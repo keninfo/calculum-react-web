@@ -1,14 +1,15 @@
 'use client'
 
-import type { ReactNode } from 'react'
-// import type { Metadata } from 'next'
+// import type { ReactElement } from 'react'
+// // import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 // import './globals.css'
+import { Box, Typography } from '@mui/material'
 
 // import { useThemeModes } from '@/hooks/useThemeModes'
 // import { ThemeProvider } from '@mui/material/styles'
-import { CssBaseline } from '@mui/material'
-import AppProviders from '@/components/AppProviders'
+
+// import CssBaseline from '@mui/material/CssBaseline'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -23,17 +24,23 @@ import AppProviders from '@/components/AppProviders'
 //   return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 // }
 
-const RootLayout = ({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) => {
+const ExampleComponent = () => {
+  //   return (
+  //     <html lang="en">
+  //       <body className={inter.className}>
+  //         {/* <AppProviders> */}
+  //         {/* <CssBaseline /> */}
+  //         {children}
+  //         {/* </AppProviders> */}
+  //       </body>
+  //     </html>
+  //   )
+
   return (
-    <AppProviders>
-      <CssBaseline />
-      {children}
-    </AppProviders>
+    <Box>
+      <Typography>Example</Typography>
+    </Box>
   )
 }
 
-export default RootLayout
+export default ExampleComponent
