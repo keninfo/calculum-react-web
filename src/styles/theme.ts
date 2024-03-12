@@ -55,7 +55,7 @@ const initTheme = (darkMode: boolean): Theme => {
     },
     spacing: base,
     typography: {
-      fontFamily: 'Roboto, sans-serif',
+      fontFamily: 'Agency FB',
       h1: {
         fontSize: '32px',
         lineHeight: '36px',
@@ -176,6 +176,21 @@ const initTheme = (darkMode: boolean): Theme => {
             backgroundColor: theme.palette.background.light,
           },
           sizeLarge: { fontSize: '16px' },
+        },
+      },
+      MuiPaper: {
+        defaultProps: {
+          elevation: 0,
+        },
+        styleOverrides: {
+          outlined: ({ theme }) => ({
+            borderWidth: 2,
+            borderColor: theme.palette.border.light,
+          }),
+          root: {
+            borderRadius: '8px !important',
+            backgroundImage: 'none',
+          },
         },
       },
     },

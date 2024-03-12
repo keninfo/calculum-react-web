@@ -20,7 +20,9 @@ const BearProtocolApp = () => {
         </Box>
       </header>
 
-      <Home />
+      <main>
+        <Home />
+      </main>
     </>
   )
 }

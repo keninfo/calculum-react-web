@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main,
+.menu {
+  background-color: var(--color-background-main);
+  padding-top: var(--space-4);
+}
+
+.vaultCards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topCard,
+.vaultCards {
+  padding: var(--space-2);
+}
+
+.typography {
+  padding: var(--space-1) 0 var(--space-1);
+}
+
+.typography > a {
+  color: var(--color-text-primary);
+  font-weight: bold;
+  text-decoration: none;
+}

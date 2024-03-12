@@ -1,58 +1,62 @@
-import { Container, Grid, Link, Paper, Typography } from '@mui/material'
+import { Grid, Link, Paper, Typography } from '@mui/material'
 import TopCard from '../TopCard'
+import LongOnlyVault from '@/components/LongOnlyVault'
+import LongShortVault from '@/components/LongShortVault'
+import TBAVault from '@/components/TBAVault'
+
+import css from './styles.module.css'
 
 const Home = () => {
   return (
-    <Container style={{ width: '100%', maxWidth: '100%' }}>
-      <Grid container>
-        <Grid item xs={10} sm={1} className="pl-0">
-          <Paper elevation={0} style={{ backgroundColor: '#fff', borderRadius: '12px', height: '100%' }}>
-            <Container className="pl-0">
-              <Typography variant="h6" className="font-weight-bold" style={{ fontSize: '1.35rem' }}>
-                <Link href="#">
-                  <p>
-                    <span className="text-yellow font-weight-bold">{'>'}</span>Home
-                  </p>
-                </Link>
-                <Link href="#">
-                  <p>
-                    <span className="text-yellow font-weight-bold">{'>'}</span>Vaults
-                  </p>
-                </Link>
-                <Link href="https://calculum.gitbook.io/calculum-docs" target="_blank" rel="noopener noreferrer">
-                  <p>
-                    <span className="text-yellow font-weight-bold">{'>'}</span>Docs
-                  </p>
-                </Link>
-                <Link href="https://medium.com/@CalculumFi" target="_blank" rel="noopener noreferrer">
-                  <p>
-                    <span className="text-yellow font-weight-bold">{'>'}</span>Blog
-                  </p>
-                </Link>
-              </Typography>
-            </Container>
-          </Paper>
+    <Grid container className={css.main}>
+      <Grid item xs className={css.menu}>
+        <Paper sx={{ marginLeft: '30px', backgroundColor: ({ palette }) => palette.background.main }}>
+          <Typography variant="h3" className={css.typography}>
+            <Link href="#">
+              <span style={{ color: '#fbc216' }}>{'>_'}</span>Home
+            </Link>
+          </Typography>
+
+          <Typography variant="h3" className={css.typography}>
+            <Link href="#">
+              <span style={{ color: '#fbc216' }}>{'>_'}</span>Vaults
+            </Link>
+          </Typography>
+
+          <Typography variant="h3" className={css.typography}>
+            <Link href="https://calculum.gitbook.io/calculum-docs" target="_blank" rel="noopener noreferrer">
+              <span style={{ color: '#fbc216' }}>{'>_'}</span>Docs
+            </Link>
+          </Typography>
+
+          <Typography variant="h3" className={css.typography}>
+            <Link href="https://medium.com/@CalculumFi" target="_blank" rel="noopener noreferrer">
+              <span style={{ color: '#fbc216' }}>{'>_'}</span>Blog
+            </Link>
+          </Typography>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={11}>
+        <Grid item className={css.topCard}>
+          <TopCard />
         </Grid>
 
-        <Grid item style={{ padding: 0 }}>
-          <TopCard />
+        <Grid item className={css.vaultCards}>
+          <Grid item xs={3.9}>
+            <LongOnlyVault />
+          </Grid>
 
-          {/* <Grid container justifyContent="space-around" style={{ marginTop: '2rem' }}>
-            <Grid item>
-              <Vault1 />
-            </Grid>
+          <Grid item xs={3.9}>
+            <LongShortVault />
+          </Grid>
 
-            <Grid item>
-              <Vault2 />
-            </Grid>
-
-            <Grid item>
-              <Vault3 />
-            </Grid>
-          </Grid> */}
+          <Grid item xs={3.9}>
+            <TBAVault />
+          </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </Grid>
   )
 }
 

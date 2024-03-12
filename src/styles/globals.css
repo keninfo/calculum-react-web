@@ -1,11 +1,25 @@
 @import url(./vars.css);
 
+@font-face {
+  font-family: 'Agency FB';
+  src: url('/fonts/agency-fb.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Agency FB';
+  src: url('/fonts/agency-fb-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: var(--color-background-default);
+  font-family: "Agency FB";
+  background-color: #191919;
 }
 
 main {

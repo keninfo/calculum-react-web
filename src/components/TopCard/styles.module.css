@@ -1,0 +1,17 @@
+.container {
+  background-color: #3c3c3c;
+  padding: var(--space-2);
+  border: 1px solid white;
+  border-radius: 15px;
+}
+
+.mainLema {
+  border-bottom: 1px solid #fbc216;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-2);
+}
