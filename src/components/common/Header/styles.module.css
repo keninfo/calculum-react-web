@@ -1,0 +1,9 @@
+.appBar {
+  position: static;
+  width: 100%;
+  background-color: var(--color-background-main);
+}
+
+.toolbar {
+  padding: 0px 40px 0px;
+}

@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material'
 import { CacheProvider } from '@emotion/react'
 import { useThemeModes } from '@/hooks/useThemeModes'
 import createEmotionCache from '@/utils/createEmotionCache'
+import Web3ModalProvider from '@/services/Web3ModalProvider'
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const theme = useThemeModes()
@@ -10,7 +11,9 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
 
   return (
     <CacheProvider value={clientSideEmotionCache}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <Web3ModalProvider>{children}</Web3ModalProvider>
+      </ThemeProvider>
     </CacheProvider>
   )
 }

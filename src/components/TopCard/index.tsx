@@ -16,11 +16,7 @@ const TopCard = () => {
         </Grid>
       </Grid>
 
-      <Grid
-        container
-        // dense className="pt-3 mt-3" style={{ borderTop: '1px solid #fbc216' }}
-        className={css.info}
-      >
+      <Grid container className={css.info}>
         <Grid item xs={6} display="flex" justifyContent="center" alignItems="center">
           <Typography variant="h2">Total Value Locked: $50k</Typography>
         </Grid>
