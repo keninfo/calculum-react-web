@@ -19,8 +19,9 @@ import {
 import { InfoOutlined } from '@mui/icons-material'
 // import { ethers } from 'ethers'
 
+import VaultTitle from '@/components/common/VaultTitle'
 import VaultCard from '@/components/common/VaultCard'
-import ClearButton from '../common/ClearButton'
+import ClearButton from '@/components/common/ClearButton'
 
 const Vault = () => {
   // const [depositInputRules] = useState([(value: any) => !!value || 'Required'])
@@ -28,6 +29,7 @@ const Vault = () => {
   const [showDepositDialog, setShowDepositDialog] = useState<boolean>(false)
   const [showLoader, setShowLoader] = useState<boolean>(false)
 
+  //! IMPORTANT: The following code will be used during contract testing interaction. So we're not gonna to remove this example code yet
   // const deposit = async () => {
   //   const contractABI: ethers.ContractInterface = []
   //   const provider = new ethers.providers.JsonRpcProvider()
@@ -61,18 +63,13 @@ const Vault = () => {
   return (
     <VaultCard
       title={
-        <Grid
-          container
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          pb={1}
-          sx={{ borderBottom: '1px solid #fbc216' }}
-        >
-          <Typography variant="h3" fontWeight="bold">
-            <span style={{ color: 'yellow' }}>VAULT #1:</span> LONG-ONLY MOMENTUM STRATEGY
-          </Typography>
-        </Grid>
+        <VaultTitle
+          customTitle={
+            <Typography variant="h3" fontWeight="bold">
+              <span style={{ color: '#fbc216' }}>VAULT #1:</span> LONG-ONLY MOMENTUM STRATEGY
+            </Typography>
+          }
+        />
       }
     >
       <Grid container spacing={2}>
@@ -163,7 +160,7 @@ const Vault = () => {
             }}
           >
             <Typography variant="h4" mr={1}>
-              Net APY: <span style={{ color: 'yellow' }}>20.0%</span> since inception
+              Net APY: <span style={{ color: '#fbc216' }}>20.0%</span> since inception
             </Typography>
             <Tooltip title="Based on live trading during test period between [date] and [date]" placement="bottom">
               <SvgIcon component={InfoOutlined} inheritViewBox fontSize="small" />

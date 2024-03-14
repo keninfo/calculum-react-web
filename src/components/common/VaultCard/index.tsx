@@ -9,10 +9,12 @@ type VaultCardProps = {
 const VaultCard = ({ title, children }: VaultCardProps) => (
   <Paper sx={{ backgroundColor: '#3c3c3c', border: '1px solid white', height: '100%' }}>
     <Grid container spacing={0} p={4}>
-      <Grid item xs>
+      <Grid item xs={12}>
         {title}
       </Grid>
-      <Grid item>{children}</Grid>
+      <Grid item xs={12}>
+        {children}
+      </Grid>
     </Grid>
   </Paper>
 )

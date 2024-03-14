@@ -31,7 +31,7 @@ const nextConfig = {
       ],
     })
 
-    config.externals.push('pino-pretty', 'encoding')
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
 
     return config
   },

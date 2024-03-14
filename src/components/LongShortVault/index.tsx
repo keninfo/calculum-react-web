@@ -1,29 +1,28 @@
-import VaultCard from '../common/VaultCard'
+import { Grid, Typography } from '@mui/material'
 
-const LongShortVault = () => (
-  <VaultCard title="props2">
-    <div className="title">
-      <div className="justify-center pb-1">
-        <span className="card-title">
-          <b>
-            <span className="text-yellow">VAULT #2:</span> LONG-SHORT MOMENTUM STRATEGY
-          </b>
-        </span>
-      </div>
-    </div>
+import VaultTitle from '@/components/common/VaultTitle'
+import VaultCard from '@/components/common/VaultCard'
 
-    <div className="body">
-      <div className="pt-2" style={{ borderTop: '1px solid #fbc216' }}>
-        <div className="md-8">
-          <div className="row">
-            <div className="pb-0">
-              <span>Coming soon...</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </VaultCard>
-)
+const LongShortVault = () => {
+  return (
+    <VaultCard
+      title={
+        <VaultTitle
+          customTitle={
+            <Typography variant="h3" fontWeight="bold">
+              <span style={{ color: '#fbc216' }}>VAULT #2:</span> LONG-SHORT MOMENTUM STRATEGY
+            </Typography>
+          }
+        />
+      }
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography>Coming soon...</Typography>
+        </Grid>
+      </Grid>
+    </VaultCard>
+  )
+}
 
 export default LongShortVault
