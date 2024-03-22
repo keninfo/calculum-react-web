@@ -8,8 +8,10 @@ import { shortenAddress } from '@/utils/formatters'
 
 const ConnectButton = () => {
   const { open } = useWeb3Modal()
-  const { address, isConnected } = useAccount()
+  const { address, isConnected, status } = useAccount()
   const { disconnect } = useDisconnect()
+
+  console.log({ status })
 
   return (
     <ClearButton handleClickClearButton={isConnected ? () => disconnect() : () => open()}>

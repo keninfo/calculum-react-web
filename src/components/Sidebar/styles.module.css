@@ -1,0 +1,21 @@
+.container {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  background-color: var(--color-background-default);
+  padding: var(--space-8) var(--space-6); /* This must be into the sidebar's children*/
+}
+
+.listItemButton {
+  border-radius: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.footerContainer {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+}
