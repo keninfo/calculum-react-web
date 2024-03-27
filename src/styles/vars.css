@@ -69,10 +69,10 @@
   --color-text-secondary: #c9c9c9;
   --color-text-disabled: #7a7a7a;
   --color-primary-dark: #1f1f1f;
-  --color-primary-main: #2b2b2b;
-  --color-primary-light: #1a1a1a;
+  --color-primary-main: #2667dd;
+  --color-primary-light: #306cda;
   --color-secondary-dark: #2f84b3;
-  --color-secondary-main: #accee1;
+  --color-secondary-main: #283c52;
   --color-secondary-light: #c1dae9;
   --color-secondary-background: #303033;
   --color-gradient-dark: #eab372;
@@ -80,7 +80,7 @@
   --color-gradient-light: #fae9d6;
   --color-gradient-contrastText: #ffffff;
   --color-gradient-background: #fdf8f1;
-  --color-border-main: #636669;
+  --color-border-main: #283c52;
   --color-border-light: #303033;
   --color-border-background: #121312;
   --color-error-dark: #f86c6b;
@@ -99,8 +99,8 @@
   --color-warning-main: #ff8061;
   --color-warning-light: #ffb7a6;
   --color-warning-background: #2f2318;
-  --color-background-default: #1f1f1f;
-  --color-background-main: #191919;
+  --color-background-default: #070a1d;
+  --color-background-main: #090d27;
   --color-background-paper: #1c1c1c;
   --color-background-light: #1b2a22;
   --color-background-disabled: #f0f0f0;
@@ -117,10 +117,10 @@
     --color-text-secondary: #c9c9c9;
     --color-text-disabled: #7a7a7a;
     --color-primary-dark: #1f1f1f;
-    --color-primary-main: #2b2b2b;
-    --color-primary-light: #1a1a1a;
+    --color-primary-main: #2667dd;
+    --color-primary-light: #306cda;
     --color-secondary-dark: #2f84b3;
-    --color-secondary-main: #accee1;
+    --color-secondary-main: #283c52;
     --color-secondary-light: #c1dae9;
     --color-secondary-background: #303033;
     --color-gradient-dark: #eab372;
@@ -128,7 +128,7 @@
     --color-gradient-light: #fae9d6;
     --color-gradient-contrastText: #ffffff;
     --color-gradient-background: #fdf8f1;
-    --color-border-main: #636669;
+    --color-border-main: #283c52;
     --color-border-light: #303033;
     --color-border-background: #121312;
     --color-error-dark: #f86c6b;
@@ -147,8 +147,8 @@
     --color-warning-main: #ff8061;
     --color-warning-light: #ffb7a6;
     --color-warning-background: #2f2318;
-    --color-background-default: #1f1f1f;
-    --color-background-main: #191919;
+    --color-background-default: #070a1d;
+    --color-background-main: #090d27;
     --color-background-paper: #1c1c1c;
     --color-background-light: #1b2a22;
     --color-background-disabled: #f0f0f0;

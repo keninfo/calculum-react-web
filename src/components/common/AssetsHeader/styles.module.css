@@ -1,0 +1,23 @@
+.assetStats {
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  margin: var(--space-3) var(--space-1);
+  border-radius: var(--space-1);
+  background-color: var(--color-background-default);
+}
+
+.assetMetrics {
+  width: 80%;
+}
+
+.assetStats,
+.assetMetrics {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
