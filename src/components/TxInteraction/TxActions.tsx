@@ -22,18 +22,8 @@ enum FormField {
 }
 
 const TxActions = ({ activeTab, label }: TxActionsProps) => {
-  const { writeContract, error: contractError } = useWriteContract()
-  console.log({ contractError })
+  const { writeContract } = useWriteContract()
   const { address: signerAddress } = useAccount()
-
-  const allowanceData = useReadContract({
-    abi: usdcContract.abi,
-    address: usdcContract.address as Hash,
-    functionName: 'allowance',
-    args: [signerAddress, calculumVaultContract.address],
-  })
-
-  const allowance = allowanceData.data as bigint
 
   const formMethods = useForm({
     mode: 'onChange',
@@ -47,11 +37,20 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
     setValue,
   } = formMethods
 
-  const approveValue = watch(FormField.approve)
+  // const approveValue = watch(FormField.approve) //! Not required for now
   const depositValue = watch(FormField.deposit)
   const claimValue = watch(FormField.claim)
   const withdrawValue = watch(FormField.withdraw)
-  console.log({ approveValue, depositValue, claimValue, withdrawValue })
+
+  const fetchAllowance = useReadContract({
+    abi: usdcContract.abi,
+    address: usdcContract.address as Hash,
+    functionName: 'allowance',
+    args: [signerAddress, calculumVaultContract.address],
+  })
+
+  const allowance = fetchAllowance.data as bigint
+  const refetchAllowance = () => fetchAllowance.refetch()
 
   const approve = () => {
     writeContract({
@@ -60,20 +59,22 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
       functionName: 'approve',
       args: [calculumVaultContract.address, '1000000000000'], // 1M USDC. TODO: Hardcoded approval amount, need to fix this later
     })
+
+    refetchAllowance()
   }
 
   const handleAction = (value: string, functionName: string) => {
-    console.log({ value, functionName })
     const parsedValue = parseUnits(value, 6).toString() // TODO: Hardcoded ERC20 decimals, need to fix this later
     const args = [parsedValue, signerAddress] as string[]
 
-    console.log('execMethod')
     writeContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName,
       args,
     })
+
+    refetchAllowance()
   }
 
   const submit = () => {
@@ -81,15 +82,12 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
       switch (activeTab) {
         case 0:
           handleAction(depositValue, FormField.deposit)
-          console.log('exec1')
           return
         case 1:
           handleAction(claimValue, FormField.claim)
-          console.log('exec2')
           return
         case 2:
           handleAction(withdrawValue, FormField.withdraw)
-          console.log('exec3')
           return
         default:
           return
@@ -125,7 +123,6 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
         return ''
     }
   }
-  console.log(registration())
 
   return (
     <form onSubmit={handleSubmit(() => submit())}>
