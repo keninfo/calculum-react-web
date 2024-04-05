@@ -1,15 +1,32 @@
+import { useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 
+import { useDispatch } from 'react-redux'
+import { fetchPrices } from '@/store/pricesSlice'
+import { type AppDispatch, useAppSelector } from '@/store/store'
+
 import css from './styles.module.css'
+import { formatPrice } from '@/utils/formatters'
 
 const AssetsHeader = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const prices = useAppSelector((state) => state.prices)
+
+  useEffect(() => {
+    dispatch(fetchPrices())
+  }, [dispatch])
+
+  const BTCUSDCSpot = prices.prices ? prices.prices['1'] : ''
+
+  const formatted = formatPrice(BTCUSDCSpot)
+
   return (
     <Box className={css.assetStats}>
       <Typography>BTC/USD</Typography>
       <Box className={css.assetMetrics}>
         <Box className={css.metric}>
           <Typography>Last price</Typography>
-          <Typography>0.058505 $390.68</Typography>
+          <Typography>${formatted}</Typography>
         </Box>
         <Box className={css.metric}>
           <Typography>24h Change</Typography>

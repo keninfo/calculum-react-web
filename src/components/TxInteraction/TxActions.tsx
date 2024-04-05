@@ -11,6 +11,7 @@ import css from './styles.module.css'
 
 type TxActionsProps = {
   activeTab: number
+  activeSubTab: number
   label: string
 }
 
@@ -21,8 +22,9 @@ enum FormField {
   withdraw = 'withdraw',
 }
 
-const TxActions = ({ activeTab, label }: TxActionsProps) => {
-  const { writeContract } = useWriteContract()
+const TxActions = ({ activeTab, activeSubTab, label }: TxActionsProps) => {
+  const { writeContract, error } = useWriteContract()
+  console.log({ error, activeSubTab })
   const { address: signerAddress } = useAccount()
 
   const formMethods = useForm({
@@ -65,7 +67,7 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
 
   const handleAction = (value: string, functionName: string) => {
     const parsedValue = parseUnits(value, 6).toString() // TODO: Hardcoded ERC20 decimals, need to fix this later
-    const args = [parsedValue, signerAddress] as string[]
+    const args = [parsedValue, signerAddress] as string[] // TODO: fix args for every contract method. Not the same for everyone
 
     writeContract({
       abi: calculumVaultContract.abi,

@@ -2,10 +2,11 @@
 
 import type { ReactNode } from 'react'
 
-import { CssBaseline } from '@mui/material'
 import AppProviders from '@/components/AppProviders'
+import { CssBaseline } from '@mui/material'
 
 import '@/styles/globals.css'
+import { Providers } from '@/store/provider'
 
 const RootLayout = ({
   children,
@@ -15,12 +16,14 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body>
-        <main>
-          <AppProviders>
-            <CssBaseline />
-            {children}
-          </AppProviders>
-        </main>
+        <Providers>
+          <main>
+            <AppProviders>
+              <CssBaseline />
+              {children}
+            </AppProviders>
+          </main>
+        </Providers>
       </body>
     </html>
   )

@@ -23,3 +23,11 @@ export const formatBalance = (number: bigint) => {
     return `0.${leadingZeros}${toStringNumber}`
   }
 }
+
+export const formatPrice = (price: string) => {
+  const priceNum = parseFloat(price)
+
+  if (isNaN(priceNum)) return 'Invalid Number'
+
+  return priceNum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+}
