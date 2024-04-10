@@ -1,4 +1,4 @@
-module.exports = {
+{
   "tabWidth": 2,
   "printWidth": 120,
   "trailingComma": "all",
@@ -26,5 +26,5 @@ module.exports = {
     "^\\w*$"
   ],
   "importOrderSeparation": true,
-  "plugins": [require.resolve("@trivago/prettier-plugin-sort-imports")]
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }
