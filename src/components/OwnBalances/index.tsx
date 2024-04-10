@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
+
 import { Box, Typography } from '@mui/material'
-import { useAccount, useReadContract } from 'wagmi'
+
 import { type Hash } from 'viem'
 
-import { calculumVaultContract } from '@/contracts/calculumVault'
+import { useAccount, useReadContract } from 'wagmi'
 
+import { calculumVaultContract } from '@/contracts/calculumVault'
 import { formatBalance } from '@/utils/formatters'
 
 const OwnBalances = () => {

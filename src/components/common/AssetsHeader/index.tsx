@@ -1,12 +1,14 @@
 import { useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
 
 import { useDispatch } from 'react-redux'
+
+import { Box, Typography } from '@mui/material'
+
 import { fetchPrices } from '@/store/pricesSlice'
 import { type AppDispatch, useAppSelector } from '@/store/store'
+import { formatPrice } from '@/utils/formatters'
 
 import css from './styles.module.css'
-import { formatPrice } from '@/utils/formatters'
 
 const AssetsHeader = () => {
   const dispatch = useDispatch<AppDispatch>()

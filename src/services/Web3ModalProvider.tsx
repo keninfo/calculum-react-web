@@ -1,12 +1,16 @@
 'use client'
 
-import React, { type ReactNode } from 'react'
-import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
-import { cookieStorage, createStorage } from 'wagmi'
-import { mainnet, arbitrumSepolia } from 'wagmi/chains'
 import { createWeb3Modal } from '@web3modal/wagmi/react'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+
+import React, { type ReactNode } from 'react'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
+import { mainnet, arbitrumSepolia } from 'wagmi/chains'
+
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 
 export const projectId = WALLET_CONNECT_PROJECT_ID

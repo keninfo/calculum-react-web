@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react'
+
+import Badge from '@mui/material/Badge'
 import List, { type ListProps } from '@mui/material/List'
 import ListItemButton, { type ListItemButtonProps } from '@mui/material/ListItemButton'
 import ListItemIcon, { type ListItemIconProps } from '@mui/material/ListItemIcon'
 import ListItemText, { type ListItemTextProps } from '@mui/material/ListItemText'
-import Badge from '@mui/material/Badge'
 
 import css from './styles.module.css'
 

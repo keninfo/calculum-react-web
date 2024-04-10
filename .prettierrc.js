@@ -1,0 +1,30 @@
+module.exports = {
+  "tabWidth": 2,
+  "printWidth": 120,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "semi": false,
+  "endOfLine": "auto",
+  "importOrder": [
+    "^react$",
+    "^react-dom$",
+    "^next",
+    "^react-hook-form$",
+    "^react-redux$",
+    "^redux$",
+    "^@mui/",
+    "^@vertex-protocol/",
+    "^@tanstack/",
+    "^axios$",
+    "^bignumber.js$",
+    "^ethers",
+    "^viem",
+    "^wagmi",
+    "@/",
+    "^\\..*",
+    "^\\w",
+    "^\\w*$"
+  ],
+  "importOrderSeparation": true,
+  "plugins": [require.resolve("@trivago/prettier-plugin-sort-imports")]
+}

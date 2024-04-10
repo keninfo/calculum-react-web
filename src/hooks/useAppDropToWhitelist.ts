@@ -1,6 +1,7 @@
-import { useWriteContract } from 'wagmi'
 import type { Hash } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+
+import { useWriteContract } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { OWNER_PK } from '@/utils/constants'

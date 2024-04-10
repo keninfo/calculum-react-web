@@ -1,11 +1,12 @@
 import { Box, Grid } from '@mui/material'
-import Sidebar from '@/components/Sidebar'
-import Header from '@/components/common/Header'
-import AssetsHeader from '@/components/common/AssetsHeader'
-import PriceChart from '@/components/PriceChart'
+
 import CollateralsTable from '@/components/CollateralsTable'
-import TxInteraction from '@/components/TxInteraction'
 import OwnBalances from '@/components/OwnBalances'
+import PriceChart from '@/components/PriceChart'
+import Sidebar from '@/components/Sidebar'
+import TxInteraction from '@/components/TxInteraction'
+import AssetsHeader from '@/components/common/AssetsHeader'
+import Header from '@/components/common/Header'
 
 import css from './styles.module.css'
 

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
-import SidebarNavigation from './SidebarNavigation'
-import SidebarFooter from './SidebarFooter'
 
+import SidebarFooter from './SidebarFooter'
+import SidebarNavigation from './SidebarNavigation'
 import css from './styles.module.css'
 
 const Sidebar = () => {

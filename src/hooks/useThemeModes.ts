@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
+
 import type { Theme } from '@mui/material'
+
 import initTheme from '@/styles/theme'
 
 const useDarkMode = (): boolean => {

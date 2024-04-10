@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+
 import { Grid } from '@mui/material'
 
 type VaultTitleProps = {

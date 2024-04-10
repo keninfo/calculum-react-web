@@ -2,11 +2,11 @@
 
 import type { ReactNode } from 'react'
 
-import AppProviders from '@/components/AppProviders'
 import { CssBaseline } from '@mui/material'
 
-import '@/styles/globals.css'
+import AppProviders from '@/components/AppProviders'
 import { Providers } from '@/store/provider'
+import '@/styles/globals.css'
 
 const RootLayout = ({
   children,

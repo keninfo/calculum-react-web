@@ -1,8 +1,8 @@
 import { type ChangeEvent, useState } from 'react'
+
 import { Box, Tabs, Tab, Typography } from '@mui/material'
 
 import TxActions from './TxActions'
-
 import css from './styles.module.css'
 
 const TxInteraction = () => {
@@ -27,17 +27,19 @@ const TxInteraction = () => {
             </Typography>
           }
         />
+
+        <Tab
+          label={
+            <Typography variant="body2" fontWeight={700}>
+              Take money out
+            </Typography>
+          }
+        />
+
         <Tab
           label={
             <Typography variant="body2" fontWeight={700}>
               Claim
-            </Typography>
-          }
-        />
-        <Tab
-          label={
-            <Typography variant="body2" fontWeight={700}>
-              Withdraw
             </Typography>
           }
         />
@@ -46,17 +48,19 @@ const TxInteraction = () => {
       {activeTab === 1 && (
         <Box>
           <Tabs value={subTab} indicatorColor="primary" onChange={handleSubTabChange}>
+            {/* usar withdraw (cantidad de assets) en el contrato (USDC 1e6) */}
             <Tab
               label={
                 <Typography variant="body2" fontWeight={700}>
-                  Claim 1
+                  Withdraw
                 </Typography>
               }
             />
+            {/* usar redeem en el contrato (Shares 1e18) */}
             <Tab
               label={
                 <Typography variant="body2" fontWeight={700}>
-                  Claim 2
+                  Redeem
                 </Typography>
               }
             />
@@ -66,17 +70,19 @@ const TxInteraction = () => {
       {activeTab === 2 && (
         <Box>
           <Tabs value={subTab} indicatorColor="primary" onChange={handleSubTabChange}>
+            {/* claimAssets */}
             <Tab
               label={
                 <Typography variant="body2" fontWeight={700}>
-                  Withdraw 1
+                  Assets
                 </Typography>
               }
             />
+            {/* claimShares */}
             <Tab
               label={
                 <Typography variant="body2" fontWeight={700}>
-                  Withdraw 2
+                  Shares
                 </Typography>
               }
             />

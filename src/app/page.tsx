@@ -1,6 +1,7 @@
 'use client'
 
 import Head from 'next/head'
+
 import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 

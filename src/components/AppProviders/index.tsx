@@ -1,9 +1,12 @@
-import type { ReactNode } from 'react'
-import { ThemeProvider } from '@mui/material'
 import { CacheProvider } from '@emotion/react'
-import createEmotionCache from '@/utils/createEmotionCache'
-import Web3ModalProvider from '@/services/Web3ModalProvider'
+
+import type { ReactNode } from 'react'
+
+import { ThemeProvider } from '@mui/material'
+
 import { useThemeModes } from '@/hooks/useThemeModes'
+import Web3ModalProvider from '@/services/Web3ModalProvider'
+import createEmotionCache from '@/utils/createEmotionCache'
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const theme = useThemeModes() //! will be discommented until we define a proper squema structure

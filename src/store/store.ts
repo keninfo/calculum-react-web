@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import { type TypedUseSelectorHook, useSelector } from 'react-redux'
 
 import pricesSlice from './pricesSlice'

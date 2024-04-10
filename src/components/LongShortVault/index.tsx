@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 
-import VaultTitle from '@/components/common/VaultTitle'
 import VaultCard from '@/components/common/VaultCard'
+import VaultTitle from '@/components/common/VaultTitle'
 
 const LongShortVault = () => {
   return (
