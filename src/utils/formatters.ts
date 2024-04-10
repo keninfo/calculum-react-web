@@ -34,11 +34,7 @@ export const formatPrice = (price: string): string => {
   if (Math.abs(priceNum) >= 1000) formattedPrice = priceNum.toFixed(2)
   else formattedPrice = priceNum.toFixed(4)
 
-  if (formattedPrice.includes('.00')) formattedPrice = formattedPrice.slice(0, -3)
-
-  formattedPrice = formattedPrice.replace(/\d(?=(\d{3})+\.)/g, '$&,')
-
-  return formattedPrice
+  return formattedPrice.replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
 export const formatPercentage = (percentage: number): string => {
