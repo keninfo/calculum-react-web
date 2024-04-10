@@ -6,7 +6,7 @@ export const shortenAddress = (address?: string, length = 4): string => {
   return `${address.slice(0, length + 2)}...${address.slice(-length)}`
 }
 
-export const formatBalance = (number: bigint) => {
+export const formatBalance = (number: bigint): string => {
   const toStringNumber = number.toString()
   const length = toStringNumber.length
 
@@ -24,10 +24,29 @@ export const formatBalance = (number: bigint) => {
   }
 }
 
-export const formatPrice = (price: string) => {
+export const formatPrice = (price: string): string => {
   const priceNum = parseFloat(price)
 
   if (isNaN(priceNum)) return 'Invalid Number'
 
-  return priceNum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  let formattedPrice
+
+  if (Math.abs(priceNum) >= 1000) formattedPrice = priceNum.toFixed(2)
+  else formattedPrice = priceNum.toFixed(4)
+
+  if (formattedPrice.includes('.00')) formattedPrice = formattedPrice.slice(0, -3)
+
+  formattedPrice = formattedPrice.replace(/\d(?=(\d{3})+\.)/g, '$&,')
+
+  return formattedPrice
+}
+
+export const formatPercentage = (percentage: number): string => {
+  const roundedPercentage = Math.abs(percentage).toFixed(2)
+
+  const prefix = percentage >= 0 ? '+' : '-'
+
+  const formattedPercentage = `${prefix}${roundedPercentage}%`
+
+  return formattedPercentage
 }

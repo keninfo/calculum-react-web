@@ -20,7 +20,7 @@ const vertexGatewayUrl = 'https://gateway.prod.vertexprotocol.com/v1'
 
 export const fetchPrices = createAsyncThunk('stats/fetchPrices', async () => {
   const res = await axios.get(`${vertexGatewayUrl}/query?type=all_products`)
-  const prices = queryPrices(res.data.data.spot_products)
+  const prices = queryPrices(res.data.data.perp_products)
 
   return prices
 })

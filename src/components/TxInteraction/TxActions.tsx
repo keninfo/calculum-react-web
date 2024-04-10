@@ -24,9 +24,8 @@ enum FormField {
   withdraw = 'withdraw',
 }
 
-const TxActions = ({ activeTab, activeSubTab, label }: TxActionsProps) => {
-  const { writeContract, error } = useWriteContract()
-  console.log({ error, activeSubTab })
+const TxActions = ({ activeTab, label }: TxActionsProps) => {
+  const { writeContract } = useWriteContract()
   const { address: signerAddress } = useAccount()
 
   const formMethods = useForm({
