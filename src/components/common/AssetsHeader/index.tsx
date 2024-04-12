@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { useDispatch } from 'react-redux'
 
 import { Box, Typography, Select, MenuItem, type SelectChangeEvent, FormControl, InputLabel } from '@mui/material'
 
 import { type StatsPerPrices, fetchPerpPrices } from '@/store/perpPricesSlice'
+import { setSelectedAsset } from '@/store/selectedAssetSlice'
 import { type AppDispatch, useAppSelector } from '@/store/store'
 import { assetsList } from '@/utils/assetsList'
 import { formatPercentage, formatPrice } from '@/utils/formatters'
@@ -20,10 +21,9 @@ const AssetsHeader = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   const perpPrices = useAppSelector((state) => state.perpPrices)
+  const selectedAsset = useAppSelector((state) => state.selectedAsset)
 
-  const [selectedAsset, setSelectedAsset] = useState<string>('BTC-PERP')
-
-  const handleAssetChange = (event: SelectChangeEvent) => setSelectedAsset(event.target.value)
+  const handleAssetChange = (event: SelectChangeEvent) => dispatch(setSelectedAsset(event.target.value))
 
   useEffect(() => {
     dispatch(fetchPerpPrices())
@@ -33,7 +33,7 @@ const AssetsHeader = () => {
     const perpPricesList: Record<string, {}> = perpPrices.perpPrices
     if (!perpPricesList) return { price: '', volume: '', baseVolume: '', percentageChange: '' }
 
-    const selectedTickerProduct = assetsList.find((a) => a.label === selectedAsset)?.ticker
+    const selectedTickerProduct = assetsList.find((a) => a.label === selectedAsset.selectedAsset)?.ticker
 
     if (!selectedTickerProduct) return { price: '', volume: '', baseVolume: '', percentageChange: '' }
     const statsPerProduct = perpPricesList[selectedTickerProduct] as StatsPerPrices
@@ -50,7 +50,7 @@ const AssetsHeader = () => {
     <Box className={css.assetStats}>
       <FormControl>
         <InputLabel id="assets-label">Perps</InputLabel>
-        <Select labelId="assets-label" label="Perps" value={selectedAsset} onChange={handleAssetChange}>
+        <Select labelId="assets-label" label="Perps" value={selectedAsset.selectedAsset} onChange={handleAssetChange}>
           {assetsList.map((asset) => (
             <MenuItem key={asset.label} value={asset.label}>
               {asset.label}
