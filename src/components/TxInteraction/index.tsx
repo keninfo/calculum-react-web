@@ -31,7 +31,7 @@ const TxInteraction = () => {
         <Tab
           label={
             <Typography variant="body2" fontWeight={700}>
-              Take money out
+              Initiate withdraw
             </Typography>
           }
         />

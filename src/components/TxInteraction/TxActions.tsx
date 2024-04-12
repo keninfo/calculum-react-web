@@ -20,12 +20,16 @@ type TxActionsProps = {
 enum FormField {
   approve = 'approve',
   deposit = 'deposit',
-  claim = 'claim', // TODO: ask about this specific method and its usage
   withdraw = 'withdraw',
+  redeem = 'redeem',
+  claimAssets = 'claimAssets',
+  claimShares = 'claimShares',
 }
 
-const TxActions = ({ activeTab, label }: TxActionsProps) => {
-  const { writeContract } = useWriteContract()
+const TxActions = ({ activeTab, activeSubTab, label }: TxActionsProps) => {
+  console.log({ activeTab, activeSubTab })
+  const { writeContract, error: errorInContract } = useWriteContract()
+  console.log({ errorInContract })
   const { address: signerAddress } = useAccount()
 
   const formMethods = useForm({
@@ -42,8 +46,12 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
 
   // const approveValue = watch(FormField.approve) //! Not required for now
   const depositValue = watch(FormField.deposit)
-  const claimValue = watch(FormField.claim)
+
   const withdrawValue = watch(FormField.withdraw)
+  const redeemValue = watch(FormField.redeem)
+
+  const claimAssetsValue = watch(FormField.claimAssets)
+  const claimSharesValue = watch(FormField.claimShares)
 
   const fetchAllowance = useReadContract({
     abi: usdcContract.abi,
@@ -66,9 +74,22 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
     refetchAllowance()
   }
 
-  const handleAction = (value: string, functionName: string) => {
+  const getArgs = (value: string, functionName: string) => {
     const parsedValue = parseUnits(value, 6).toString() // TODO: Hardcoded ERC20 decimals, need to fix this later
-    const args = [parsedValue, signerAddress] as string[] // TODO: fix args for every contract method. Not the same for everyone
+
+    const argsMap: { [key: string]: string[] } = {
+      deposit: [parsedValue, signerAddress] as string[],
+      withdraw: [parsedValue, signerAddress, signerAddress] as string[],
+      redeem: [parsedValue, signerAddress, signerAddress] as string[],
+      claimAssets: [signerAddress, signerAddress] as string[],
+      claimShares: [signerAddress] as string[],
+    }
+
+    return argsMap[functionName] || []
+  }
+
+  const handleAction = (value: string, functionName: string) => {
+    const args = getArgs(value, functionName)
 
     writeContract({
       abi: calculumVaultContract.abi,
@@ -87,18 +108,32 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
           handleAction(depositValue, FormField.deposit)
           return
         case 1:
-          handleAction(claimValue, FormField.claim)
-          return
+          switch (activeSubTab) {
+            case 0:
+              handleAction(withdrawValue, FormField.withdraw)
+              return
+            case 1:
+              handleAction(redeemValue, FormField.redeem)
+              return
+            default:
+              return
+          }
         case 2:
-          handleAction(withdrawValue, FormField.withdraw)
-          return
+          switch (activeSubTab) {
+            case 0:
+              handleAction(claimAssetsValue, FormField.claimAssets)
+              return
+            case 1:
+              handleAction(claimSharesValue, FormField.claimShares)
+              return
+            default:
+              return
+          }
+
         default:
           return
       }
-    }
-
-    approve()
-    return
+    } else approve()
   }
 
   const inputError = () => {
@@ -106,9 +141,25 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
       case 0:
         return errors.deposit
       case 1:
-        return errors.claim
+        switch (activeSubTab) {
+          case 0:
+            return errors.withdraw
+          case 1:
+            return errors.redeem
+          default:
+            return undefined
+        }
+
       case 2:
-        return errors.withdraw
+        switch (activeSubTab) {
+          case 0:
+            return errors.claimAssets
+          case 1:
+            return errors.claimShares
+          default:
+            return undefined
+        }
+
       default:
         return undefined
     }
@@ -119,9 +170,23 @@ const TxActions = ({ activeTab, label }: TxActionsProps) => {
       case 0:
         return FormField.deposit
       case 1:
-        return FormField.claim
+        switch (activeSubTab) {
+          case 0:
+            return FormField.withdraw
+          case 1:
+            return FormField.redeem
+          default:
+            return ''
+        }
       case 2:
-        return FormField.withdraw
+        switch (activeSubTab) {
+          case 0:
+            return FormField.claimAssets
+          case 1:
+            return FormField.claimShares
+          default:
+            return ''
+        }
       default:
         return ''
     }
