@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+
+import { useForm } from 'react-hook-form'
+
+import { InfoOutlined } from '@mui/icons-material'
 import {
   Grid,
   Paper,
@@ -16,20 +20,18 @@ import {
   ListItem,
   SvgIcon,
 } from '@mui/material'
-import { InfoOutlined } from '@mui/icons-material'
-import { useWriteContract, useAccount, useReadContract } from 'wagmi'
+
 import { parseUnits } from 'viem'
-import { useForm } from 'react-hook-form'
-
-import VaultTitle from '@/components/common/VaultTitle'
-import VaultCard from '@/components/common/VaultCard'
-import ClearButton from '@/components/common/ClearButton'
-
-import { calculumVaultContract } from '@/contracts/calculumVault'
 import type { Hash } from 'viem'
 
-import USDCLogo from '@/public/coins/usdc.svg'
+import { useWriteContract, useAccount, useReadContract } from 'wagmi'
+
+import ClearButton from '@/components/common/ClearButton'
+import VaultCard from '@/components/common/VaultCard'
+import VaultTitle from '@/components/common/VaultTitle'
+import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
+import USDCLogo from '@/public/coins/usdc.svg'
 
 const Vault = () => {
   const { writeContract } = useWriteContract()

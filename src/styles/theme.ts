@@ -55,7 +55,7 @@ const initTheme = (darkMode: boolean): Theme => {
     },
     spacing: base,
     typography: {
-      fontFamily: 'Agency FB',
+      fontFamily: 'DM Sans',
       h1: {
         fontSize: '32px',
         lineHeight: '36px',
@@ -104,7 +104,7 @@ const initTheme = (darkMode: boolean): Theme => {
           {
             props: { size: 'stretched' },
             style: {
-              padding: '12px 48px',
+              padding: '12px 36px',
             },
           },
           {

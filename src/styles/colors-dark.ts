@@ -6,12 +6,12 @@ const darkPalette = {
   },
   primary: {
     dark: '#1F1F1F',
-    main: '#2B2B2B',
-    light: '#1A1A1A',
+    main: '#2667DD',
+    light: '#306CDA',
   },
   secondary: {
     dark: '#2F84B3',
-    main: '#ACCEE1',
+    main: '#283C52',
     light: '#C1DAE9',
     background: '#303033',
   },
@@ -23,7 +23,7 @@ const darkPalette = {
     background: '#FDF8F1',
   },
   border: {
-    main: '#636669',
+    main: '#283C52',
     light: '#303033',
     background: '#121312',
   },
@@ -52,8 +52,8 @@ const darkPalette = {
     background: '#2F2318',
   },
   background: {
-    default: '#1F1F1F',
-    main: '#191919',
+    default: '#070A1D',
+    main: '#090D27',
     paper: '#1C1C1C',
     light: '#1B2A22',
     disabled: '#F0F0F0',
@@ -68,3 +68,30 @@ const darkPalette = {
   },
 }
 export default darkPalette
+
+// Para la imagen "logo1 bear protocol":
+
+// #2667DD Azul oscuro
+// #090D27 Casi negro
+// #23DDEA Aguamarina
+// #283C52 Azul petróleo muy oscuro
+// #2D248C Púrpura muy oscuro
+// #B2B8C9 Gris pálido
+
+// Para la imagen "logo 2 bear protocol":
+
+// #302473 Púrpura un poquito más claro que el anterior
+// #BCF6F3 Aguamarina más claro
+// #0C1C44 Púrpura más oscuro que el oscuro
+// #50F3DE Aguamarina tirando a verde
+// #5F2898 Púrpura más claro
+// #3F8D9B Verde petróleo
+
+// Para la imagen "logo 3 bear protocol":
+
+// #010130 Púrpura casi negro
+// #64EDDB Aguamarina claro
+// #EDF8F9 Aguamarina casi blanco
+// #1D58A0 Azul tono lindo
+// #08D6DD Aguamarina tirando a verde
+// #B969CF Púrpura tirando a fucsia

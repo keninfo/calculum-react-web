@@ -1,63 +1,61 @@
-import { Grid, Link, Paper, Typography } from '@mui/material'
-import TopCard from '../TopCard'
-import LongOnlyVault from '@/components/LongOnlyVault'
-import LongShortVault from '@/components/LongShortVault'
-import TBAVault from '@/components/TBAVault'
+import { Box, Grid } from '@mui/material'
+
+import CollateralsTable from '@/components/CollateralsTable'
+import OwnBalances from '@/components/OwnBalances'
+import PriceChart from '@/components/PriceChart'
+import Sidebar from '@/components/Sidebar'
+import TxInteraction from '@/components/TxInteraction'
+import AssetsHeader from '@/components/common/AssetsHeader'
+import Header from '@/components/common/Header'
 
 import css from './styles.module.css'
 
-const Home = () => {
-  return (
-    <Grid container className={css.main}>
-      <Grid item xs className={css.menu}>
-        <Paper sx={{ marginLeft: '30px', backgroundColor: ({ palette }) => palette.background.main }}>
-          <Typography variant="h3" className={css.typography}>
-            <Link href="#">
-              <span style={{ color: '#fbc216' }}>{'>_'}</span>Home
-            </Link>
-          </Typography>
+const Home = () => (
+  <>
+    <header className={css.headerContainer}>
+      <Box className={css.headerContent}>
+        <Box className={css.header}>
+          <Header />
+        </Box>
+      </Box>
+    </header>
 
-          <Typography variant="h3" className={css.typography}>
-            <Link href="#">
-              <span style={{ color: '#fbc216' }}>{'>_'}</span>Vaults
-            </Link>
-          </Typography>
+    <div>
+      <aside className={css.sidebar}>
+        <Sidebar />
+      </aside>
+    </div>
 
-          <Typography variant="h3" className={css.typography}>
-            <Link href="https://calculum.gitbook.io/calculum-docs" target="_blank" rel="noopener noreferrer">
-              <span style={{ color: '#fbc216' }}>{'>_'}</span>Docs
-            </Link>
-          </Typography>
+    <Box className={css.main}>
+      <div className={css.content}>
+        <AssetsHeader />
 
-          <Typography variant="h3" className={css.typography}>
-            <Link href="https://medium.com/@CalculumFi" target="_blank" rel="noopener noreferrer">
-              <span style={{ color: '#fbc216' }}>{'>_'}</span>Blog
-            </Link>
-          </Typography>
-        </Paper>
-      </Grid>
+        <Box className={css.cards}>
+          <Grid container spacing={2} className={css.cardsContainer}>
+            <Grid item xs={9}>
+              <Box className={css.card}>
+                <PriceChart />
+              </Box>
 
-      <Grid item xs={11}>
-        <Grid item className={css.topCard}>
-          <TopCard />
-        </Grid>
+              <Box className={css.card}>
+                <CollateralsTable />
+              </Box>
+            </Grid>
 
-        <Grid item className={css.vaultCards}>
-          <Grid item xs={3.9}>
-            <LongOnlyVault />
+            <Grid item xs={3}>
+              <Box className={css.card}>
+                <TxInteraction />
+              </Box>
+
+              <Box className={css.card}>
+                <OwnBalances />
+              </Box>
+            </Grid>
           </Grid>
-
-          <Grid item xs={3.9}>
-            <LongShortVault />
-          </Grid>
-
-          <Grid item xs={3.9}>
-            <TBAVault />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  )
-}
+        </Box>
+      </div>
+    </Box>
+  </>
+)
 
 export default Home

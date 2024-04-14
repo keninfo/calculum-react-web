@@ -3,8 +3,9 @@
 import type { ReactNode } from 'react'
 
 import { CssBaseline } from '@mui/material'
-import AppProviders from '@/components/AppProviders'
 
+import AppProviders from '@/components/AppProviders'
+import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
 
 const RootLayout = ({
@@ -15,12 +16,14 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body>
-        <main>
-          <AppProviders>
-            <CssBaseline />
-            {children}
-          </AppProviders>
-        </main>
+        <Providers>
+          <main>
+            <AppProviders>
+              <CssBaseline />
+              {children}
+            </AppProviders>
+          </main>
+        </Providers>
       </body>
     </html>
   )

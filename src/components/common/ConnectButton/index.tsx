@@ -1,6 +1,7 @@
+import { useWeb3Modal } from '@web3modal/wagmi/react'
+
 import { Typography } from '@mui/material'
 
-import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useAccount, useDisconnect } from 'wagmi'
 
 import ClearButton from '@/components/common/ClearButton'

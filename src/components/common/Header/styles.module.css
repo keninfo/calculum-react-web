@@ -1,9 +1,24 @@
-.appBar {
-  position: static;
-  width: 100%;
-  background-color: var(--color-background-main);
+.container {
+  height: 50px;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border-radius: 25px !important;
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: var(--main-shadow);
+  padding-right: 4px;
+  background-color: var(--color-background-default);
 }
 
-.toolbar {
-  padding: 0px 40px 0px;
+.element {
+  padding: 0;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container,
+.element {
+  display: flex;
+  align-items: center;
 }
