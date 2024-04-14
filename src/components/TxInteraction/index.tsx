@@ -8,7 +8,18 @@ import css from './styles.module.css'
 const TxInteraction = () => {
   const [activeTab, setActiveTab] = useState<number>(0)
   const [subTab, setSubTab] = useState<number>(0)
-  const actionButtonLabel = activeTab === 0 ? 'Deposit' : activeTab === 1 ? 'Claim' : activeTab === 2 ? 'Withdraw' : ''
+  const actionButtonLabel =
+    activeTab === 0
+      ? 'Deposit'
+      : activeTab === 1
+        ? subTab === 0
+          ? 'Withdraw'
+          : 'Redeem'
+        : activeTab === 2
+          ? subTab === 0
+            ? 'Claim Assets'
+            : 'Claim Shares'
+          : ''
 
   const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => {
     setActiveTab(newValue)

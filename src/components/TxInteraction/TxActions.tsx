@@ -27,9 +27,8 @@ enum FormField {
 }
 
 const TxActions = ({ activeTab, activeSubTab, label }: TxActionsProps) => {
-  console.log({ activeTab, activeSubTab })
-  const { writeContract, error: errorInContract } = useWriteContract()
-  console.log({ errorInContract })
+  const { writeContract, error: errorContract } = useWriteContract()
+  console.log({ errorContract })
   const { address: signerAddress } = useAccount()
 
   const formMethods = useForm({
