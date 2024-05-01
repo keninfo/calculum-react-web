@@ -6,4 +6,7 @@ export const navigationItems: NavigationItem[] = [
   {
     label: 'Overview',
   },
+  {
+    label: 'Other',
+  },
 ]
