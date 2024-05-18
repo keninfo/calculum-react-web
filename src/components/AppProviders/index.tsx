@@ -1,6 +1,7 @@
+import { CacheProvider } from '@emotion/react'
+
 import type { ReactNode } from 'react'
 import { useState, createContext } from 'react'
-import { CacheProvider } from '@emotion/react'
 
 import Web3ModalProvider from '@/services/Web3ModalProvider'
 import createEmotionCache from '@/utils/createEmotionCache'
@@ -12,7 +13,7 @@ interface CoinContextType {
 
 export const CoinContext = createContext<CoinContextType>({
   coin: 'ADA',
-  setCoin: () => { },
+  setCoin: () => {},
 })
 const clientSideEmotionCache = createEmotionCache()
 
