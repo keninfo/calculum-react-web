@@ -27,11 +27,9 @@ const layout = {
     },
   },
   xaxis: {
-    tickfont: {
-      color: 'white',
-    },
-    gridcolor: 'transparent',
-    dtick: 'M6',
+    showgrid: false,
+    // zeroline: false,
+    visible: false,
   },
   yaxis: {
     showgrid: false,
@@ -132,7 +130,7 @@ const Index = ({
         y: cumulativeReturns_ret as number[],
         type: 'scatter',
         line: {
-          color: '#F11A28',
+          color: '#9C061F',
         },
         showlegend: false,
       },
@@ -141,7 +139,7 @@ const Index = ({
 
   return (
     <>
-      <div className="w-3/5 h-[50vh]">
+      <div className="w-full">
         <Plot
           data={trace as never}
           layout={layout as never}
