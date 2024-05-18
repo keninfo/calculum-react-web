@@ -1,20 +1,52 @@
-import { Box } from '@mui/material'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import React from 'react'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import SidebarFooter from './SidebarFooter'
-import SidebarNavigation from './SidebarNavigation'
-import css from './styles.module.css'
+import type { NavigationGroup, NavigationItem } from './config'
+import { navigationGroups } from './config'
+
+library.add(fas)
 
 const Sidebar = () => {
-  return (
-    <Box className={css.container} sx={{ height: '100%' }}>
-      <Box sx={{ pt: '80px', height: '100%' }}>
-        <SidebarNavigation />
-      </Box>
+  const pathname = usePathname()
 
-      <Box>
-        <SidebarFooter />
-      </Box>
-    </Box>
+  const MenuItem = (item: NavigationItem) => {
+    return (
+      <div key={item.name} className={`my-6 ${pathname == item.link ? 'text-carmesi' : ''}`}>
+        <Link href={item.link} className="flex justify-start space-x-3 hover:text-carmesi">
+          <div className="w-10 flex justify-center items-center">
+            <FontAwesomeIcon icon={['fas', item.icon as IconName]} />
+          </div>
+          <div>{item.name}</div>
+        </Link>
+      </div>
+    )
+  }
+
+  const MenuGroup = (group: NavigationGroup) => {
+    return (
+      <div key={group.name} className="my-16">
+        <p>{group.name}</p>
+        {group.list.map(MenuItem)}
+      </div>
+    )
+  }
+
+  return (
+    <div className="fixed top-0 left-0 h-screen w-2/5 bg-darkness p-10">
+      <h1 className="text-carmesi text-4xl">
+        Bear <br></br>Protocol
+      </h1>
+      {navigationGroups.map(MenuGroup)}
+      <SidebarFooter />
+    </div>
   )
 }
 

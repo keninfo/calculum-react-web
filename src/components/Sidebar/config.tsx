@@ -1,12 +1,36 @@
 export type NavigationItem = {
-  label: string
+  name: string
+  link: string
+  icon: string
 }
 
-export const navigationItems: NavigationItem[] = [
+export type NavigationGroup = {
+  name: string
+  list: NavigationItem[]
+}
+
+export const navigationGroups: NavigationGroup[] = [
   {
-    label: 'Overview',
+    name: 'MAIN',
+    list: [
+      { name: 'Overview', link: '/', icon: 'globe' },
+      { name: 'Positions', link: '/positions', icon: 'layer-group' },
+      { name: 'Open Orders', link: '/orders', icon: 'bars-staggered' },
+    ],
   },
   {
-    label: 'Other',
+    name: 'OTHER',
+    list: [
+      { name: 'About', link: '/about', icon: 'info' },
+      { name: 'News', link: '/news', icon: 'newspaper' },
+      { name: 'Documents', link: '/docs', icon: 'file-invoice' },
+    ],
+  },
+  {
+    name: 'ACTIONS',
+    list: [
+      { name: 'Settings', link: '/settings', icon: 'gear' },
+      { name: 'Appearance', link: '/appearance', icon: 'palette' },
+    ],
   },
 ]

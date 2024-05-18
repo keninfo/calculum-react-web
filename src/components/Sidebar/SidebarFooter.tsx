@@ -1,7 +1,11 @@
 import ConnectButton from '@/components/common/ConnectButton'
 
 const SidebarFooter = () => {
-  return <ConnectButton />
+  return (
+    <div>
+      <ConnectButton />
+    </div>
+  )
 }
 
 export default SidebarFooter
