@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import BigNumber from 'bignumber.js'
 
 export const queryPrices = (products: any | null) => {
