@@ -1,39 +1,28 @@
-@import url(./vars.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
-  font-family: 'Agency FB';
-  src: url('/fonts/agency-fb.ttf') format('truetype');
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Agency FB';
-  src: url('/fonts/agency-fb-bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Agency FB';
+  font-family: 'Montserrat';
   background-color: #191919;
+  color: white;
 }
 
 main {
@@ -51,4 +40,21 @@ button {
 
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -moz-appearance: none; 
+  -webkit-appearance: none; 
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1.5em top 50%;
+  background-size: 1em;
+  padding-right: 1.5em;
+  width: 50%;
+  
 }
