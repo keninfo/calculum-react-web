@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Button } from '@mui/material'
+import { Button } from '@mui/base'
 
 type ClearButtonProps = {
   handleClickClearButton: () => void
@@ -8,7 +8,10 @@ type ClearButtonProps = {
 }
 
 const ClearButton = ({ handleClickClearButton, children }: ClearButtonProps) => (
-  <Button variant="contained" onClick={handleClickClearButton}>
+  <Button
+    onClick={handleClickClearButton}
+    className="bg-smoke px-10 py-5 rounded-xl text-carmesi shadow-2xl hover:scale-110 hover:bg-white"
+  >
     {children}
   </Button>
 )
