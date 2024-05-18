@@ -41,9 +41,7 @@ const Sidebar = () => {
 
   return (
     <div className="fixed top-0 left-0 h-screen w-2/5 bg-darkness p-10">
-      <h1 className="text-carmesi text-4xl">
-        Bear <br></br>Protocol
-      </h1>
+      <img src="/red.svg" alt="Bear Protocol" className="w-[10vw] mt-10" />
       {navigationGroups.map(MenuGroup)}
       <SidebarFooter />
     </div>
