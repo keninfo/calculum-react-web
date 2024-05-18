@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import { useState, createContext } from 'react'
+import { CacheProvider } from '@emotion/react'
 
 import Web3ModalProvider from '@/services/Web3ModalProvider'
+import createEmotionCache from '@/utils/createEmotionCache'
 
 interface CoinContextType {
   coin: string
@@ -10,16 +12,19 @@ interface CoinContextType {
 
 export const CoinContext = createContext<CoinContextType>({
   coin: 'ADA',
-  setCoin: () => {},
+  setCoin: () => { },
 })
+const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coin, setCoin] = useState<string>('ADA')
 
   return (
-    <CoinContext.Provider value={{ coin, setCoin }}>
-      <Web3ModalProvider>{children}</Web3ModalProvider>
-    </CoinContext.Provider>
+    <CacheProvider value={clientSideEmotionCache}>
+      <CoinContext.Provider value={{ coin, setCoin }}>
+        <Web3ModalProvider>{children}</Web3ModalProvider>
+      </CoinContext.Provider>
+    </CacheProvider>
   )
 }
 
