@@ -1,7 +1,5 @@
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 
-import { Typography } from '@mui/material'
-
 import { useAccount, useDisconnect } from 'wagmi'
 
 import ClearButton from '@/components/common/ClearButton'
@@ -14,7 +12,7 @@ const ConnectButton = () => {
 
   return (
     <ClearButton handleClickClearButton={isConnected ? () => disconnect() : () => open()}>
-      {isConnected ? <Typography>{shortenAddress(address)}</Typography> : <Typography>Connect Wallet</Typography>}
+      {isConnected ? <p>{shortenAddress(address)}</p> : <p>Connect Wallet</p>}
     </ClearButton>
   )
 }
