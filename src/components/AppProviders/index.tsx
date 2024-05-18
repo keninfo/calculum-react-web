@@ -1,23 +1,25 @@
-import { CacheProvider } from '@emotion/react'
-
 import type { ReactNode } from 'react'
+import { useState, createContext } from 'react'
 
-import { ThemeProvider } from '@mui/material'
-
-import { useThemeModes } from '@/hooks/useThemeModes'
 import Web3ModalProvider from '@/services/Web3ModalProvider'
-import createEmotionCache from '@/utils/createEmotionCache'
+
+interface CoinContextType {
+  coin: string
+  setCoin: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const CoinContext = createContext<CoinContextType>({
+  coin: 'ADA',
+  setCoin: () => {},
+})
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const theme = useThemeModes() //! will be discommented until we define a proper squema structure
-  const clientSideEmotionCache = createEmotionCache()
+  const [coin, setCoin] = useState<string>('ADA')
 
   return (
-    <CacheProvider value={clientSideEmotionCache}>
-      <ThemeProvider theme={theme}>
-        <Web3ModalProvider>{children}</Web3ModalProvider>
-      </ThemeProvider>
-    </CacheProvider>
+    <CoinContext.Provider value={{ coin, setCoin }}>
+      <Web3ModalProvider>{children}</Web3ModalProvider>
+    </CoinContext.Provider>
   )
 }
 
