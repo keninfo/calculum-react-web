@@ -66,27 +66,27 @@ const Products = () => {
     return (
       <tr
         key={element.asset} // Added a key prop to ensure each row is unique
-        className="border-b-2 border-darkness cursor-pointer hover:scale-105"
+        className="cursor-pointer hover:scale-105 text-lg"
         onClick={() => handleTableRowClick(element)}
       >
         <td>
           <img
             src={`https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/${element.asset.toLowerCase()}.svg`}
             alt="coin icon"
-            className="size-[2rem]"
+            className="size-[1.5rem]"
           ></img>
         </td>
-        <td className={`py-4 ${element.asset === coin ? 'text-carmesi' : ''}`}>{element.asset}</td>
-        <td className="py-4">{element.apy}%</td>
-        <td className="py-4">{element.composition}%</td>
-        <td className="py-4">${element.value}</td>
+        <td className={`py-3 ${element.asset === coin ? 'text-carmesi' : ''}`}>{element.asset}</td>
+        <td className="py-3">{element.apy}%</td>
+        <td className="py-3">{element.composition}%</td>
+        <td className="py-3">${element.value}</td>
       </tr>
     )
   }
 
   return (
     <div>
-      <h1 className="text-3xl text-carmesi">Collateral</h1>
+      <h1 className="text-3xl text-carmesi mt-10">Collateral</h1>
       <table className="table-auto w-full text-center mt-10">
         <thead>
           <tr className="text-xs">

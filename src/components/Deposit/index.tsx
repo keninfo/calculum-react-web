@@ -9,7 +9,7 @@ const Deposit = () => {
   return (
     <div>
       <select name="" id="" className="bg-darkness text-white border-2 border-white rounded-lg px-6 py-2 w-full my-6">
-        <option selected>Strategy...</option>
+        <option selected>USDC invested 100% into {coin}</option>
       </select>
       <input
         placeholder="0.0"
@@ -35,7 +35,6 @@ const Deposit = () => {
         </div>
       </div>
       <div className="flex justify-between items-center px-2">
-        Deposit {coin}
         <ConnectButton />
       </div>
     </div>

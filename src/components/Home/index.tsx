@@ -84,10 +84,10 @@ const Home = () => {
 
   return (
     <>
-      <div className="relative grid grid-cols-12 gap-10">
-        <div className="col-span-7">
-          <h1 className="text-4xl">Overview</h1>
-          <div className="h-[50vh] pt-10">
+      <div className="relative flex space-around space-x-10">
+        <div className="w-full">
+          <h1 className="text-4xl pb-2">Overview</h1>
+          <div className="h-[50vh] mb-10">
             {false && <ChartOptions coins={dailyCoins} />}
             <CoinSelect coins={['ADA', 'USDC', 'BTC', 'ETH', 'FIL', 'SOL']} />
             <Chart
@@ -101,16 +101,17 @@ const Home = () => {
             />
           </div>
           <Stats></Stats>
+          <Products></Products>
         </div>
-        <div className="col-span-5">
+        <div className="w-min">
           <Card>
-            <div className="h-[50vh]">
+            <div className="h-fit">
               <Tabs defaultValue={0}>
-                <TabsList className="flex justify-between text-lg px-4">
+                <TabsList className="w-min flex justify-between space-x-10 mx-auto text-lg">
                   <Tab
                     slotProps={{
                       root: ({ selected }) => ({
-                        className: `${selected ? 'text-carmesi hover:text-white' : 'text-white hover:text-carmesi'} pb-4
+                        className: `${selected ? 'text-carmesi hover:text-white' : 'text-white hover:text-carmesi'}
                           `,
                       }),
                     }}
@@ -121,9 +122,7 @@ const Home = () => {
                   <Tab
                     slotProps={{
                       root: ({ selected }) => ({
-                        className: `${
-                          selected ? 'text-carmesi  hover:text-white' : 'text-white hover:text-carmesi'
-                        } pb-4
+                        className: `${selected ? 'text-carmesi  hover:text-white' : 'text-white hover:text-carmesi'} 
                           `,
                       }),
                     }}
@@ -134,9 +133,7 @@ const Home = () => {
                   <Tab
                     slotProps={{
                       root: ({ selected }) => ({
-                        className: `${
-                          selected ? 'text-carmesi  hover:text-white' : 'text-white hover:text-carmesi'
-                        } pb-4
+                        className: `${selected ? 'text-carmesi  hover:text-white' : 'text-white hover:text-carmesi'} 
                           `,
                       }),
                     }}
@@ -157,13 +154,9 @@ const Home = () => {
               </Tabs>
             </div>
           </Card>
-        </div>
-        <div className="col-span-7 border-carmesi ">
-          <Products></Products>
-        </div>
-        <div className="col-span-5">
+          <div className="my-10"></div>
           <Card>
-            <div className="h-[50vh]">
+            <div className="h-fit">
               <div className="flex justify-between">
                 <h4 className="text-3xl mb-4">{coin.toUpperCase()}</h4>
                 <img
