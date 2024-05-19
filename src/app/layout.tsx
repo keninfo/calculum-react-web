@@ -38,8 +38,9 @@ const SidebarWrapper = ({
 
   return (
     <div
-      className={`transition-all ease-in-out duration-300 absolute right-0 top-0 h-fit z-10 bg-smoke rounded-l-[50px] p-10 shadow-2xl ${!isSidebarOpen ? 'w-[90vw]' : 'w-[80vw]'
-        }`}
+      className={`transition-all ease-in-out duration-300 absolute right-0 top-0 h-fit z-10 bg-smoke rounded-l-[50px] p-10 shadow-2xl ${
+        !isSidebarOpen ? 'w-[90vw]' : 'w-[80vw]'
+      }`}
     >
       {children}
     </div>
