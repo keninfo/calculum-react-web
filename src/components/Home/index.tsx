@@ -89,7 +89,7 @@ const Home = () => {
           <h1 className="text-4xl pb-2">Overview</h1>
           <div className="h-[50vh] mb-10">
             {false && <ChartOptions coins={dailyCoins} />}
-            <CoinSelect coins={['ADA', 'USDC', 'BTC', 'ETH', 'FIL', 'SOL']} />
+            <CoinSelect coins={['ADA', 'USDC', 'BTC', 'ETH', 'BNB', 'SOL', 'MATIC', 'BCH']} />
             <Chart
               period={[start, end]}
               dates={dailyDates}

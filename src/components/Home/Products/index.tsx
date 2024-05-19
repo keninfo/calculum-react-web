@@ -11,7 +11,7 @@ export type coinData = {
 
 const sampleData: coinData[] = [
   {
-    asset: 'USDC',
+    asset: 'BTC',
     apy: -1.05,
     composition: 3.3795,
     value: 1.7885,
@@ -23,25 +23,37 @@ const sampleData: coinData[] = [
     value: 5.5808,
   },
   {
-    asset: 'SOL',
-    apy: 6.38,
-    composition: 9.1353,
-    value: 3.6306,
-  },
-  {
-    asset: 'ADA',
+    asset: 'BNB',
     apy: 5.16,
     composition: 3.5841,
     value: 5.8348,
   },
   {
-    asset: 'FIL',
+    asset: 'SOL',
     apy: -1.17,
     composition: 2.6122,
     value: 7.6025,
   },
   {
-    asset: 'BTC',
+    asset: 'MATIC',
+    apy: -0.37,
+    composition: 5.1197,
+    value: 7.1521,
+  },
+  {
+    asset: 'BCH',
+    apy: 5.16,
+    composition: 3.5841,
+    value: 5.8348,
+  },
+  {
+    asset: 'USDC',
+    apy: -1.05,
+    composition: 3.3795,
+    value: 1.7885,
+  },
+  {
+    asset: 'ADA',
     apy: -0.37,
     composition: 5.1197,
     value: 7.1521,
