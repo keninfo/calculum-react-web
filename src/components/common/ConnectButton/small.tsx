@@ -18,12 +18,12 @@ const SmallConnectButton = () => {
   return (
     <ClearButton handleClickClearButton={isConnected ? () => disconnect() : () => open()}>
       {isConnected ? (
-        <p>
+        <p className="text-white">
           {' '}
           <FontAwesomeIcon icon={['fas', 'link-slash' as IconName]} />
         </p>
       ) : (
-        <p>
+        <p className="text-white">
           {' '}
           <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} />
         </p>
