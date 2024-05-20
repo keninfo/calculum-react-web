@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { CoinContext } from '@/components/AppProviders'
 import AssetInfo from '@/components/AssetInfo'
-import Chart from '@/components/Chart'
-import CoinSelect from '@/components/ChartOptions/CoinSelect'
+import Chart from '@/components/Chart/Index'
+import CoinSelect from '@/components/ChartOptions/CoinSelect/Index'
 
 import ActionCard from '../ActionCard'
 import Products from '../CollateralsTable'

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import { CoinContext } from '@/components/AppProviders'
 
-const Index = ({ coins }: { coins: string[] }) => {
+const CoinSelect = ({ coins }: { coins: string[] }) => {
   const { coin, setCoin } = useContext(CoinContext)
 
   return (
@@ -21,4 +21,4 @@ const Index = ({ coins }: { coins: string[] }) => {
   )
 }
 
-export default Index
+export default CoinSelect
