@@ -29,7 +29,7 @@ const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coin, setCoin] = useState<string>('ADA')
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true)
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   return (
     <CacheProvider value={clientSideEmotionCache}>
