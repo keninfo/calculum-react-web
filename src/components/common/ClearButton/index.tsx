@@ -10,7 +10,7 @@ type ClearButtonProps = {
 const ClearButton = ({ handleClickClearButton, children }: ClearButtonProps) => (
   <Button
     onClick={handleClickClearButton}
-    className="bg-smoke py-6 flex justify-center rounded-xl text-carmesi shadow-2xl hover:scale-110 w-[100%]"
+    className="bg-smoke py-6 flex justify-center rounded-xl text-white  hover:scale-110 w-[100%] hover:text-carmesi"
   >
     {children}
   </Button>
