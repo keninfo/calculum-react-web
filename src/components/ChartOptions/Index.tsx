@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import CoinSelect from './CoinSelect'
+import CoinSelect from './CoinSelect/index'
 import DatePicker from './DatePicker/Index'
 import SetDays from './SetDays/Index'
 
