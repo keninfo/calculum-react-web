@@ -8,6 +8,8 @@ import Sidebar from '@/components/Sidebar'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
 
+const scrollbarWidth = 15
+
 const RootLayout = ({
   children,
 }: Readonly<{
@@ -15,13 +17,11 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body>
+      <body className="overscroll-none">
         <Providers>
           <AppProviders>
-            <main className="relative bg-darkness">
-              <SidebarWrapper>{children}</SidebarWrapper>
-              <Sidebar />
-            </main>
+            <SidebarWrapper>{children}</SidebarWrapper>
+            <Sidebar />
           </AppProviders>
         </Providers>
       </body>
@@ -38,9 +38,10 @@ const SidebarWrapper = ({
 
   return (
     <div
-      className={`transition-all ease-in-out duration-300 absolute right-0 top-0 h-fit z-10 bg-smoke rounded-l-[50px] p-10 shadow-2xl ${
-        !isSidebarOpen ? 'w-[90vw]' : 'w-[80vw]'
+      className={`transition-all ease-in-out duration-300 absolute right-0 top-0 h-fit z-10 bg-smoke rounded-l-[50px] py-10 px-14  ${
+        !isSidebarOpen ? 'w-[90lvw]' : 'w-[80lvw]'
       }`}
+      style={{ width: `calc(${isSidebarOpen ? '80vw' : '90vw'} - ${scrollbarWidth}px)` }}
     >
       {children}
     </div>
