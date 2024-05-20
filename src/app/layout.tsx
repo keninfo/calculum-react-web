@@ -41,7 +41,7 @@ const SidebarWrapper = ({
       className={`transition-all ease-in-out duration-300 absolute right-0 top-0 h-fit z-10 bg-smoke rounded-l-[50px] py-10 px-14  ${
         !isSidebarOpen ? 'w-[90lvw]' : 'w-[80lvw]'
       }`}
-      style={{ width: `calc(${isSidebarOpen ? '80vw' : '90vw'} - ${scrollbarWidth}px)` }}
+      style={{ width: `calc(${isSidebarOpen ? '80vw' : '91vw'} - ${scrollbarWidth}px)` }}
     >
       {children}
     </div>
