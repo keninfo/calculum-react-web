@@ -38,7 +38,7 @@ const layout = {
   },
 }
 
-const Index = ({
+const Chart = ({
   period,
   dates,
   prices,
@@ -151,4 +151,4 @@ const Index = ({
   )
 }
 
-export default Index
+export default Chart
