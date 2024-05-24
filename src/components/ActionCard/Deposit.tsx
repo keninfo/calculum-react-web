@@ -51,6 +51,25 @@ const Deposit = () => {
     args: [amount * 1000000],
   })
 
+  const { data: symbolAsset } = useReadContract({
+    abi: usdcContract.abi,
+    address: usdcContract.address as Hash,
+    functionName: 'symbol',
+  })
+
+  const { data: symbolShares } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'symbol',
+  })
+
+  const { data: hasDeposited } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'isDepositWallet',
+    args: [address],
+  })
+
   const [max, allowance, USDCBalance, deposits] = data || []
 
   const maxResult = max?.result as bigint
@@ -106,11 +125,22 @@ const Deposit = () => {
     reset()
   }
 
+  console.log(hasDeposited)
+
   return (
     <div className="text-sm mt-[4vh]" key={seed}>
-      <p className="mb-[1vh] mt-[2vh] text-left text-xs">
+      {(!(hasDeposited as boolean) && Number(allowanceResult) == 0) ? (
+        <>
+          <h4 className="mt-[4vh] mb-[1vh] text-xl"> Welcome to Bear Protocol!</h4>
+          <p className="bg-carmesi  px-[2vw] py-[1vh] rounded-lg">
+            Before using this strategy you need to approve it, we recommend using the MAX, but you are welcomed to
+            approve as much or as little as you like !
+          </p>
+        </>
+      ) : <></>}
+      <p className="mb-[1vh] mt-[4vh] text-left text-xs">
         You have {parseFloat(formatBalance(USDCBalanceResult))}
-        <b className="text-carmesi"> BPUSDC2</b> in Wallet
+        <b className="text-carmesi mx-1"> {symbolAsset as string}</b> in Wallet
       </p>
       <div className="flex justify-between space-x-5">
         <input
@@ -123,14 +153,18 @@ const Deposit = () => {
           MAX
         </button>
       </div>
-      <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
-      <input
-        className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
-        type="string"
-        value={formatShares(conversion as bigint) + ' Shares'}
-        // onChange={handleAmountChange}
-        disabled
-      />
+      {Number(allowanceResult) != 0 && (
+        <>
+          <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
+          <input
+            className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+            type="string"
+            value={formatShares(conversion as bigint) + ' Shares of ' + (symbolShares as string)}
+            // onChange={handleAmountChange}
+            disabled
+          />
+        </>
+      )}
       <div className="mb-[1vh] mt-[2vh] text-left text-sm">
         <div className="flex justify-between">
           <p>Pending Assets: </p>
@@ -143,7 +177,9 @@ const Deposit = () => {
       </div>
       <div className="inline justify-center px-2">
         {checkAmount >= maxResult ? (
-          <p>You have reached the current limit you can have deposited in bear protocol</p>
+          <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
+            {`You've reached the current limit you can have deposited in Bear Protocol`}
+          </p>
         ) : parseFloat(formatBalance(allowanceResult)) > 0 ? (
           <ClearButton
             handleClickClearButton={() => {
