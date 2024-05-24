@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
-import { mainnet, arbitrumSepolia } from 'wagmi/chains'
+import { arbitrumSepolia } from 'wagmi/chains'
 
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 
@@ -24,7 +24,7 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 }
 
-const chains = [mainnet, arbitrumSepolia] as const
+const chains = [arbitrumSepolia] as const
 export const config = defaultWagmiConfig({
   chains,
   projectId,
