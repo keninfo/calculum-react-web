@@ -112,7 +112,6 @@ const Home = () => {
             hourly={false}
           />
           <div>
-            {/* <Stats></Stats> */}
             <Products></Products>
           </div>
         </div>
