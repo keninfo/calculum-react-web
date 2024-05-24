@@ -79,11 +79,11 @@ const Claim = () => {
               <ClearButton handleClickClearButton={() => claimShares()}>Claim All Shares</ClearButton>
             )}
             {selected == 0 && userAssets <= 0 && (
-              <p className="text-center w-full text-carmesi">{`You don't have Assets to claim.`}</p>
+              <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Assets to claim.`}</p>
             )}
 
             {selected == 1 && userShares <= 0 && (
-              <p className="text-center w-full text-carmesi">{`You don't have Shares to claim.`}</p>
+              <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Shares to claim.`}</p>
             )}
           </div>
         </>

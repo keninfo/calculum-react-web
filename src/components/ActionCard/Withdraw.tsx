@@ -5,6 +5,7 @@ import type { Hash } from 'viem'
 import { useAccount, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
+import { usdcContract } from '@/contracts/usdc'
 import { formatShares } from '@/utils/formatters'
 
 import ClearButton from '../common/ClearButton'
@@ -52,6 +53,18 @@ const Withdraw = () => {
     args: [amount * 1000000],
   })
 
+  const { data: symbolAsset } = useReadContract({
+    abi: usdcContract.abi,
+    address: usdcContract.address as Hash,
+    functionName: 'symbol',
+  })
+
+  const { data: symbolShares } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'symbol',
+  })
+
   function withdrawAssets() {
     writeContract({
       abi: calculumVaultContract.abi,
@@ -86,16 +99,20 @@ const Withdraw = () => {
   return (
     <div className="text-sm">
       {withdrawalStatus == 5 && (
-        <p className="text-center mt-[2vh]">You have a Withdrawal pending, wait one Epoch for it to be reflected.</p>
+        <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">
+          You have a Withdrawal pending, wait one Epoch for it to be reflected.
+        </p>
       )}
       {withdrawalStatus == 4 && (
-        <p className="text-center mt-[2vh]">You have a Redeem pending, wait one Epoch for it to be reflected.</p>
+        <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">
+          You have a Redeem pending, wait one Epoch for it to be reflected.
+        </p>
       )}
       {withdrawalStatus != 4 && withdrawalStatus != 5 && (
         <>
           <p className="text-center text-xs mt-[2vh]">
             You have {parseFloat(formatShares(CoinBalanceResult))}
-            <b className="text-carmesi"> vUSDC3</b> in Wallet
+            <b className="text-carmesi"> {symbolShares as string}</b> in Wallet
           </p>
           <div className="flex justify-between p-[1vw] mb-[2vh] text-sm">
             <div
@@ -114,7 +131,7 @@ const Withdraw = () => {
           <div className="my-[2vh]">
             {selected == 0 && (
               <>
-                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw BPUSDC</p>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw {symbolAsset as string}</p>
                 <div className="flex justify-between space-x-5">
                   <input
                     className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
@@ -130,7 +147,7 @@ const Withdraw = () => {
                 <input
                   className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
                   type="string"
-                  value={formatShares(conversionShares as bigint) + ' Shares'}
+                  value={formatShares(conversionShares as bigint) + ' Shares of ' + (symbolShares as string)}
                   // onChange={handleAmountChange}
                   disabled
                 />
@@ -145,7 +162,7 @@ const Withdraw = () => {
             )}
             {selected == 1 && (
               <>
-                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Reedem shares</p>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Redeem shares of {symbolShares as string}</p>
                 <div className="flex justify-between space-x-5">
                   <input
                     className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"

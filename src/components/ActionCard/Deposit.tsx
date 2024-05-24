@@ -129,7 +129,7 @@ const Deposit = () => {
 
   return (
     <div className="text-sm mt-[4vh]" key={seed}>
-      {(!(hasDeposited as boolean) && Number(allowanceResult) == 0) ? (
+      {!(hasDeposited as boolean) && Number(allowanceResult) == 0 ? (
         <>
           <h4 className="mt-[4vh] mb-[1vh] text-xl"> Welcome to Bear Protocol!</h4>
           <p className="bg-carmesi  px-[2vw] py-[1vh] rounded-lg">
@@ -137,7 +137,9 @@ const Deposit = () => {
             approve as much or as little as you like !
           </p>
         </>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
       <p className="mb-[1vh] mt-[4vh] text-left text-xs">
         You have {parseFloat(formatBalance(USDCBalanceResult))}
         <b className="text-carmesi mx-1"> {symbolAsset as string}</b> in Wallet
