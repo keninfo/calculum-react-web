@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { CoinContext } from '@/components/AppProviders'
 import AssetInfo from '@/components/AssetInfo'
-import Chart from '@/components/Chart/index'
+import Chart from '@/components/Chart/Index'
 import ChartOptions from '@/components/ChartOptions/Index'
 
 import ActionCard from '../ActionCard'
