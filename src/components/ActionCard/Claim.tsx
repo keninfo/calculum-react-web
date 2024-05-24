@@ -1,44 +1,93 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 
-import { CoinContext } from '@/components/AppProviders'
+import type { Hash } from 'viem'
 
-import ConnectButton from '../common/ConnectButton'
+import { useAccount, useReadContract, useWriteContract } from 'wagmi'
+
+import ClearButton from '@/components/common/ClearButton'
+import { calculumVaultContract } from '@/contracts/calculumVault'
+import { formatBalance, formatShares } from '@/utils/formatters'
 
 const Claim = () => {
-  const { coin } = useContext(CoinContext)
+  const [selected, setSelected] = useState<number>(0)
+
+  const { address } = useAccount()
+  const { writeContract } = useWriteContract()
+
+  const { data } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'DEPOSITS',
+    args: [address],
+  })
+
+  const [userStatus, userAssets, userShares] = (data || []) as bigint[]
+  const userStatusResult = Number(userStatus)
+
+  function claimShares() {
+    writeContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'claimShares',
+      args: [address],
+    })
+  }
+
+  function claimAssets() {
+    writeContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'claimAssets',
+      args: [address, address],
+    })
+  }
+
   return (
     <div className="text-sm">
-      <div className="flex justify-center mt-[2vh] space-x-10">
-        <p className="text-carmesi cursor-pointer">ASSETS</p>
-        <p className="cursor-pointer">SHARES</p>
-      </div>
-      <select
-        name=""
-        id=""
-        className="bg-darkness text-white border-2 border-white rounded-lg px-[2vw] py-[1vh] w-full my-[3vh]"
-      >
-        <option selected>USDC invested into {coin}</option>
-      </select>
-      <div className="flex justify-between space-x-5">
-        <input
-          placeholder="0.0"
-          className="bg-darkness text-white border-2 border-white rounded-lg px-[2vw] py-[1vh] w-full"
-        ></input>
-        <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]">MAX</button>
-      </div>
-      <div className="p-[1vw] my-[2vh] text-sm">
-        <div className="flex justify-between ">
-          <h4>Fees</h4>
-          <p>0.0</p>
-        </div>
-        <div className="flex justify-between mt-[1vh] ">
-          <h4>Total</h4>
-          <p>0.0</p>
-        </div>
-      </div>
-      <div className="flex justify-between items-center px-2">
-        <ConnectButton />
-      </div>
+      {userStatusResult == 1 && (
+        <>
+          <p className="mt-[4vh] mb-[2vh]">Your shares are still pending, wait one Epoch to be able to claim them!</p>
+          <div className="text-center border-2 bg-smoke rounded-lg px-[2vw] py-[1vh]  border-white">
+            <h4>PENDING SHARES</h4>
+            <p>{formatShares(userShares)}</p>
+          </div>
+        </>
+      )}
+      {userStatusResult !== 1 && (
+        <>
+          <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
+            <div
+              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+              onClick={() => setSelected(0)}
+            >
+              <h4>ASSETS</h4>
+              <p>{formatBalance(userAssets)}</p>
+            </div>
+            <div
+              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+              onClick={() => setSelected(1)}
+            >
+              <h4>SHARES</h4>
+              <p>{formatShares(userShares)}</p>
+            </div>
+          </div>
+          <div className="flex justify-between items-center px-2">
+            {selected == 0 && userAssets > 0 && (
+              <ClearButton handleClickClearButton={() => claimAssets()}>Claim All Assets</ClearButton>
+            )}
+            {selected == 1 && userShares > 0 && (
+              <ClearButton handleClickClearButton={() => claimShares()}>Claim All Shares</ClearButton>
+            )}
+            {selected == 0 && userAssets <= 0 && (
+              <p className="text-center w-full text-carmesi">{`You don't have Assets to claim.`}</p>
+            )}
+
+            {selected == 1 && userShares <= 0 && (
+              <p className="text-center w-full text-carmesi">{`You don't have Shares to claim.`}</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }
