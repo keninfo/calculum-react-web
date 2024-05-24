@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-import DatePicker from './DatePicker/Index'
-import SetDays from './SetDays/Index'
+import DatePicker from './DatePicker'
+import SetDays from './SetDays'
+import SetVolatility from './SetVolatility'
 
-const Index = ({ coins }: { coins: string[] }) => {
+interface ChartOptionsProps {
+  onSubmit: (dataType: dataType) => void
+}
+
+interface dataType {
+  start: Date
+  end: Date
+  volatility: number
+  days: number
+}
+
+const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit }) => {
   const [start, setStart] = useState<Date>(new Date('2020-01-01'))
   const [end, setEnd] = useState<Date>(new Date())
   const [volatility, setVolatility] = useState<number>(0.1)
