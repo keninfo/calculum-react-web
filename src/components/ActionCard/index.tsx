@@ -5,15 +5,35 @@ import { TabPanel } from '@mui/base/TabPanel'
 import { Tabs } from '@mui/base/Tabs'
 import { TabsList } from '@mui/base/TabsList'
 
-import Card from '@/components/common/Card'
+import type { Hash } from 'viem'
 
+import { useAccount, useReadContract } from 'wagmi'
+
+import Card from '@/components/common/Card'
+import { calculumVaultContract } from '@/contracts/calculumVault'
+import { shortenAddress } from '@/utils/formatters'
+
+import ConnectButton from '../common/ConnectButton'
 import Claim from './Claim'
 import Deposit from './Deposit'
+import NotWhitelist from './NotWhitelist'
 import Withdraw from './Withdraw'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
 const ActionCard = () => {
+  const { address, isConnected } = useAccount()
+  let whitelisted = true
+
+  const checkWhitelist = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'whitelist',
+    args: [address],
+  })
+
+  whitelisted = checkWhitelist.data as boolean
+
   const ActionTab = ({ tab, index }: { tab: string; index: number }) => {
     return (
       <Tab
@@ -49,8 +69,15 @@ const ActionCard = () => {
   return (
     <Card>
       <div className="h-fit w-[20vw]">
-        <ActionCardTabs />
+        {isConnected && whitelisted && <ActionCardTabs />}
+        {isConnected && !whitelisted && <NotWhitelist />}
+        {!isConnected && <ConnectButton />}
       </div>
+      {isConnected && (
+        <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white rounded-lg px-[2vw] py-[1vh]">
+          {shortenAddress(address)}
+        </p>
+      )}
     </Card>
   )
 }
