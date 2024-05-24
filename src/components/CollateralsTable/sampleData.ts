@@ -7,7 +7,7 @@ export type coinData = {
 export const sampleData: coinData[] = [
   {
     asset: 'BTC',
-    apy: -1.05,
+    apy: -2.05,
     composition: 3.3795,
     value: 1.7885,
   },
