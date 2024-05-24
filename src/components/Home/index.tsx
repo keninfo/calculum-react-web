@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { SetStateAction } from 'react'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { CoinContext } from '@/components/AppProviders'
 import AssetInfo from '@/components/AssetInfo'
 import Chart from '@/components/Chart'
-import CoinSelect from '@/components/ChartOptions/CoinSelect'
+import ChartOptions from '@/components/ChartOptions'
 
 import ActionCard from '../ActionCard'
+import CoinSelect from '../ChartOptions/CoinSelect'
 import Products from '../CollateralsTable'
-import Stats from '../Stats'
 import CryptoIcon from '../common/CryptoIcon'
 
 import * as d3 from 'd3'
@@ -32,10 +33,10 @@ const Home = () => {
   const [dailyDates, setDailyDates] = useState<Date[]>([])
   const [dailyCoins, setDailyCoins] = useState<string[]>([])
 
-  const [start] = useState<Date>(new Date('2020-01-01'))
-  const [end] = useState<Date>(new Date())
-  const [days] = useState<number>(2)
-  const [volatility] = useState<number>(0.1)
+  const [start, setStart] = useState<Date>(new Date('2020-01-01'))
+  const [end, setEnd] = useState<Date>(new Date())
+  const [days, setDays] = useState<number>(2)
+  const [volatility, setVolatility] = useState<number>(0.1)
 
   const fetchDaily = async () => {
     try {
@@ -77,17 +78,30 @@ const Home = () => {
     return [] // or handle the case when daily is undefined
   }
 
+  const submit = (data: {
+    end: SetStateAction<Date>
+    start: SetStateAction<Date>
+    volatility: SetStateAction<number>
+    days: SetStateAction<number>
+  }) => {
+    setEnd(data.end)
+    setStart(data.start)
+    setVolatility(data.volatility)
+    setDays(data.days)
+  }
+
   return (
     <>
-      <div className="relative flex space-around space-x-10">
-        <div className="w-full ">
-          <div className="flex justify-between items-start">
+      <div className="relative flex space-around space-x-10 ">
+        <div className="w-full">
+          <div className="flex justify-between items-start z-100">
             <h1 className="text-4xl pb-2">Overview</h1>
             <div className="flex justify-start items-center space-x-5 mt-[1vh]">
               <CryptoIcon coin={coin} className="size-[3vw]" type="white" />
-              <CoinSelect coins={['ADA', 'USDC', 'BTC', 'ETH', 'BNB', 'SOL', 'MATIC', 'BCH']} />
+              <CoinSelect coins={['ADA', 'BTC', 'ETH', 'BNB', 'SOL', 'MATIC', 'BCH']} />
             </div>
           </div>
+          <ChartOptions onSubmit={submit} />
           <Chart
             period={[start, end]}
             dates={dailyDates}
@@ -97,9 +111,10 @@ const Home = () => {
             selectedCoin={coin}
             hourly={false}
           />
-
-          <Stats></Stats>
-          <Products></Products>
+          <div>
+            {/* <Stats></Stats> */}
+            <Products></Products>
+          </div>
         </div>
         <div className="w-min">
           <ActionCard />
