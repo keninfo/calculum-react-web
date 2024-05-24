@@ -1,6 +1,6 @@
 export const calculumVaultContract = {
   chainId: '421614',
-  address: '0xCc2cDAd298813F9819BD8B2831a292da268dFF3f',
+  address: '0xDDfa23a7E35Cede6baa6a94f304573E55864B6eA',
   abi: [
     {
       inputs: [],
