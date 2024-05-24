@@ -42,12 +42,6 @@ export const sampleData: coinData[] = [
     value: 5.8348,
   },
   {
-    asset: 'USDC',
-    apy: -1.05,
-    composition: 3.3795,
-    value: 1.7885,
-  },
-  {
     asset: 'ADA',
     apy: -0.37,
     composition: 5.1197,
