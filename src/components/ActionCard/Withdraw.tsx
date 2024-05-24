@@ -1,44 +1,182 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 
-import { CoinContext } from '@/components/AppProviders'
+import type { Hash } from 'viem'
 
-import ConnectButton from '../common/ConnectButton'
+import { useAccount, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
+
+import { calculumVaultContract } from '@/contracts/calculumVault'
+import { formatShares } from '@/utils/formatters'
+
+import ClearButton from '../common/ClearButton'
 
 const Withdraw = () => {
-  const { coin } = useContext(CoinContext)
+  const [selected, setSelected] = useState<number>(0)
+  const [amount, setAmount] = useState<number>(10)
+  const { address } = useAccount()
+  const { writeContract } = useWriteContract()
+
+  const { data } = useReadContracts({
+    contracts: [
+      {
+        abi: calculumVaultContract.abi,
+        address: calculumVaultContract.address as Hash,
+        functionName: 'balanceOf',
+        args: [address],
+      },
+      {
+        abi: calculumVaultContract.abi,
+        address: calculumVaultContract.address as Hash,
+        functionName: 'WITHDRAWALS',
+        args: [address],
+      },
+    ],
+  })
+
+  const [CoinBalance, withdrawals] = data || []
+
+  const CoinBalanceResult = CoinBalance?.result as bigint
+
+  const [withdrawalStatus, , ,] = (withdrawals?.result || []) as number[]
+
+  const { data: conversionShares } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'convertToShares',
+    args: [amount * 1000000],
+  })
+
+  const { data: conversionAssets } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'convertToShares',
+    args: [amount * 1000000],
+  })
+
+  function withdrawAssets() {
+    writeContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'withdraw',
+      args: [amount * 1000000, address, address],
+    })
+  }
+
+  function RedeemShares() {
+    writeContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'redeem',
+      args: [amount * 1000000, address, address],
+    })
+  }
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+    setAmount(value)
+  }
+
+  const setMaxShares = () => {
+    setAmount(parseFloat(formatShares(CoinBalanceResult)))
+  }
+
+  const setMaxAssets = () => {
+    setAmount(parseFloat(formatShares(CoinBalanceResult)))
+  }
+
   return (
     <div className="text-sm">
-      <div className="flex justify-center mt-[2vh] space-x-10">
-        <p className="text-carmesi cursor-pointer">WITHDRAW</p>
-        <p className="cursor-pointer">REDEEM</p>
-      </div>
-      <select
-        name=""
-        id=""
-        className="bg-darkness text-white border-2 border-white rounded-lg px-[2vw] py-[1vh] w-full my-[3vh]"
-      >
-        <option selected>USDC invested into {coin}</option>
-      </select>
-      <div className="flex justify-between space-x-5">
-        <input
-          placeholder="0.0"
-          className="bg-darkness text-white border-2 border-white rounded-lg px-[2vw] py-[1vh] w-full"
-        ></input>
-        <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]">MAX</button>
-      </div>
-      <div className="p-[1vw] my-[2vh] text-sm">
-        <div className="flex justify-between ">
-          <h4>Fees</h4>
-          <p>0.0</p>
-        </div>
-        <div className="flex justify-between mt-[1vh] ">
-          <h4>Total</h4>
-          <p>0.0</p>
-        </div>
-      </div>
-      <div className="flex justify-between items-center px-2">
-        <ConnectButton />
-      </div>
+      {withdrawalStatus == 5 && (
+        <p className="text-center mt-[2vh]">You have a Withdrawal pending, wait one Epoch for it to be reflected.</p>
+      )}
+      {withdrawalStatus == 4 && (
+        <p className="text-center mt-[2vh]">You have a Redeem pending, wait one Epoch for it to be reflected.</p>
+      )}
+      {withdrawalStatus != 4 && withdrawalStatus != 5 && (
+        <>
+          <p className="text-center text-xs mt-[2vh]">
+            You have {parseFloat(formatShares(CoinBalanceResult))}
+            <b className="text-carmesi"> vUSDC3</b> in Wallet
+          </p>
+          <div className="flex justify-between p-[1vw] mb-[2vh] text-sm">
+            <div
+              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+              onClick={() => setSelected(0)}
+            >
+              <h4>Withdraw</h4>
+            </div>
+            <div
+              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+              onClick={() => setSelected(1)}
+            >
+              <h4>Redeem</h4>
+            </div>
+          </div>
+          <div className="my-[2vh]">
+            {selected == 0 && (
+              <>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw BPUSDC</p>
+                <div className="flex justify-between space-x-5">
+                  <input
+                    className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+                    type="number"
+                    value={amount}
+                    onChange={handleAmountChange}
+                  />
+                  <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMaxAssets}>
+                    MAX
+                  </button>
+                </div>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
+                <input
+                  className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
+                  type="string"
+                  value={formatShares(conversionShares as bigint) + ' Shares'}
+                  // onChange={handleAmountChange}
+                  disabled
+                />
+                <ClearButton
+                  handleClickClearButton={() => {
+                    withdrawAssets()
+                  }}
+                >
+                  Withdraw
+                </ClearButton>
+              </>
+            )}
+            {selected == 1 && (
+              <>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Reedem shares</p>
+                <div className="flex justify-between space-x-5">
+                  <input
+                    className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+                    type="number"
+                    value={amount}
+                    onChange={handleAmountChange}
+                  />
+                  <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMaxShares}>
+                    MAX
+                  </button>
+                </div>
+                <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
+                <input
+                  className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
+                  type="string"
+                  value={formatShares(conversionAssets as bigint) + ' BPUSDC'}
+                  // onChange={handleAmountChange}
+                  disabled
+                />
+                <ClearButton
+                  handleClickClearButton={() => {
+                    RedeemShares()
+                  }}
+                >
+                  Redeem
+                </ClearButton>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }
