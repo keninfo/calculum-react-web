@@ -137,17 +137,35 @@ const Chart = ({
     ]
   }, [filteredDates, cumulativeReturnsScaled, cumulativeReturns_ret, selectedCoin, volatility])
 
+  const trace2 = [
+    {
+      name: `${selectedCoin}USDT`,
+      x: filteredDates.map((date: string | number | Date) => new Date(date)) as Date[],
+      y: rolled as number[],
+      type: 'lines',
+      line: {
+        color: 'limegreen',
+      },
+    },
+  ]
+
   return (
-    <>
-      <div className="w-full">
+    <div className="w-full relative">
+      <Plot
+        data={trace as never}
+        layout={layout as never}
+        // style={{ height: '100%' }}
+        config={{ displayModeBar: false, displaylogo: false, responsive: false }}
+      />
+      <div className="w-full h-full absolute top-[35vh]">
         <Plot
-          data={trace as never}
+          data={trace2 as never}
           layout={layout as never}
-          style={{ height: '100%' }}
+          style={{ width: '100%', height: '50%' }}
           config={{ displayModeBar: false, displaylogo: false, responsive: true }}
         />
       </div>
-    </>
+    </div>
   )
 }
 
