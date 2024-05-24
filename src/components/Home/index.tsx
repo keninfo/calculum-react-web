@@ -92,7 +92,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="relative flex space-around space-x-10 ">
+      <div className="relative flex space-around space-x-10 mt-[2vh] ">
         <div className="w-full">
           <div className="flex justify-between items-start z-100">
             <h1 className="text-4xl pb-2">Overview</h1>
