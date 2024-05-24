@@ -4,6 +4,7 @@ import { useContext, type ReactNode } from 'react'
 
 import { SidebarContext } from '@/components/AppProviders'
 import AppProviders from '@/components/AppProviders'
+import MaintenanceBanner from '@/components/MaintenanceBanner'
 import Sidebar from '@/components/Sidebar'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
@@ -20,6 +21,7 @@ const RootLayout = ({
       <body className="overscroll-none">
         <Providers>
           <AppProviders>
+            <MaintenanceBanner />
             <SidebarWrapper>{children}</SidebarWrapper>
             <Sidebar />
           </AppProviders>
