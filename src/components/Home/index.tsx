@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { CoinContext } from '@/components/AppProviders'
 import AssetInfo from '@/components/AssetInfo'
 import Chart from '@/components/Chart'
-import ChartOptions from '@/components/ChartOptions'
+import ChartOptions from '@/components/ChartOptions/Index'
 
 import ActionCard from '../ActionCard'
 import CoinSelect from '../ChartOptions/CoinSelect'
