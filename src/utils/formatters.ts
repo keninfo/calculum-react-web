@@ -7,20 +7,27 @@ export const shortenAddress = (address?: string, length = 4): string => {
 }
 
 export const formatBalance = (number: bigint): string => {
-  const toStringNumber = number.toString()
-  const length = toStringNumber.length
+  try {
+    const toStringNumber = number.toString()
+    const length = toStringNumber.length
 
-  if (length >= 6) {
-    const integerPart = toStringNumber.slice(0, length - 6)
-    const decimalPart = toStringNumber.slice(length - 6)
+    let integerPart = '0'
+    let decimalPart = '0'
+
+    if (length > 6) {
+      integerPart = toStringNumber.slice(0, length - 6)
+      decimalPart = toStringNumber.slice(length - 6, length - 6)
+    } else {
+      integerPart = '0'
+      decimalPart = '0'.repeat(18 - length) + toStringNumber.slice(0, 2)
+    }
 
     let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = formattedNumber.replace(/\.?0*$/, '')
+    formattedNumber = parseFloat(formattedNumber).toFixed(2)
 
     return formattedNumber
-  } else {
-    const leadingZeros = '0'.repeat(6 - length)
-    return `0.${leadingZeros}${toStringNumber}`
+  } catch (error) {
+    return '0.0'
   }
 }
 
@@ -45,4 +52,29 @@ export const formatPercentage = (percentage: number): string => {
   const formattedPercentage = `${prefix}${roundedPercentage}%`
 
   return formattedPercentage
+}
+
+export const formatShares = (share: bigint): string => {
+  try {
+    const toStringNumber = share.toString()
+    const length = toStringNumber.length
+
+    let integerPart = '0'
+    let decimalPart = '0'
+
+    if (length > 18) {
+      integerPart = toStringNumber.slice(0, length - 18)
+      decimalPart = toStringNumber.slice(length - 18, length - 18)
+    } else {
+      integerPart = '0'
+      decimalPart = '0'.repeat(18 - length) + toStringNumber.slice(0, 2)
+    }
+
+    let formattedNumber = `${integerPart}.${decimalPart}`
+    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+
+    return formattedNumber
+  } catch (error) {
+    return '0.0'
+  }
 }
