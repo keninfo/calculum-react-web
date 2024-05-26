@@ -20,9 +20,9 @@ const CollateralsTableItem = (element: coinData) => {
       <td className={`flex justify-start items-center ${element.asset === coin ? 'text-carmesi' : ''}`}>
         <CryptoIcon coin={element.asset} className="size-[1.5rem] mr-[2vw]" /> {element.asset}
       </td>
+      <td>${element.price}</td>
       <td>{element.apy}%</td>
-      <td>{element.composition}%</td>
-      <td>${element.value}</td>
+      <td>${element.market}</td>
     </tr>
   )
 }

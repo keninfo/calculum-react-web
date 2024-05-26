@@ -1,50 +1,50 @@
 export type coinData = {
   asset: string
   apy: number
-  composition: number
-  value: number
+  price: number
+  market: string
 }
 export const sampleData: coinData[] = [
   {
     asset: 'BTC',
-    apy: -2.05,
-    composition: 3.3795,
-    value: 1.7885,
+    apy: +156.71,
+    price: 68980.4,
+    market: '1,363.62B',
   },
   {
     asset: 'ETH',
-    apy: 8.87,
-    composition: 2.2206,
-    value: 5.5808,
+    apy: +19.96,
+    price: 3747.28,
+    market: '450.17B',
   },
   {
     asset: 'BNB',
-    apy: 5.16,
-    composition: 3.5841,
-    value: 5.8348,
+    apy: +95.34,
+    price: 600.83,
+    market: '88.67B',
   },
   {
     asset: 'SOL',
-    apy: -1.17,
-    composition: 2.6122,
-    value: 7.6025,
+    apy: +61.11,
+    price: 167.81,
+    market: '75.42B',
   },
   {
     asset: 'MATIC',
-    apy: -0.37,
-    composition: 5.1197,
-    value: 7.1521,
+    apy: -21.29,
+    price: 0.724898,
+    market: '7.17B',
   },
   {
     asset: 'BCH',
-    apy: 5.16,
-    composition: 3.5841,
-    value: 5.8348,
+    apy: +95.74,
+    price: 517.84,
+    market: '10.21B',
   },
   {
     asset: 'ADA',
-    apy: -0.37,
-    composition: 5.1197,
-    value: 7.1521,
+    apy: -20.98,
+    price: 0.459704,
+    market: '16.41B',
   },
 ]

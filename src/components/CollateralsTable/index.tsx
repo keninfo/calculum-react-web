@@ -22,9 +22,9 @@ const CollateralsTable = () => {
         <thead>
           <tr className="text-sm [&>th]:pb-[4vh] [&>th]:w-fit">
             <th>ASSET</th>
+            <th>PRICE</th>
             <th>APY</th>
-            <th>COMPOSITION</th>
-            <th>VALUE</th>
+            <th>MARKET CAP</th>
           </tr>
         </thead>
         <tbody className="text-2xl">{sampleData.map((element) => CollateralsTableItem(element))}</tbody>
