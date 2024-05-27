@@ -30,14 +30,22 @@ const Withdraw = () => {
         functionName: 'WITHDRAWALS',
         args: [address],
       },
+      {
+        abi: calculumVaultContract.abi,
+        address: calculumVaultContract.address as Hash,
+        functionName: 'isWithdrawWallet',
+        args: [address],
+      },
     ],
   })
 
-  const [CoinBalance, withdrawals] = data || []
+  const [CoinBalance, withdrawals, isWithdrawWallet] = data || []
 
   const CoinBalanceResult = CoinBalance?.result as bigint
 
   const [withdrawalStatus, , ,] = (withdrawals?.result || []) as number[]
+
+  const isWithdrawWalletStatus = isWithdrawWallet?.result as boolean
 
   const { data: conversionShares } = useReadContract({
     abi: calculumVaultContract.abi,
@@ -108,7 +116,10 @@ const Withdraw = () => {
           You have a Redeem pending, wait one Epoch for it to be reflected.
         </p>
       )}
-      {withdrawalStatus != 4 && withdrawalStatus != 5 && (
+      {isWithdrawWalletStatus && (
+        <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">You have Claims pending</p>
+      )}
+      {withdrawalStatus != 4 && withdrawalStatus != 5 && !isWithdrawWalletStatus && (
         <>
           <p className="text-center text-xs mt-[2vh]">
             You have {parseFloat(formatShares(CoinBalanceResult))}
