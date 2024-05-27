@@ -17,7 +17,7 @@ const Claim = () => {
   const { data } = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
-    functionName: 'DEPOSITS',
+    functionName: 'WITHDRAWALS',
     args: [address],
   })
 
