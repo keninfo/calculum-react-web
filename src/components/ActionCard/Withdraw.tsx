@@ -79,7 +79,7 @@ const Withdraw = () => {
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'redeem',
-      args: [amount * 1000000, address, address],
+      args: [amount * 1000000000000000000, address, address],
     })
   }
 
