@@ -14,15 +14,25 @@ const Claim = () => {
   const { address } = useAccount()
   const { writeContract } = useWriteContract()
 
-  const { data } = useReadContract({
+  const { data: dataWithdrawals } = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
     functionName: 'WITHDRAWALS',
     args: [address],
   })
 
-  const [userStatus, userAssets, userShares] = (data || []) as bigint[]
-  const userStatusResult = Number(userStatus)
+  const { data: dataDeposits } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'DEPOSITS',
+    args: [address],
+  })
+
+  const [, userWithdrawalsAssets] = (dataWithdrawals || []) as bigint[]
+  const [userDepositsStatus, , userDepositsShares] = (dataDeposits || []) as bigint[]
+
+  // const userWithdrawalsStatusResult = Number(userWithdrawalsStatus)
+  const userDepositsStatusResult = Number(userDepositsStatus)
 
   function claimShares() {
     writeContract({
@@ -44,16 +54,16 @@ const Claim = () => {
 
   return (
     <div className="text-sm">
-      {userStatusResult == 1 && (
+      {userDepositsStatusResult == 1 && (
         <>
           <p className="mt-[4vh] mb-[2vh]">Your shares are still pending, wait one Epoch to be able to claim them!</p>
           <div className="text-center border-2 bg-smoke rounded-lg px-[2vw] py-[1vh]  border-white">
             <h4>PENDING SHARES</h4>
-            <p>{formatShares(userShares)}</p>
+            <p>{formatShares(userDepositsShares)}</p>
           </div>
         </>
       )}
-      {userStatusResult !== 1 && (
+      {userDepositsStatusResult !== 1 && (
         <>
           <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
             <div
@@ -61,28 +71,28 @@ const Claim = () => {
               onClick={() => setSelected(0)}
             >
               <h4>ASSETS</h4>
-              <p>{formatBalance(userAssets)}</p>
+              <p>{formatBalance(userWithdrawalsAssets)}</p>
             </div>
             <div
               className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
               onClick={() => setSelected(1)}
             >
               <h4>SHARES</h4>
-              <p>{formatShares(userShares)}</p>
+              <p>{formatShares(userDepositsShares)}</p>
             </div>
           </div>
           <div className="flex justify-between items-center px-2">
-            {selected == 0 && userAssets > 0 && (
+            {selected == 0 && userWithdrawalsAssets > 0 && (
               <ClearButton handleClickClearButton={() => claimAssets()}>Claim All Assets</ClearButton>
             )}
-            {selected == 1 && userShares > 0 && (
+            {selected == 1 && userDepositsShares > 0 && (
               <ClearButton handleClickClearButton={() => claimShares()}>Claim All Shares</ClearButton>
             )}
-            {selected == 0 && userAssets <= 0 && (
+            {selected == 0 && userWithdrawalsAssets <= 0 && (
               <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Assets to claim.`}</p>
             )}
 
-            {selected == 1 && userShares <= 0 && (
+            {selected == 1 && userDepositsShares <= 0 && (
               <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Shares to claim.`}</p>
             )}
           </div>

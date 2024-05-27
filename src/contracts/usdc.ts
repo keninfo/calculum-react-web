@@ -1,6 +1,6 @@
 export const usdcContract = {
   chainId: '421614',
-  address: '0x5bd8097fc0d3A84A14154FcED6a3e8D29fb517f4',
+  address: '0xD8D092527A2dcbE43B27f3423424C801B2A073A9',
   abi: [
     {
       anonymous: false,
