@@ -19,9 +19,6 @@ function ReadContract() {
     status = data[0] as boolean
   }
 
-  // uncomment to test look of banner
-  // status = true
-
   return (
     <>
       {status && (

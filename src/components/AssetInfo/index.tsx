@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
 
 import { CoinContext } from '@/components/AppProviders'
-
-import Card from '../common/Card'
-import CryptoIcon from '../common/CryptoIcon'
+import Card from '@/components/common/Card'
+import CryptoIcon from '@/components/common/CryptoIcon'
 
 const AssetInfo = () => {
   const { coin } = useContext(CoinContext)
@@ -24,9 +23,9 @@ const AssetInfo = () => {
         <h5>Disclaimers</h5>
         <p>
           {' '}
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos porro veniam maiores soluta quam.
-          Corporis animi expedita repellendus molestias ratione, possimus nobis iste dolore eligendi veritatis ad
-          assumenda earum! Debitis.
+          Volatility: Cryptocurrency prices can experience extreme fluctuations within short periods, driven by various
+          factors such as market demand, regulatory developments, technological advancements, and investor sentiment.
+          These fluctuations may lead to substantial gains or losses in a short amount of time.
         </p>
       </div>
     </Card>

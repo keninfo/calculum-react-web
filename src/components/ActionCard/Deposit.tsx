@@ -4,11 +4,10 @@ import type { Hash } from 'viem'
 
 import { useAccount, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
+import ClearButton from '@/components/common/ClearButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 import { formatBalance, formatShares } from '@/utils/formatters'
-
-import ClearButton from '../common/ClearButton'
 
 const Deposit = () => {
   const [seed, setSeed] = useState(1)

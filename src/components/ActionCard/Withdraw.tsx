@@ -4,11 +4,10 @@ import type { Hash } from 'viem'
 
 import { useAccount, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
+import ClearButton from '@/components/common/ClearButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 import { formatShares } from '@/utils/formatters'
-
-import ClearButton from '../common/ClearButton'
 
 const Withdraw = () => {
   const [selected, setSelected] = useState<number>(0)
@@ -57,8 +56,8 @@ const Withdraw = () => {
   const { data: conversionAssets } = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
-    functionName: 'convertToShares',
-    args: [amount * 1000000],
+    functionName: 'convertToAssets',
+    args: [amount * 1000000000000000000],
   })
 
   const { data: symbolAsset } = useReadContract({
@@ -190,7 +189,6 @@ const Withdraw = () => {
                   className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
                   type="string"
                   value={formatShares(conversionAssets as bigint) + ' BPUSDC'}
-                  // onChange={handleAmountChange}
                   disabled
                 />
                 <ClearButton

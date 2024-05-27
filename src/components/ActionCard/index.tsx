@@ -10,10 +10,10 @@ import type { Hash } from 'viem'
 import { useAccount, useReadContract } from 'wagmi'
 
 import Card from '@/components/common/Card'
+import ConnectButton from '@/components/common/ConnectButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { shortenAddress } from '@/utils/formatters'
 
-import ConnectButton from '../common/ConnectButton'
 import Claim from './Claim'
 import Deposit from './Deposit'
 import NotWhitelist from './NotWhitelist'
