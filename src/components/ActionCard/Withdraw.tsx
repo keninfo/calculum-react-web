@@ -92,7 +92,7 @@ const Withdraw = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSh
 
   return (
     <div className="text-sm">
-      {withdrawalStatus == 5 && (
+      {/* {withdrawalStatus == 5 && (
         <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">
           You have a Withdrawal pending, wait one Epoch for it to be reflected.
         </p>
@@ -101,7 +101,7 @@ const Withdraw = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSh
         <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">
           You have a Redeem pending, wait one Epoch for it to be reflected.
         </p>
-      )}
+      )} */}
       {isWithdrawWalletStatus && (
         <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">You have Claims pending</p>
       )}

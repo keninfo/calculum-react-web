@@ -28,10 +28,10 @@ const Claim = () => {
     args: [address],
   })
 
-  const [, userWithdrawalsAssets] = (dataWithdrawals || []) as bigint[]
+  const [userWithdrawalsStatus, userWithdrawalsAssets] = (dataWithdrawals || []) as bigint[]
   const [userDepositsStatus, , userDepositsShares] = (dataDeposits || []) as bigint[]
 
-  // const userWithdrawalsStatusResult = Number(userWithdrawalsStatus)
+  const userWithdrawalsStatusResult = Number(userWithdrawalsStatus)
   const userDepositsStatusResult = Number(userDepositsStatus)
 
   function claimShares() {
@@ -63,7 +63,19 @@ const Claim = () => {
           </div>
         </>
       )}
-      {userDepositsStatusResult !== 1 && (
+      {userWithdrawalsStatusResult == 4 ||
+        (userWithdrawalsStatusResult == 5 && (
+          <>
+            <p className="mt-[4vh] mb-[2vh]">
+              Your assets are still pending for Withdraw, wait one Epoch to be able to claim them!
+            </p>
+            <div className="text-center border-2 bg-smoke rounded-lg px-[2vw] py-[1vh]  border-white">
+              <h4>PENDING ASSETS</h4>
+              <p>{formatBalance(userWithdrawalsAssets)}</p>
+            </div>
+          </>
+        ))}
+      {userDepositsStatusResult === 3 && userWithdrawalsStatusResult === 3 && (
         <>
           <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
             <div
