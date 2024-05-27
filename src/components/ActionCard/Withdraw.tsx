@@ -6,10 +6,9 @@ import { useAccount, useReadContract, useReadContracts, useWriteContract } from 
 
 import ClearButton from '@/components/common/ClearButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
-import { usdcContract } from '@/contracts/usdc'
 import { formatShares } from '@/utils/formatters'
 
-const Withdraw = () => {
+const Withdraw = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolShares: string }) => {
   const [selected, setSelected] = useState<number>(0)
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
@@ -58,18 +57,6 @@ const Withdraw = () => {
     address: calculumVaultContract.address as Hash,
     functionName: 'convertToAssets',
     args: [amount * 1000000000000000000],
-  })
-
-  const { data: symbolAsset } = useReadContract({
-    abi: usdcContract.abi,
-    address: usdcContract.address as Hash,
-    functionName: 'symbol',
-  })
-
-  const { data: symbolShares } = useReadContract({
-    abi: calculumVaultContract.abi,
-    address: calculumVaultContract.address as Hash,
-    functionName: 'symbol',
   })
 
   function withdrawAssets() {

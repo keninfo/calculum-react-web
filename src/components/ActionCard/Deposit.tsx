@@ -9,7 +9,7 @@ import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
-const Deposit = () => {
+const Deposit = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolShares: string }) => {
   const [seed, setSeed] = useState(1)
   const { address } = useAccount()
   const [amount, setAmount] = useState<number>(0)
@@ -48,18 +48,6 @@ const Deposit = () => {
     address: calculumVaultContract.address as Hash,
     functionName: 'convertToShares',
     args: [amount * 1000000],
-  })
-
-  const { data: symbolAsset } = useReadContract({
-    abi: usdcContract.abi,
-    address: usdcContract.address as Hash,
-    functionName: 'symbol',
-  })
-
-  const { data: symbolShares } = useReadContract({
-    abi: calculumVaultContract.abi,
-    address: calculumVaultContract.address as Hash,
-    functionName: 'symbol',
   })
 
   const { data: hasDeposited } = useReadContract({

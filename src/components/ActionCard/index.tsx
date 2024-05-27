@@ -12,6 +12,7 @@ import { useAccount, useReadContract } from 'wagmi'
 import Card from '@/components/common/Card'
 import ConnectButton from '@/components/common/ConnectButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
+import { usdcContract } from '@/contracts/usdc'
 import { shortenAddress } from '@/utils/formatters'
 
 import Claim from './Claim'
@@ -30,6 +31,18 @@ const ActionCard = () => {
     address: calculumVaultContract.address as Hash,
     functionName: 'whitelist',
     args: [address],
+  })
+
+  const { data: symbolAsset } = useReadContract({
+    abi: usdcContract.abi,
+    address: usdcContract.address as Hash,
+    functionName: 'symbol',
+  })
+
+  const { data: symbolShares } = useReadContract({
+    abi: calculumVaultContract.abi,
+    address: calculumVaultContract.address as Hash,
+    functionName: 'symbol',
   })
 
   whitelisted = checkWhitelist.data as boolean
@@ -55,13 +68,13 @@ const ActionCard = () => {
           {actions.map((tab, index) => ActionTab({ tab, index }))}
         </TabsList>
         <TabPanel value={0} className="text-center">
-          <Deposit />
+          <Deposit symbolAsset={symbolAsset as string} symbolShares={symbolShares as string} />
         </TabPanel>
         <TabPanel value={1} className="text-center">
           <Claim />
         </TabPanel>
         <TabPanel value={2} className="text-center">
-          <Withdraw />
+          <Withdraw symbolAsset={symbolAsset as string} symbolShares={symbolShares as string} />
         </TabPanel>
       </Tabs>
     )
