@@ -1,15 +1,26 @@
-import React, { useContext } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { SetStateAction } from 'react'
+import React, { useContext, useState } from 'react'
 
 import ActionCard from '@/components/ActionCard'
 import { CoinContext } from '@/components/AppProviders'
 import AssetInfo from '@/components/AssetInfo'
-import CandleStick from '@/components/CandleStick'
 import CoinSelect from '@/components/ChartOptions/CoinSelect'
 import Products from '@/components/CollateralsTable'
 import CryptoIcon from '@/components/common/CryptoIcon'
 
+import Chart from '../Chart/Index'
+import ChartOptions from '../ChartOptions/Index'
+
 const Home = () => {
   const { coin } = useContext(CoinContext)
+  const [days, setDays] = useState<number>(2)
+  const [volatility, setVolatility] = useState<number>(0.1)
+
+  const submit = (data: { volatility: SetStateAction<number>; days: SetStateAction<number> }) => {
+    setVolatility(data.volatility)
+    setDays(data.days)
+  }
 
   return (
     <>
@@ -22,8 +33,9 @@ const Home = () => {
               <CoinSelect coins={['ADA', 'BTC', 'ETH', 'BNB', 'SOL', 'MATIC', 'BCH']} />
             </div>
           </div>
-          <CandleStick />
           <div>
+            <ChartOptions onSubmit={submit} />
+            <Chart window={days} volatility={volatility} hourly={false} />
             <Products></Products>
           </div>
         </div>

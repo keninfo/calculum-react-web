@@ -15,7 +15,7 @@ const Index = ({ days, setDays }: { days: number; setDays: (e: number) => void }
 
   return (
     <input
-      className="px-2 py-2 h-fit rounded-2xl text-md border border-white bg-smoke text-white text-center"
+      className="px-1 py-0.5 h-fit rounded-xl text-md border border-white bg-smoke text-white text-center"
       placeholder="1-365"
       type="text"
       id="days"

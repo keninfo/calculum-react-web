@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import DatePicker from './DatePicker'
 import SetDays from './SetDays'
 import SetVolatility from './SetVolatility'
 
@@ -16,8 +15,6 @@ interface dataType {
 }
 
 const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit }) => {
-  const [start, setStart] = useState<Date>(new Date('2020-01-01'))
-  const [end, setEnd] = useState<Date>(new Date())
   const [volatility, setVolatility] = useState<number>(0.1)
   const [days, setDays] = useState<number>(2)
 
@@ -25,8 +22,6 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit }) => {
     // Define the debouncing function
     const debounceSubmit = setTimeout(() => {
       const data = {
-        start,
-        end,
         volatility,
         days,
       }
@@ -35,13 +30,15 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit }) => {
 
     // Cleanup function to clear the timeout when any input changes
     return () => clearTimeout(debounceSubmit)
-  }, [days, end, onSubmit, start, volatility])
+  }, [days, onSubmit, volatility])
 
   return (
-    <div className="w-100 h-[10vh] flex justify-end items-end space-x-10">
-      <SetDays days={days} setDays={setDays} />
-      <SetVolatility setVolatility={setVolatility} />
-      <DatePicker startDate={start} endDate={end} setStartDate={setStart} setEndDate={setEnd} />
+    <div className="w-full h-[10vh] flex justify-between align-middle items-center">
+      <p className="w-fit">365 days</p>
+      <div className="flex justify-end items-end space-x-10">
+        <SetDays days={days} setDays={setDays} />
+        <SetVolatility setVolatility={setVolatility} />
+      </div>
     </div>
   )
 }

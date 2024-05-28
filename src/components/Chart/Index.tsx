@@ -1,70 +1,51 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import dynamic from 'next/dynamic'
+import { CoinContext } from '../AppProviders'
+import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calculateRolling } from './chartComputations'
+import { ADA, BTC, ETH, BNB, SOL, MATIC, BCH } from './dummyData.ts'
 
-import {
-  pct_change,
-  calculateScaledReturns,
-  calculateCumulativeReturns,
-  filterByDate,
-  calculateRolling,
-} from './chartComputations'
+import type { IChartApi, Time } from 'lightweight-charts'
+import { createChart, ColorType } from 'lightweight-charts'
 
-import * as d3 from 'd3'
-
-const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
-const formatTime = d3.utcFormat('%B %d, %Y')
-let filter = [[], []]
-
-const layout = {
-  paper_bgcolor: 'transparent',
-  plot_bgcolor: 'transparent',
-  legend: {
-    font: {
-      color: 'white',
-    },
-  },
-  xaxis: {
-    showgrid: false,
-    // zeroline: false,
-    visible: false,
-  },
-  yaxis: {
-    showgrid: false,
-    // zeroline: false,
-    visible: false,
-  },
+interface ChartDataPrice {
+  time: Time
+  value: number
 }
 
-const Chart = ({
-  period,
-  dates,
-  prices,
-  window,
-  volatility,
-  selectedCoin,
-  hourly,
-}: {
-  period: Date[]
-  dates: Date[]
-  prices: number[]
-  window: number
-  volatility: number
-  selectedCoin: string
-  hourly: boolean
-}) => {
-  const [start, setStart] = useState<string | null>()
-  const [end, setEnd] = useState<string | null>()
+interface ChartData {
+  time: Time
+  open: number
+  high: number
+  low: number
+  close: number
+}
+
+const Chart = ({ window, volatility, hourly }: { window: number; volatility: number; hourly: boolean }) => {
+  const chartContainerRef = useRef<HTMLDivElement>(null)
+  const chartInstance = useRef<IChartApi | undefined>()
+
   const [periods_per_year, setPeriod] = useState<number>(0)
   const [rolling_window, setRollling] = useState<number>(0)
   const [target_vol, setVol] = useState<number>(0)
-  const [filteredDates, setFilteredDates] = useState<string[]>([])
-  const [filteredPrices, setFilteredPrices] = useState<string[]>([])
+
   const [cumulativeReturnsScaled, setCumulativeReturnsScaled] = useState<number[]>([])
   const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
+  const [filteredPrices, setFilteredPrices] = useState<number[]>([])
   const [rolled, setRolled] = useState<number[]>([])
+
+  const { coin } = useContext(CoinContext)
+
+  const coinDataMap: { [key: string]: number[][] } = {
+    ADA,
+    BTC,
+    ETH,
+    BNB,
+    SOL,
+    MATIC,
+    BCH,
+  }
 
   useEffect(() => {
     setVol(volatility)
@@ -81,25 +62,15 @@ const Chart = ({
   }, [hourly, window])
 
   useEffect(() => {
-    setStart(period[0] ? formatTime(period[0]) : null)
-    setEnd(period[1] ? formatTime(period[1]) : null)
-  }, [period])
-
-  useEffect(() => {
-    if (dates && prices) {
-      filter = filterByDate(prices, dates, start, end)
-    }
-
-    setFilteredPrices(filter[0])
-    setFilteredDates(filter[1])
-  }, [end, start, dates, prices])
-
-  useEffect(() => {
     Calculations()
+
+    console.log(cumulativeReturns_ret)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filteredPrices, rolling_window, periods_per_year, target_vol, period])
+  }, [rolling_window, periods_per_year, target_vol, coin])
 
   const Calculations = () => {
+    const fp = coinDataMap[coin].map((arr) => arr[4])
+    setFilteredPrices(fp)
     const percentageChange = pct_change(filteredPrices)
     const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
     setCumulativeReturnsScaled(calculateCumulativeReturns(scaledReturns))
@@ -112,60 +83,69 @@ const Chart = ({
     }
   }
 
-  const trace = useMemo(() => {
-    return [
-      {
-        name: `${selectedCoin}USDT - ${volatility * 100}% volatility `,
-        x: filteredDates.map((date: string | number | Date) => new Date(date)) as Date[],
-        y: cumulativeReturnsScaled as number[],
-        type: 'scatter',
-        line: {
-          color: 'white',
-        },
-        showlegend: false,
-      },
-      {
-        name: `${selectedCoin}USDT`,
-        x: filteredDates.map((date: string | number | Date) => new Date(date)) as Date[],
-        y: cumulativeReturns_ret as number[],
-        type: 'scatter',
-        line: {
-          color: '#9C061F',
-        },
-        showlegend: false,
-      },
-    ]
-  }, [filteredDates, cumulativeReturnsScaled, cumulativeReturns_ret, selectedCoin, volatility])
+  useEffect(() => {
+    if (!chartContainerRef.current) return
 
-  const trace2 = [
-    {
-      name: `${selectedCoin}USDT`,
-      x: filteredDates.map((date: string | number | Date) => new Date(date)) as Date[],
-      y: rolled as number[],
-      type: 'lines',
-      line: {
-        color: 'limegreen',
+    chartInstance.current = createChart(chartContainerRef.current, {
+      width: 600,
+      height: 400,
+      layout: {
+        background: { type: ColorType.Solid, color: 'transparent' },
+        textColor: '#000',
       },
-    },
-  ]
+      grid: {
+        vertLines: {
+          visible: false,
+        },
+        horzLines: {
+          visible: false,
+        },
+      },
+      rightPriceScale: {
+        visible: false,
+      },
+      timeScale: {
+        visible: false,
+      },
+    })
+
+    // Chart for cumulativeReturnsScaled
+    const lineSeries = chartInstance.current.addLineSeries({
+      color: 'white', // Set the color for the line
+    })
+
+    const chartDataPrice: ChartDataPrice[] = coinDataMap[coin].map((data, index) => ({
+      time: data[0] as Time,
+      value: cumulativeReturnsScaled[index],
+    }))
+
+    lineSeries.setData(chartDataPrice)
+
+    const candleSeries = chartInstance.current.addCandlestickSeries()
+
+    const chartData: ChartData[] = coinDataMap[coin].map(([time, open, high, low, close]) => ({
+      time: time as Time,
+      open,
+      high,
+      low,
+      close,
+    }))
+
+    candleSeries.setData(chartData)
+
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.remove()
+        chartInstance.current = undefined
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coin])
 
   return (
-    <div className="w-full relative">
-      <Plot
-        data={trace as never}
-        layout={layout as never}
-        // style={{ height: '100%' }}
-        config={{ displayModeBar: false, displaylogo: false, responsive: false }}
-      />
-      <div className="w-full h-full absolute top-[35vh]">
-        <Plot
-          data={trace2 as never}
-          layout={layout as never}
-          style={{ width: '100%', height: '50%' }}
-          config={{ displayModeBar: false, displaylogo: false, responsive: true }}
-        />
-      </div>
-    </div>
+    <>
+      <div ref={chartContainerRef} style={{ width: '100%', height: '400px' }} />
+    </>
   )
 }
 
