@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrumSepolia } from 'wagmi/chains'
+import { metaMask } from 'wagmi/connectors'
 
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 
@@ -29,6 +30,7 @@ export const config = defaultWagmiConfig({
   chains,
   projectId,
   metadata,
+  connectors: [metaMask()],
   ssr: true,
   storage: createStorage({
     storage: cookieStorage,
