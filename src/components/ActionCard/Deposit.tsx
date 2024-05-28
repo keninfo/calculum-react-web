@@ -167,7 +167,7 @@ const Deposit = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSha
       <div className="inline justify-center px-2">
         {checkAmount >= maxResult ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
-            {`You've reached the current limit you can have deposited in Bear Protocol`}
+            {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
         ) : parseFloat(formatBalance(allowanceResult)) > 0 ? (
           <ClearButton
