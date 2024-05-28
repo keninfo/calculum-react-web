@@ -36,8 +36,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
     <MetaMaskUIProvider
       sdkOptions={{
         dappMetadata: {
-          name: 'Example React UI Dapp',
-          url: window.location.href,
+          // url: window.location.href,
         },
       }}
     >
