@@ -75,34 +75,42 @@ const Claim = () => {
         </>
       )}
       {/* 2 -  user can claim chares*/}
-      {userDepositsStatusResult === 2 && (
-        <>
-          <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
-            <div
-              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
-              onClick={() => setSelected(0)}
-            >
-              <h4>ASSETS</h4>
-              <p>{formatBalance(userWithdrawalsAssets)}</p>
+      {userDepositsStatusResult === 2 ||
+        (userWithdrawalsStatusResult === 2 && (
+          <>
+            <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
+              <div
+                className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+                onClick={() => setSelected(0)}
+              >
+                <h4>ASSETS</h4>
+                <p>{formatBalance(userWithdrawalsAssets)}</p>
+              </div>
+              <div
+                className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+                onClick={() => setSelected(1)}
+              >
+                <h4>SHARES</h4>
+                <p>{formatShares(userDepositsShares)}</p>
+              </div>
             </div>
-            <div
-              className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
-              onClick={() => setSelected(1)}
-            >
-              <h4>SHARES</h4>
-              <p>{formatShares(userDepositsShares)}</p>
+            <div className="flex justify-between items-center px-2">
+              {selected == 0 && userWithdrawalsAssets > 0 && (
+                <ClearButton handleClickClearButton={() => claimAssets()}>Claim All Assets</ClearButton>
+              )}
+              {selected == 1 && userDepositsShares > 0 && (
+                <ClearButton handleClickClearButton={() => claimShares()}>Claim All Shares</ClearButton>
+              )}
+              {selected == 0 && userWithdrawalsAssets <= 0 && (
+                <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Assets to claim.`}</p>
+              )}
+
+              {selected == 1 && userDepositsShares <= 0 && (
+                <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Shares to claim.`}</p>
+              )}
             </div>
-          </div>
-          <div className="flex justify-between items-center px-2">
-            {selected == 1 && userDepositsShares > 0 && (
-              <ClearButton handleClickClearButton={() => claimShares()}>Claim All Shares</ClearButton>
-            )}
-            {selected == 1 && userDepositsShares <= 0 && (
-              <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Shares to claim.`}</p>
-            )}
-          </div>
-        </>
-      )}
+          </>
+        ))}
       {/* 3 - deposit and withdraw completed should be able to claim */}
       {userDepositsStatusResult === 3 && userWithdrawalsStatusResult === 3 && (
         <>
