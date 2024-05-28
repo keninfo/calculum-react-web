@@ -37,13 +37,13 @@ const Withdraw = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSh
     ],
   })
 
-  const [CoinBalance, withdrawals, isWithdrawWallet] = data || []
+  const [CoinBalance, withdrawals] = data || []
 
   const CoinBalanceResult = CoinBalance?.result as bigint
 
   const [withdrawalStatus, , ,] = (withdrawals?.result || []) as number[]
 
-  const isWithdrawWalletStatus = isWithdrawWallet?.result as boolean
+  // const isWithdrawWalletStatus = isWithdrawWallet?.result as boolean
 
   const { data: conversionShares } = useReadContract({
     abi: calculumVaultContract.abi,
@@ -102,10 +102,11 @@ const Withdraw = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSh
           You have a Redeem pending, wait one Epoch for it to be reflected.
         </p>
       )} */}
-      {isWithdrawWalletStatus && (
-        <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">You have Claims pending</p>
-      )}
-      {withdrawalStatus != 4 && withdrawalStatus != 5 && !isWithdrawWalletStatus && (
+      {withdrawalStatus == 4 ||
+        (withdrawalStatus == 5 && (
+          <p className="text-center mt-[2vh] bg-carmesi px-[2vw] py-[1vh] rounded-lg">You have Claims pending</p>
+        ))}
+      {withdrawalStatus != 4 && withdrawalStatus != 5 && (
         <>
           <p className="text-center text-xs mt-[2vh]">
             You have {parseFloat(formatShares(CoinBalanceResult))}
