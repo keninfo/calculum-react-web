@@ -1,4 +1,5 @@
 import { CacheProvider } from '@emotion/react'
+import { MetaMaskUIProvider } from '@metamask/sdk-react-ui'
 
 import type { ReactNode } from 'react'
 import { useState, createContext } from 'react'
@@ -32,13 +33,22 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true)
 
   return (
-    <CacheProvider value={clientSideEmotionCache}>
-      <CoinContext.Provider value={{ coin, setCoin }}>
-        <SidebarContext.Provider value={{ isSidebarOpen, setSidebarOpen }}>
-          <Web3ModalProvider>{children}</Web3ModalProvider>
-        </SidebarContext.Provider>
-      </CoinContext.Provider>
-    </CacheProvider>
+    <MetaMaskUIProvider
+      sdkOptions={{
+        dappMetadata: {
+          name: 'Example React UI Dapp',
+          url: window.location.href,
+        },
+      }}
+    >
+      <CacheProvider value={clientSideEmotionCache}>
+        <CoinContext.Provider value={{ coin, setCoin }}>
+          <SidebarContext.Provider value={{ isSidebarOpen, setSidebarOpen }}>
+            <Web3ModalProvider>{children}</Web3ModalProvider>
+          </SidebarContext.Provider>
+        </CoinContext.Provider>
+      </CacheProvider>
+    </MetaMaskUIProvider>
   )
 }
 
