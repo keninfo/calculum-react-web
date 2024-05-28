@@ -9,16 +9,16 @@ import type { Hash } from 'viem'
 
 import { useAccount, useReadContract } from 'wagmi'
 
+import Claim from '@/components/Claim'
+import Deposit from '@/components/Deposit'
+import Withdraw from '@/components/Withdraw'
 import Card from '@/components/common/Card'
 import ConnectButton from '@/components/common/ConnectButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 import { shortenAddress } from '@/utils/formatters'
 
-import Claim from './Claim'
-import Deposit from './Deposit'
 import NotWhitelist from './NotWhitelist'
-import Withdraw from './Withdraw'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
