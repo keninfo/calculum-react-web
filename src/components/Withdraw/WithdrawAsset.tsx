@@ -1,0 +1,58 @@
+import React, { useState } from 'react'
+
+import { useAccount } from 'wagmi'
+
+import ClearButton from '@/components/common/ClearButton'
+import ContractReads from '@/hooks/useContractReads'
+import useWithdrawAssets from '@/hooks/useWithdrawAssets'
+import { formatShares } from '@/utils/formatters'
+
+const WithdrawAsset = () => {
+  const [amount, setAmount] = useState<number>(10)
+  const { address } = useAccount()
+  const { SymbolAsset, SymbolShares, BalanceAsset, ConvertToShares } = ContractReads()
+  const { withdrawAssets } = useWithdrawAssets()
+
+  const BalanceAssetResult = BalanceAsset(address).data as bigint
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+    setAmount(value)
+  }
+
+  const setMaxAssets = () => {
+    setAmount(parseFloat(formatShares(BalanceAssetResult)))
+  }
+  return (
+    <>
+      <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw {SymbolAsset().data as string}</p>
+      <div className="flex justify-between space-x-5">
+        <input
+          className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+          type="number"
+          value={amount}
+          onChange={handleAmountChange}
+        />
+        <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMaxAssets}>
+          MAX
+        </button>
+      </div>
+      <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
+      <input
+        className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
+        type="string"
+        value={formatShares(ConvertToShares(amount).data as bigint) + ' Shares of ' + (SymbolShares().data as string)}
+        disabled
+      />
+      <ClearButton
+        handleClickClearButton={() => {
+          withdrawAssets({ amount, address })
+        }}
+      >
+        Withdraw
+      </ClearButton>
+    </>
+  )
+}
+
+export default WithdrawAsset
