@@ -4,10 +4,12 @@ import type { Hash } from 'viem'
 
 import { useAccount, useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
-import ClearButton from '@/components/common/ClearButton'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 import { formatBalance, formatShares } from '@/utils/formatters'
+
+import ActionAlert from '../common/ActionAlert'
+import ClearButton from '../common/ClearButton'
 
 const Deposit = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolShares: string }) => {
   const [seed, setSeed] = useState(1)
@@ -112,17 +114,15 @@ const Deposit = ({ symbolAsset, symbolShares }: { symbolAsset: string; symbolSha
     reset()
   }
 
-  console.log(hasDeposited)
-
   return (
     <div className="text-sm mt-[4vh]" key={seed}>
       {!(hasDeposited as boolean) && Number(allowanceResult) == 0 ? (
         <>
           <h4 className="mt-[4vh] mb-[1vh] text-xl"> Welcome to Bear Protocol!</h4>
-          <p className="bg-carmesi  px-[2vw] py-[1vh] rounded-lg">
-            Before using this strategy you need to approve it, we recommend using the MAX, but you are welcomed to
-            approve as much or as little as you like !
-          </p>
+          <ActionAlert
+            alert={`Before using this strategy you need to approve it, we recommend using the MAX, but you are welcomed to
+            approve as much or as little as you like !`}
+          />
         </>
       ) : (
         <></>
