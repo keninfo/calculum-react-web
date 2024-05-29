@@ -57,23 +57,23 @@ const DepositAssets = () => {
   }
   return (
     <>
-      <p className="mb-[1vh] mt-[4vh] text-left text-xs">
-        You have {formattedBalance}
-        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
-      </p>
-      <div className="flex justify-between space-x-5">
-        <input
-          className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
-          type="number"
-          value={amount}
-          onChange={handleAmountChange}
-        />
-        <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMax}>
-          MAX
-        </button>
-      </div>
       {Number(allowance) != 0 && (
         <>
+          <p className="mb-[1vh] mt-[4vh] text-left text-xs">
+            You have {formattedBalance}
+            <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
+          </p>
+          <div className="flex justify-between space-x-5">
+            <input
+              className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+              type="number"
+              value={amount}
+              onChange={handleAmountChange}
+            />
+            <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMax}>
+              MAX
+            </button>
+          </div>
           <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
           <input
             className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
@@ -83,7 +83,6 @@ const DepositAssets = () => {
           />
         </>
       )}
-
       <div className="inline justify-center px-2">
         {checkAmount >= max ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
