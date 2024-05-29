@@ -1,7 +1,8 @@
 import React from 'react'
 
-import ClearButton from '../common/ClearButton'
 import useClaimAssets from '@/hooks/useClaimAssets'
+
+import ClearButton from '@/components/common/ClearButton'
 
 interface ClaimProps {
   assets: string

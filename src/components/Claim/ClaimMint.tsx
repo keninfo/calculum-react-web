@@ -1,8 +1,8 @@
 import React from 'react'
 
-import ClearButton from '../common/ClearButton'
 import useClaimShares from '@/hooks/useClaimShares'
 
+import ClearButton from '@/components/common/ClearButton'
 
 interface ClaimProps {
   shares: string

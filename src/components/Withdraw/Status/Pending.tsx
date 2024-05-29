@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ActionAlert from '../../common/ActionAlert'
+import ActionAlert from '@/components/common/ActionAlert'
 import Completed from './Completed'
 
 const Pending = ({ selected }: { selected: number }) => {

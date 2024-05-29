@@ -6,7 +6,7 @@ import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance } from '@/utils/formatters'
 
-import ClearButton from '../common/ClearButton'
+import ClearButton from '@/components/common/ClearButton'
 
 type DepositData = [number, bigint, bigint, bigint]
 
