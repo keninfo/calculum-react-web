@@ -5,15 +5,15 @@ import { useAccount } from 'wagmi'
 import ClearButton from '@/components/common/ClearButton'
 import ContractReads from '@/hooks/useContractReads'
 import useWithdrawAssets from '@/hooks/useWithdrawAssets'
-import { formatShares } from '@/utils/formatters'
+import { formatBalance, formatShares } from '@/utils/formatters'
 
 const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
-  const { SymbolAsset, SymbolShares, BalanceAsset, ConvertToShares } = ContractReads()
+  const { SymbolAsset, SymbolShares, BalanceAssets, ConvertToShares } = ContractReads()
   const { withdrawAssets } = useWithdrawAssets()
 
-  const BalanceAssetResult = BalanceAsset(address).data as bigint
+  const BalanceAssetResult = BalanceAssets(address).data as bigint
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -21,8 +21,9 @@ const WithdrawAsset = () => {
   }
 
   const setMaxAssets = () => {
-    setAmount(parseFloat(formatShares(BalanceAssetResult)))
+    setAmount(parseFloat(formatBalance(BalanceAssetResult)))
   }
+
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw {SymbolAsset().data as string}</p>

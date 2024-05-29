@@ -5,15 +5,15 @@ import { useAccount } from 'wagmi'
 import ClearButton from '@/components/common/ClearButton'
 import ContractReads from '@/hooks/useContractReads'
 import useRedeemAssets from '@/hooks/useRedeemAssets'
-import { formatShares } from '@/utils/formatters'
+import { formatBalance, formatShares } from '@/utils/formatters'
 
 const Redeem = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
-  const { SymbolShares, BalanceAsset, ConvertToAssets } = ContractReads()
+  const { SymbolShares, BalanceShares, ConvertToAssets } = ContractReads()
   const { redeemAssets } = useRedeemAssets()
 
-  const BalanceAssetResult = BalanceAsset(address).data as bigint
+  const BalanceSharesResult = BalanceShares(address).data as bigint
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -21,7 +21,7 @@ const Redeem = () => {
   }
 
   const setMaxShares = () => {
-    setAmount(parseFloat(formatShares(BalanceAssetResult)))
+    setAmount(parseFloat(formatShares(BalanceSharesResult)))
   }
 
   return (
@@ -42,7 +42,7 @@ const Redeem = () => {
       <input
         className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
         type="string"
-        value={formatShares(ConvertToAssets(amount).data as bigint) + ' BPUSDC'}
+        value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'}
         disabled
       />
       <ClearButton
