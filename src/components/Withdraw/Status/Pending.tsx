@@ -1,13 +1,11 @@
 import React from 'react'
 
 import ActionAlert from '@/components/common/ActionAlert'
-import Completed from './Completed'
 
-const Pending = ({ selected }: { selected: number }) => {
+const Pending = () => {
   return (
     <>
-      <ActionAlert alert="You have a deposit pending, wait at least one epoch for it to be reflected." />
-      <Completed selected={selected} />
+      <ActionAlert alert="You have a withdraw/redeem pending, wait at least one epoch for it to be reflected." />
     </>
   )
 }
