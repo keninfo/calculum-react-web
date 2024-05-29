@@ -4,30 +4,37 @@ import { useAccount } from 'wagmi'
 
 import ClearButton from '@/components/common/ClearButton'
 import ContractReads from '@/hooks/useContractReads'
-import Deposit from '@/hooks/useDeposit'
+import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
-import Approve from '../Approve'
+import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]
 
-const Completed = () => {
+const DepositAssets = () => {
   const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
-  const { Deposits, Allowance, MaxDeposit, SymbolAsset, SymbolShares, ConvertToShares, BalanceShares } = ContractReads()
-  const [formatedShares, setFormatedShares] = useState<string>('')
-  const [formatedBalance, setFormatedBalance] = useState<number>(0)
+  const { Deposits, Allowance, MaxDeposit, SymbolAsset, SymbolShares, ConvertToShares, BalanceAssets } = ContractReads()
+  const [formattedShares, setFormattedShares] = useState<string>('')
+  const [formattedBalance, setFormattedBalance] = useState<number>(0)
+  const { Deposit } = useDeposit()
+
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
 
   const max = MaxDeposit().data as bigint
   const allowance = Allowance(address).data as bigint
+  const convertedShares = ConvertToShares(amount).data as bigint
+  const balanceAssets = BalanceAssets(address).data as bigint
 
   useEffect(() => {
-    setFormatedShares(formatShares(ConvertToShares(amount).data as bigint))
-    setFormatedBalance(parseFloat(formatBalance(BalanceShares(address).data as bigint)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount])
+    if (convertedShares) {
+      setFormattedShares(formatShares(convertedShares))
+    }
+    if (balanceAssets) {
+      setFormattedBalance(parseFloat(formatBalance(balanceAssets)))
+    }
+  }, [convertedShares, balanceAssets])
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -51,7 +58,7 @@ const Completed = () => {
   return (
     <>
       <p className="mb-[1vh] mt-[4vh] text-left text-xs">
-        You have {formatedBalance}
+        You have {formattedBalance}
         <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
       </p>
       <div className="flex justify-between space-x-5">
@@ -71,7 +78,7 @@ const Completed = () => {
           <input
             className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
             type="string"
-            value={formatedShares + ' Shares of ' + (SymbolShares().data as string)}
+            value={formattedShares + ' Shares of ' + (SymbolShares().data as string)}
             disabled
           />
         </>
@@ -85,7 +92,7 @@ const Completed = () => {
         ) : parseFloat(formatBalance(allowance)) > 0 ? (
           <ClearButton
             handleClickClearButton={() => {
-              Deposit()
+              Deposit({ amount, address })
             }}
           >
             Deposit
@@ -98,4 +105,4 @@ const Completed = () => {
   )
 }
 
-export default Completed
+export default DepositAssets
