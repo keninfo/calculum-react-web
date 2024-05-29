@@ -93,11 +93,32 @@ const useContractReads = () => {
     })
     return { data, isLoading, error }
   }
+
   const Deposits = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'DEPOSITS',
+      args: [address],
+    })
+    return { data, isLoading, error }
+  }
+
+  const IsClaimerMint = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'isClaimerMint',
+      args: [address],
+    })
+    return { data, isLoading, error }
+  }
+
+  const IsClaimerWithdraw = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'isClaimerWithdraw',
       args: [address],
     })
     return { data, isLoading, error }
@@ -142,6 +163,8 @@ const useContractReads = () => {
     BalanceShares,
     Withdrawals,
     Deposits,
+    IsClaimerMint,
+    IsClaimerWithdraw,
     ConvertToShares,
     ConvertToAssets,
   }
