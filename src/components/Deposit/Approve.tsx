@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
+import ClearButton from '@/components/common/ClearButton'
 import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance } from '@/utils/formatters'
-
-import ClearButton from '@/components/common/ClearButton'
 
 type DepositData = [number, bigint, bigint, bigint]
 
@@ -44,7 +43,7 @@ const Approve = () => {
   }
   return (
     <>
-      <p className="mb-[1vh] mt-[4vh] text-left text-xs">
+      <p className="mb-[1vh] text-left text-xs">
         You have {parseFloat(formatBalance(BalanceAssetResult))}
         <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
       </p>
