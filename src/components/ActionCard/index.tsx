@@ -5,17 +5,14 @@ import { TabPanel } from '@mui/base/TabPanel'
 import { Tabs } from '@mui/base/Tabs'
 import { TabsList } from '@mui/base/TabsList'
 
-import type { Hash } from 'viem'
-
-import { useAccount, useReadContract } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
 import Withdraw from '@/components/Withdraw'
 import Card from '@/components/common/Card'
 import ConnectButton from '@/components/common/ConnectButton'
-import { calculumVaultContract } from '@/contracts/calculumVault'
-import { usdcContract } from '@/contracts/usdc'
+import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
 import NotWhitelist from './NotWhitelist'
@@ -24,28 +21,9 @@ const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
 const ActionCard = () => {
   const { address, isConnected } = useAccount()
-  let whitelisted = true
+  const { CheckWhitelist } = ContractReads()
 
-  const checkWhitelist = useReadContract({
-    abi: calculumVaultContract.abi,
-    address: calculumVaultContract.address as Hash,
-    functionName: 'whitelist',
-    args: [address],
-  })
-
-  const { data: symbolAsset } = useReadContract({
-    abi: usdcContract.abi,
-    address: usdcContract.address as Hash,
-    functionName: 'symbol',
-  })
-
-  const { data: symbolShares } = useReadContract({
-    abi: calculumVaultContract.abi,
-    address: calculumVaultContract.address as Hash,
-    functionName: 'symbol',
-  })
-
-  whitelisted = checkWhitelist.data as boolean
+  const whitelistCheck = CheckWhitelist(address).data as boolean
 
   const ActionTab = ({ tab, index }: { tab: string; index: number }) => {
     return (
@@ -61,6 +39,7 @@ const ActionCard = () => {
       </Tab>
     )
   }
+
   const ActionCardTabs = () => {
     return (
       <Tabs defaultValue={0}>
@@ -68,22 +47,23 @@ const ActionCard = () => {
           {actions.map((tab, index) => ActionTab({ tab, index }))}
         </TabsList>
         <TabPanel value={0} className="text-center">
-          <Deposit symbolAsset={symbolAsset as string} symbolShares={symbolShares as string} />
+          <Deposit />
         </TabPanel>
         <TabPanel value={1} className="text-center">
           <Claim />
         </TabPanel>
         <TabPanel value={2} className="text-center">
-          <Withdraw symbolAsset={symbolAsset as string} symbolShares={symbolShares as string} />
+          <Withdraw />
         </TabPanel>
       </Tabs>
     )
   }
+
   return (
     <Card>
       <div className="h-fit w-[20vw]">
-        {isConnected && whitelisted && <ActionCardTabs />}
-        {isConnected && !whitelisted && <NotWhitelist />}
+        {isConnected && whitelistCheck && <ActionCardTabs />}
+        {isConnected && !whitelistCheck && <NotWhitelist />}
         {!isConnected && <ConnectButton />}
       </div>
       {isConnected && (
