@@ -15,16 +15,13 @@ type responseData = [number, bigint, bigint, bigint]
 
 const Claim = () => {
   const { address } = useAccount()
-  const { Withdrawals, Deposits, IsClaimerMint, IsClaimerWithdraw } = ContractReads()
+  const { Withdrawals, Deposits } = ContractReads()
 
   const [userWithdrawalsStatus, userWithdrawalsAssets] = (Withdrawals(address).data || []) as responseData
   const [userDepositsStatus, , userDepositsShares] = (Deposits(address).data || []) as responseData
 
   const userWithdrawalsStatusResult = Number(userWithdrawalsStatus)
   const userDepositsStatusResult = Number(userDepositsStatus)
-
-  const claimerMint = IsClaimerMint(address).data as boolean
-  const claimerWithdraw = IsClaimerWithdraw(address).data as boolean
 
   return (
     <div className="text-sm">
@@ -33,8 +30,8 @@ const Claim = () => {
       {(userWithdrawalsStatusResult == 1 || userWithdrawalsStatusResult == 4 || userWithdrawalsStatusResult == 5) && (
         <PendingWithdraw assets={formatBalance(userWithdrawalsAssets)} />
       )}
-      {claimerMint && <ClaimMint shares={formatShares(userDepositsShares)} address={address} />}
-      {claimerWithdraw && <ClaimWithdraw assets={formatBalance(userWithdrawalsAssets)} address={address} />}
+      <ClaimMint shares={formatShares(userDepositsShares)} address={address} />
+      <ClaimWithdraw assets={formatBalance(userWithdrawalsAssets)} address={address} />
     </div>
   )
 }
