@@ -21,7 +21,7 @@ const ClaimWithdraw = ({ assets, address }: ClaimProps) => {
       <p>{assets}</p>
       <div className="mt-[2vh]">
         {claimerWithdraw ? (
-          <ClearButton handleClickClearButton={() => ClaimAssets(address)}>Claim All Shares</ClearButton>
+          <ClearButton handleClickClearButton={() => ClaimAssets(address)}>Claim All Assets</ClearButton>
         ) : (
           <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] rounded-lg">{`You don't have Assets to claim.`}</p>
         )}
