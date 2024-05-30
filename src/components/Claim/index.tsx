@@ -26,12 +26,16 @@ const Claim = () => {
   return (
     <div className="text-sm">
       {userDepositsStatusResult == 0 && <InactiveDeposit />}
-      {userDepositsStatusResult == 1 && <PendingDeposit shares={formatShares(userDepositsShares)} />}
-      {(userWithdrawalsStatusResult == 1 || userWithdrawalsStatusResult == 4 || userWithdrawalsStatusResult == 5) && (
-        <PendingWithdraw assets={formatBalance(userWithdrawalsAssets)} />
+      {userDepositsStatusResult == 1 ? (
+        <PendingDeposit shares={formatShares(userDepositsShares)} />
+      ) : (
+        <ClaimMint shares={formatShares(userDepositsShares)} address={address} />
       )}
-      <ClaimMint shares={formatShares(userDepositsShares)} address={address} />
-      <ClaimWithdraw assets={formatBalance(userWithdrawalsAssets)} address={address} />
+      {userWithdrawalsStatusResult == 1 || userWithdrawalsStatusResult == 4 || userWithdrawalsStatusResult == 5 ? (
+        <PendingWithdraw assets={formatBalance(userWithdrawalsAssets)} />
+      ) : (
+        <ClaimWithdraw assets={formatBalance(userWithdrawalsAssets)} address={address} />
+      )}
     </div>
   )
 }
