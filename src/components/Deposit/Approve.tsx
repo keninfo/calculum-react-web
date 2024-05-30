@@ -12,14 +12,13 @@ type DepositData = [number, bigint, bigint, bigint]
 const Approve = () => {
   const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
-  const { Deposits, Allowance, MaxDeposit, SymbolAsset, BalanceAssets } = ContractReads()
+  const { Deposits, MaxDeposit, SymbolAsset, BalanceAssets } = ContractReads()
   const { ApproveAssets } = useApprove()
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
 
   const max = MaxDeposit().data as bigint
-  const allowance = Allowance(address).data as bigint
   const BalanceAssetResult = BalanceAssets(address).data as bigint
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,17 +28,7 @@ const Approve = () => {
 
   const setMax = () => {
     const s1 = max - checkAmount
-    const s2 = allowance - checkAmount
-    if (Number(allowance) == 0) {
-      setAmount(parseFloat(formatBalance(s1)))
-      return
-    }
-
-    if (s1 < s2) {
-      setAmount(parseFloat(formatBalance(s1)))
-      return
-    }
-    setAmount(parseFloat(formatBalance(s2)))
+    setAmount(parseFloat(formatBalance(s1)))
   }
   return (
     <>
