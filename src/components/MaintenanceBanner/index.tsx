@@ -6,7 +6,7 @@ import { useReadContract } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
 
-function ReadContract() {
+function MaintenanceBanner() {
   const fetchMaintenance = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
@@ -31,4 +31,4 @@ function ReadContract() {
   )
 }
 
-export default ReadContract
+export default MaintenanceBanner
