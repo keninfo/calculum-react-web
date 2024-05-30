@@ -15,8 +15,8 @@ interface dataType {
 }
 
 const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit }) => {
-  const [volatility, setVolatility] = useState<number>(0.1)
-  const [days, setDays] = useState<number>(2)
+  const [volatility, setVolatility] = useState<number>(0.2)
+  const [days, setDays] = useState<number>(14)
 
   useEffect(() => {
     // Define the debouncing function

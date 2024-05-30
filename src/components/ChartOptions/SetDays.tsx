@@ -1,5 +1,9 @@
 const Index = ({ days, setDays }: { days: number; setDays: (e: number) => void }) => {
   const numberValidation = (e: string) => {
+    if (e === '') {
+      setDays(0) // or any other default value you prefer
+      return
+    }
     try {
       if (parseInt(e) > 365) {
         throw new Error('Not a valid number')
@@ -16,7 +20,6 @@ const Index = ({ days, setDays }: { days: number; setDays: (e: number) => void }
   return (
     <input
       className="px-1 py-0.5 h-fit rounded-xl text-md border border-white bg-smoke text-white text-center"
-      placeholder="1-365"
       type="text"
       id="days"
       value={days}

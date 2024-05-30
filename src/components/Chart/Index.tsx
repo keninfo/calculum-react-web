@@ -7,7 +7,7 @@ import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calcula
 import { ADA, BTC, ETH, BNB, SOL, MATIC, BCH } from './dummyData.ts'
 
 import type { IChartApi, Time } from 'lightweight-charts'
-import { createChart, ColorType } from 'lightweight-charts'
+import { createChart, ColorType, LineStyle } from 'lightweight-charts'
 
 interface ChartDataPrice {
   time: Time
@@ -22,13 +22,21 @@ interface ChartData {
   close: number
 }
 
+const epochToDate = (epoch: number): string => {
+  const date = new Date(epoch) // Convert from seconds to milliseconds
+  const year = date.getUTCFullYear()
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0') // Months are zero-indexed
+  const day = String(date.getUTCDate()).padStart(2, '0')
+  return `${year}-${month}-${day}` // Format to 'YYYY-MM-DD'
+}
+
 const Chart = ({ window, volatility, hourly }: { window: number; volatility: number; hourly: boolean }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
 
   const [periods_per_year, setPeriod] = useState<number>(0)
   const [rolling_window, setRollling] = useState<number>(0)
-  const [target_vol, setVol] = useState<number>(0)
+  const [target_vol, setVol] = useState<number>(0.2)
 
   const [cumulativeReturnsScaled, setCumulativeReturnsScaled] = useState<number[]>([])
   // const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
@@ -52,13 +60,8 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   }, [volatility])
 
   useEffect(() => {
-    if (!hourly) {
-      setPeriod(365)
-      setRollling(window)
-    } else {
-      setPeriod(365 * 24)
-      setRollling(window * 24)
-    }
+    setPeriod(365)
+    setRollling(window)
   }, [hourly, window])
 
   useEffect(() => {
@@ -67,7 +70,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   }, [rolling_window, periods_per_year, target_vol, coin])
 
   const Calculations = () => {
-    const fp = coinDataMap[coin].map((arr) => arr[4])
+    const fp = coinDataMap[coin].map((arr) => arr[1])
     setFilteredPrices(fp)
     const percentageChange = pct_change(filteredPrices)
     const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
@@ -89,7 +92,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: '#000',
+        textColor: 'transparent',
       },
       grid: {
         vertLines: {
@@ -100,29 +103,46 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
         },
       },
       rightPriceScale: {
-        visible: false,
+        visible: true,
+        borderVisible: false,
       },
       timeScale: {
-        visible: false,
+        visible: true,
+        borderVisible: false,
+        fixLeftEdge: true,
+      },
+      crosshair: {
+        vertLine: {
+          // width: 8,
+          color: '#C3BCDB44',
+          style: LineStyle.Solid,
+        },
+
+        horzLine: {
+          color: 'white',
+        },
       },
     })
 
     // Chart for cumulativeReturnsScaled
     const lineSeries = chartInstance.current.addLineSeries({
       color: 'white', // Set the color for the line
+      priceScaleId: 'right', // Ensure it shares the same price scale as the candlestick series
     })
 
     const chartDataPrice: ChartDataPrice[] = coinDataMap[coin].map((data, index) => ({
-      time: data[0] as Time,
-      value: cumulativeReturnsScaled[index],
+      time: epochToDate(data[0]),
+      value: cumulativeReturnsScaled[index] * filteredPrices[index],
     }))
 
     lineSeries.setData(chartDataPrice)
 
-    const candleSeries = chartInstance.current.addCandlestickSeries()
+    const candleSeries = chartInstance.current.addCandlestickSeries({
+      priceScaleId: 'right', // Ensure it shares the same price scale as the line series
+    })
 
     const chartData: ChartData[] = coinDataMap[coin].map(([time, open, high, low, close]) => ({
-      time: time as Time,
+      time: epochToDate(time),
       open,
       high,
       low,
@@ -138,7 +158,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coin])
+  }, [coin, cumulativeReturnsScaled])
 
   return (
     <>
