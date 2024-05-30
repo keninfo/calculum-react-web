@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     colors: {
       darkness: '#111111',
-      smoke: '#13191C',
-      carmesi: '#9C061F',
+      smoke: '#161a1d',
+      carmesi: '#ef233c',
     },
   },
   plugins: [],
