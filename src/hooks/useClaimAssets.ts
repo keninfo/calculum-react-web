@@ -12,7 +12,7 @@ const useClaimAssets = () => {
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'claimAssets',
-      args: [address],
+      args: [address, address],
     })
   }
 
