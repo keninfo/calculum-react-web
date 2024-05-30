@@ -31,7 +31,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   const [target_vol, setVol] = useState<number>(0)
 
   const [cumulativeReturnsScaled, setCumulativeReturnsScaled] = useState<number[]>([])
-  const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
+  // const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
   const [filteredPrices, setFilteredPrices] = useState<number[]>([])
   const [rolled, setRolled] = useState<number[]>([])
 
@@ -63,8 +63,6 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
 
   useEffect(() => {
     Calculations()
-
-    console.log(cumulativeReturns_ret)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rolling_window, periods_per_year, target_vol, coin])
 
@@ -74,7 +72,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
     const percentageChange = pct_change(filteredPrices)
     const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
     setCumulativeReturnsScaled(calculateCumulativeReturns(scaledReturns))
-    setCumulativeReturns_ret(calculateCumulativeReturns(percentageChange))
+    // setCumulativeReturns_ret(calculateCumulativeReturns(percentageChange))
 
     setRolled(calculateRolling(percentageChange, rolling_window))
 
