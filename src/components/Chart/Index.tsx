@@ -9,11 +9,6 @@ import { ADA, BTC, ETH, BNB, SOL, MATIC, BCH } from './dummyData.ts'
 import type { IChartApi, Time } from 'lightweight-charts'
 import { createChart, ColorType, LineStyle } from 'lightweight-charts'
 
-interface ChartDataPrice {
-  time: Time
-  value: number
-}
-
 interface ChartData {
   time: Time
   open: number
@@ -39,7 +34,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   const [target_vol, setVol] = useState<number>(0.2)
 
   const [cumulativeReturnsScaled, setCumulativeReturnsScaled] = useState<number[]>([])
-  // const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
+  const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
   const [filteredPrices, setFilteredPrices] = useState<number[]>([])
   const [rolled, setRolled] = useState<number[]>([])
 
@@ -75,7 +70,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
     const percentageChange = pct_change(filteredPrices)
     const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
     setCumulativeReturnsScaled(calculateCumulativeReturns(scaledReturns))
-    // setCumulativeReturns_ret(calculateCumulativeReturns(percentageChange))
+    setCumulativeReturns_ret(calculateCumulativeReturns(percentageChange))
 
     setRolled(calculateRolling(percentageChange, rolling_window))
 
@@ -106,6 +101,10 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
         visible: true,
         borderVisible: false,
       },
+      leftPriceScale: {
+        visible: true,
+        borderVisible: false,
+      },
       timeScale: {
         visible: true,
         borderVisible: false,
@@ -113,32 +112,17 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       },
       crosshair: {
         vertLine: {
-          // width: 8,
           color: '#C3BCDB44',
           style: LineStyle.Solid,
         },
-
         horzLine: {
           color: 'white',
         },
       },
     })
 
-    // Chart for cumulativeReturnsScaled
-    const lineSeries = chartInstance.current.addLineSeries({
-      color: 'white', // Set the color for the line
-      priceScaleId: 'right', // Ensure it shares the same price scale as the candlestick series
-    })
-
-    const chartDataPrice: ChartDataPrice[] = coinDataMap[coin].map((data, index) => ({
-      time: epochToDate(data[0]),
-      value: cumulativeReturnsScaled[index] * filteredPrices[index],
-    }))
-
-    lineSeries.setData(chartDataPrice)
-
     const candleSeries = chartInstance.current.addCandlestickSeries({
-      priceScaleId: 'right', // Ensure it shares the same price scale as the line series
+      priceScaleId: 'right',
     })
 
     const chartData: ChartData[] = coinDataMap[coin].map(([time, open, high, low, close]) => ({
@@ -151,6 +135,42 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
 
     candleSeries.setData(chartData)
 
+    const legend = document.createElement('div')
+
+    legend.style.position = 'absolute'
+    legend.style.top = '0px'
+    legend.style.right = '0px'
+    legend.style.zIndex = '20'
+    legend.style.color = 'white'
+    legend.style.backgroundColor = '#161a1d'
+    legend.style.padding = '1vh 2vw'
+    legend.style.borderRadius = '15px'
+    legend.innerHTML = 'Closing Price: <span id="close-price">-</span> | ROC: <span id="roc">-</span>'
+    chartContainerRef.current.appendChild(legend)
+
+    const closePriceElem = legend.querySelector('#close-price')
+    const rocElem = legend.querySelector('#roc')
+
+    chartInstance.current.subscribeCrosshairMove((param) => {
+      if (!param || !param.time || !param.seriesData) {
+        if (closePriceElem) {
+          closePriceElem.textContent = '-'
+        }
+        if (rocElem) {
+          rocElem.textContent = '-'
+        }
+        return
+      }
+
+      const index = chartData.findIndex((data) => data.time === param.time)
+      if (index > 0 && rocElem && closePriceElem) {
+        const roc = cumulativeReturnsScaled[index]
+        const closePrice = coinDataMap[coin][index][4] // Adjusted to get the closing price correctly
+        rocElem.textContent = roc.toFixed(2) + '%'
+        closePriceElem.textContent = closePrice.toFixed(2)
+      }
+    })
+
     return () => {
       if (chartInstance.current) {
         chartInstance.current.remove()
@@ -158,11 +178,11 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coin, cumulativeReturnsScaled])
+  }, [coin, cumulativeReturnsScaled, cumulativeReturns_ret])
 
   return (
     <>
-      <div ref={chartContainerRef} style={{ width: '100%', height: '400px' }} />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
     </>
   )
 }
