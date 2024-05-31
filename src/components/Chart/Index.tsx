@@ -9,6 +9,11 @@ import { ADA, BTC, ETH, BNB, SOL, MATIC, BCH } from './dummyData.ts'
 import type { IChartApi, Time } from 'lightweight-charts'
 import { createChart, ColorType, LineStyle } from 'lightweight-charts'
 
+interface ChartDataPrice {
+  time: Time
+  value: number
+}
+
 interface ChartData {
   time: Time
   open: number
@@ -83,7 +88,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
     if (!chartContainerRef.current) return
 
     chartInstance.current = createChart(chartContainerRef.current, {
-      width: 600,
+      width: 700,
       height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
@@ -133,48 +138,86 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       close,
     }))
 
+    const lineSeries = chartInstance.current.addLineSeries({
+      color: 'white', // Set the color for the line
+      priceScaleId: 'left', // Ensure it shares the same price scale as the candlestick series
+    })
+
+    const chartDataPrice: ChartDataPrice[] = coinDataMap[coin].map((data, index) => ({
+      time: epochToDate(data[0]),
+      value: cumulativeReturnsScaled[index] * 100,
+    }))
+
+    lineSeries.setData(chartDataPrice)
+
     candleSeries.setData(chartData)
 
-    const legend = document.createElement('div')
+    // const legend = document.createElement('div')
 
-    legend.style.position = 'absolute'
-    legend.style.top = '0px'
-    legend.style.right = '0px'
-    legend.style.zIndex = '20'
-    legend.style.color = 'white'
-    legend.style.backgroundColor = '#161a1d'
-    legend.style.padding = '1vh 2vw'
-    legend.style.borderRadius = '15px'
-    legend.innerHTML = 'Closing Price: <span id="close-price">-</span> | ROC: <span id="roc">-</span>'
-    chartContainerRef.current.appendChild(legend)
+    // legend.style.position = 'absolute'
+    // legend.style.top = '0px'
+    // legend.style.right = '0px'
+    // legend.style.zIndex = '20'
+    // legend.style.color = 'white'
+    // legend.style.backgroundColor = '#161a1d'
+    // legend.style.padding = '1vh 2vw'
+    // legend.style.borderRadius = '15px'
+    // legend.innerHTML = 'Closing Price: <span id="close-price">-</span> | ROC: <span id="roc">-</span>'
+    // chartContainerRef.current.appendChild(legend)
 
-    const closePriceElem = legend.querySelector('#close-price')
-    const rocElem = legend.querySelector('#roc')
+    // const closePriceElem = legend.querySelector('#close-price')
+    // const rocElem = legend.querySelector('#roc')
 
-    chartInstance.current.subscribeCrosshairMove((param) => {
-      if (!param || !param.time || !param.seriesData) {
-        if (closePriceElem) {
-          closePriceElem.textContent = '-'
-        }
-        if (rocElem) {
-          rocElem.textContent = '-'
-        }
-        return
-      }
+    // chartInstance.current.subscribeCrosshairMove((param) => {
+    //   if (!param || !param.time || !param.seriesData) {
+    //     if (closePriceElem) {
+    //       closePriceElem.textContent = '-'
+    //     }
+    //     if (rocElem) {
+    //       rocElem.textContent = '-'
+    //     }
+    //     return
+    //   }
 
-      const index = chartData.findIndex((data) => data.time === param.time)
-      if (index > 0 && rocElem && closePriceElem) {
-        const roc = cumulativeReturns_ret[index]
-        const closePrice = coinDataMap[coin][index][4] // Adjusted to get the closing price correctly
-        rocElem.textContent = roc.toFixed(2) + '%'
-        closePriceElem.textContent = closePrice.toFixed(2)
-      }
-    })
+    //   const index = chartData.findIndex((data) => data.time === param.time)
+    //   if (index > 0 && rocElem && closePriceElem) {
+    //     const roc = cumulativeReturns_ret[index] * 100
+    //     const closePrice = coinDataMap[coin][index][4] // Adjusted to get the closing price correctly
+    //     rocElem.textContent = roc.toFixed(2) + '%'
+    //     closePriceElem.textContent = closePrice.toFixed(2)
+    //   }
+    // })
+
+    // Add custom labels for price scales
+    const leftLabel = document.createElement('div')
+    leftLabel.style.position = 'absolute'
+    leftLabel.style.top = '10px'
+    leftLabel.style.left = '10px'
+    leftLabel.style.color = 'white'
+    leftLabel.style.zIndex = '10'
+    leftLabel.innerText = 'ROC (%)'
+
+    const rightLabel = document.createElement('div')
+    rightLabel.style.position = 'absolute'
+    rightLabel.style.top = '10px'
+    rightLabel.style.right = '10px'
+    rightLabel.style.color = 'white'
+    rightLabel.style.zIndex = '10'
+    rightLabel.innerText = 'Price'
+
+    if (chartContainerRef.current) {
+      chartContainerRef.current.appendChild(leftLabel)
+      chartContainerRef.current.appendChild(rightLabel)
+    }
 
     return () => {
       if (chartInstance.current) {
         chartInstance.current.remove()
         chartInstance.current = undefined
+      }
+      if (chartContainerRef.current) {
+        chartContainerRef.current.removeChild(leftLabel)
+        chartContainerRef.current.removeChild(rightLabel)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
