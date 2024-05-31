@@ -24,10 +24,10 @@ const SidebarGroupItem = (item: NavigationItem) => {
       ${!isSidebarOpen ? 'w-full flex justify-center mb-[5vh]' : ''}`}
     >
       <Link href={item.link} className="flex justify-start space-x-3 hover:text-carmesi ">
-        <div className="w-10 flex justify-center items-center text-[2vh]">
+        <div className="w-10 flex justify-center items-center text-[1.5vh]">
           <FontAwesomeIcon icon={['fas', item.icon as IconName]} size="lg" />
         </div>
-        {isSidebarOpen && <p className="text-[1.8vh]">{item.name}</p>}
+        {isSidebarOpen && <p className="text-[1.75vh]">{item.name}</p>}
       </Link>
     </div>
   )
