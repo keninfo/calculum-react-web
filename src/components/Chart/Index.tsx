@@ -164,7 +164,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
 
       const index = chartData.findIndex((data) => data.time === param.time)
       if (index > 0 && rocElem && closePriceElem) {
-        const roc = cumulativeReturnsScaled[index]
+        const roc = cumulativeReturns_ret[index]
         const closePrice = coinDataMap[coin][index][4] // Adjusted to get the closing price correctly
         rocElem.textContent = roc.toFixed(2) + '%'
         closePriceElem.textContent = closePrice.toFixed(2)
