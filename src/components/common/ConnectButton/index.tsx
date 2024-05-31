@@ -11,7 +11,7 @@ const ConnectButton = () => {
 
   return (
     <ClearButton handleClickClearButton={isConnected ? () => disconnect() : () => open()}>
-      {isConnected ? <p>Disconnect Wallet</p> : <p>Connect Wallet</p>}
+      {isConnected ? <p className="text-[.8vw]">Disconnect Wallet</p> : <p className="text-[1vw]">Connect Wallet</p>}
     </ClearButton>
   )
 }
