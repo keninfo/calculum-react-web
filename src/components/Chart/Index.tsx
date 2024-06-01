@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinContext } from '../AppProviders'
 import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calculateRolling } from './chartComputations'
-import { ADA, BTC, ETH, BNB, SOL, MATIC, BCH } from './dummyData.ts'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { createChart, ColorType, LineStyle } from 'lightweight-charts'
@@ -14,23 +13,27 @@ interface ChartDataPrice {
   value: number
 }
 
-interface ChartData {
-  time: Time
-  open: number
-  high: number
-  low: number
-  close: number
+const formatDate = (date: Date): string => {
+  const newDate = new Date(date)
+  const year = newDate.getUTCFullYear()
+  const month = String(newDate.getUTCMonth() + 1).padStart(2, '0')
+  const day = String(newDate.getUTCDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
-const epochToDate = (epoch: number): string => {
-  const date = new Date(epoch) // Convert from seconds to milliseconds
-  const year = date.getUTCFullYear()
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0') // Months are zero-indexed
-  const day = String(date.getUTCDate()).padStart(2, '0')
-  return `${year}-${month}-${day}` // Format to 'YYYY-MM-DD'
-}
-
-const Chart = ({ window, volatility, hourly }: { window: number; volatility: number; hourly: boolean }) => {
+const Chart = ({
+  window,
+  volatility,
+  coins,
+  prices,
+  dates,
+}: {
+  window: number
+  volatility: number
+  coins: string[]
+  prices: number[][]
+  dates: Date[]
+}) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
 
@@ -38,22 +41,7 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   const [rolling_window, setRollling] = useState<number>(0)
   const [target_vol, setVol] = useState<number>(0.2)
 
-  const [cumulativeReturnsScaled, setCumulativeReturnsScaled] = useState<number[]>([])
-  const [cumulativeReturns_ret, setCumulativeReturns_ret] = useState<number[]>([])
-  const [filteredPrices, setFilteredPrices] = useState<number[]>([])
-  const [rolled, setRolled] = useState<number[]>([])
-
   const { coin } = useContext(CoinContext)
-
-  const coinDataMap: { [key: string]: number[][] } = {
-    ADA,
-    BTC,
-    ETH,
-    BNB,
-    SOL,
-    MATIC,
-    BCH,
-  }
 
   useEffect(() => {
     setVol(volatility)
@@ -62,37 +50,40 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
   useEffect(() => {
     setPeriod(365)
     setRollling(window)
-  }, [hourly, window])
-
-  useEffect(() => {
-    Calculations()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rolling_window, periods_per_year, target_vol, coin])
-
-  const Calculations = () => {
-    const fp = coinDataMap[coin].map((arr) => arr[1])
-    setFilteredPrices(fp)
-    const percentageChange = pct_change(filteredPrices)
-    const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
-    setCumulativeReturnsScaled(calculateCumulativeReturns(scaledReturns))
-    setCumulativeReturns_ret(calculateCumulativeReturns(percentageChange))
-
-    setRolled(calculateRolling(percentageChange, rolling_window))
-
-    for (let i = 0; i < rolled.length; i++) {
-      rolled[i] *= Math.sqrt(periods_per_year)
-    }
-  }
+  }, [window])
 
   useEffect(() => {
     if (!chartContainerRef.current) return
+
+    const getCoinArray = () => {
+      const index = coins.indexOf(coin)
+      if (prices) {
+        return prices[index]
+      }
+      return []
+    }
+
+    const filteredPrices = getCoinArray()
+    const percentageChange = pct_change(filteredPrices)
+    const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
+    const cumulativeReturnsScaled = calculateCumulativeReturns(scaledReturns)
+    const cumulativeReturns_ret = calculateCumulativeReturns(percentageChange)
+
+    const rolled = calculateRolling(percentageChange, rolling_window)
+    for (let i = 0; i < rolled.length; i++) {
+      rolled[i] *= Math.sqrt(periods_per_year)
+    }
+
+    if (chartInstance.current) {
+      chartInstance.current.remove()
+    }
 
     chartInstance.current = createChart(chartContainerRef.current, {
       width: 700,
       height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: 'transparent',
+        textColor: 'white',
       },
       grid: {
         vertLines: {
@@ -126,72 +117,42 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
       },
     })
 
-    const candleSeries = chartInstance.current.addCandlestickSeries({
-      priceScaleId: 'right',
-    })
-
-    const chartData: ChartData[] = coinDataMap[coin].map(([time, open, high, low, close]) => ({
-      time: epochToDate(time),
-      open,
-      high,
-      low,
-      close,
-    }))
-
     const lineSeries = chartInstance.current.addLineSeries({
-      color: 'white', // Set the color for the line
-      priceScaleId: 'left', // Ensure it shares the same price scale as the candlestick series
+      color: 'white',
+      priceScaleId: 'left',
     })
 
-    const chartDataPrice: ChartDataPrice[] = coinDataMap[coin].map((data, index) => ({
-      time: epochToDate(data[0]),
-      value: cumulativeReturnsScaled[index] * 100,
+    const chartDataPrice: ChartDataPrice[] = cumulativeReturnsScaled.map((data, index) => ({
+      time: formatDate(dates[index]),
+      value: data,
     }))
 
     lineSeries.setData(chartDataPrice)
 
-    candleSeries.setData(chartData)
+    const lineSeries2 = chartInstance.current.addLineSeries({
+      color: 'red',
+      priceScaleId: 'right',
+    })
 
-    // const legend = document.createElement('div')
+    const chartDataPrice2: ChartDataPrice[] = cumulativeReturns_ret.map((data, index) => ({
+      time: formatDate(dates[index]),
+      value: data,
+    }))
 
-    // legend.style.position = 'absolute'
-    // legend.style.top = '0px'
-    // legend.style.right = '0px'
-    // legend.style.zIndex = '20'
-    // legend.style.color = 'white'
-    // legend.style.backgroundColor = '#161a1d'
-    // legend.style.padding = '1vh 2vw'
-    // legend.style.borderRadius = '15px'
-    // legend.innerHTML = 'Closing Price: <span id="close-price">-</span> | ROC: <span id="roc">-</span>'
-    // chartContainerRef.current.appendChild(legend)
+    lineSeries2.setData(chartDataPrice2)
 
-    // const closePriceElem = legend.querySelector('#close-price')
-    // const rocElem = legend.querySelector('#roc')
+    // Calculate the start date for the last 365 days
+    const startDate = new Date(dates[dates.length - 1])
+    startDate.setDate(startDate.getDate() - 365)
+    const formattedStartDate = formatDate(startDate)
+    const endDate = formatDate(dates[dates.length - 1])
 
-    // chartInstance.current.subscribeCrosshairMove((param) => {
-    //   if (!param || !param.time || !param.seriesData) {
-    //     if (closePriceElem) {
-    //       closePriceElem.textContent = '-'
-    //     }
-    //     if (rocElem) {
-    //       rocElem.textContent = '-'
-    //     }
-    //     return
-    //   }
+    // Set the visible range for the time scale to show the last 365 days
+    chartInstance.current.timeScale().setVisibleRange({ from: formattedStartDate, to: endDate })
 
-    //   const index = chartData.findIndex((data) => data.time === param.time)
-    //   if (index > 0 && rocElem && closePriceElem) {
-    //     const roc = cumulativeReturns_ret[index] * 100
-    //     const closePrice = coinDataMap[coin][index][4] // Adjusted to get the closing price correctly
-    //     rocElem.textContent = roc.toFixed(2) + '%'
-    //     closePriceElem.textContent = closePrice.toFixed(2)
-    //   }
-    // })
-
-    // Add custom labels for price scales
     const leftLabel = document.createElement('div')
     leftLabel.style.position = 'absolute'
-    leftLabel.style.top = '10px'
+    leftLabel.style.top = '-30px'
     leftLabel.style.left = '10px'
     leftLabel.style.color = 'white'
     leftLabel.style.zIndex = '10'
@@ -199,33 +160,29 @@ const Chart = ({ window, volatility, hourly }: { window: number; volatility: num
 
     const rightLabel = document.createElement('div')
     rightLabel.style.position = 'absolute'
-    rightLabel.style.top = '10px'
+    rightLabel.style.top = '-30px'
     rightLabel.style.right = '10px'
     rightLabel.style.color = 'white'
     rightLabel.style.zIndex = '10'
     rightLabel.innerText = 'Price'
 
-    if (chartContainerRef.current) {
-      chartContainerRef.current.appendChild(leftLabel)
-      chartContainerRef.current.appendChild(rightLabel)
-    }
+    chartContainerRef.current.appendChild(leftLabel)
+    chartContainerRef.current.appendChild(rightLabel)
 
     return () => {
       if (chartInstance.current) {
         chartInstance.current.remove()
         chartInstance.current = undefined
       }
-      if (chartContainerRef.current) {
-        chartContainerRef.current.removeChild(leftLabel)
-        chartContainerRef.current.removeChild(rightLabel)
-      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coin, cumulativeReturnsScaled, cumulativeReturns_ret])
+  }, [coin, coins, prices, dates, rolling_window, periods_per_year, target_vol])
 
   return (
     <>
-      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
+      <div
+        ref={chartContainerRef}
+        style={{ width: '100%', height: '400px', position: 'relative', marginTop: '30px' }}
+      />
     </>
   )
 }
