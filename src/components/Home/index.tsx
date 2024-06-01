@@ -88,7 +88,7 @@ const Home = () => {
             {prices.length > 0 ? (
               <Chart window={days} volatility={volatility} coins={coins} prices={prices} dates={dates} />
             ) : (
-              <p className="text-3xl"> Loading... </p>
+              <p className="text-3xl">Loading...</p>
             )}
             <Products></Products>
           </div>
