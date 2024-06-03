@@ -119,7 +119,7 @@ const Chart = ({
 
     const lineSeries = chartInstance.current.addLineSeries({
       color: 'white',
-      priceScaleId: 'left',
+      priceScaleId: 'right',
     })
 
     const chartDataPrice: ChartDataPrice[] = cumulativeReturnsScaled.map((data, index) => ({
@@ -130,7 +130,7 @@ const Chart = ({
     lineSeries.setData(chartDataPrice)
 
     const lineSeries2 = chartInstance.current.addLineSeries({
-      color: 'red',
+      color: '#ef233c',
       priceScaleId: 'right',
     })
 
