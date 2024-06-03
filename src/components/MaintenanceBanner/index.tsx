@@ -10,7 +10,7 @@ function MaintenanceBanner() {
   const fetchMaintenance = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
-    functionName: 'isMaintenance',
+    functionName: 'inMaintenance',
   })
 
   let status = false
