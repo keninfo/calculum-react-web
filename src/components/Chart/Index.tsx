@@ -150,23 +150,14 @@ const Chart = ({
     // Set the visible range for the time scale to show the last 365 days
     chartInstance.current.timeScale().setVisibleRange({ from: formattedStartDate, to: endDate })
 
-    const leftLabel = document.createElement('div')
-    leftLabel.style.position = 'absolute'
-    leftLabel.style.top = '-30px'
-    leftLabel.style.left = '10px'
-    leftLabel.style.color = 'white'
-    leftLabel.style.zIndex = '10'
-    leftLabel.innerText = 'ROC (%)'
-
     const rightLabel = document.createElement('div')
     rightLabel.style.position = 'absolute'
     rightLabel.style.top = '-30px'
     rightLabel.style.right = '10px'
     rightLabel.style.color = 'white'
     rightLabel.style.zIndex = '10'
-    rightLabel.innerText = 'Price'
+    rightLabel.innerText = 'ROC (%)'
 
-    chartContainerRef.current.appendChild(leftLabel)
     chartContainerRef.current.appendChild(rightLabel)
 
     return () => {
