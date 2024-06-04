@@ -7,7 +7,6 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 
 import ClaimMint from './ClaimMint'
 import ClaimWithdraw from './ClaimWithdraw'
-import InactiveDeposit from './Status/InactiveDeposit'
 import PendingDeposit from './Status/PendingDeposit'
 import PendingWithdraw from './Status/PendingWithdraw'
 
@@ -25,7 +24,7 @@ const Claim = () => {
 
   return (
     <div className="text-sm">
-      {userDepositsStatusResult == 0 && <InactiveDeposit />}
+      {/* {userDepositsStatusResult == 0 && <InactiveDeposit />} */}
       {userDepositsStatusResult == 1 ? (
         <PendingDeposit shares={formatShares(userDepositsShares)} />
       ) : (

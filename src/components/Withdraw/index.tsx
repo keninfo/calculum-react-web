@@ -7,7 +7,6 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 
 import Claimet from './Status/Claimet'
 import Completed from './Status/Completed'
-import Inactive from './Status/Inactive'
 import Pending from './Status/Pending'
 import PendingRedeem from './Status/PendingRedeem'
 import PendingWithdraw from './Status/PendingWithdraw'
@@ -16,14 +15,14 @@ type DepositData = [number, bigint, bigint, bigint]
 
 const Withdraw = () => {
   const { address } = useAccount()
-  const { Withdrawals, Deposits } = ContractReads()
+  const { Withdrawals } = ContractReads()
   const [selected, setSelected] = useState<number>(0)
   const { SymbolShares, BalanceShares } = ContractReads()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
 
   const [withdrawalStatus, withdrawnAssets, , withdrawalTotal] = (Withdrawals(address).data || []) as DepositData
-  const [depositStatus, , ,] = (Deposits(address).data || []) as DepositData
+  // const [depositStatus, , ,] = (Deposits(address).data || []) as DepositData
 
   const finalAmount = withdrawnAssets + withdrawalTotal
 
@@ -47,7 +46,7 @@ const Withdraw = () => {
         You have {parseFloat(formatShares(BalanceSharesResult))}
         <b className="text-carmesi"> {SymbolShares().data as string}</b> in Wallet
       </p>
-      {depositStatus == 0 && <Inactive />}
+      {/* {depositStatus == 0 && <Inactive />} */}
       {withdrawalStatus == 0 && <Completed selected={selected} />}
       {withdrawalStatus == 1 && <Pending />}
       {withdrawalStatus == 2 && <Claimet />}
