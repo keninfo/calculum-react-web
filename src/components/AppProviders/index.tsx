@@ -12,25 +12,15 @@ interface CoinContextType {
   setCoin: React.Dispatch<React.SetStateAction<string>>
 }
 
-interface SidebarContextType {
-  isSidebarOpen: boolean
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
 export const CoinContext = createContext<CoinContextType>({
   coin: 'ADA',
   setCoin: () => {},
 })
 
-export const SidebarContext = createContext<SidebarContextType>({
-  isSidebarOpen: true,
-  setSidebarOpen: () => {},
-})
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coin, setCoin] = useState<string>('ADA')
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true)
 
   return (
     <MetaMaskUIProvider
@@ -42,9 +32,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
     >
       <CacheProvider value={clientSideEmotionCache}>
         <CoinContext.Provider value={{ coin, setCoin }}>
-          <SidebarContext.Provider value={{ isSidebarOpen, setSidebarOpen }}>
-            <Web3ModalProvider>{children}</Web3ModalProvider>
-          </SidebarContext.Provider>
+          <Web3ModalProvider>{children}</Web3ModalProvider>
         </CoinContext.Provider>
       </CacheProvider>
     </MetaMaskUIProvider>
