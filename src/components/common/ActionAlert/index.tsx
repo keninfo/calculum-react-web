@@ -4,7 +4,7 @@ type AlertProps = {
 }
 
 const ActionAlert = ({ alert, className }: AlertProps) => (
-  <p className={`bg-carmesi px-[2vw] py-[1vh] rounded-lg mt-[4vh] mb-[2vh] ${className}`}>{alert}</p>
+  <p className={`text-carmesi py-[1vh] rounded-lg mb-[2vh] ${className} text-left`}>{alert}</p>
 )
 
 export default ActionAlert
