@@ -168,7 +168,10 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
   return (
     <>
       <ChartOptions onSubmit={submit} coins={coins} />
-      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px' }} />
+      <div
+        ref={chartContainerRef}
+        style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px', marginBottom: '50px' }}
+      />
     </>
   )
 }
