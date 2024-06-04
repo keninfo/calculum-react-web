@@ -72,7 +72,7 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
 
     chartInstance.current = createChart(chartContainerRef.current, {
       // width: 700,
-      // height: 400,
+      height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
         textColor: 'white',

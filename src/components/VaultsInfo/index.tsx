@@ -11,9 +11,11 @@ const VaultsInfo = () => {
       </div>
       <table className="table-fixed mt-[2vh] w-full">
         <thead className="text-[1vw] text-carmesi">
-          <th className="text-left">Strategy</th>
-          <th className="text-center">Price</th>
-          <th className="text-right">Change</th>
+          <tr>
+            <th className="text-left">Strategy</th>
+            <th className="text-center">Price</th>
+            <th className="text-right">Change</th>
+          </tr>
         </thead>
         <tbody className="text-[1vw]">
           <tr>
