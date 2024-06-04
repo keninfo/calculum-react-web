@@ -14,15 +14,13 @@ const CollateralsTableItem = (element: coinData) => {
   return (
     <tr
       key={element.asset}
-      className="cursor-pointer hover:scale-105 text-sm  [&>td]:py-[2vh] [&>td]:border-b [&>td]:border-darkness"
+      className="cursor-pointer hover:scale-105 text-sm [&>td]:py-[2vh] [&>td]:border-b [&>td]:border-darkness"
       onClick={() => handleTableRowClick(element)}
     >
-      <td className={`flex justify-start items-center ${element.asset === coin ? 'text-carmesi' : ''}`}>
-        <CryptoIcon coin={element.asset} className="size-[1.5rem] mr-[2vw]" /> {element.asset}
+      <td className={`flex justify-start items-center mr-[4vw] ${element.asset === coin ? 'text-carmesi' : ''}`}>
+        <CryptoIcon coin={element.asset} className="size-[1.5rem] mr-[.5vw]" /> {element.asset}
       </td>
-      <td>${element.price}</td>
-      <td>{element.apy}%</td>
-      <td>${element.market}</td>
+      <td className="text-right">${element.price.toFixed(2)}</td>
     </tr>
   )
 }

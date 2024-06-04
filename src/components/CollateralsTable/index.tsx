@@ -16,17 +16,9 @@ const CollateralsTable = () => {
   })
 
   return (
-    <div>
-      <h1 className="text-3xl text-carmesi my-[5vh]">Collaterals</h1>
-      <table className="w-full table-fixed text-left">
-        <thead>
-          <tr className="text-sm [&>th]:pb-[4vh] [&>th]:w-fit">
-            <th>ASSET</th>
-            <th>PRICE</th>
-            <th>APY</th>
-            <th>MARKET CAP</th>
-          </tr>
-        </thead>
+    <div className="border-r pr-[5vh]">
+      <h1 className="text-2xl mb-[2vh] text-center">COLLATERAL</h1>
+      <table className="table-fixed text-left mx-[1vw]">
         <tbody className="text-2xl">{sampleData.map((element) => CollateralsTableItem(element))}</tbody>
       </table>
     </div>
