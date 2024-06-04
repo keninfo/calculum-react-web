@@ -10,7 +10,7 @@ function MaintenanceBanner() {
   const fetchMaintenance = useReadContract({
     abi: calculumVaultContract.abi,
     address: calculumVaultContract.address as Hash,
-    functionName: 'inMaintenance',
+    functionName: 'InMaintenance',
   })
 
   let status = false
@@ -22,7 +22,7 @@ function MaintenanceBanner() {
   return (
     <>
       {status && (
-        <div className="fixed top-0 left-0 w-screen h-fit z-50 bg-carmesi text-white text-center py-2 text-sm">
+        <div className="w-screen h-fit z-50 bg-carmesi text-white text-center py-2 text-sm">
           The contract is currently undergoing maintenance. Please allow 15 minutes for the process to complete. Thank
           you for your patience.
         </div>
