@@ -37,7 +37,7 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins }) => {
   }, [days, onSubmit, volatility])
 
   return (
-    <div className="w-full h-[10vh] flex justify-start items-center space-x-10 pl-[4vw]">
+    <div className="w-full h-[10vh] flex justify-start items-center space-x-10">
       <div className="flex justify-start items-center">
         <CryptoIcon coin={coin} className="size-[2vw] mr-[1vw]" type="white" />
         <CoinSelect coins={coins} />
