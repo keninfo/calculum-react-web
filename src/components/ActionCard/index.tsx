@@ -7,6 +7,7 @@ import { TabsList } from '@mui/base/TabsList'
 
 import { useAccount } from 'wagmi'
 
+import CoinSelect from '@/components/ChartOptions/CoinSelect'
 import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
 import Withdraw from '@/components/Withdraw'
@@ -19,7 +20,7 @@ import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
-const ActionCard = () => {
+const ActionCard = ({ coins }: { coins: string[] }) => {
   const { address, isConnected } = useAccount()
   const { CheckWhitelist } = ContractReads()
 
@@ -60,8 +61,12 @@ const ActionCard = () => {
   }
 
   return (
-    <Card>
-      <div className="h-fit w-[20vw]">
+    <Card className="w-full h-full">
+      <div className="flex w-full mb-[4vh] space-x-2">
+        <p className="border rounded-xl py-0.5 w-full text-center">Strategy</p>
+        <CoinSelect coins={coins} />
+      </div>
+      <div className="h-fit">
         {isConnected && whitelistCheck && <ActionCardTabs />}
         {isConnected && !whitelistCheck && <NotWhitelist />}
         {!isConnected && <ConnectButton />}
