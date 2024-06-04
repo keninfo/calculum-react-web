@@ -1,8 +1,10 @@
 'use client'
 
+import type { SetStateAction } from 'react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinContext } from '../AppProviders'
+import ChartOptions from '../ChartOptions/Index'
 import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calculateRolling } from './chartComputations'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -21,25 +23,15 @@ const formatDate = (date: Date): string => {
   return `${year}-${month}-${day}`
 }
 
-const Chart = ({
-  window,
-  volatility,
-  coins,
-  prices,
-  dates,
-}: {
-  window: number
-  volatility: number
-  coins: string[]
-  prices: number[][]
-  dates: Date[]
-}) => {
+const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; dates: Date[] }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
 
   const [periods_per_year, setPeriod] = useState<number>(0)
   const [rolling_window, setRollling] = useState<number>(0)
   const [target_vol, setVol] = useState<number>(0.2)
+  const [volatility, setVolatility] = useState<number>(0.1)
+  const [window, setDays] = useState<number>(2)
 
   const { coin } = useContext(CoinContext)
 
@@ -58,7 +50,7 @@ const Chart = ({
     const getCoinArray = () => {
       const index = coins.indexOf(coin)
       if (prices) {
-        return prices[index]
+        return prices[index].slice(-365)
       }
       return []
     }
@@ -79,8 +71,8 @@ const Chart = ({
     }
 
     chartInstance.current = createChart(chartContainerRef.current, {
-      width: 700,
-      height: 400,
+      // width: 700,
+      // height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
         textColor: 'white',
@@ -119,24 +111,24 @@ const Chart = ({
 
     const lineSeries = chartInstance.current.addLineSeries({
       color: 'white',
-      priceScaleId: 'right',
+      priceScaleId: 'left',
     })
 
     const chartDataPrice: ChartDataPrice[] = cumulativeReturnsScaled.map((data, index) => ({
       time: formatDate(dates[index]),
-      value: data,
+      value: data * 100,
     }))
 
     lineSeries.setData(chartDataPrice)
 
     const lineSeries2 = chartInstance.current.addLineSeries({
       color: '#ef233c',
-      priceScaleId: 'right',
+      priceScaleId: 'left',
     })
 
     const chartDataPrice2: ChartDataPrice[] = cumulativeReturns_ret.map((data, index) => ({
       time: formatDate(dates[index]),
-      value: data,
+      value: data * 100,
     }))
 
     lineSeries2.setData(chartDataPrice2)
@@ -153,7 +145,7 @@ const Chart = ({
     const rightLabel = document.createElement('div')
     rightLabel.style.position = 'absolute'
     rightLabel.style.top = '-30px'
-    rightLabel.style.right = '10px'
+    rightLabel.style.left = '10px'
     rightLabel.style.color = 'white'
     rightLabel.style.zIndex = '10'
     rightLabel.innerText = 'ROC (%)'
@@ -168,12 +160,15 @@ const Chart = ({
     }
   }, [coin, coins, prices, dates, rolling_window, periods_per_year, target_vol])
 
+  const submit = (data: { volatility: SetStateAction<number>; days: SetStateAction<number> }) => {
+    setVolatility(data.volatility)
+    setDays(data.days)
+  }
+
   return (
     <>
-      <div
-        ref={chartContainerRef}
-        style={{ width: '100%', height: '400px', position: 'relative', marginTop: '30px' }}
-      />
+      <ChartOptions onSubmit={submit} coins={coins} />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px' }} />
     </>
   )
 }
