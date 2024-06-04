@@ -3,8 +3,8 @@ module.exports = {
   content: ['./src/app/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     colors: {
-      darkness: '#111111',
-      smoke: '#161a1d',
+      darkness: '#161a1d',
+      smoke: '#111111',
       carmesi: '#ef233c',
     },
   },

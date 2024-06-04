@@ -63,24 +63,24 @@ const Home = () => {
   return (
     <>
       <div className="grid grid-cols-11">
-        <div className="p-[1vw] col-span-8">
+        <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
             <Chart coins={coins} prices={prices} dates={dates.slice(-365)} />
           ) : (
             <p className="text-3xl">Loading...</p>
           )}
         </div>
-        <div className="p-[1vw] col-span-3 ">
+        <div className="p-[.5vw] col-span-3 ">
           <ActionCard coins={coins} />
         </div>
-        <div className="p-[1vw] col-span-8">
+        <div className="p-[.5vw] col-span-8">
           <Card className=" flex justify-between w-full">
             <CollateralsTable />
             <TradesTable />
           </Card>
         </div>
 
-        <div className="p-[1vw] col-span-3 ">
+        <div className="p-[.5vw] col-span-3 ">
           <VaultsInfo />
         </div>
       </div>

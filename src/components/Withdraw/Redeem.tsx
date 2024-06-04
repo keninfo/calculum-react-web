@@ -27,20 +27,20 @@ const Redeem = () => {
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Redeem shares of {SymbolShares().data as string}</p>
-      <div className="flex justify-between space-x-5">
+      <div className="flex justify-between">
         <input
-          className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+          className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
           type="number"
           value={amount}
           onChange={handleAmountChange}
         />
-        <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMaxShares}>
+        <button className="bg-carmesi border-2 px-[2vw] py-[1vh]" onClick={setMaxShares}>
           MAX
         </button>
       </div>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
       <input
-        className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full mb-[4vh]"
+        className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full mb-[4vh]"
         type="string"
         value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'}
         disabled

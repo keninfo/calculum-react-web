@@ -38,9 +38,12 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins }) => {
 
   return (
     <div className="w-full h-[10vh] flex justify-start items-center space-x-10 pl-[4vw]">
-      <CryptoIcon coin={coin} className="size-[2vw]" type="white" />
-      <CoinSelect coins={coins} />
-      <p className="border rounded-xl px-10 py-0.5">Last 365 days</p>
+      <div className="flex justify-start items-center">
+        <CryptoIcon coin={coin} className="size-[2vw] mr-[1vw]" type="white" />
+        <CoinSelect coins={coins} />
+      </div>
+
+      <p className="border px-10 py-0.5 bg-smoke">Last 365 days</p>
       <SetDays days={days} setDays={setDays} />
       <SetVolatility setVolatility={setVolatility} />
     </div>

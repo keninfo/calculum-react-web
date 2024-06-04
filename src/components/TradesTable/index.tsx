@@ -8,13 +8,13 @@ const TradesTable = () => {
         <h1 className="text-2xl text-center ">TRADES</h1>
         <div className="flex justify-between items-center space-x-[2vw]">
           <div
-            className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+            className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
           >
             <h4>Open</h4>
           </div>
           <div
-            className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+            className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(1)}
           >
             <h4>Closed</h4>

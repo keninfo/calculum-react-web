@@ -61,9 +61,9 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
   }
 
   return (
-    <Card className="w-full h-full">
+    <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
-        <p className="border rounded-xl py-0.5 w-full text-center">Strategy</p>
+        <p className="border py-0.5 w-full text-center bg-smoke">Strategy</p>
         <CoinSelect coins={coins} />
       </div>
       <div className="h-fit">
@@ -72,7 +72,7 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
         {!isConnected && <ConnectButton />}
       </div>
       {isConnected && (
-        <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white rounded-lg px-[2vw] py-[1vh]">
+        <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh]">
           {shortenAddress(address)}
         </p>
       )}

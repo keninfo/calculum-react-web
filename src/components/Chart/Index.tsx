@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinContext } from '../AppProviders'
 import ChartOptions from '../ChartOptions/Index'
+import Card from '../common/Card'
 import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calculateRolling } from './chartComputations'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -166,13 +167,13 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
   }
 
   return (
-    <>
+    <Card className="w-full">
       <ChartOptions onSubmit={submit} coins={coins} />
       <div
         ref={chartContainerRef}
         style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px', marginBottom: '50px' }}
       />
-    </>
+    </Card>
   )
 }
 

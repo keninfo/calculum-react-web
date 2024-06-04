@@ -30,13 +30,13 @@ const Withdraw = () => {
     <div className="text-sm">
       <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
         <div
-          className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+          className={`text-center border-2  bg-smoke  px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(0)}
         >
           <h4>Withdraw</h4>
         </div>
         <div
-          className={`text-center border-2  bg-smoke rounded-lg px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+          className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(1)}
         >
           <h4>Redeem</h4>

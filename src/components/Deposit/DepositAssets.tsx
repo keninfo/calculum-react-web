@@ -63,20 +63,20 @@ const DepositAssets = () => {
             You have {formattedBalance}
             <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
           </p>
-          <div className="flex justify-between space-x-5">
+          <div className="flex justify-between">
             <input
-              className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+              className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
               type="number"
               value={amount}
               onChange={handleAmountChange}
             />
-            <button className="bg-carmesi rounded-lg px-[2vw] py-[1vh]" onClick={setMax}>
+            <button className="bg-carmesi border-2 border-white px-[2vw] py-[1vh]" onClick={setMax}>
               MAX
             </button>
           </div>
           <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
           <input
-            className="bg-darkness text-white border-2 border-white rounded-lg px-[1vw] py-[1vh] w-full"
+            className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
             type="string"
             value={formattedShares + ' Shares of ' + (SymbolShares().data as string)}
             disabled

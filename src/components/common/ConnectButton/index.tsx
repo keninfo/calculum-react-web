@@ -14,7 +14,7 @@ const ConnectButton = () => {
   return (
     <Button
       onClick={isConnected ? () => disconnect() : () => open()}
-      className="bg-smoke py-[2vh] px-[4vw] w-full flex justify-center rounded-xl text-white  hover:scale-110  hover:text-carmesi"
+      className="bg-darkness py-[2vh] px-[4vw] w-full flex justify-center text-white  hover:scale-110  hover:text-carmesi"
     >
       {isConnected ? (
         <p className="text-[.8vw]">Disconnect {shortenAddress(address)}</p>
