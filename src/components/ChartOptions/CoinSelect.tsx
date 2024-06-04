@@ -7,7 +7,7 @@ const CoinSelect = ({ coins }: { coins: string[] }) => {
 
   return (
     <select
-      className="px-10 py-2 h-fit w-fit rounded-2xl text-md border border-white bg-smoke text-white text-left"
+      className="px-10 py-0.5 h-fit w-fit rounded-xl text-md border border-white bg-smoke text-white text-left"
       id="cryptoCoin"
       onChange={(e) => setCoin(e.target.value)}
       value={coin}
