@@ -5,6 +5,7 @@ import ActionCard from '@/components/ActionCard'
 import Chart from '@/components/Chart/Index'
 import VaultsInfo from '@/components/VaultsInfo'
 import Card from '@/components/common/Card'
+import ContractReads from '@/hooks/useContractReads'
 
 import CollateralsTable from '../CollateralsTable'
 import TradesTable from '../TradesTable'
@@ -25,9 +26,18 @@ const parseData = (data: any) => {
 }
 
 const Home = () => {
+  const { InMaintenance } = ContractReads()
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
   const [coins, setCoins] = useState<string[]>([])
+
+  let status = false
+
+  const data = InMaintenance().data as [boolean, number]
+  if (data) {
+    status = data[0] as boolean
+  }
+
   const fetchDaily = async () => {
     try {
       let dailyData = await d3.csv('/daily_prices_for_jesus.csv')
@@ -62,25 +72,20 @@ const Home = () => {
 
   return (
     <>
-      <div className="grid grid-cols-11">
+      <div className={`grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
-            <Chart coins={coins} prices={prices} dates={dates.slice(-365)} />
+            <Chart coins={coins} prices={prices} dates={dates} />
           ) : (
             <p className="text-3xl">Loading...</p>
           )}
-        </div>
-        <div className="p-[.5vw] col-span-3 ">
-          <ActionCard coins={coins} />
-        </div>
-        <div className="p-[.5vw] col-span-8">
-          <Card className=" flex justify-between w-full">
+          <Card className=" flex justify-between w-full mt-[1vw]">
             <CollateralsTable />
             <TradesTable />
           </Card>
         </div>
-
-        <div className="p-[.5vw] col-span-3 ">
+        <div className="p-[.5vw] col-span-3">
+          <ActionCard coins={coins} />
           <VaultsInfo />
         </div>
       </div>

@@ -17,8 +17,8 @@ const RootLayout = ({
       <body className="overscroll-none">
         <Providers>
           <AppProviders>
-            <div className="mt-[15vh] px-[2vw] pb-[2vw] bg-smoke ">{children}</div>
             <Navbar />
+            <div className="px-[2vw] pb-[2vw] bg-smoke">{children}</div>
           </AppProviders>
         </Providers>
       </body>
