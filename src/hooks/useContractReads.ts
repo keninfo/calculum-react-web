@@ -7,6 +7,14 @@ import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 
 const useContractReads = () => {
+  const InMaintenance = () => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'InMaintenance',
+    })
+    return { data, isLoading, error }
+  }
   const MaxDeposit = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
@@ -153,6 +161,7 @@ const useContractReads = () => {
   }
 
   return {
+    InMaintenance,
     MaxDeposit,
     CheckWhitelist,
     HasDeposited,

@@ -1,23 +1,17 @@
 import React from 'react'
 
-import type { Hash } from 'viem'
-
-import { useReadContract } from 'wagmi'
-
-import { calculumVaultContract } from '@/contracts/calculumVault'
+import ContractReads from '@/hooks/useContractReads'
 
 function MaintenanceBanner() {
-  const fetchMaintenance = useReadContract({
-    abi: calculumVaultContract.abi,
-    address: calculumVaultContract.address as Hash,
-    functionName: 'InMaintenance',
-  })
+  const { InMaintenance } = ContractReads()
 
   let status = false
-  const data = fetchMaintenance.data as [boolean, number]
+  const data = InMaintenance().data as [boolean, number]
   if (data) {
     status = data[0] as boolean
   }
+
+  // status = true
 
   return (
     <>
