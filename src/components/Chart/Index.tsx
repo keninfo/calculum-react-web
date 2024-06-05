@@ -3,9 +3,10 @@
 import type { SetStateAction } from 'react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { CoinContext } from '../AppProviders'
-import ChartOptions from '../ChartOptions/Index'
-import Card from '../common/Card'
+import { CoinContext } from '@/components/AppProviders'
+import ChartOptions from '@/components/ChartOptions/Index'
+import Card from '@/components/common/Card'
+
 import { pct_change, calculateScaledReturns, calculateCumulativeReturns, calculateRolling } from './chartComputations'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -33,6 +34,7 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
   const [target_vol, setVol] = useState<number>(0.2)
   const [volatility, setVolatility] = useState<number>(0.1)
   const [window, setDays] = useState<number>(2)
+  const [last, setLast] = useState<number>(14)
 
   const { coin } = useContext(CoinContext)
 
@@ -51,7 +53,7 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
     const getCoinArray = () => {
       const index = coins.indexOf(coin)
       if (prices) {
-        return prices[index].slice(-365)
+        return prices[index].slice(-last)
       }
       return []
     }
@@ -72,7 +74,6 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
     }
 
     chartInstance.current = createChart(chartContainerRef.current, {
-      // width: 700,
       height: 400,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
@@ -91,6 +92,7 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
         borderVisible: false,
       },
       leftPriceScale: {
+        mode: 2,
         visible: true,
         borderVisible: false,
       },
@@ -110,14 +112,20 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
       },
     })
 
+    const datesFiltered = dates.slice(-last)
+    const visibleRange = {
+      from: formatDate(datesFiltered[0]) as Time,
+      to: formatDate(datesFiltered[datesFiltered.length - 1]) as Time,
+    }
+
     const lineSeries = chartInstance.current.addLineSeries({
       color: 'white',
       priceScaleId: 'left',
     })
 
     const chartDataPrice: ChartDataPrice[] = cumulativeReturnsScaled.map((data, index) => ({
-      time: formatDate(dates[index]),
-      value: data * 100,
+      time: formatDate(datesFiltered[index]) as Time,
+      value: data,
     }))
 
     lineSeries.setData(chartDataPrice)
@@ -128,27 +136,21 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
     })
 
     const chartDataPrice2: ChartDataPrice[] = cumulativeReturns_ret.map((data, index) => ({
-      time: formatDate(dates[index]),
-      value: data * 100,
+      time: formatDate(datesFiltered[index]) as Time,
+      value: data,
     }))
 
     lineSeries2.setData(chartDataPrice2)
 
-    // Calculate the start date for the last 365 days
-    const startDate = new Date(dates[dates.length - 1])
-    startDate.setDate(startDate.getDate() - 365)
-    const formattedStartDate = formatDate(startDate)
-    const endDate = formatDate(dates[dates.length - 1])
-
-    // Set the visible range for the time scale to show the last 365 days
-    chartInstance.current.timeScale().setVisibleRange({ from: formattedStartDate, to: endDate })
+    // Set visible range after chart is created
+    chartInstance.current.timeScale().setVisibleRange(visibleRange)
 
     const rightLabel = document.createElement('div')
     rightLabel.style.position = 'absolute'
-    rightLabel.style.top = '-30px'
+    rightLabel.style.top = '-40px'
     rightLabel.style.left = '10px'
     rightLabel.style.color = 'white'
-    rightLabel.style.zIndex = '10'
+    rightLabel.style.zIndex = '1'
     rightLabel.innerText = 'ROC (%)'
 
     chartContainerRef.current.appendChild(rightLabel)
@@ -159,20 +161,22 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
         chartInstance.current = undefined
       }
     }
-  }, [coin, coins, prices, dates, rolling_window, periods_per_year, target_vol])
+  }, [coin, coins, prices, dates, rolling_window, periods_per_year, target_vol, last])
 
-  const submit = (data: { volatility: SetStateAction<number>; days: SetStateAction<number> }) => {
+  const submit = (data: {
+    volatility: SetStateAction<number>
+    days: SetStateAction<number>
+    dates: SetStateAction<number>
+  }) => {
     setVolatility(data.volatility)
     setDays(data.days)
+    setLast(data.dates)
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full p-[2vh] pr-0">
       <ChartOptions onSubmit={submit} coins={coins} />
-      <div
-        ref={chartContainerRef}
-        style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px', marginBottom: '50px' }}
-      />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '50px' }} />
     </Card>
   )
 }
