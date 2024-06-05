@@ -1,32 +1,18 @@
-const Index = ({
-  startDate,
-  endDate,
-  setStartDate,
-  setEndDate,
-}: {
-  startDate: Date
-  endDate: Date
-  setStartDate: (state: Date) => void
-  setEndDate: (state: Date) => void
-}) => {
+const Index = ({ setDates }: { setDates: (e: number) => void }) => {
+  const dates = [365, 90, 60, 30, 14, 7]
+
   return (
-    <div className="flex space-x-2 w-full items-center">
-      <input
-        className="px-2 py-1.5 h-fit rounded-2xl text-md border border-white bg-smoke text-white text-center"
-        type="date"
-        id="startDate"
-        value={startDate.toISOString().split('T')[0]}
-        onChange={(e) => setStartDate(new Date(e.target.value))}
-      />
-      <p> - </p>
-      <input
-        className="px-2 py-1.5 h-fit rounded-2xl text-md border border-white bg-smoke text-white text-center"
-        type="date"
-        id="endDate"
-        value={endDate.toISOString().split('T')[0]}
-        onChange={(e) => setEndDate(new Date(e.target.value))}
-      />
-    </div>
+    <select
+      className="px-10 py-0.5 h-fit w-fit text-md border border-white bg-smoke text-white text-left"
+      id="cryptoCoin"
+      onChange={(e) => setDates(parseFloat(e.target.value))}
+    >
+      {dates.map((target, index) => (
+        <option key={index} value={target}>
+          {target}
+        </option>
+      ))}
+    </select>
   )
 }
 
