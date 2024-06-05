@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div className="fixed top-0 left-0 w-screen bg-smoke  z-10">
       <MaintenanceBanner />
-      <div className=" flex justify-between items-center px-[2.5vw]">
+      <div className=" flex justify-between items-center px-[3vw]">
         <img src="/red.svg" alt="Bear Protocol" className="h-[6vh] mr-[4vw]" />
         <div className="flex w-fit justify-left items-center">{navigationItems.map(NavbarItem)}</div>
         <div className="w-[20vw]">

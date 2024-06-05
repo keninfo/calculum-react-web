@@ -4,7 +4,7 @@ import Card from '@/components/common/Card'
 
 const VaultsInfo = () => {
   return (
-    <Card className="w-full h-full">
+    <Card className="w-full h-[40vh] mt-[1vw]">
       <div className="flex justify-between items-center h-fit">
         <h4 className="text-2xl">VAULTS</h4>
         <p className="text-md">Last 24h</p>
