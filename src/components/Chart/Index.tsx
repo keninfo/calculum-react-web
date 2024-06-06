@@ -160,7 +160,7 @@ const Chart = ({ coins, prices, dates }: { coins: string[]; prices: number[][]; 
     rightLabel.style.left = '10px'
     rightLabel.style.color = 'white'
     rightLabel.style.zIndex = '1'
-    rightLabel.innerText = 'ROC (%)'
+    rightLabel.innerText = 'RoC (%)'
 
     chartContainerRef.current?.appendChild(rightLabel)
 
