@@ -3,7 +3,7 @@ const Index = ({ setDates }: { setDates: (e: number) => void }) => {
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
+      className="px-10 py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left rounded-none"
       id="cryptoCoin"
       onChange={(e) => setDates(parseFloat(e.target.value))}
     >

@@ -37,18 +37,18 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins }) => {
   }, [days, onSubmit, volatility, dates])
 
   return (
-    <div className="flex justify-between">
-      <div className="inline">
+    <div className="flex justify-between items-end">
+      <div className="inline w-full">
         <div className="flex items-center space-x-2">
-          <div className="w-20 h-1 bg-white"></div>
-          <span>Scaled</span>
+          <div className="w-[2vw] h-1 bg-white"></div>
+          <span className="text-xs">BTC - Return on Capital (RoC)</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <div className="w-20 h-1 bg-carmesi"></div>
-          <span className="text-carmesi">Volatility </span>
+        <div className="flex items-center space-x-2 w-fit">
+          <div className="w-[2vw] h-1 bg-carmesi"></div>
+          <p className="text-carmesi text-xs">BTC Vol Scaled - Return on Capital (RoC) </p>
         </div>
       </div>
-      <div className="w-full flex justify-end items-center space-x-[2vw] pr-[3vw]">
+      <div className="w-full flex justify-end items-center space-x-[1vw] pr-[3vw]">
         <div className="block space-y-[1vh]">
           <p className="opacity-30 text-right text-sm">Asset:</p>
           <CoinSelect coins={coins} />
