@@ -37,24 +37,36 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins }) => {
   }, [days, onSubmit, volatility, dates])
 
   return (
-    <div className="w-full flex justify-end items-center space-x-[2vw] pr-[2vw]">
-      <div className="block space-y-[1vh]">
-        <p className="opacity-30 text-right">Asset:</p>
-        <CoinSelect coins={coins} />
+    <div className="flex justify-between">
+      <div className="inline">
+        <div className="flex items-center space-x-2">
+          <div className="w-20 h-1 bg-white"></div>
+          <span>Scaled</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-20 h-1 bg-carmesi"></div>
+          <span className="text-carmesi">Volatility </span>
+        </div>
       </div>
-      <div className="block space-y-[1vh]">
-        <p className="opacity-30 text-right">Window:</p>
-        <DatePicker setDates={setDates} />
-      </div>
+      <div className="w-full flex justify-end items-center space-x-[2vw] pr-[3vw]">
+        <div className="block space-y-[1vh]">
+          <p className="opacity-30 text-right text-sm">Asset:</p>
+          <CoinSelect coins={coins} />
+        </div>
+        <div className="block space-y-[1vh]">
+          <p className="opacity-30 text-right text-sm">Window:</p>
+          <DatePicker setDates={setDates} />
+        </div>
 
-      <div className="block space-y-[1vh]">
-        <p className="opacity-30 text-right">Rolling Window:</p>
-        <SetDays days={days} setDays={setDays} />
-      </div>
+        <div className="block space-y-[1vh]">
+          <p className="opacity-30 text-right text-sm">Rolling Window:</p>
+          <SetDays days={days} setDays={setDays} />
+        </div>
 
-      <div className="block space-y-[1vh]">
-        <p className="opacity-30 text-right">Volatility:</p>
-        <SetVolatility setVolatility={setVolatility} />
+        <div className="block space-y-[1vh]">
+          <p className="opacity-30 text-right text-sm">Volatility:</p>
+          <SetVolatility setVolatility={setVolatility} />
+        </div>
       </div>
     </div>
   )
