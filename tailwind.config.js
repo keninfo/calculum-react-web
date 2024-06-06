@@ -6,6 +6,7 @@ module.exports = {
       darkness: '#161a1d',
       smoke: '#111111',
       carmesi: '#ef233c',
+      white: '#ffffff',
     },
   },
   plugins: [],
