@@ -3,7 +3,7 @@ const Index = ({ setVolatility }: { setVolatility: (e: number) => void }) => {
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-fit text-md border border-white bg-smoke text-white text-left"
+      className="px-10 py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
       id="cryptoCoin"
       onChange={(e) => setVolatility(parseFloat(e.target.value))}
     >
