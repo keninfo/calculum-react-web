@@ -6,7 +6,7 @@ import { useAccount, useDisconnect } from 'wagmi'
 
 import { shortenAddress } from '@/utils/formatters'
 
-const ConnectButton = () => {
+const ConnectButton = ({ className }: { className?: string }) => {
   const { open } = useWeb3Modal()
   const { isConnected, address } = useAccount()
   const { disconnect } = useDisconnect()
@@ -14,10 +14,10 @@ const ConnectButton = () => {
   return (
     <Button
       onClick={isConnected ? () => disconnect() : () => open()}
-      className="bg-darkness py-[2vh] px-[4vw] w-full flex justify-center text-white  hover:scale-110  hover:text-carmesi"
+      className={`bg-darkness py-[2vh] px-[4vw] w-full flex justify-center text-white  hover:scale-110  hover:text-carmesi ${className}`}
     >
       {isConnected ? (
-        <p className="text-[.8vw]">Disconnect {shortenAddress(address)}</p>
+        <p className="text-[.8vw]"> Disconnect {shortenAddress(address)}</p>
       ) : (
         <p className="text-[1vw]">Connect Wallet</p>
       )}
