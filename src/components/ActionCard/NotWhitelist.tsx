@@ -12,7 +12,7 @@ const NotWhitelist = () => {
         {`We're here to help!`}
       </p>
       <p className="text-center my-4 text-carmesi text-[1vw]">bearprotocol@placeholder.com</p>
-      <ConnectButton />
+      <ConnectButton className="bg-smoke" />
     </>
   )
 }

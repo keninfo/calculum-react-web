@@ -63,13 +63,13 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
   return (
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
-        <p className="border py-0.5 w-full text-center bg-smoke">Strategy</p>
+        <p className="border py-0.5 w-full text-center bg-smoke text-sm">Strategy</p>
         <CoinSelect coins={coins} />
       </div>
       <div className="h-fit">
         {isConnected && whitelistCheck && <ActionCardTabs />}
         {isConnected && !whitelistCheck && <NotWhitelist />}
-        {!isConnected && <ConnectButton />}
+        {!isConnected && <ConnectButton className="bg-smoke" />}
       </div>
       {isConnected && (
         <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh]">
