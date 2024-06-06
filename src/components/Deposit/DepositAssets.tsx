@@ -14,7 +14,7 @@ type DepositData = [number, bigint, bigint, bigint]
 const DepositAssets = () => {
   const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
-  const { Deposits, Allowance, MaxDeposit, SymbolAsset, SymbolShares, ConvertToShares, BalanceAssets } = ContractReads()
+  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit } = useDeposit()
@@ -78,7 +78,7 @@ const DepositAssets = () => {
           <input
             className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
             type="string"
-            value={formattedShares + ' Shares of ' + (SymbolShares().data as string)}
+            value={formattedShares + ' Shares'}
             disabled
           />
         </>
