@@ -77,7 +77,9 @@ const Home = () => {
           {prices.length > 0 ? (
             <Chart coins={coins} prices={prices} dates={dates} />
           ) : (
-            <p className="text-3xl">Loading...</p>
+            <Card className="w-full h-full flex justify-center">
+              <p className="text-3xl">Loading...</p>
+            </Card>
           )}
           <Card className=" flex justify-between w-full mt-[1vw]">
             <CollateralsTable />
