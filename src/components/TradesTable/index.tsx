@@ -28,7 +28,7 @@ const TradesTable = () => {
       </div>
       {isConnected ? (
         <div className="ml-[5vh]">
-          <table className="table-fixed mt-[4vh] w-full p-[2vw] mx-auto  bg-darkness">
+          {/* <table className="table-fixed mt-[4vh] w-full p-[2vw] mx-auto  bg-darkness">
             <thead className="text-[1.2vw] text-carmesi">
               <tr>
                 <th className="text-center pb-[2vh]">ASSET</th>
@@ -47,11 +47,11 @@ const TradesTable = () => {
                 </td>
               </tr>
             </tbody>
-          </table>
-          {/* <p className="text-center mt-[10vh] text-2xl">
+          </table> */}
+          <p className="text-center mt-[10vh] text-2xl">
             {selected == 0 && `You currently have no open trades`}
             {selected == 1 && `You currently have no closed trades`}
-          </p> */}
+          </p>
         </div>
       ) : (
         <div className="flex justify-center items-center">
