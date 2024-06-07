@@ -93,7 +93,7 @@ const Home = () => {
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
             <Chart
-              coins={['BTC', 'ETH', 'PEPE']}
+              coins={['BTC', 'BTC 20%', 'ETH', 'PEPE']}
               prices={prices}
               dates={dates}
               onPerformanceUpdate={handlePerformanceUpdate}
@@ -109,7 +109,7 @@ const Home = () => {
           </Card>
         </div>
         <div className="p-[.5vw] col-span-3">
-          <ActionCard coins={['BTC', 'ETH', 'PEPE']} />
+          <ActionCard coins={['BTC', 'BTC 20%', 'ETH', 'PEPE']} />
           <RebalancingResults results={performanceData} />
           <VaultsInfo />
         </div>

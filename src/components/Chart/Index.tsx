@@ -74,8 +74,10 @@ const Chart = ({
   useEffect(() => {
     if (coin == 'ETH') {
       setVol(0.1)
-    } else if (coin == 'BTC') {
+    } else if (coin == 'BTC 60%') {
       setVol(0.6)
+    } else if (coin == 'BTC 20%') {
+      setVol(0.2)
     } else {
       setVol(0.6)
     }
@@ -83,13 +85,7 @@ const Chart = ({
 
   useEffect(() => {
     setPeriod(365)
-    if (coin == 'ETH') {
-      setRollling(14)
-    } else if (coin == 'BTC') {
-      setRollling(14)
-    } else {
-      setRollling(14)
-    }
+    setRollling(14)
   }, [coin, window])
 
   useEffect(() => {
@@ -97,6 +93,11 @@ const Chart = ({
     if (showSecondChart && !chartContainerRef2.current) return
 
     const getCoinArray = () => {
+      if (coin == 'BTC 20%') {
+        const index = coins.indexOf('BTC')
+        return prices[index].slice(-last)
+      }
+
       const index = coins.indexOf(coin)
       if (prices) {
         return prices[index].slice(-last)
