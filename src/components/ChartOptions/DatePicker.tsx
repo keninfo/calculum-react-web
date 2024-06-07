@@ -1,5 +1,5 @@
 const Index = ({ setDates }: { setDates: (e: number) => void }) => {
-  const dates = [365, 90, 60, 30, 14, 7]
+  const dates = [365, 90, 60, 30]
 
   return (
     <select
