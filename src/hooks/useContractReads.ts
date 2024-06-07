@@ -160,6 +160,15 @@ const useContractReads = () => {
     return { data, isLoading, error }
   }
 
+  const TotalAssets = () => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'totalAssets',
+    })
+    return { data, isLoading, error }
+  }
+
   return {
     InMaintenance,
     MaxDeposit,
@@ -176,6 +185,7 @@ const useContractReads = () => {
     IsClaimerWithdraw,
     ConvertToShares,
     ConvertToAssets,
+    TotalAssets,
   }
 }
 
