@@ -403,6 +403,7 @@ const Chart = ({
       }))
 
       lineSeries3?.setData(chartDataPrice3)
+      chartInstance2.current?.timeScale().setVisibleRange(visibleRange)
 
       const toolTip2 = document.createElement('div')
       Object.assign(toolTip2.style, {
@@ -516,10 +517,7 @@ const Chart = ({
         </div>
 
         {showSecondChart && (
-          <div
-            ref={chartContainerRef2}
-            style={{ width: '100%', height: '20%', position: 'relative', marginTop: '50px' }}
-          />
+          <div ref={chartContainerRef2} style={{ width: '100%', height: '20%', position: 'relative' }} />
         )}
       </Card>
     </>
