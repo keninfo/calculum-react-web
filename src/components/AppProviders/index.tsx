@@ -13,14 +13,14 @@ interface CoinContextType {
 }
 
 export const CoinContext = createContext<CoinContextType>({
-  coin: 'ADA',
+  coin: 'BTC',
   setCoin: () => {},
 })
 
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const [coin, setCoin] = useState<string>('ADA')
+  const [coin, setCoin] = useState<string>('BTC')
 
   return (
     <MetaMaskUIProvider
