@@ -6,18 +6,17 @@ type DataRow = {
   label: string
   value: string
   change: string
+  active: boolean
 }
 
 const data: DataRow[] = [
-  { label: 'Vol ADA', value: '1580.47', change: '+3.45%' },
-  { label: 'Vol BTC', value: '2900.10', change: '-5.12%' },
-  { label: 'ETH/USDC', value: '820.50', change: '+12.34%' },
-  { label: 'Vol SOL', value: '1345.67', change: '-2.78%' },
-  { label: 'Vol MATIC', value: '3120.89', change: '+9.87%' },
-  { label: 'Vol ETH', value: '750.45', change: '-1.23%' },
-  { label: 'DOGE/ADA', value: '1400.89', change: '+8.90%' },
-  { label: 'Vol BNB', value: '2987.32', change: '-3.45%' },
-  { label: 'ADA/USDC', value: '780.67', change: '+6.78%' },
+  { label: 'Vol BTC', value: '2900.10', change: '-5.12%', active: true },
+  { label: 'Vol ETH', value: '2987.32', change: '3.45%', active: true },
+  { label: 'Vol PEPE', value: '750.45', change: '-1.23%', active: true },
+  { label: 'Vol ADA', value: '1580.47', change: '+3.45%', active: false },
+  { label: 'Vol ARB', value: '780.67', change: '+6.78%', active: false },
+  { label: 'Vol SOL', value: '1345.67', change: '-2.78%', active: false },
+  { label: 'Vol MATIC', value: '3120.89', change: '+9.87%', active: false },
 ]
 
 const VaultsInfo = () => {
@@ -32,6 +31,8 @@ const VaultsInfo = () => {
     // Initial sorting based on the default sortConfig
     setFilteredData((prevData) => {
       const sortedData = [...prevData].sort((a, b) => {
+        if (a.active && !b.active) return -1
+        if (!a.active && b.active) return 1
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === 'ascending' ? -1 : 1
         }
@@ -87,9 +88,9 @@ const VaultsInfo = () => {
         </thead>
         <tbody className="text-[1vw] w-full">
           {filteredData.map((row, index) => (
-            <tr key={index}>
-              <td className="text-left pt-[2vh] border-r">{row.label}</td>
-              <td className="text-center pt-[2vh] border-r">{row.value}</td>
+            <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
+              <td className="text-left pt-[2vh] border-r border-white">{row.label}</td>
+              <td className="text-center pt-[2vh] border-r border-white">{row.value}</td>
               <td className="text-right pt-[2vh]">{row.change}</td>
             </tr>
           ))}
