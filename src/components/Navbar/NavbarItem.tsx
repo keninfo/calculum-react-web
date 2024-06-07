@@ -15,7 +15,9 @@ const NavbarItem = (item: NavigationItem) => {
   return (
     <div key={item.name}>
       <Link href={item.link} className="flex items-center justify-start  hover:text-carmesi ">
-        <p className={` px-[3vw] py-[3vh] ${pathname == item.link ? 'text-[3vh] bg-smoke' : 'text-[2vh]'}`}>
+        <p
+          className={` px-[3vw] py-[3vh] ${pathname == item.link ? 'text-[3vh] bg-smoke text-carmesi font-bold' : 'text-[2vh]'}`}
+        >
           {item.name.toUpperCase()}
         </p>
       </Link>

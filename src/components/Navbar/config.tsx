@@ -5,7 +5,7 @@ export type NavigationItem = {
 }
 
 export const navigationItems: NavigationItem[] = [
-  { name: 'Overview', link: '/', icon: 'globe' },
-  { name: 'About', link: '', icon: 'info' },
-  { name: 'Docs', link: '', icon: 'file-invoice' },
+  { name: 'DASHBOARD', link: '/', icon: 'globe' },
+  { name: 'ABOUT', link: '', icon: 'info' },
+  { name: 'DOCS', link: '', icon: 'file-invoice' },
 ]
