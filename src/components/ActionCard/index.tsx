@@ -31,7 +31,7 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
       <Tab
         slotProps={{
           root: ({ selected }) => ({
-            className: `${selected ? 'text-carmesi hover:text-white' : 'text-white hover:text-carmesi'}`,
+            className: `${selected ? 'text-carmesi hover:text-white font-bold' : 'text-white hover:text-carmesi'}`,
           }),
         }}
         value={index}
@@ -63,7 +63,7 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
   return (
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
-        <p className="border py-0.5 w-full text-center bg-smoke text-sm">Strategy</p>
+        <p className="border py-0.5 w-full text-center bg-smoke text-sm opacity-30">Strategy...</p>
         <CoinSelect coins={coins} />
       </div>
       <div className="h-fit">
