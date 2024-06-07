@@ -12,7 +12,6 @@ import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
 import Withdraw from '@/components/Withdraw'
 import Card from '@/components/common/Card'
-import ConnectButton from '@/components/common/ConnectButton'
 import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
@@ -69,7 +68,7 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
       <div className="h-fit">
         {isConnected && whitelistCheck && <ActionCardTabs />}
         {isConnected && !whitelistCheck && <NotWhitelist />}
-        {!isConnected && <ConnectButton className="bg-smoke" />}
+        {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>}
       </div>
       {isConnected && (
         <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh]">
