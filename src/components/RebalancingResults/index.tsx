@@ -29,13 +29,13 @@ const RebalancingResults = ({ results }: { results: NewPerformance | null }) => 
       <p>
         Constant Volatility: <b>{scaledSharpe}</b>
       </p>
-      <p>
+      <p className="mt-[2vh]">
         CAGR, Raw: <b>{rawCAGR}%</b>
       </p>
       <p>
         Constant Volatility: <b>{scaledCAGR}%</b>
       </p>
-      <p>
+      <p className="mt-[2vh]">
         Largest Drawdown, Raw: <b>{rawDDMax}%</b>
       </p>
       <p>

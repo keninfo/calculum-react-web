@@ -508,7 +508,7 @@ const Chart = ({
           style={{ width: '100%', height: '50%', position: 'relative', marginTop: '50px' }}
         />
       </Card>
-      <Card className={`w-full mt-[2vh] ${showSecondChart ? 'p-[2vh] pr-0' : 'py-[1vh] px-[3vw]'}`}>
+      <Card className={`w-full mt-[2vh] ${showSecondChart ? 'p-[2vh] pr-0' : 'py-[2vh] px-[3vw]'}`}>
         <div className={`w-full flex justify-between ${showSecondChart ? 'pr-[3vw]' : ''}`}>
           <p className="text-xl">Rolling Volatility</p>
           <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
