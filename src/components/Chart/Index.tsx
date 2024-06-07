@@ -73,7 +73,7 @@ const Chart = ({
 
   useEffect(() => {
     if (coin == 'ETH') {
-      setVol(0.1)
+      setVol(0.3)
     } else if (coin == 'BTC 60%') {
       setVol(0.6)
     } else if (coin == 'BTC 20%') {
