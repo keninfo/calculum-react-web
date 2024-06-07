@@ -7,7 +7,9 @@ module.exports = {
       smoke: '#111111',
       carmesi: '#ef233c',
       white: '#ffffff',
+      greySmoke: '#666666',
     },
   },
+
   plugins: [],
 }
