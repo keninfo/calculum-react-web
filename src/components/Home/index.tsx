@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import ActionCard from '@/components/ActionCard'
 import Chart from '@/components/Chart/Index'
+import RebalancingResults from '@/components/RebalancingResults'
 import VaultsInfo from '@/components/VaultsInfo'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
@@ -25,17 +26,33 @@ const parseData = (data: any) => {
   })
 }
 
+interface PerformanceData {
+  sharpe: number
+  cagr: number
+  dd_max: string
+}
+
+interface NewPerformance {
+  raw: PerformanceData
+  scaled: PerformanceData
+}
+
 const Home = () => {
   const { InMaintenance } = ContractReads()
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
-  const [coins, setCoins] = useState<string[]>([])
+  const [performanceData, setPerformanceData] = useState<NewPerformance | null>(null)
+  // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
 
   const data = InMaintenance().data as [boolean, number]
   if (data) {
     status = data[0] as boolean
+  }
+
+  const handlePerformanceUpdate = (data: NewPerformance) => {
+    setPerformanceData(data)
   }
 
   const fetchDaily = async () => {
@@ -51,14 +68,14 @@ const Home = () => {
         return prices
       })
 
-      const coinNames: string[] = dailyData.reduce<string[]>((acc, obj) => {
-        const keys = Object.keys(obj).filter((key) => key !== 'date')
-        return [...acc, ...keys]
-      }, [])
+      // const coinNames: string[] = dailyData.reduce<string[]>((acc, obj) => {
+      //   const keys = Object.keys(obj).filter((key) => key !== 'date')
+      //   return [...acc, ...keys]
+      // }, [])
 
-      const uniqueCoinNames = Array.from(new Set(coinNames))
+      // const uniqueCoinNames = Array.from(new Set(coinNames))
 
-      setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
+      // setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
       setDates(dates)
       setPrices(arrayOfArrays)
     } catch (error) {
@@ -75,19 +92,25 @@ const Home = () => {
       <div className={`grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
-            <Chart coins={coins} prices={prices} dates={dates} />
+            <Chart
+              coins={['BTC', 'ETH', 'PEPE']}
+              prices={prices}
+              dates={dates}
+              onPerformanceUpdate={handlePerformanceUpdate}
+            />
           ) : (
             <Card className="w-full h-full flex justify-center">
               <p className="text-3xl">Loading...</p>
             </Card>
           )}
-          <Card className=" flex justify-between w-full mt-[1vw]">
+          <Card className=" flex justify-between w-full mt-[2vh]">
             <CollateralsTable />
             <TradesTable />
           </Card>
         </div>
         <div className="p-[.5vw] col-span-3">
-          <ActionCard coins={coins} />
+          <ActionCard coins={['BTC', 'ETH', 'PEPE']} />
+          <RebalancingResults results={performanceData} />
           <VaultsInfo />
         </div>
       </div>
