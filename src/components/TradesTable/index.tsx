@@ -8,10 +8,10 @@ const TradesTable = () => {
   const { isConnected } = useAccount()
   const [selected, setSelected] = useState<number>(0)
   return (
-    <div className="w-full h-max">
+    <div className="w-full">
       <div className="flex justify-between pl-[5vh] items-start">
         <h1 className="text-2xl text-center ">TRADES</h1>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center space-x-1">
           <div
             className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
