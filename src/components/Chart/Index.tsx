@@ -92,24 +92,37 @@ const Chart = ({
     if (!chartContainerRef1.current) return
     if (showSecondChart && !chartContainerRef2.current) return
 
-    const getCoinArray = () => {
+    const getCoinArray = (amount: number) => {
+      let index = 0
       if (coin == 'BTC 20%') {
-        const index = coins.indexOf('BTC')
-        return prices[index].slice(-last)
+        index = 0
       }
 
-      const index = coins.indexOf(coin)
-      if (prices) {
-        return prices[index].slice(-last)
+      if (coin == 'BTC') {
+        index = 0
       }
-      return []
+
+      if (coin == 'PEPE') {
+        index = 14
+      }
+
+      if (coin == 'ETH') {
+        index = 1
+      }
+
+      return prices[index].slice(-amount)
     }
 
-    const filteredPrices = getCoinArray()
+    const filteredPrices = getCoinArray(last + rolling_window)
+
     const percentageChange = pct_change(filteredPrices)
     const scaledReturns = calculateScaledReturns(percentageChange, rolling_window, periods_per_year, target_vol)
-    const cumulativeReturnsScaled = calculateCumulativeReturns(scaledReturns)
-    const cumulativeReturns_ret = calculateCumulativeReturns(percentageChange)
+    const cumulativeReturnsScaled = calculateCumulativeReturns(scaledReturns).slice(
+      rolling_window - 1,
+      scaledReturns.length,
+    )
+    const cumulativeReturns_ret = calculateCumulativeReturns(pct_change(getCoinArray(last + 1)))
+    cumulativeReturns_ret[0] = 1
 
     const rolled = calculateRolling(percentageChange, rolling_window)
     for (let i = 0; i < rolled.length; i++) {
@@ -223,7 +236,8 @@ const Chart = ({
       })
     }
 
-    const datesFiltered = dates.slice(-last)
+    // const datesFiltered = dates
+    const datesFiltered = dates.slice(-(last + rolling_window))
     const visibleRange = {
       from: formatDate(datesFiltered[0]) as Time,
       to: formatDate(datesFiltered[datesFiltered.length - 1]) as Time,
@@ -236,6 +250,7 @@ const Chart = ({
 
     const chartDataPrice1: ChartDataPrice[] = cumulativeReturnsScaled.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
+      // value: data,
       value: (data - 1) * 100,
     }))
 
@@ -248,6 +263,7 @@ const Chart = ({
 
     const chartDataPrice2: ChartDataPrice[] = cumulativeReturns_ret.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
+      // value: data,
       value: (data - 1) * 100,
     }))
 
@@ -502,15 +518,15 @@ const Chart = ({
 
   return (
     <>
-      <Card className="w-full p-[2vh] pr-0">
+      <Card className="w-full p-[1vh] pr-0">
         <ChartOptions onSubmit={submit} coins={coins} volatility={target_vol} days={rolling_window} />
         <div
           ref={chartContainerRef1}
           style={{ width: '100%', height: '50%', position: 'relative', marginTop: '50px' }}
         />
       </Card>
-      <Card className={`w-full mt-[2vh] ${showSecondChart ? 'p-[2vh] pr-0' : 'py-[2vh] px-[3vw]'}`}>
-        <div className={`w-full flex justify-between ${showSecondChart ? 'pr-[3vw]' : ''}`}>
+      <Card className={`w-full mt-[2vh] ${showSecondChart ? 'p-[1.5vh] pr-0' : 'py-[1.5vh] px-[1.5vw]'}`}>
+        <div className={`w-full flex justify-between ${showSecondChart ? 'pr-[1.5vw]' : ''}`}>
           <p className="text-xl">Rolling Volatility</p>
           <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
             {showSecondChart ? 'Hide' : 'Show'}
