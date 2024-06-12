@@ -51,11 +51,11 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
 
   return (
     <>
-      <Card className="w-full p-0 pt-[3vw] pl-[1vw]">
+      <Card className="w-full !p-0 !pt-[3vw] !pl-[1vw]">
         <ChartOptions />
         <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
       </Card>
-      <Card className={`w-full p-0 pl-[1vw] pb-[2vh]`}>
+      <Card className={`w-full !p-0 !pl-[1vw] !pb-[2vh]`}>
         {showSecondChart && <RollingVol dates={dates} seriesData={getCoinArray(0)} />}
         <div className={`w-full flex justify-end pt-[2vh] pr-[1vw]`}>
           <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
