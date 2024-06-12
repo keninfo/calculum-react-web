@@ -41,7 +41,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   if (data.length <= 0) {
     return (
       <Card className="w-full h-fit mt-[2vh]">
-        <p className="text-2xl w-full text-center">Loading...</p>
+        <p className="text-2xl w-full text-center animate-pulse">Loading...</p>
       </Card>
     )
   }
