@@ -1,37 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+
+import { OptionsContext } from '@/components/AppProviders'
 
 import CoinSelect from './CoinSelect'
-import DatePicker from './DatePicker'
+import SetWindow from './SetWindow'
 
-interface ChartOptionsProps {
-  onSubmit: (dataType: dataType) => void
-  coins: string[]
-  volatility: number
-  days: number
-}
-
-interface dataType {
-  start: Date
-  end: Date
-  volatility: number
-  days: number
-  dates: number
-}
-
-const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins, volatility, days }) => {
-  const [dates, setDates] = useState<number>(365)
-
-  useEffect(() => {
-    const debounceSubmit = setTimeout(() => {
-      const data = {
-        dates,
-      }
-      onSubmit(data as dataType)
-    }, 500)
-
-    return () => clearTimeout(debounceSubmit)
-  }, [onSubmit, dates])
-
+const ChartOptions = () => {
+  const { volatility, rollingWindow } = useContext(OptionsContext)
   return (
     <div className="flex justify-between items-start -mb-[5vh] w-full">
       <div className="inline w-full">
@@ -48,11 +23,11 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins, volatility
         <div className="w-full flex justify-end items-center space-x-[1vw] pr-[3vw]">
           <div className="block space-y-[1vh]">
             <p className="opacity-30 text-right text-sm">Asset:</p>
-            <CoinSelect coins={coins} />
+            <CoinSelect />
           </div>
           <div className="block space-y-[1vh]">
             <p className="opacity-30 text-right text-sm">Data History:</p>
-            <DatePicker setDates={setDates} />
+            <SetWindow />
           </div>
         </div>
         <div className="w-full flex justify-end items-center space-x-[1vw] pr-[3vw] mt-[3vh]">
@@ -62,7 +37,7 @@ const ChartOptions: React.FC<ChartOptionsProps> = ({ onSubmit, coins, volatility
           </div>
           <div className="flex text-greySmoke space-x-2">
             <p>Rolling Window:</p>
-            <p>{days} days</p>
+            <p>{rollingWindow} days</p>
           </div>
         </div>
       </div>

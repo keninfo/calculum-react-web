@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 
-import { CoinContext } from '@/components/AppProviders'
+import { OptionsContext } from '@/components/AppProviders'
 
-const CoinSelect = ({ coins }: { coins: string[] }) => {
-  const { coin, setCoin } = useContext(CoinContext)
+const coins = ['BTC', 'BTC 20%', 'ETH', 'PEPE']
+
+const CoinSelect = () => {
+  const { coin, setCoin } = useContext(OptionsContext)
 
   return (
     <select

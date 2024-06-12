@@ -19,7 +19,7 @@ import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
-const ActionCard = ({ coins }: { coins: string[] }) => {
+const ActionCard = () => {
   const { address, isConnected } = useAccount()
   const { CheckWhitelist } = ContractReads()
 
@@ -63,7 +63,7 @@ const ActionCard = ({ coins }: { coins: string[] }) => {
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
         <p className="border py-0.5 w-full text-center bg-smoke text-sm opacity-30">Strategy...</p>
-        <CoinSelect coins={coins} />
+        <CoinSelect />
       </div>
       <div className="h-fit">
         {isConnected && whitelistCheck && <ActionCardTabs />}
