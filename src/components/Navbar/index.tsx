@@ -13,7 +13,7 @@ library.add(fas)
 
 const Sidebar = () => {
   return (
-    <div className="fixed top-0 left-0 w-screen bg-smoke  z-10">
+    <div className="fixed top-0 left-0 w-screen bg-smoke z-50">
       <MaintenanceBanner />
       <div className=" flex justify-between items-center px-[3vw]">
         <img src="/red.svg" alt="Bear Protocol" className="h-[6vh] mr-[4vw]" />
