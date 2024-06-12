@@ -216,7 +216,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       >
         {!showCandle ? 'Show Candlestick' : 'Hide Candlestick'}
       </button>
-      <div ref={chartContainerRef} />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '20%', position: 'relative', marginTop: '20px' }} />
       <button onClick={resetChartView} className="absolute top-[6vh] right-[3vw] ">
         <FontAwesomeIcon icon={faRotate} />
       </button>
