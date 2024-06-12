@@ -27,6 +27,10 @@ export const lineChartConfig = {
     visible: true,
     borderVisible: false,
     fixLeftEdge: true,
+    tickMarkFormatter: (time: string | number | Date, locale: Intl.LocalesArgument) => {
+      const date = new Date(time)
+      return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+    },
   },
   crosshair: {
     horzLine: {
