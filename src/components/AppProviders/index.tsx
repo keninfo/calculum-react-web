@@ -22,15 +22,15 @@ interface OptionsContextType {
 
 export const OptionsContext = createContext<OptionsContextType>({
   coin: 'BTC',
-  setCoin: () => { },
+  setCoin: () => {},
   rollingWindow: 14,
-  setRollingWindow: () => { },
+  setRollingWindow: () => {},
   window: 365,
-  setWindow: () => { },
+  setWindow: () => {},
   volatility: 0.2,
-  setVolatility: () => { },
+  setVolatility: () => {},
   showCandle: false,
-  setShowCandle: () => { },
+  setShowCandle: () => {},
 })
 
 const clientSideEmotionCache = createEmotionCache()
