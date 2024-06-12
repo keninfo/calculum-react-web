@@ -119,7 +119,7 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
     }
   }, [coin, dates, rollingWindow, seriesData, window])
 
-  return <div ref={chartContainerRef} style={{ width: '100%', height: '20%', position: 'relative' }} />
+  return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
 }
 
 export default RoC

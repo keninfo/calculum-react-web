@@ -57,7 +57,7 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
       </Card>
       <Card className={`w-full p-0 pl-[1vw] pb-[2vh]`}>
         {showSecondChart && <RollingVol dates={dates} seriesData={getCoinArray(0)} />}
-        <div className={`w-full flex justify-end pt-[2vh] pr-[2vh]`}>
+        <div className={`w-full flex justify-end pt-[2vh] pr-[1vw]`}>
           <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
             {showSecondChart ? 'Hide' : 'Show'}
           </button>

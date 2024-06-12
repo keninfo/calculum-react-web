@@ -224,7 +224,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
   return (
     <div className="relative">
-      <div ref={chartContainerRef} style={{ width: '100%', height: '20%', position: 'relative', marginTop: '20px' }} />
+      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
     </div>
   )
 }
