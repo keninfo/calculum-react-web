@@ -37,7 +37,7 @@ export const lineChartConfig = {
       visible: true,
       style: 0,
       width: 2 as DeepPartial<LineWidth>,
-      color: 'rgba(32, 38, 46, 0.1)',
+      color: '#111111',
       labelVisible: false,
     },
   },

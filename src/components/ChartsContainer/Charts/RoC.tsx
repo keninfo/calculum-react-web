@@ -123,75 +123,100 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const toolTip = document.createElement('div')
 
-    if (!showCandle) {
-      Object.assign(toolTip.style, { height: '400px', ...tooltipConfig })
+    Object.assign(toolTip.style, { height: '400px', ...tooltipConfig })
 
-      toolTip.style.background = `rgba(255, 255, 255, 0.10)`
-      toolTip.style.color = 'white'
+    toolTip.style.background = `rgba(255, 255, 255, 0.10)`
+    toolTip.style.color = 'white'
 
-      chartContainerRef.current?.appendChild(toolTip)
+    chartContainerRef.current?.appendChild(toolTip)
 
-      chartInstance.current?.subscribeCrosshairMove((param) => {
-        if (
-          param.point === undefined ||
-          !param.time ||
-          param.point.x < 0 ||
-          param.point.x > (chartContainerRef.current?.clientWidth ?? 0) ||
-          param.point.y < 0 ||
-          param.point.y > (chartContainerRef.current?.clientHeight ?? 0)
-        ) {
-          toolTip.style.display = 'none'
-        } else {
-          toolTip.style.display = 'block'
-          const dateStr = param.time as string
-          const data1 = lineSeries1
-            ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
+    chartInstance.current?.subscribeCrosshairMove((param) => {
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > (chartContainerRef.current?.clientWidth ?? 0) ||
+        param.point.y < 0 ||
+        param.point.y > (chartContainerRef.current?.clientHeight ?? 0)
+      ) {
+        toolTip.style.display = 'none'
+      } else {
+        toolTip.style.display = 'block'
+        const dateStr = param.time as string
+        const data1 = lineSeries1
+          ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
+          : undefined
+        const rocScaled = data1?.value !== undefined ? data1.value : data1?.close
+        const data2 = lineSeries2
+          ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
+          : undefined
+        const rocCumulative = data2?.value !== undefined ? data2.value : data2?.close
+
+        if (!showCandle && rocCumulative !== undefined && rocScaled !== undefined) {
+          if (rocScaled > rocCumulative) {
+            toolTip.innerHTML = `<div style="color: white">${coin}</div>
+          <div>
+            <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
+            Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
+            <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
+            Raw Price: ${rocCumulative?.toFixed(2)}%</p>
+          </div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            ${dateStr}
+          </div>`
+          } else {
+            toolTip.innerHTML = `<div style="color: white">${coin}</div>
+          <div>
+            <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
+            Raw Price: ${rocCumulative?.toFixed(2)}%</p>
+            <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
+            Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
+          </div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            ${dateStr}
+          </div>`
+          }
+        } else if (showCandle) {
+          const candlestick = candlestickSeries
+            ? (param.seriesData.get(candlestickSeries) as {
+                open?: number
+                high?: number
+                low?: number
+                close?: number
+              })
             : undefined
-          const rocScaled = data1?.value !== undefined ? data1.value : data1?.close
-          const data2 = lineSeries2
-            ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
-            : undefined
-          const rocCumulative = data2?.value !== undefined ? data2.value : data2?.close
-
-          if (rocCumulative !== undefined && rocScaled !== undefined) {
-            if (rocScaled > rocCumulative) {
-              toolTip.innerHTML = `<div style="color: white">${coin}</div>
+          if (candlestick) {
+            const { open, high, low, close } = candlestick
+            toolTip.innerHTML = `<div style="color: white">${coin}</div>
             <div>
-              <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
-              Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
-              <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
-              Raw Price: ${rocCumulative?.toFixed(2)}%</p>
+              <p style="font-size: 10px; margin: 4px 0px; color: lightblue; font-weight: bold;">
+              O: ${open?.toFixed(4)}</p>
+              <p style="font-size: 10px; margin: 4px 0px; color: lightgreen; font-weight: bold;">
+              H: ${high?.toFixed(4)}</p>
+              <p style="font-size: 10px; margin: 4px 0px; color: salmon; font-weight: bold;">
+              L: ${low?.toFixed(4)}</p>
+              <p style="font-size: 10px; margin: 4px 0px; color: gold; font-weight: bold;">
+              C: ${close?.toFixed(4)}</p>
             </div>
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
               ${dateStr}
             </div>`
-            } else {
-              toolTip.innerHTML = `<div style="color: white">${coin}</div>
-            <div>
-              <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
-              Raw Price: ${rocCumulative?.toFixed(2)}%</p>
-              <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
-              Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
-            </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
-              ${dateStr}
-            </div>`
-            }
-
-            let left = param.point.x as number
-            const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
-            const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
-            const halfTooltipWidth = toolTipWidth / 2
-            left += priceScaleWidth - halfTooltipWidth
-            left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
-            left = Math.max(left, priceScaleWidth)
-
-            toolTip.style.left = left + 'px'
-            toolTip.style.top = '0px'
           }
         }
-      })
-    }
+
+        let left = param.point.x as number
+        const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
+        const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
+        const halfTooltipWidth = toolTipWidth / 2
+        left += priceScaleWidth - halfTooltipWidth
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
+        left = Math.max(left, priceScaleWidth)
+
+        toolTip.style.left = left + 'px'
+        toolTip.style.top = '0px'
+      }
+    })
+
     return () => {
       if (chartInstance.current) {
         chartInstance.current.remove()
@@ -217,7 +242,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         {!showCandle ? 'Show Candlestick' : 'Hide Candlestick'}
       </button>
       <div ref={chartContainerRef} style={{ width: '100%', height: '20%', position: 'relative', marginTop: '20px' }} />
-      <button onClick={resetChartView} className="absolute top-[6vh] right-[3vw] ">
+      <button onClick={resetChartView} className="absolute -top-[12vh] right-[1vw] ">
         <FontAwesomeIcon icon={faRotate} />
       </button>
     </div>
