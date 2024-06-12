@@ -51,19 +51,17 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
 
   return (
     <>
-      <Card className="w-full p-[3vh] pr-0">
+      <Card className="w-full p-0 pt-[3vw] pl-[1vw]">
         <ChartOptions />
         <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
       </Card>
-      <Card className={`w-full mt-[2vh] ${showSecondChart ? 'p-[3vh] pr-0' : 'py-[3vh] px-[2vw]'}`}>
-        <div className={`w-full flex justify-between ${showSecondChart ? 'pr-[2vw]' : ''}`}>
-          <p className="text-xl">Rolling Volatility</p>
+      <Card className={`w-full p-0 pl-[1vw] pb-[2vh]`}>
+        {showSecondChart && <RollingVol dates={dates} seriesData={getCoinArray(0)} />}
+        <div className={`w-full flex justify-end pt-[2vh] pr-[2vh]`}>
           <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
             {showSecondChart ? 'Hide' : 'Show'}
           </button>
         </div>
-
-        {showSecondChart && <RollingVol dates={dates} seriesData={getCoinArray(0)} />}
       </Card>
     </>
   )

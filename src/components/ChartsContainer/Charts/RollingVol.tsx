@@ -51,7 +51,7 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
 
     const chartDataPrice1: PriceChartData[] = rolled.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: data,
+      value: data * 100,
     }))
 
     lineSeries?.setData(chartDataPrice1)

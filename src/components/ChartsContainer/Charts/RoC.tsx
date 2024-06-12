@@ -1,7 +1,4 @@
-import { faRotate } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 
 import { OptionsContext } from '@/components/AppProviders'
 import { formatDate } from '@/utils/formatters'
@@ -36,8 +33,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility } = useContext(OptionsContext)
-  const [showCandle, setShowCandle] = useState<boolean>(false)
+  const { coin, window, rollingWindow, volatility, showCandle } = useContext(OptionsContext)
 
   useEffect(() => {
     if (!chartContainerRef.current) return
@@ -76,7 +72,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: data,
+      value: (data - 1) * 100,
     }))
 
     if (!showCandle) {
@@ -90,7 +86,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const chartDataPrice2: PriceChartData[] = cumulativeReturns.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: data,
+      value: (data - 1) * 100,
     }))
 
     if (!showCandle) {
@@ -226,25 +222,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     }
   }, [coin, dates, ohcl, rollingWindow, seriesData1, seriesData2, showCandle, volatility, window])
 
-  const resetChartView = () => {
-    if (chartInstance.current && initialVisibleRange.current) {
-      chartInstance.current.timeScale().setVisibleRange(initialVisibleRange.current)
-    }
-  }
-
   return (
     <div className="relative">
-      {!showCandle ? <p className="text-sm mb-[2vh]">RoC(%)</p> : <p className="text-lg mb-[2vh]">Price</p>}
-      <button
-        onClick={() => setShowCandle(!showCandle)}
-        className="text-sm mb-[2vh] absolute -top-[11vh] left-1/2 -translate-x-1/2 hover:text-carmesi hover:scale-105"
-      >
-        {!showCandle ? 'Show Candlestick' : 'Hide Candlestick'}
-      </button>
       <div ref={chartContainerRef} style={{ width: '100%', height: '20%', position: 'relative', marginTop: '20px' }} />
-      <button onClick={resetChartView} className="absolute -top-[12vh] right-[1vw] ">
-        <FontAwesomeIcon icon={faRotate} />
-      </button>
     </div>
   )
 }
