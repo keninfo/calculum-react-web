@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react'
 
 import ActionCard from '@/components/ActionCard'
-import Chart from '@/components/Chart/Index'
-import RebalancingResults from '@/components/RebalancingResults'
+import ChartsContainer from '@/components/ChartsContainer/Index'
+import CollateralsTable from '@/components/CollateralsTable'
+import TradesTable from '@/components/TradesTable'
 import VaultsInfo from '@/components/VaultsInfo'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
-import CollateralsTable from '../CollateralsTable'
-import TradesTable from '../TradesTable'
+import RebalancingResults from '../RebalancingResults'
 
 import * as d3 from 'd3'
 import { timeParse } from 'd3-time-format'
@@ -26,22 +26,10 @@ const parseData = (data: any) => {
   })
 }
 
-interface PerformanceData {
-  sharpe: number
-  cagr: number
-  dd_max: string
-}
-
-interface NewPerformance {
-  raw: PerformanceData
-  scaled: PerformanceData
-}
-
 const Home = () => {
   const { InMaintenance } = ContractReads()
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
-  const [performanceData, setPerformanceData] = useState<NewPerformance | null>(null)
   // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
@@ -49,10 +37,6 @@ const Home = () => {
   const data = InMaintenance().data as [boolean, number]
   if (data) {
     status = data[0] as boolean
-  }
-
-  const handlePerformanceUpdate = (data: NewPerformance) => {
-    setPerformanceData(data)
   }
 
   const fetchDaily = async () => {
@@ -92,12 +76,7 @@ const Home = () => {
       <div className={`grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
-            <Chart
-              coins={['BTC', 'BTC 20%', 'ETH', 'PEPE']}
-              prices={prices}
-              dates={dates}
-              onPerformanceUpdate={handlePerformanceUpdate}
-            />
+            <ChartsContainer prices={prices} dates={dates} />
           ) : (
             <Card className="w-full h-full flex justify-center">
               <p className="text-3xl">Loading...</p>
@@ -109,8 +88,8 @@ const Home = () => {
           </Card>
         </div>
         <div className="p-[.5vw] col-span-3">
-          <ActionCard coins={['BTC', 'BTC 20%', 'ETH', 'PEPE']} />
-          <RebalancingResults results={performanceData} />
+          <ActionCard />
+          <RebalancingResults data={prices} />
           <VaultsInfo />
         </div>
       </div>
