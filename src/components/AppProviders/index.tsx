@@ -16,17 +16,21 @@ interface OptionsContextType {
   setWindow: React.Dispatch<React.SetStateAction<number>>
   volatility: number
   setVolatility: React.Dispatch<React.SetStateAction<number>>
+  showCandle: boolean
+  setShowCandle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
   coin: 'BTC',
-  setCoin: () => {},
+  setCoin: () => { },
   rollingWindow: 14,
-  setRollingWindow: () => {},
+  setRollingWindow: () => { },
   window: 365,
-  setWindow: () => {},
+  setWindow: () => { },
   volatility: 0.2,
-  setVolatility: () => {},
+  setVolatility: () => { },
+  showCandle: false,
+  setShowCandle: () => { },
 })
 
 const clientSideEmotionCache = createEmotionCache()
@@ -36,6 +40,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [rollingWindow, setRollingWindow] = useState<number>(14)
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
+  const [showCandle, setShowCandle] = useState<boolean>(false)
 
   return (
     <MetaMaskUIProvider
@@ -47,7 +52,18 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
     >
       <CacheProvider value={clientSideEmotionCache}>
         <OptionsContext.Provider
-          value={{ coin, setCoin, rollingWindow, setRollingWindow, window, setWindow, volatility, setVolatility }}
+          value={{
+            coin,
+            setCoin,
+            rollingWindow,
+            setRollingWindow,
+            window,
+            setWindow,
+            volatility,
+            setVolatility,
+            showCandle,
+            setShowCandle,
+          }}
         >
           <Web3ModalProvider>{children}</Web3ModalProvider>
         </OptionsContext.Provider>
