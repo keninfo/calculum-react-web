@@ -212,9 +212,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       {!showCandle ? <p className="text-sm mb-[2vh]">RoC(%)</p> : <p className="text-lg mb-[2vh]">Price</p>}
       <button
         onClick={() => setShowCandle(!showCandle)}
-        className="text-sm mb-[2vh] absolute -top-[11vh] left-1/2 -translate-x-1/2 text-greySmoke hover:text-carmesi hover:scale-105"
+        className="text-sm mb-[2vh] absolute -top-[11vh] left-1/2 -translate-x-1/2 hover:text-carmesi hover:scale-105"
       >
-        Show CandleStick
+        {!showCandle ? 'Show Candlestick' : 'Hide Candlestick'}
       </button>
       <div ref={chartContainerRef} />
       <button onClick={resetChartView} className="absolute top-[6vh] right-[3vw] ">
