@@ -61,8 +61,8 @@ const VaultsInfo = () => {
 
   return (
     <Card className="w-full h-[80vh] mt-[1vw]">
-      <div className="flex justify-between items-center h-fit">
-        <h4 className="text-2xl">VAULTS</h4>
+      <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-[1vh] mb-[2vh]">
+        <h4 className="text-2xl ">VAULTS</h4>
         <p className="text-md">Last 24h</p>
       </div>
       <input
@@ -73,7 +73,7 @@ const VaultsInfo = () => {
         className="px-1 py-0.5 h-fit text-sm border border-white bg-smoke text-white text-center w-full mt-[2vh]"
       />
       <table className="table-fixed mt-[2vh] w-full">
-        <thead className="text-[1vw] text-carmesi">
+        <thead className="text-[1vw] ">
           <tr>
             <th className="text-left cursor-pointer" onClick={() => handleSort('label')}>
               Strategy {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}

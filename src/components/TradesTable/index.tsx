@@ -10,7 +10,7 @@ const TradesTable = () => {
   return (
     <div className="w-full">
       <div className="flex justify-between pl-[5vh] items-start">
-        <h1 className="text-2xl text-center ">TRADES</h1>
+        <h1 className="text-2xl text-center font-bold border-b-carmesi border-b-4 pb-[1vh]">TRADES</h1>
         <div className="flex justify-between items-center space-x-1">
           <div
             className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
