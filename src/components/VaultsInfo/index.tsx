@@ -61,7 +61,7 @@ const VaultsInfo = () => {
 
   return (
     <Card className="w-full h-[80vh] mt-[1vw]">
-      <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-[1vh] mb-[2vh]">
+      <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-1 mb-[2vh]">
         <h4 className="text-2xl ">VAULTS</h4>
         <p className="text-md">Last 24h</p>
       </div>

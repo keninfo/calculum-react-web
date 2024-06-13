@@ -95,7 +95,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
 
   return (
     <Card className="w-full h-fit mt-[2vh]">
-      <h2 className="text-xl  mb-4 font-bold border-b-carmesi border-b-4 pb-[1vh]">REBALANCED RESULTS</h2>
+      <h2 className="text-xl  mb-4 font-bold border-b-carmesi border-b-4 pb-1">REBALANCED RESULTS</h2>
       <p>
         Sharpe Ratio, Raw: <b>{rawSharpe}</b>
       </p>

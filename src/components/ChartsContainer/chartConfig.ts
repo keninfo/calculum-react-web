@@ -48,7 +48,7 @@ export const lineChartConfig = {
   localization: {
     dateFormat: "dd MMMM 'yy",
     priceFormatter: (price: number) => {
-      return price.toFixed(2) + '%' // Append a string (e.g., currency symbol) to each value
+      return price.toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
     },
   },
 }
