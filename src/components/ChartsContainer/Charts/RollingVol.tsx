@@ -4,7 +4,7 @@ import { OptionsContext } from '@/components/AppProviders'
 import { formatDate } from '@/utils/formatters'
 
 import { calculateRolling, pct_change } from '../chartComputations'
-import { lineChartConfig, toolTipWidth, tooltipConfig } from '../chartConfig'
+import { lineChartConfig, toolTipWidth, tooltipConfig, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { createChart } from 'lightweight-charts'
@@ -35,8 +35,14 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
       chartInstance.current = createChart(chartContainerRef.current, { height: 200, ...lineChartConfig })
     }
 
-    const seriesDataFiltered = seriesData.slice(-window)
-    const datesFiltered = dates.slice(-window)
+    const seriesDataFiltered = seriesData.slice(
+      seriesData.length - (window + rollingWindow + 1),
+      seriesData.length - rollingWindow + 1,
+    )
+    const datesFiltered = dates.slice(
+      dates.length - (window + rollingWindow + 1),
+      seriesData.length - rollingWindow + 1,
+    )
 
     const rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
 
@@ -47,6 +53,12 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
     const lineSeries = chartInstance.current?.addLineSeries({
       color: 'limegreen',
       priceScaleId: 'left',
+      autoscaleInfoProvider: () => ({
+        priceRange: {
+          minValue: 0,
+          maxValue: 100,
+        },
+      }),
     })
 
     const chartDataPrice1: PriceChartData[] = rolled.map((data, index) => ({
@@ -109,6 +121,10 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
         }
       }
     })
+
+    if (lineSeries) {
+      lineSeries.createPriceLine(zeroLine)
+    }
 
     return () => {
       if (chartInstance.current) {

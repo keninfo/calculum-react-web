@@ -47,6 +47,9 @@ export const lineChartConfig = {
   },
   localization: {
     dateFormat: "dd MMMM 'yy",
+    priceFormatter: (price: number) => {
+      return price.toFixed(2) + '%' // Append a string (e.g., currency symbol) to each value
+    },
   },
 }
 
@@ -66,4 +69,12 @@ export const tooltipConfig = {
   pointerEvents: 'none',
   fontFamily: '-apple-system, BlinkMacSystemFont, Montserrat, Roboto, Ubuntu, sans-serif',
   color: 'white',
+}
+
+export const zeroLine = {
+  price: 0,
+  color: 'rgba(255, 255, 255, 0.25)',
+  lineWidth: 2 as LineWidth,
+  lineStyle: 0,
+  axisLabelVisible: false,
 }

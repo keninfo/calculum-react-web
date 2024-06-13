@@ -4,7 +4,7 @@ import { OptionsContext } from '@/components/AppProviders'
 import { formatDate } from '@/utils/formatters'
 
 import { calculateCumulativeReturns, calculateScaledReturns, pct_change } from '../chartComputations'
-import { lineChartConfig, tooltipConfig, toolTipWidth } from '../chartConfig'
+import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { createChart } from 'lightweight-charts'
@@ -43,7 +43,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     }
 
     if (chartContainerRef.current) {
-      chartInstance.current = createChart(chartContainerRef.current, { height: 400, ...lineChartConfig })
+      chartInstance.current = createChart(chartContainerRef.current, {
+        height: 400,
+        ...lineChartConfig,
+        // timeScale: { visible: false },
+      })
     }
 
     const periods = 365 // only for daily, have to change if hourly
@@ -212,6 +216,14 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         toolTip.style.top = '0px'
       }
     })
+
+    if (lineSeries1) {
+      lineSeries1.createPriceLine(zeroLine)
+    }
+
+    if (candlestickSeries) {
+      candlestickSeries.createPriceLine(zeroLine)
+    }
 
     return () => {
       if (chartInstance.current) {
