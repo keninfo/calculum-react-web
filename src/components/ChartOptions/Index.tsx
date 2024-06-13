@@ -19,10 +19,6 @@ const ChartOptions = () => {
           <div className="w-[2vw] h-1 bg-carmesi"></div>
           <p className="text-carmesi text-sm">BTC Vol Scaled - Return on Capital (RoC) </p>
         </div>
-        <div className="flex items-center space-x-2 w-fit">
-          <div className="w-[2vw] h-1 bg-[#32CD32]"></div>
-          <p className="text-[#32CD32] text-sm">Rolling Volatility </p>
-        </div>
       </div>
       <div className="w-full">
         <div className="w-full flex justify-end items-center space-x-[1vw] pr-[3vw]">
