@@ -33,6 +33,16 @@ export const OptionsContext = createContext<OptionsContextType>({
   setShowCandle: () => {},
 })
 
+interface ProContextType {
+  pro: boolean
+  setPro: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const ProContext = createContext<ProContextType>({
+  pro: false,
+  setPro: () => {},
+})
+
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
@@ -41,6 +51,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
   const [showCandle, setShowCandle] = useState<boolean>(false)
+  const [pro, setPro] = useState<boolean>(false)
 
   return (
     <MetaMaskUIProvider
@@ -65,7 +76,9 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
             setShowCandle,
           }}
         >
-          <Web3ModalProvider>{children}</Web3ModalProvider>
+          <ProContext.Provider value={{ pro, setPro }}>
+            <Web3ModalProvider>{children}</Web3ModalProvider>
+          </ProContext.Provider>
         </OptionsContext.Provider>
       </CacheProvider>
     </MetaMaskUIProvider>

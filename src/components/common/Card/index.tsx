@@ -7,7 +7,7 @@ type CardProps = {
 }
 
 const Card = ({ children, className }: CardProps) => {
-  return <div className={`h-fit w-fit bg-darkness p-[5vh] transition ease-in-out ${className}`}>{children}</div>
+  return <div className={`h-fit w-fit p-[5vh] transition ease-in-out bg-darkness  ${className}`}>{children}</div>
 }
 
 export default Card

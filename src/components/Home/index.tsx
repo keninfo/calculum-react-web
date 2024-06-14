@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import ActionCard from '@/components/ActionCard'
 import ChartsContainer from '@/components/ChartsContainer/Index'
@@ -9,6 +9,7 @@ import VaultsInfo from '@/components/VaultsInfo'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
+import { ProContext } from '../AppProviders'
 import RebalancingResults from '../RebalancingResults'
 
 import * as d3 from 'd3'
@@ -30,6 +31,7 @@ const Home = () => {
   const { InMaintenance } = ContractReads()
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
+  const { pro } = useContext(ProContext)
   // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
@@ -89,7 +91,7 @@ const Home = () => {
         </div>
         <div className="p-[.5vw] col-span-3">
           <ActionCard />
-          <RebalancingResults data={prices} />
+          {pro && <RebalancingResults data={prices} />}
           <VaultsInfo />
         </div>
       </div>
