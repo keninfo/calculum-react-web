@@ -6,7 +6,6 @@ import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
 import TradesTable from '@/components/TradesTable'
 import VaultsInfo from '@/components/VaultsInfo'
-import WelcomeModal from '@/components/WelcomeModal'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
@@ -77,7 +76,6 @@ const Home = () => {
   return (
     <>
       <div className={`grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
-        <WelcomeModal />
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
