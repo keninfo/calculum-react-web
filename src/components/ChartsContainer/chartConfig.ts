@@ -15,7 +15,7 @@ export const lineChartConfig = {
     },
   },
   rightPriceScale: {
-    visible: true,
+    visible: false,
     borderVisible: false,
   },
   leftPriceScale: {
