@@ -51,6 +51,14 @@ export const lineChartConfig = {
       return price.toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
     },
   },
+  handleScroll: {
+    mouseWheel: false,
+    horzTouchDrag: false,
+    vertTouchDrag: false,
+  },
+  handleScale: {
+    mouseWheel: false,
+  },
 }
 
 export const toolTipWidth = 96
