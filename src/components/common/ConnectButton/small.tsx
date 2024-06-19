@@ -6,8 +6,6 @@ import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 import { useAccount, useDisconnect } from 'wagmi'
 
-import ClearButton from '@/components/common/ClearButton'
-
 library.add(fas)
 
 const SmallConnectButton = () => {
@@ -16,19 +14,19 @@ const SmallConnectButton = () => {
   const { disconnect } = useDisconnect()
 
   return (
-    <ClearButton handleClickClearButton={isConnected ? () => disconnect() : () => open()}>
+    <button onClick={isConnected ? () => disconnect() : () => open()}>
       {isConnected ? (
-        <p className="text-white">
+        <p className="text-white flex items-center">
           {' '}
-          <FontAwesomeIcon icon={['fas', 'link-slash' as IconName]} />
+          <FontAwesomeIcon icon={['fas', 'link-slash' as IconName]} className="h-[4vh]" />
         </p>
       ) : (
-        <p className="text-white">
+        <p className="text-white flex items-center">
           {' '}
-          <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} />
+          <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh] " />
         </p>
       )}
-    </ClearButton>
+    </button>
   )
 }
 
