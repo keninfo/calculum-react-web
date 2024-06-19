@@ -99,6 +99,7 @@ const Home = () => {
 
       {/* MOBILE */}
       <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] | md:hidden">
+        <ActionCard />
         {prices.length > 0 ? (
           <ChartsContainer prices={prices} dates={dates} />
         ) : (

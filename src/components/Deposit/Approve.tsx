@@ -38,7 +38,7 @@ const Approve = () => {
       </p>
       <div className="flex justify-between">
         <input
-          className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
+          className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] | md:px-[1vw]"
           type="number"
           value={amount}
           onChange={handleAmountChange}

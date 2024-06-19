@@ -35,7 +35,7 @@ const ActionCard = () => {
         }}
         value={index}
       >
-        <p className="text-[1vw]">{tab}</p>
+        <p className="text-lg | md:text-[1vw]">{tab}</p>
       </Tab>
     )
   }
@@ -43,7 +43,7 @@ const ActionCard = () => {
   const ActionCardTabs = () => {
     return (
       <Tabs defaultValue={0}>
-        <TabsList className="w-min flex justify-between space-x-[2vw] mx-auto">
+        <TabsList className="w-min flex justify-between space-x-[6vw] mx-auto | md:space-x-[2vw]">
           {actions.map((tab, index) => ActionTab({ tab, index }))}
         </TabsList>
         <TabPanel value={0} className="text-center">
@@ -62,7 +62,15 @@ const ActionCard = () => {
   return (
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
-        <p className="border py-0.5 w-full text-center bg-smoke text-sm opacity-30">Strategy...</p>
+        <select
+          className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-white text-left"
+          id="cryptoCoin"
+          value={'USDC vol'}
+        >
+          <option key={1} value={'USDC vol'}>
+            {'USDC vol'}
+          </option>
+        </select>
         <CoinSelect />
       </div>
       <div className="h-fit">
@@ -71,7 +79,7 @@ const ActionCard = () => {
         {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>}
       </div>
       {isConnected && (
-        <p className="text-white text-[.8vw] text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh]">
+        <p className="text-white text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh] text-md | md:text-[.8vw]">
           {shortenAddress(address)}
         </p>
       )}

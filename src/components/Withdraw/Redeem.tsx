@@ -29,7 +29,7 @@ const Redeem = () => {
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Redeem shares of {SymbolShares().data as string}</p>
       <div className="flex justify-between">
         <input
-          className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full"
+          className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] | md:px-[1vw] "
           type="number"
           value={amount}
           onChange={handleAmountChange}
@@ -40,7 +40,7 @@ const Redeem = () => {
       </div>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
       <input
-        className="bg-darkness text-white border-2 border-white px-[1vw] py-[1vh] w-full mb-[4vh]"
+        className="bg-darkness text-white border-2 border-white py-[1vh] w-full mb-[4vh] px-[4vw] | md:px-[1vw] "
         type="string"
         value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'}
         disabled

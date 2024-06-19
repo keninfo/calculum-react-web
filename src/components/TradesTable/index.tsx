@@ -27,7 +27,7 @@ const TradesTable = () => {
         </div>
       </div>
       {isConnected ? (
-        <div className="ml-[5vh]">
+        <div className="md:ml-[5vh]">
           <p className="text-center mt-[10vh] text-2xl">
             {selected == 0 && `You currently have no open trades`}
             {selected == 1 && `You currently have no closed trades`}

@@ -28,7 +28,7 @@ const Withdraw = () => {
 
   return (
     <div className="text-sm">
-      <div className="flex justify-between p-[1vw] my-[2vh] text-sm">
+      <div className="flex  p-[1vw] my-[2vh] text-sm justify-center space-x-[4vw] | md:justify-between md:space-x-0">
         <div
           className={`text-center border-2  bg-smoke  px-[2vw] py-[1vh] cursor-pointer  hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(0)}
