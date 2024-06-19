@@ -75,7 +75,8 @@ const Home = () => {
 
   return (
     <>
-      <div className={`grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
+      {/* DESKTOP */}
+      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
         <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
@@ -94,6 +95,25 @@ const Home = () => {
           {pro && <RebalancingResults data={prices} />}
           <VaultsInfo />
         </div>
+      </div>
+
+      {/* MOBILE */}
+      <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] | md:hidden">
+        {prices.length > 0 ? (
+          <ChartsContainer prices={prices} dates={dates} />
+        ) : (
+          <Card className="w-full h-full flex justify-center">
+            <p className="text-3xl animate-pulse">Loading...</p>
+          </Card>
+        )}
+        {pro && <RebalancingResults data={prices} />}
+        <Card>
+          <TradesTable />
+        </Card>
+        <VaultsInfo />
+        <Card>
+          <CollateralsTable />
+        </Card>
       </div>
     </>
   )

@@ -52,17 +52,20 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
 
   return (
     <>
-      <Card className="w-full !p-0 !pt-[3vw] !pl-[1vw] !pb-[2vh]">
+      <Card className="w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[2vw]">
         <ChartOptions />
         <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
       </Card>
       {pro && (
-        <Card className={`w-full !p-0 !pl-[1vw] !pb-[2vh]`}>
-          <div className={`w-full flex justify-between items-center pb-[4vh] pt-[3vh] pr-[3vw] pl-[1vw]`}>
-            <div className="flex items-center space-x-2 w-fit">
+        <Card className={`w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[2vw]`}>
+          <div className={`w-full flex justify-between items-center py-[3vh] | md:pb-[4vh] md:pt-[3vh]`}>
+            <div className="flex items-center space-x-2 w-fit ml-[6vw] | md:ml-0">
               <p className="text-white text-2xl">Rolling Volatility </p>
             </div>
-            <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105" onClick={toggleSecondChart}>
+            <button
+              className="border py-[.5vh] px-[1vw] text-xs hover:scale-105 mr-[6vw] | mr:ml-0"
+              onClick={toggleSecondChart}
+            >
               {showSecondChart ? 'Hide' : 'Show'}
             </button>
           </div>

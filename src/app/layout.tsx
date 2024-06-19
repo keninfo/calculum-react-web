@@ -18,7 +18,7 @@ const RootLayout = ({
         <Providers>
           <AppProviders>
             <Navbar />
-            <div className="px-[2vw] pb-[2vw] bg-smoke">{children}</div>
+            <div className="md:px-[2vw] pb-[2vw] bg-smoke">{children}</div>
           </AppProviders>
         </Providers>
       </body>

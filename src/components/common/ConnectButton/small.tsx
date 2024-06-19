@@ -4,6 +4,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 
+import { Button } from '@mui/base'
+
 import { useAccount, useDisconnect } from 'wagmi'
 
 library.add(fas)
@@ -13,20 +15,26 @@ const SmallConnectButton = () => {
   const { isConnected } = useAccount()
   const { disconnect } = useDisconnect()
 
+  const handleClick = () => {
+    if (isConnected) {
+      disconnect()
+    } else {
+      open()
+    }
+  }
+
   return (
-    <button onClick={isConnected ? () => disconnect() : () => open()}>
+    <Button onClick={handleClick}>
       {isConnected ? (
         <p className="text-white flex items-center">
-          {' '}
           <FontAwesomeIcon icon={['fas', 'link-slash' as IconName]} className="h-[4vh]" />
         </p>
       ) : (
         <p className="text-white flex items-center">
-          {' '}
-          <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh] " />
+          <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh]" />
         </p>
       )}
-    </button>
+    </Button>
   )
 }
 

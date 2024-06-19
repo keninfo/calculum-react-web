@@ -17,9 +17,9 @@ const ConnectButton = ({ className }: { className?: string }) => {
       className={`bg-darkness py-[2vh] px-[4vw] w-full flex justify-center text-white  hover:scale-105  hover:text-carmesi ${className}`}
     >
       {isConnected ? (
-        <p className="text-[.8vw]"> Disconnect {shortenAddress(address)}</p>
+        <p className="text-[1.5vh] | md:text-[.8vw]"> Disconnect {shortenAddress(address)}</p>
       ) : (
-        <p className="text-[1vw]">Connect Wallet</p>
+        <p className="text-[2vh] | md:text-[1vw]">Connect Wallet</p>
       )}
     </Button>
   )

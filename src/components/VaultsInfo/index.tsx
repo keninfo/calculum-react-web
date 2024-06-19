@@ -62,7 +62,7 @@ const VaultsInfo = () => {
   return (
     <Card className="w-full h-[80vh] mt-[1vw]">
       <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-1 mb-[2vh]">
-        <h4 className="text-2xl ">VAULTS</h4>
+        <h4 className="text-xl ">VAULTS</h4>
         <p className="text-md">Last 24h</p>
       </div>
       <input
@@ -73,20 +73,20 @@ const VaultsInfo = () => {
         className="px-1 py-0.5 h-fit text-sm border border-white bg-smoke text-white text-center w-full mt-[2vh]"
       />
       <table className="table-fixed mt-[2vh] w-full">
-        <thead className="text-[1vw] ">
+        <thead className="text-[2vh] | md:text-[1vw]">
           <tr>
-            <th className="text-left cursor-pointer" onClick={() => handleSort('label')}>
+            <th className="text-left cursor-pointer " onClick={() => handleSort('label')}>
               Strategy {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center cursor-pointer" onClick={() => handleSort('value')}>
+            <th className="text-center cursor-pointer " onClick={() => handleSort('value')}>
               Price {sortConfig.key === 'value' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-right cursor-pointer" onClick={() => handleSort('change')}>
+            <th className="text-right cursor-pointer " onClick={() => handleSort('change')}>
               Change {sortConfig.key === 'change' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
           </tr>
         </thead>
-        <tbody className="text-[1vw] w-full">
+        <tbody className="w-full text-[2vh] | md:text-[1vw] ">
           {filteredData.map((row, index) => (
             <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
               <td className="text-left pt-[2vh] border-r border-white">{row.label}</td>
