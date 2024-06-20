@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ConnectButton from '@/components/common/ConnectButton'
+import CustomConnectButton from '@/components/common/CustomConnectButton'
 
 const NotWhitelist = () => {
   return (
@@ -12,7 +12,7 @@ const NotWhitelist = () => {
         {`We're here to help!`}
       </p>
       <p className="text-center my-4 text-carmesi text-md | md:text-[1vw]">bearprotocol@placeholder.com</p>
-      <ConnectButton className="bg-smoke" />
+      <CustomConnectButton className="bg-smoke" />
     </>
   )
 }

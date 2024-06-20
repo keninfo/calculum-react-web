@@ -14,7 +14,7 @@ import ContractReads from '@/hooks/useContractReads'
 import { ProContext } from '../AppProviders'
 import RebalancingResults from '../RebalancingResults'
 import { PrimaryButton } from '../common/Buttons'
-import ConnectButton from '../common/ConnectButton'
+import CustomConnectButton from '../common/CustomConnectButton'
 import Modal from '../common/Modal'
 
 import * as d3 from 'd3'
@@ -129,7 +129,7 @@ const Home = () => {
         </Card>
 
         <div className="fixed bottom-0 left-0 w-screen z-50 flex justify-around p-[2vh] bg-smoke space-x-1">
-          {!isConnected && <ConnectButton />}
+          {!isConnected && <CustomConnectButton />}
           {isConnected && (
             <>
               <PrimaryButton handleClick={() => toggleModal(0)} className="bg-opacity-0">

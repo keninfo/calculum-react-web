@@ -4,7 +4,7 @@ import { MetaMaskUIProvider } from '@metamask/sdk-react-ui'
 import type { ReactNode } from 'react'
 import { useState, createContext } from 'react'
 
-import Web3ModalProvider from '@/services/Web3ModalProvider'
+import RainbowKit from '@/services/RainbowKitProvider'
 import createEmotionCache from '@/utils/createEmotionCache'
 
 interface OptionsContextType {
@@ -77,7 +77,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
           }}
         >
           <ProContext.Provider value={{ pro, setPro }}>
-            <Web3ModalProvider>{children}</Web3ModalProvider>
+            <RainbowKit>{children}</RainbowKit>
           </ProContext.Provider>
         </OptionsContext.Provider>
       </CacheProvider>
