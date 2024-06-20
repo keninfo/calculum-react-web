@@ -17,7 +17,7 @@ library.add(fas)
 const Sidebar = () => {
   const { pro } = useContext(ProContext)
   return (
-    <div className="fixed top-0 left-0 w-screen bg-smoke z-50">
+    <div className="absolute | md:fixed top-0 left-0 w-screen bg-smoke z-50">
       {/* DESKTOP*/}
       <MaintenanceBanner />
       <div className="hidden | md:flex justify-between items-center px-[2.5vw]">
