@@ -37,7 +37,7 @@ const TradesTable = () => {
         <div className="flex justify-center items-center">
           <div className="space-y-4 mt-[2vh] text-center | md:mt-[10vh]">
             <p className="text-2xl text-carmesi my-[4vh] | md:my-0">Connect a wallet to see your trades</p>
-            <ConnectButton className="!bg-smoke mx-auto" />
+            <ConnectButton className="!bg-smoke mx-auto hidden | md:block" />
           </div>
         </div>
       )}
