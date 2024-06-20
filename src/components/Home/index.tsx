@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from 'react'
 
+import { useAccount } from 'wagmi'
+
 import ActionCard from '@/components/ActionCard'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
@@ -11,6 +13,9 @@ import ContractReads from '@/hooks/useContractReads'
 
 import { ProContext } from '../AppProviders'
 import RebalancingResults from '../RebalancingResults'
+import { PrimaryButton } from '../common/Buttons'
+import ConnectButton from '../common/ConnectButton'
+import Modal from '../common/Modal'
 
 import * as d3 from 'd3'
 import { timeParse } from 'd3-time-format'
@@ -31,7 +36,9 @@ const Home = () => {
   const { InMaintenance } = ContractReads()
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
+  const [open, setOpen] = useState<boolean>(false)
   const { pro } = useContext(ProContext)
+  const { isConnected } = useAccount()
   // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
@@ -73,6 +80,10 @@ const Home = () => {
     fetchDaily()
   }, [])
 
+  const toggleModal = () => {
+    setOpen((prevOpen) => !prevOpen)
+  }
+
   return (
     <>
       {/* DESKTOP */}
@@ -98,8 +109,7 @@ const Home = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] | md:hidden">
-        <ActionCard />
+      <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] pb-[20vh] | md:hidden ">
         {prices.length > 0 ? (
           <ChartsContainer prices={prices} dates={dates} />
         ) : (
@@ -115,6 +125,28 @@ const Home = () => {
         <Card>
           <CollateralsTable />
         </Card>
+
+        <div className="fixed bottom-0 left-0 w-screen z-50 flex justify-around p-[2vh] bg-smoke space-x-1">
+          {!isConnected && <ConnectButton />}
+          {isConnected && (
+            <>
+              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+                <p className="font-bold">DEPOSIT</p>
+              </PrimaryButton>
+              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+                <p className="font-bold">CLAIM</p>
+              </PrimaryButton>
+              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+                <p className="font-bold">WITHDRAW</p>
+              </PrimaryButton>
+              {open && (
+                <Modal onClose={toggleModal}>
+                  <ActionCard />
+                </Modal>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   )
