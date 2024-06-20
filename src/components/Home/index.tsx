@@ -81,8 +81,8 @@ const Home = () => {
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
           ) : (
-            <Card className="w-full h-full flex justify-center">
-              <p className="text-3xl animate-pulse">Loading...</p>
+            <Card className="w-full h-full flex justify-center" title="LOADING...">
+              <></>
             </Card>
           )}
           <Card className=" flex justify-between w-full mt-[2vh]">
@@ -103,8 +103,8 @@ const Home = () => {
         {prices.length > 0 ? (
           <ChartsContainer prices={prices} dates={dates} />
         ) : (
-          <Card className="w-full h-full flex justify-center">
-            <p className="text-3xl animate-pulse">Loading...</p>
+          <Card className="w-full h-full flex justify-center" title="LOADING...">
+            <></>
           </Card>
         )}
         {pro && <RebalancingResults data={prices} />}
