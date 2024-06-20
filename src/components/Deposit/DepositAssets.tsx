@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
-import ClearButton from '@/components/common/ClearButton'
+import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
@@ -64,23 +65,13 @@ const DepositAssets = () => {
             <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
           </p>
           <div className="flex justify-between">
-            <input
-              className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] | md:px-[1vw]"
-              type="number"
-              value={amount}
-              onChange={handleAmountChange}
-            />
-            <button className="bg-carmesi border-2 border-white px-[2vw] py-[1vh]" onClick={setMax}>
+            <Input type="number" value={amount} handleChange={handleAmountChange} />
+            <AlternateButton handleClick={setMax} border={true}>
               MAX
-            </button>
+            </AlternateButton>
           </div>
           <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
-          <input
-            className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] mb-[4vh] | md:mb-0 md:px-[1vw] "
-            type="string"
-            value={formattedShares + ' Shares'}
-            disabled
-          />
+          <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
         </>
       )}
       <div className="inline justify-center px-2">
@@ -89,13 +80,7 @@ const DepositAssets = () => {
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
         ) : parseFloat(formatBalance(allowance)) > 0 ? (
-          <ClearButton
-            handleClickClearButton={() => {
-              Deposit({ amount, address })
-            }}
-          >
-            Deposit
-          </ClearButton>
+          <PrimaryButton handleClick={() => Deposit({ amount, address })}>Deposit</PrimaryButton>
         ) : (
           <Approve />
         )}

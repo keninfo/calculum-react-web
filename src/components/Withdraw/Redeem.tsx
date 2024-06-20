@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
-import ClearButton from '@/components/common/ClearButton'
+import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useRedeemAssets from '@/hooks/useRedeemAssets'
 import { formatBalance, formatShares } from '@/utils/formatters'
@@ -28,30 +29,16 @@ const Redeem = () => {
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Redeem shares of {SymbolShares().data as string}</p>
       <div className="flex justify-between">
-        <input
-          className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] | md:px-[1vw] "
-          type="number"
-          value={amount}
-          onChange={handleAmountChange}
-        />
-        <button className="bg-carmesi border-2 px-[2vw] py-[1vh]" onClick={setMaxShares}>
+        <Input type="number" value={amount} handleChange={handleAmountChange} />
+        <AlternateButton handleClick={setMaxShares} border={true}>
           MAX
-        </button>
+        </AlternateButton>
       </div>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
-      <input
-        className="bg-darkness text-white border-2 border-white py-[1vh] w-full mb-[4vh] px-[4vw] | md:px-[1vw] "
-        type="string"
-        value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'}
-        disabled
-      />
-      <ClearButton
-        handleClickClearButton={() => {
-          redeemAssets({ amount, address })
-        }}
-      >
+      <Input type="text" value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'} disabled={true} />
+      <PrimaryButton handleClick={() => redeemAssets({ amount, address })} className="mt-[4vh]">
         Redeem
-      </ClearButton>
+      </PrimaryButton>
     </>
   )
 }

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
-import ClearButton from '@/components/common/ClearButton'
+import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
 import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance } from '@/utils/formatters'
@@ -37,25 +38,14 @@ const Approve = () => {
         <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
       </p>
       <div className="flex justify-between">
-        <input
-          className="bg-darkness text-white border-2 border-white py-[1vh] w-full px-[4vw] | md:px-[1vw]"
-          type="number"
-          value={amount}
-          onChange={handleAmountChange}
-        />
-        <button className="bg-carmesi px-[2vw] py-[1vh] border-2 border-white" onClick={setMax}>
+        <Input type="number" value={amount} handleChange={handleAmountChange} />
+        <AlternateButton handleClick={setMax} border={true}>
           MAX
-        </button>
+        </AlternateButton>
       </div>
-      <div className="my-[2vh]">
-        <ClearButton
-          handleClickClearButton={() => {
-            ApproveAssets(amount)
-          }}
-        >
-          Approve
-        </ClearButton>
-      </div>
+      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="mt-[4vh]">
+        Approve
+      </PrimaryButton>
     </>
   )
 }
