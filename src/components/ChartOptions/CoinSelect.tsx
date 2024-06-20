@@ -9,7 +9,7 @@ const CoinSelect = () => {
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-fit text-sm border  bg-smoke text-white text-left"
+      className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-white text-left | md:w-fit"
       id="cryptoCoin"
       onChange={(e) => setCoin(e.target.value)}
       value={coin}

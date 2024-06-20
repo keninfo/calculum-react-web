@@ -57,11 +57,10 @@ const ChartOptions = () => {
 
       {/* MOBILE */}
       <div className="w-full pl-[2vw] | md:hidden">
-        <div className="w-full flex justify-between items-center mt-[4vh] space-x-6 px-6">
-          <div className="block space-y-[1vh]">
-            <p className="opacity-30 text-left text-sm">Strategy:</p>
+        <div className="w-full grid grid-cols-2 items-center mt-[6vh] px-6">
+          <div className="col-span-1 mr-[2vw]">
             <select
-              className="px-10 py-0.5 h-fit w-fit text-sm border  bg-smoke text-white text-left"
+              className="px-10 py-0.5 h-fit w-full text-sm border bg-smoke text-white text-left"
               id="cryptoCoin"
               value={'USDC vol'}
             >
@@ -70,29 +69,26 @@ const ChartOptions = () => {
               </option>
             </select>
           </div>
-          <div className="block space-y-[1vh]">
-            <p className="opacity-30 text-left text-sm">Asset:</p>
+          <div className="col-span-1 ml-[2vw]">
             <CoinSelect />
           </div>
         </div>
-        <div className="w-full flex justify-between items-center mt-[1vh] space-x-6 px-6">
-          <div className="block space-y-[1vh]">
-            <p className="opacity-30 text-left text-sm">Show:</p>
+        <div className="w-full grid grid-cols-2 items-center mt-[2vw] px-6">
+          <div className="col-span-1 mr-[2vw]">
             <ShowCandle />
           </div>
-          <div className="block space-y-[1vh]">
-            <p className="opacity-30 text-left text-sm">Data History:</p>
+          <div className="col-span-1 ml-[2vw]">
             <SetWindow />
           </div>
         </div>
         {!pro && <div className="h-10 w-full"></div>}
         {pro && (
-          <div className="w-full flex justify-around items-center space-x-[1vw] my-[3vh]">
-            <div className="flex text-greySmoke space-x-2">
+          <div className="w-full grid grid-cols-2 items-center my-[6vw] px-6">
+            <div className="col-span-1 mr-[2vw] text-center border text-greySmoke">
               <p>Volatility:</p>
               <p>{volatility * 100}%</p>
             </div>
-            <div className="flex text-greySmoke space-x-2">
+            <div className="col-span-1 ml-[2vw] text-center border text-greySmoke">
               <p>Rolling Window:</p>
               <p>{rollingWindow} days</p>
             </div>
