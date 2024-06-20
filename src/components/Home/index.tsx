@@ -37,6 +37,7 @@ const Home = () => {
   const [prices, setPrices] = useState<number[][]>([])
   const [dates, setDates] = useState<Date[]>([])
   const [open, setOpen] = useState<boolean>(false)
+  const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
   const { isConnected } = useAccount()
   // const [coins, setCoins] = useState<string[]>([])
@@ -80,8 +81,9 @@ const Home = () => {
     fetchDaily()
   }, [])
 
-  const toggleModal = () => {
+  const toggleModal = (value: number) => {
     setOpen((prevOpen) => !prevOpen)
+    setDefaultValue(value)
   }
 
   return (
@@ -130,18 +132,18 @@ const Home = () => {
           {!isConnected && <ConnectButton />}
           {isConnected && (
             <>
-              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+              <PrimaryButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
                 <p className="font-bold">DEPOSIT</p>
               </PrimaryButton>
-              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+              <PrimaryButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
                 <p className="font-bold">CLAIM</p>
               </PrimaryButton>
-              <PrimaryButton handleClick={toggleModal} className="bg-opacity-0">
+              <PrimaryButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
                 <p className="font-bold">WITHDRAW</p>
               </PrimaryButton>
               {open && (
-                <Modal onClose={toggleModal}>
-                  <ActionCard />
+                <Modal onClose={() => toggleModal(0)}>
+                  <ActionCard defaultValue={defaultValue} />
                 </Modal>
               )}
             </>

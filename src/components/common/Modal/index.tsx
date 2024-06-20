@@ -38,12 +38,9 @@ const Modal = ({ children, closeMessage, onClose }: ModalProps) => {
   if (open) {
     return (
       <div className="fixed top-0 left-0 bg-smoke/90 w-screen h-screen z-50 flex items-center justify-center">
-        <div
-          ref={modalRef}
-          className="relative bg-darkness w-screen h-[80vh] z-40 px-[3vw] py-[5vh] drop-shadow-xl flex flex-col items-start justify-center"
-        >
-          <button onClick={handleClose} className="absolute top-[3vh] right-[3vh]">
-            {closeMessage ? closeMessage : 'X'}
+        <div ref={modalRef} className="relative bg-darkness w-screen h-[80vh] z-40 drop-shadow-xl">
+          <button onClick={handleClose} className="absolute -top-[5vh] left-1/2 -translate-x-1/2 font-bold">
+            {closeMessage ? closeMessage : 'CLOSE'}
           </button>
           {children}
         </div>

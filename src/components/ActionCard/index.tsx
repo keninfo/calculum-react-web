@@ -19,7 +19,7 @@ import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 
-const ActionCard = () => {
+const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   const { address, isConnected } = useAccount()
   const { CheckWhitelist } = ContractReads()
 
@@ -42,7 +42,7 @@ const ActionCard = () => {
 
   const ActionCardTabs = () => {
     return (
-      <Tabs defaultValue={0}>
+      <Tabs defaultValue={defaultValue}>
         <TabsList className="w-min flex justify-between space-x-[6vw] mx-auto | md:space-x-[2vw]">
           {actions.map((tab, index) => ActionTab({ tab, index }))}
         </TabsList>
