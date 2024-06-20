@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import Card from '@/components/common/Card'
 
+import Input from '../common/Input'
+
 type DataRow = {
   label: string
   value: string
@@ -60,18 +62,8 @@ const VaultsInfo = () => {
   }
 
   return (
-    <Card className="w-full h-[80vh] mt-[1vw]">
-      <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-1 mb-[2vh]">
-        <h4 className="text-xl ">VAULTS</h4>
-        <p className="text-md">Last 24h</p>
-      </div>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={handleSearch}
-        className="px-1 py-0.5 h-fit text-sm border border-white bg-smoke text-white text-center w-full mt-[2vh]"
-      />
+    <Card className="w-full h-[80vh] mt-[1vw]" title="VAULTS" subtitle="Last 24H">
+      <Input placeholder="Search..." type={'text'} value={searchQuery} handleChange={handleSearch} />
       <table className="table-fixed mt-[2vh] w-full">
         <thead className="text-[2vh] | md:text-[1vw]">
           <tr>

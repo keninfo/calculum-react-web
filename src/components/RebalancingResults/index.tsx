@@ -40,8 +40,8 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
 
   if (data.length <= 0) {
     return (
-      <Card className="w-full h-fit mt-[2vh]">
-        <p className="text-2xl w-full text-center animate-pulse">Loading...</p>
+      <Card className="w-full h-full flex justify-center" title="LOADING...">
+        <></>
       </Card>
     )
   }
@@ -94,8 +94,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
   return (
-    <Card className="w-full h-fit mt-[2vh]">
-      <h2 className="text-xl  mb-4 font-bold border-b-carmesi border-b-4 pb-1">REBALANCED RESULTS</h2>
+    <Card className="w-full h-fit mt-[2vh]" title="REBALANCED RESULTS">
       <p>
         Sharpe Ratio, Raw: <b>{rawSharpe}</b>
       </p>
