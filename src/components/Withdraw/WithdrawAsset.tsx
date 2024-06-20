@@ -41,7 +41,7 @@ const WithdrawAsset = () => {
         disabled={true}
       />
       <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-[4vh]">
-        Redeem
+        Withdraw
       </PrimaryButton>
     </>
   )
