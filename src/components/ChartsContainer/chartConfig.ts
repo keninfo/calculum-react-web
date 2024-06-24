@@ -80,7 +80,7 @@ export const tooltipConfig = {
 }
 
 export const zeroLine = {
-  price: 0,
+  price: 100,
   color: 'rgba(255, 255, 255, 0.25)',
   lineWidth: 2 as LineWidth,
   lineStyle: 0,

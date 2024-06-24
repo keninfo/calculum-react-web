@@ -32,7 +32,21 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
     }
 
     if (chartContainerRef.current) {
-      chartInstance.current = createChart(chartContainerRef.current, { height: 200, ...lineChartConfig })
+      chartInstance.current = createChart(chartContainerRef.current, {
+        height: 200,
+        ...lineChartConfig,
+        localization: {
+          dateFormat: "dd MMMM 'yy",
+          priceFormatter: (price: number) => {
+            return price.toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
+          },
+        },
+        leftPriceScale: {
+          mode: 0,
+          visible: true,
+          borderVisible: false,
+        },
+      })
     }
 
     const seriesDataFiltered = seriesData.slice(
@@ -56,14 +70,14 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
       autoscaleInfoProvider: () => ({
         priceRange: {
           minValue: 0,
-          maxValue: 100,
+          maxValue: coin == 'PEPE' ? 400 : 100,
         },
       }),
     })
 
     const chartDataPrice1: PriceChartData[] = rolled.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: data,
+      value: data * 100,
     }))
 
     lineSeries?.setData(chartDataPrice1)
@@ -123,7 +137,7 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
     })
 
     if (lineSeries) {
-      lineSeries.createPriceLine(zeroLine)
+      lineSeries.createPriceLine({ ...zeroLine, price: 0 })
     }
 
     return () => {

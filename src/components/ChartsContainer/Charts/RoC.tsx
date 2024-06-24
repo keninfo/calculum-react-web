@@ -43,11 +43,28 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     }
 
     if (chartContainerRef.current) {
-      chartInstance.current = createChart(chartContainerRef.current, {
-        height: 400,
-        ...lineChartConfig,
-        // timeScale: { visible: false },
-      })
+      if (showCandle) {
+        chartInstance.current = createChart(chartContainerRef.current, {
+          height: 400,
+          ...lineChartConfig,
+          localization: {
+            priceFormatter: (price: number) => {
+              return '$' + price
+            },
+          },
+          leftPriceScale: {
+            mode: 2,
+            visible: true,
+            borderVisible: false,
+          },
+        })
+      } else {
+        chartInstance.current = createChart(chartContainerRef.current, {
+          height: 400,
+          ...lineChartConfig,
+          // timeScale: { visible: false },
+        })
+      }
     }
 
     const periods = 365 // only for daily, have to change if hourly
