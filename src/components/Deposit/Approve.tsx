@@ -43,7 +43,7 @@ const Approve = () => {
           MAX
         </AlternateButton>
       </div>
-      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="mt-[4vh]">
+      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="mt-[4vh] md:mt-0">
         Approve
       </PrimaryButton>
     </>
