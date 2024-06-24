@@ -80,7 +80,9 @@ const DepositAssets = () => {
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
         ) : parseFloat(formatBalance(allowance)) > 0 ? (
-          <PrimaryButton handleClick={() => Deposit({ amount, address })}>Deposit</PrimaryButton>
+          <PrimaryButton handleClick={() => Deposit({ amount, address })} className="!mt-[4vh] md:mt-0">
+            Deposit
+          </PrimaryButton>
         ) : (
           <Approve />
         )}
