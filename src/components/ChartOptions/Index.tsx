@@ -93,8 +93,18 @@ const ChartOptions = () => {
             <ShowCandle />
           </div>
           <div className="col-span-1 ml-[2vw]">
-            <SetWindow />
+            {studyCase == 0 && <SetWindow />}
+            {studyCase == 1 && (
+              <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+            )}
+            {studyCase == 2 && (
+              <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
+            )}
           </div>
+        </div>
+        <div className="w-fit mx-auto block text-center mt-[2vw]">
+          <p className="text-greySmoke">Case Studies:</p>
+          <CaseStudies />
         </div>
         {!pro && <div className="h-10 w-full"></div>}
         {pro && (
