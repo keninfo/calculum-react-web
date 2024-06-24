@@ -15,6 +15,14 @@ const SmallCustomConnectButton = ({ className }: { className?: string }) => {
         const connected =
           ready && account && chain && (!authenticationStatus || authenticationStatus === 'authenticated')
 
+        const handleClick = () => {
+          if (connected) {
+            openAccountModal()
+          } else {
+            openConnectModal()
+          }
+        }
+
         return (
           <div
             {...(!ready && {
@@ -26,30 +34,14 @@ const SmallCustomConnectButton = ({ className }: { className?: string }) => {
               },
             })}
           >
-            {(() => {
-              if (!connected) {
-                return (
-                  <button
-                    onClick={openConnectModal}
-                    className={`py-[2vh] px-[4vw] w-full flex justify-center text-white hover:scale-105 hover:text-smoke`}
-                  >
-                    <p className="text-white flex items-center">
-                      <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh]" />
-                    </p>
-                  </button>
-                )
-              }
-              return (
-                <button
-                  onClick={openAccountModal}
-                  className={`bg-carmesi py-[2vh] px-[4vw] flex justify-center text-white hover:scale-105 hover:text-smoke ${className}`}
-                >
-                  <p className="text-white flex items-center">
-                    <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh]" />
-                  </p>
-                </button>
-              )
-            })()}
+            <button
+              onClick={handleClick}
+              className={`py-[2vh] px-[4vw] w-full flex justify-center text-white hover:scale-105 hover:text-smoke ${className}`}
+            >
+              <p className="text-white flex items-center">
+                <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh]" />
+              </p>
+            </button>
           </div>
         )
       }}
