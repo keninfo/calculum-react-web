@@ -33,7 +33,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, showCandle } = useContext(OptionsContext)
+  const { coin, window, rollingWindow, volatility, showCandle, studyCase } = useContext(OptionsContext)
 
   useEffect(() => {
     if (!chartContainerRef.current) return
@@ -68,11 +68,18 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     }
 
     const periods = 365 // only for daily, have to change if hourly
+    let selectedWindow = window
 
-    const seriesData1Filtered = seriesData1.slice(-(window + rollingWindow))
-    const seriesData2Filtered = seriesData2.slice(-window)
-    const datesFiltered = dates.slice(-(window + rollingWindow))
-    const ohclFiltered = ohcl.slice(-window)
+    if (studyCase == 1) {
+      selectedWindow = 1138
+    } else if (studyCase == 2) {
+      selectedWindow = 224
+    }
+
+    const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
+    const seriesData2Filtered = seriesData2.slice(-selectedWindow)
+    const datesFiltered = dates.slice(-(selectedWindow + rollingWindow))
+    const ohclFiltered = ohcl.slice(-selectedWindow)
 
     const data1PercentageChange = pct_change(seriesData1Filtered)
     const scaledReturns = calculateScaledReturns(data1PercentageChange, rollingWindow, periods, volatility)
@@ -249,7 +256,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
-  }, [coin, dates, ohcl, rollingWindow, seriesData1, seriesData2, showCandle, volatility, window])
+  }, [coin, dates, ohcl, rollingWindow, seriesData1, seriesData2, showCandle, studyCase, volatility, window])
 
   return (
     <div className="relative">

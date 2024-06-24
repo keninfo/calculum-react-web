@@ -18,6 +18,8 @@ interface OptionsContextType {
   setVolatility: React.Dispatch<React.SetStateAction<number>>
   showCandle: boolean
   setShowCandle: React.Dispatch<React.SetStateAction<boolean>>
+  studyCase: number
+  setStudyCase: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
@@ -31,6 +33,8 @@ export const OptionsContext = createContext<OptionsContextType>({
   setVolatility: () => {},
   showCandle: false,
   setShowCandle: () => {},
+  studyCase: 0,
+  setStudyCase: () => {},
 })
 
 interface ProContextType {
@@ -52,6 +56,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [volatility, setVolatility] = useState<number>(0.2)
   const [showCandle, setShowCandle] = useState<boolean>(false)
   const [pro, setPro] = useState<boolean>(false)
+  const [studyCase, setStudyCase] = useState<number>(0)
 
   return (
     <MetaMaskUIProvider
@@ -74,6 +79,8 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
             setVolatility,
             showCandle,
             setShowCandle,
+            studyCase,
+            setStudyCase,
           }}
         >
           <ProContext.Provider value={{ pro, setPro }}>

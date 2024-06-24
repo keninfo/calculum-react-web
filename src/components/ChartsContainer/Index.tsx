@@ -62,10 +62,7 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
             <div className="flex items-center space-x-2 w-fit ml-[6vw] | md:ml-0">
               <p className="text-white text-2xl">Rolling Volatility </p>
             </div>
-            <button
-              className="border py-[.5vh] px-[1vw] text-xs hover:scale-105 mr-[6vw] | mr:ml-0"
-              onClick={toggleSecondChart}
-            >
+            <button className="border py-[.5vh] px-[1vw] text-xs hover:scale-105 | mr:ml-0" onClick={toggleSecondChart}>
               {showSecondChart ? 'Hide' : 'Show'}
             </button>
           </div>
