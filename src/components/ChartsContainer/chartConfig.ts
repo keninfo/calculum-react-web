@@ -19,7 +19,7 @@ export const lineChartConfig = {
     borderVisible: false,
   },
   leftPriceScale: {
-    mode: 0,
+    mode: 1,
     visible: true,
     borderVisible: false,
   },
@@ -48,7 +48,7 @@ export const lineChartConfig = {
   localization: {
     dateFormat: "dd MMMM 'yy",
     priceFormatter: (price: number) => {
-      return price.toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
+      return (price - 100).toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
     },
   },
   handleScroll: {

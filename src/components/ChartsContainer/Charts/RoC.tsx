@@ -76,7 +76,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: (data - 1) * 100,
+      value: data * 100,
     }))
 
     if (!showCandle) {
@@ -90,7 +90,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const chartDataPrice2: PriceChartData[] = cumulativeReturns.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
-      value: (data - 1) * 100,
+      value: data * 100,
     }))
 
     if (!showCandle) {
@@ -157,9 +157,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: white">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
-            Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
+            Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
             <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
-            Raw Price: ${rocCumulative?.toFixed(2)}%</p>
+            Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -168,9 +168,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: white">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
-            Raw Price: ${rocCumulative?.toFixed(2)}%</p>
+            Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
             <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
-            Vol Scaled: ${rocScaled?.toFixed(2)}%</p>
+            Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
