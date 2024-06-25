@@ -78,16 +78,24 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
     const seriesData2Filtered = seriesData2.slice(-selectedWindow)
-    const datesFiltered = dates.slice(-(selectedWindow + rollingWindow))
+    const datesFiltered = dates.slice(-selectedWindow)
     const ohclFiltered = ohcl.slice(-selectedWindow)
 
     const data1PercentageChange = pct_change(seriesData1Filtered)
     const scaledReturns = calculateScaledReturns(data1PercentageChange, rollingWindow, periods, volatility)
-    const cumulativeReturnsScaled = calculateCumulativeReturns(scaledReturns)
+
+    const scaledReturnsLimited = scaledReturns.map((value) => (value ? Math.min(value, 1) : 0))
+
+    const cumulativeReturnsScaled = calculateCumulativeReturns(
+      data1PercentageChange.map((returnValue, index) => returnValue * scaledReturnsLimited[index]),
+    )
+
     const cumulativeReturnsScaledSliced = cumulativeReturnsScaled.slice(
       rollingWindow - 1,
       cumulativeReturnsScaled.length,
     )
+
+    cumulativeReturnsScaledSliced[0] = 1
 
     const data2PercentageChange = pct_change(seriesData2Filtered)
     const cumulativeReturns = calculateCumulativeReturns(data2PercentageChange)
