@@ -23,7 +23,7 @@ interface OptionsContextType {
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
-  coin: 'BTC',
+  coin: 'BTC - High Vol',
   setCoin: () => {},
   rollingWindow: 14,
   setRollingWindow: () => {},
