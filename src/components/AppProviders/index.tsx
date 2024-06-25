@@ -50,7 +50,7 @@ export const ProContext = createContext<ProContextType>({
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const [coin, setCoin] = useState<string>('BTC')
+  const [coin, setCoin] = useState<string>('BTC - High Vol')
   const [rollingWindow, setRollingWindow] = useState<number>(14)
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
