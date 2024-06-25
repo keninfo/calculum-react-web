@@ -103,9 +103,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       value: data * 100,
     }))
 
-    if (!showCandle) {
-      lineSeries1?.setData(chartDataPrice1)
-    }
+    lineSeries1?.setData(chartDataPrice1)
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
       color: 'white',
