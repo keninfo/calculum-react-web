@@ -36,7 +36,7 @@ const ChartOptions = () => {
               <CoinSelect />
             </div>
             <div className="block space-y-[1vh]">
-              <p className="opacity-30 text-right text-sm">Data History:</p>
+              <p className="opacity-30 text-right text-sm">Days:</p>
               {studyCase == 0 && <SetWindow />}
               {studyCase == 1 && (
                 <p className="px-[1vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">

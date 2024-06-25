@@ -52,8 +52,11 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
 
   return (
     <>
-      <Card className="w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[2vw]">
+      <Card className="relative w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[3vw]">
         <ChartOptions />
+        <p className="hidden | md:block absolute top-1/2 -left-[45px] -rotate-90 text-white text-sm">
+          Return on Capital (%)
+        </p>
         <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
       </Card>
       {pro && (
