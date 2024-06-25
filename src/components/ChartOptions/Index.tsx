@@ -20,11 +20,11 @@ const ChartOptions = () => {
             <div className="inline w-full">
               <div className="flex items-center space-x-2">
                 <div className="w-[2vw] h-1 bg-white"></div>
-                <span className="text-xs">BTC - RoC</span>
+                <span className="text-xs">BTC (Raw Price)</span>
               </div>
               <div className="flex items-center space-x-2 w-fit">
                 <div className="w-[2vw] h-1 bg-carmesi"></div>
-                <p className="text-carmesi text-xs">BTC Vol Scaled - RoC </p>
+                <p className="text-carmesi text-xs">BTC - Vol Target</p>
               </div>
             </div>
             <div className="block space-y-[1vh]">
@@ -39,12 +39,12 @@ const ChartOptions = () => {
               <p className="opacity-30 text-right text-sm">Data History:</p>
               {studyCase == 0 && <SetWindow />}
               {studyCase == 1 && (
-                <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
+                <p className="px-[1vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
                   04/01/2021
                 </p>
               )}
               {studyCase == 2 && (
-                <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
+                <p className="px-[1vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
                   10/01/2023
                 </p>
               )}
@@ -95,10 +95,14 @@ const ChartOptions = () => {
           <div className="col-span-1 ml-[2vw]">
             {studyCase == 0 && <SetWindow />}
             {studyCase == 1 && (
-              <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+              <p className="px-[2vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
+                04/01/2021
+              </p>
             )}
             {studyCase == 2 && (
-              <p className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
+              <p className="px-[2vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
+                10/01/2023
+              </p>
             )}
           </div>
         </div>
@@ -122,11 +126,11 @@ const ChartOptions = () => {
         <div className="block w-full">
           <div className="flex items-center justify-center  space-x-2">
             <div className="w-[2vw] h-1 bg-white"></div>
-            <span className="text-sm">BTC - Return on Capital (RoC)</span>
+            <span className="text-sm">BTC (Raw Price)</span>
           </div>
           <div className="flex items-center justify-center space-x-2">
             <div className="w-[2vw] h-1 bg-carmesi"></div>
-            <p className="text-carmesi text-sm">BTC Vol Scaled - Return on Capital (RoC) </p>
+            <p className="text-carmesi text-sm">BTC - Vol Target</p>
           </div>
         </div>
       </div>
