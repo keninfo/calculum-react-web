@@ -49,14 +49,8 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
       })
     }
 
-    const seriesDataFiltered = seriesData.slice(
-      seriesData.length - (window + rollingWindow + 1),
-      seriesData.length - rollingWindow + 1,
-    )
-    const datesFiltered = dates.slice(
-      dates.length - (window + rollingWindow + 1),
-      seriesData.length - rollingWindow + 1,
-    )
+    const seriesDataFiltered = seriesData.slice(seriesData.length - (window + rollingWindow + 1), seriesData.length)
+    const datesFiltered = dates.slice(dates.length - (window + rollingWindow + 1))
 
     const rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
 
