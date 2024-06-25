@@ -51,18 +51,20 @@ const IntroQuestionnaire = () => {
 
   return (
     <Card
-      className={`relative mx-auto flex flex-col justify-center items-center ${status ? 'mt-[20vh]' : 'mt-[15vh]'}`}
+      className={`flex relative mx-auto flex-col justify-center items-center z-50 pb-[20vh] | md:z-10 md:pb-[5vh] ${status ? 'md:mt-[20vh]' : 'md:mt-[15vh]'}`}
     >
-      <Link href="/dashboard" className="absolute top-[3vh] right-[3vh]">
+      <Link href="/dashboard" className="absolute top-[3vh] right-1/2 translate-x-1/2 font-bold | md:right-[6vh]">
         SKIP
       </Link>
-      <h2 className="text-center text-carmesi font-bold text-3xl mb-2">Welcome to Bear Protocol</h2>
-      <p className="my-[4vh] font-bold w-[50%] text-center text-[2vh]">
+      <h2 className="text-center text-carmesi font-bold text-xl mt-[6vh] | md:text-3xl md:my-2">
+        Welcome to Bear Protocol
+      </h2>
+      <p className="my-[4vh] font-bold text-center text-[2vh] | md:w-[50%] ">
         Before continuing, please answer the following questions so we can offer the best experience customized to you:{' '}
       </p>
       <p className="text-center mb-2 text-sm text-greySmoke">What is your experience with trading and crypto?</p>
       <select
-        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center"
+        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center w-full | md:w-[50%]"
         id="experience"
         onChange={(e) => setSelectedExperience(Number(e.target.value))}
         value={selectedExperience}
@@ -76,7 +78,7 @@ const IntroQuestionnaire = () => {
 
       <p className="text-center mb-2 text-sm text-greySmoke">What do you know about vaults?</p>
       <select
-        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center"
+        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center w-full | md:w-[50%]"
         id="vaultsKnowledge"
         onChange={(e) => setSelectedVaultKnowledge(Number(e.target.value))}
         value={selectedVaultKnowledge}
@@ -90,7 +92,7 @@ const IntroQuestionnaire = () => {
 
       <p className="text-center mb-2 text-sm  text-greySmoke">What do you know about Bear Protocol?</p>
       <select
-        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center"
+        className="px-2 py-1 text-[2vh] border bg-smoke text-white mb-4 text-center w-full | md:w-[50%]"
         id="bearProtocolKnowledge"
         onChange={(e) => setSelectedBearProtocolKnowledge(Number(e.target.value))}
         value={selectedBearProtocolKnowledge}
@@ -101,7 +103,7 @@ const IntroQuestionnaire = () => {
           </option>
         ))}
       </select>
-      <Link href="/dashboard" className="mt-4 font-bold hover:scale-105 bg-carmesi px-[1vw] py-[1vh]">
+      <Link href="/dashboard" className="mt-4 font-bold hover:scale-105 bg-carmesi px-[10vw] | md:px-[1vw] py-[1vh]">
         Submit
       </Link>
     </Card>

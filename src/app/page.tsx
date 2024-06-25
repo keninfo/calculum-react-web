@@ -21,12 +21,12 @@ const BearProtocolApp = () => {
         <img
           src="/bearPassive.svg"
           alt="Bear Protocol"
-          className={`h-[20vw] absolute -left-20 top-1/2 -translate-y-10  z-50 ${pro ? 'opacity-20' : 'opacity-100'}`}
+          className={`hidden | md:block h-[20vw] absolute -left-20 top-1/2 -translate-y-10  z-50 ${pro ? 'opacity-20' : 'opacity-100'}`}
         />
         <img
           src="/bearAttack.svg"
           alt="Bear Protocol"
-          className={`h-[20vw] absolute right-0 top-1/2  z-50 -scale-x-100 ${pro ? 'opacity-100' : 'opacity-20'}`}
+          className={`hidden | md:block h-[20vw] absolute right-0 top-1/2  z-50 -scale-x-100 ${pro ? 'opacity-100' : 'opacity-20'}`}
         />
         <IntroQuestionnaire />
       </main>
