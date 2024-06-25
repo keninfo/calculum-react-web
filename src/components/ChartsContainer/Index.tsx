@@ -26,10 +26,10 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
       index = 1
       setVolatility(0.3)
     }
-    if (coin == 'BTC') {
+    if (coin == 'BTC - High Vol') {
       setVolatility(0.6)
     }
-    if (coin == 'BTC 20%') {
+    if (coin == 'BTC - Controlled Vol') {
       setVolatility(0.2)
     }
     return prices[index].slice(-amount)

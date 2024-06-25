@@ -2,14 +2,14 @@ import React, { useContext } from 'react'
 
 import { OptionsContext } from '@/components/AppProviders'
 
-const coins = ['BTC', 'BTC 20%', 'ETH', 'PEPE']
+const coins = ['BTC - High Vol', 'BTC - Controlled Vol', 'ETH', 'PEPE']
 
 const CoinSelect = () => {
   const { coin, setCoin } = useContext(OptionsContext)
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-white text-left | md:w-fit"
+      className="px-[2vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-white text-left | md:w-fit"
       id="cryptoCoin"
       onChange={(e) => setCoin(e.target.value)}
       value={coin}

@@ -9,7 +9,7 @@ const SetWindow = () => {
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-full text-sm border border-white bg-smoke text-white text-left rounded-none | md:w-max"
+      className="px-[2vw] py-0.5 h-fit w-full text-sm border border-white bg-smoke text-white text-left rounded-none | md:w-max"
       id="cryptoCoin"
       onChange={(e) => setWindow(parseFloat(e.target.value))}
       value={window}

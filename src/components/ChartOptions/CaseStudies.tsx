@@ -28,7 +28,7 @@ const CaseStudies = () => {
 
   return (
     <select
-      className="px-10 py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
+      className="px-[2vw] py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
       id="studyCase"
       onChange={handleCaseChange}
       value={cases[studyCase]}
