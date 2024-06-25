@@ -40,10 +40,8 @@ function calculateRollingStd(arr, rollingWindow) {
 }
 
 export function calculateStd(arr) {
-  if (arr == null) {
-    return
-  }
-  const mean = arr.reduce((acc, val) => acc + val, 0) / arr.length
+  if (arr.length === 0) return 1 // Default to 1 if array is empty to avoid division by zero
+  const mean = calculateMean(arr)
   const squaredDiffs = arr.map((val) => (val - mean) ** 2)
   const variance = squaredDiffs.reduce((acc, val) => acc + val, 0) / (arr.length - 1)
   return Math.sqrt(variance)
@@ -61,12 +59,12 @@ function shiftArray(arr, shiftAmount) {
   return shiftedArray
 }
 
-function calculateScaledReturn(arr, shifted, periodsPerYear, targetVol) {
+function calculateLeverage(arr, shifted, periodsPerYear, targetVol) {
   const scaled_return = []
   const squared = Math.sqrt(periodsPerYear)
   for (let i = 0; i < arr.length; i++) {
     if (shifted[i] !== null && arr[i] !== null) {
-      const scaledValue = (arr[i] / (shifted[i] * squared)) * targetVol
+      const scaledValue = targetVol / (shifted[i] * squared)
       scaled_return.push(scaledValue)
     } else {
       scaled_return.push(null)
@@ -78,7 +76,7 @@ function calculateScaledReturn(arr, shifted, periodsPerYear, targetVol) {
 export function calculateScaledReturns(data, rollingWindow, periodsPerYear, targetVol) {
   const rolling_std = calculateRollingStd(data, rollingWindow)
   const shifted_rolling_std = shiftArray(rolling_std, 1)
-  const scaled_return = calculateScaledReturn(data, shifted_rolling_std, periodsPerYear, targetVol)
+  const scaled_return = calculateLeverage(data, shifted_rolling_std, periodsPerYear, targetVol)
   return scaled_return
 }
 
@@ -185,15 +183,11 @@ export function calculateRollingVol(data, rollingWindow, periodsPerYear) {
 export function calculateMean(arr) {
   const sum = arr.reduce((acc, val) => acc + val, 0)
   const mean = sum / arr.length
-
   return mean
 }
 
-export function safeRound(value, precision) {
-  if (isNaN(value)) {
-    return NaN // Handle case where value is NaN
-  }
-  return Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision)
+export function safeRound(value, decimals) {
+  return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
 }
 
 export function cummax(array) {
