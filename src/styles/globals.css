@@ -55,8 +55,9 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
   appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="black" fill="none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
   background-repeat: no-repeat;
   background-position: right 1em top 50%;
   background-size: 1em;

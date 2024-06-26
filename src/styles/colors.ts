@@ -1,15 +1,16 @@
 export const classicTheme = {
-  darkness: '#161a1d',
-  smoke: '#111111',
-  carmesi: '#ef233c',
-  white: '#ffffff',
-  greySmoke: '#666666',
+  darkness: '#F9FAF9',
+  smoke: '#E8EBED',
+  carmesi: '#EF233C',
+  white: '#353839',
+  greySmoke: '#999999',
 }
 
 export const proTheme = {
-  darkness: '#161a1d',
+  darkness: '#161A1D',
   smoke: '#111111',
-  carmesi: '#1985A1',
-  white: '#ffffff',
+  carmesi: '#EF233C',
+  // carmesi: '#DAA520',
+  white: '#FFFFFF',
   greySmoke: '#666666',
 }
