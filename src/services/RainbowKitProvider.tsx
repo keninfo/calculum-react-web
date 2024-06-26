@@ -1,6 +1,6 @@
 'use client'
 
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
 import React, { type ReactNode } from 'react'
@@ -33,7 +33,9 @@ export default function RainbowKit({ children, initialState }: { children: React
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider modalSize="compact"> {children} </RainbowKitProvider>
+        <RainbowKitProvider modalSize="compact" theme={darkTheme({ accentColor: '#ef233c', borderRadius: 'none' })}>
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
