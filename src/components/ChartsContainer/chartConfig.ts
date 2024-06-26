@@ -1,11 +1,6 @@
 import type { DeepPartial, LineWidth } from 'lightweight-charts'
-import { ColorType } from 'lightweight-charts'
 
 export const lineChartConfig = {
-  layout: {
-    background: { type: ColorType.Solid, color: 'transparent' },
-    textColor: 'white',
-  },
   grid: {
     vertLines: {
       visible: false,

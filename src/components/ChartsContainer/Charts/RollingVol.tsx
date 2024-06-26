@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { OptionsContext, ProContext } from '@/components/AppProviders'
+import { classicTheme, proTheme } from '@/styles/colors'
 import { formatDate } from '@/utils/formatters'
 
 import { calculateRolling, pct_change } from '../chartComputations'
 import { lineChartConfig, toolTipWidth, tooltipConfig, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
-import { createChart } from 'lightweight-charts'
+import { ColorType, createChart } from 'lightweight-charts'
 
 interface PriceChartData {
   time: Time
@@ -19,10 +20,41 @@ interface ChartProps {
   seriesData: number[]
 }
 
-const RoC = ({ dates, seriesData }: ChartProps) => {
+interface ThemeColorsType {
+  darkness: string
+  smoke: string
+  carmesi: string
+  white: string
+  greySmoke: string
+}
+
+const RollingVol = ({ dates, seriesData }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const { coin, rollingWindow, window } = useContext(OptionsContext)
+  const { pro } = useContext(ProContext)
+
+  const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
+
+  useEffect(() => {
+    if (!pro) {
+      setThemeColors({
+        darkness: classicTheme.darkness,
+        smoke: classicTheme.smoke,
+        carmesi: classicTheme.carmesi,
+        white: classicTheme.white,
+        greySmoke: classicTheme.greySmoke,
+      })
+    } else {
+      setThemeColors({
+        darkness: proTheme.darkness,
+        smoke: proTheme.smoke,
+        carmesi: proTheme.carmesi,
+        white: proTheme.white,
+        greySmoke: proTheme.greySmoke,
+      })
+    }
+  }, [pro])
 
   useEffect(() => {
     if (!chartContainerRef.current) return
@@ -45,6 +77,10 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
           mode: 0,
           visible: true,
           borderVisible: false,
+        },
+        layout: {
+          background: { type: ColorType.Solid, color: 'transparent' },
+          textColor: themeColors?.white,
         },
       })
     }
@@ -86,7 +122,7 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
     toolTip.style.background = `rgba(255, 255, 255, 0.10)`
-    toolTip.style.color = 'white'
+    toolTip.style.color = 'var(--color-white)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -141,9 +177,9 @@ const RoC = ({ dates, seriesData }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
-  }, [coin, dates, rollingWindow, seriesData, window])
+  }, [coin, dates, rollingWindow, seriesData, window, themeColors])
 
   return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
 }
 
-export default RoC
+export default RollingVol

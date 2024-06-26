@@ -8,7 +8,7 @@ import { calculateCumulativeReturns, calculateScaledReturns, pct_change } from '
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
-import { createChart } from 'lightweight-charts'
+import { ColorType, createChart } from 'lightweight-charts'
 
 interface PriceChartData {
   time: Time
@@ -89,12 +89,20 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             visible: true,
             borderVisible: false,
           },
+          layout: {
+            background: { type: ColorType.Solid, color: 'transparent' },
+            textColor: themeColors?.white,
+          },
         })
       } else {
         chartInstance.current = createChart(chartContainerRef.current, {
           height: 400,
           ...lineChartConfig,
           // timeScale: { visible: false },
+          layout: {
+            background: { type: ColorType.Solid, color: 'transparent' },
+            textColor: themeColors?.white,
+          },
         })
       }
     }
@@ -216,7 +224,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
         if (!showCandle && rocCumulative !== undefined && rocScaled !== undefined) {
           if (rocScaled > rocCumulative) {
-            toolTip.innerHTML = `<div style="color: white">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
             Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
@@ -249,7 +257,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             : undefined
           if (candlestick) {
             const { open, high, low, close } = candlestick
-            toolTip.innerHTML = `<div style="color: white">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
             <div>
               <p style="font-size: 10px; margin: 4px 0px; color: lightblue; font-weight: bold;">
               O: ${open?.toFixed(4)}</p>
