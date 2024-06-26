@@ -35,7 +35,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
                     onClick={openChainModal}
-                    className="flex items-center bg-white py-[1vh] px-[1vw]  justify-center hover:scale-105 bg-opacity-0"
+                    className="flex items-center bg-none py-[1vh] px-[1vw]  justify-center hover:scale-105 bg-opacity-0"
                   >
                     {chain.iconUrl && (
                       <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} style={{ width: 30, height: 30 }} />

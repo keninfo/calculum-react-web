@@ -63,7 +63,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
         <select
-          className="px-10 py-0.5 h-fit w-full text-sm border  bg-smoke text-white text-left"
+          className="px-2 py-0.5 h-fit w-full text-sm border !border-white bg-smoke text-white text-left"
           id="cryptoCoin"
           value={'USDC vol'}
         >

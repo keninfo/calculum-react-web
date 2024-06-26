@@ -31,7 +31,7 @@ export const SecondaryButton = ({ handleClick, children, disabled, border, class
 export const AlternateButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}
-    className={`bg-carmesi px-[2vw] py-[1vh] flex justify-center items-center text-white ${border ? 'border-2' : ''} ${className}`}
+    className={`bg-carmesi px-[2vw] py-[1vh] flex justify-center items-center text-white ${border ? 'border-2 border-white' : ''} ${className}`}
     disabled={disabled}
   >
     {children}
