@@ -12,7 +12,7 @@ const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
   const { SymbolAsset, SymbolShares, BalanceAssets, ConvertToShares } = ContractReads()
-  const { withdrawAssets } = useWithdrawAssets()
+  const { withdrawAssets, isPending } = useWithdrawAssets()
 
   const BalanceAssetResult = BalanceAssets(address).data as bigint
 
@@ -40,8 +40,8 @@ const WithdrawAsset = () => {
         value={formatShares(ConvertToShares(amount).data as bigint) + ' Shares of ' + (SymbolShares().data as string)}
         disabled={true}
       />
-      <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-[4vh]">
-        Withdraw
+      <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-[2vh]" disabled={isPending}>
+        {isPending ? 'Withdrawing...' : 'Withdraw'}
       </PrimaryButton>
     </>
   )

@@ -14,7 +14,7 @@ const Approve = () => {
   const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
   const { Deposits, MaxDeposit, SymbolAsset, BalanceAssets } = ContractReads()
-  const { ApproveAssets } = useApprove()
+  const { ApproveAssets, isPending } = useApprove()
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
@@ -31,6 +31,7 @@ const Approve = () => {
     const s1 = max - checkAmount
     setAmount(parseFloat(formatBalance(s1)))
   }
+
   return (
     <>
       <p className="mb-[1vh] text-left text-xs">
@@ -43,8 +44,8 @@ const Approve = () => {
           MAX
         </AlternateButton>
       </div>
-      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="mt-[4vh] md:mt-0">
-        Approve
+      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="my-[2vh]" disabled={isPending}>
+        {isPending ? 'Approving...' : 'Approve'}
       </PrimaryButton>
     </>
   )

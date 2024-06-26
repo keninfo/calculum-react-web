@@ -1,7 +1,7 @@
 import type { Hash } from 'viem'
 import { parseUnits } from 'viem'
 
-import { useWriteContract } from 'wagmi'
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
 
@@ -11,7 +11,7 @@ interface DepositProps {
 }
 
 const useDeposit = () => {
-  const { writeContract } = useWriteContract()
+  const { data: hash, writeContract, isPending } = useWriteContract()
 
   const Deposit = ({ amount, address }: DepositProps) => {
     writeContract({
@@ -22,7 +22,11 @@ const useDeposit = () => {
     })
   }
 
-  return { Deposit }
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
+
+  return { Deposit, isPending, isConfirming, isConfirmed }
 }
 
 export default useDeposit

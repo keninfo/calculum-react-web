@@ -7,7 +7,7 @@ import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 
 const useApprove = () => {
-  const { writeContract } = useWriteContract()
+  const { isPending, writeContract } = useWriteContract()
 
   const ApproveAssets = (amount: number) => {
     writeContract({
@@ -18,7 +18,7 @@ const useApprove = () => {
     })
   }
 
-  return { ApproveAssets }
+  return { ApproveAssets, isPending }
 }
 
 export default useApprove

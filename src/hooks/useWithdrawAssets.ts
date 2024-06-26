@@ -10,7 +10,7 @@ interface WithdrawProps {
   address: string | undefined
 }
 const useWithdrawAssets = () => {
-  const { writeContract } = useWriteContract()
+  const { writeContract, isPending } = useWriteContract()
 
   const withdrawAssets = ({ amount, address }: WithdrawProps) => {
     writeContract({
@@ -21,7 +21,7 @@ const useWithdrawAssets = () => {
     })
   }
 
-  return { withdrawAssets }
+  return { withdrawAssets, isPending }
 }
 
 export default useWithdrawAssets

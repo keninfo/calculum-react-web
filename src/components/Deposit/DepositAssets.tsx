@@ -18,7 +18,7 @@ const DepositAssets = () => {
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
-  const { Deposit } = useDeposit()
+  const { Deposit, isPending } = useDeposit()
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
@@ -80,8 +80,12 @@ const DepositAssets = () => {
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
         ) : parseFloat(formatBalance(allowance)) > 0 ? (
-          <PrimaryButton handleClick={() => Deposit({ amount, address })} className="mt-[4vh] md:mt-0">
-            Deposit
+          <PrimaryButton
+            handleClick={() => Deposit({ amount, address })}
+            className="mt-[4vh] md:mt-0"
+            disabled={isPending}
+          >
+            {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
         ) : (
           <Approve />
