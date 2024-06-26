@@ -14,7 +14,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className="overscroll-none">
+      <body className="overscroll-none classic">
         <Providers>
           <AppProviders>
             <Navbar />

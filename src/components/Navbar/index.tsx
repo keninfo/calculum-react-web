@@ -8,6 +8,7 @@ import MaintenanceBanner from '@/components/MaintenanceBanner'
 
 import CustomConnectButton from '../common/CustomConnectButton'
 import SmallCustomConnectButton from '../common/CustomConnectButton/small'
+import Logo from '../common/Icons/Logo'
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
@@ -21,7 +22,7 @@ const Sidebar = () => {
       {/* DESKTOP*/}
       <MaintenanceBanner />
       <div className="hidden | md:flex justify-between items-center px-[2.5vw]">
-        <img src={`${pro ? '/red.svg' : '/white.svg'}`} alt="Bear Protocol" className="h-[6vh] mr-[4vw]" />
+        <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} />
         <div className="flex w-fit justify-left items-center">{navigationItems.map(NavbarItem)}</div>
         <div className="w-fit flex justify-between items-center space-x-[2vh]">
           <CustomConnectButton />
@@ -34,9 +35,8 @@ const Sidebar = () => {
         <div className="col-span-1 flex justify-start items-center">
           <SmallCustomConnectButton />
         </div>
-
-        <img src={`${pro ? '/red.svg' : '/white.svg'}`} alt="Bear Protocol" className="h-full col-span-2" />
-        <div className="col-span-1  flex justify-end items-center">
+        <Logo className={`h-full w-full col-span-2 ${pro ? 'fill-carmesi' : 'fill-white'}`} />
+        <div className="col-span-1 flex justify-end items-center">
           <ProToggle />
         </div>
       </div>

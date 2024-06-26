@@ -2,14 +2,15 @@
 module.exports = {
   content: ['./src/app/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    colors: {
-      darkness: '#161a1d',
-      smoke: '#111111',
-      carmesi: '#ef233c',
-      white: '#ffffff',
-      greySmoke: '#666666',
+    extend: {
+      colors: {
+        darkness: 'var(--color-darkness)',
+        smoke: 'var(--color-smoke)',
+        carmesi: 'var(--color-carmesi)',
+        white: 'var(--color-white)',
+        greySmoke: 'var(--color-greySmoke)',
+      },
     },
   },
-
   plugins: [],
 }

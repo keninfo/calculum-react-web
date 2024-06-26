@@ -1,9 +1,10 @@
 'use client'
 
+import type { AvatarComponent } from '@rainbow-me/rainbowkit'
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
-import React, { type ReactNode } from 'react'
+import React, { useContext, useEffect, useState, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -11,9 +12,19 @@ import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
 
+import { ProContext } from '@/components/AppProviders'
+import { classicTheme, proTheme } from '@/styles/colors'
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 
 export const projectId = WALLET_CONNECT_PROJECT_ID
+
+interface ThemeColorsType {
+  darkness: string
+  smoke: string
+  carmesi: string
+  white: string
+  greySmoke: string
+}
 
 if (!projectId) throw new Error('Project ID is not defined')
 
@@ -29,11 +40,45 @@ const config = getDefaultConfig({
 
 const queryClient = new QueryClient()
 
+const CustomAvatar: AvatarComponent = () => {
+  return <img src="/bearAttack.svg" alt="Bear Protocol" className="h-10" />
+}
+
 export default function RainbowKit({ children, initialState }: { children: ReactNode; initialState?: State }) {
+  const { pro } = useContext(ProContext)
+
+  const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
+
+  useEffect(() => {
+    if (!pro) {
+      setThemeColors({
+        darkness: classicTheme.darkness,
+        smoke: classicTheme.smoke,
+        carmesi: classicTheme.carmesi,
+        white: classicTheme.white,
+        greySmoke: classicTheme.greySmoke,
+      })
+    } else {
+      setThemeColors({
+        darkness: proTheme.darkness,
+        smoke: proTheme.smoke,
+        carmesi: proTheme.carmesi,
+        white: proTheme.white,
+        greySmoke: proTheme.greySmoke,
+      })
+    }
+  }, [pro])
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider modalSize="compact" theme={darkTheme({ accentColor: '#ef233c', borderRadius: 'none' })}>
+        <RainbowKitProvider
+          modalSize="compact"
+          theme={darkTheme({ accentColor: themeColors?.carmesi, borderRadius: 'none' })}
+          appInfo={{
+            appName: 'BearProtocol',
+          }}
+          avatar={CustomAvatar}
+        >
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>

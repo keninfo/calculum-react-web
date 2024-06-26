@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "tsc && next lint",
     "cmp": "./scripts/cmp.sh",
-    "css-vars": "ts-node-esm ./scripts/css-vars.ts > ./src/styles/vars.css && prettier -w src/styles/vars.css",
+    "css-vars": "ts-node src/styles/generateThemes.ts && prettier src/styles/_theme.css",
     "prettier": "prettier -w \"src/**/*.{ts,tsx,css,js}\""
   },
   "engines": {

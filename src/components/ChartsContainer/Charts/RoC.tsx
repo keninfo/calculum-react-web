@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { OptionsContext, ProContext } from '@/components/AppProviders'
+import { classicTheme, proTheme } from '@/styles/colors'
 import { formatDate } from '@/utils/formatters'
 
 import { calculateCumulativeReturns, calculateScaledReturns, pct_change } from '../chartComputations'
@@ -29,11 +30,42 @@ interface OHLCChartData {
   close: number
 }
 
+interface ThemeColorsType {
+  darkness: string
+  smoke: string
+  carmesi: string
+  white: string
+  greySmoke: string
+}
+
 const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { coin, window, rollingWindow, volatility, showCandle, studyCase } = useContext(OptionsContext)
+  const { pro } = useContext(ProContext)
+
+  const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
+
+  useEffect(() => {
+    if (!pro) {
+      setThemeColors({
+        darkness: classicTheme.darkness,
+        smoke: classicTheme.smoke,
+        carmesi: classicTheme.carmesi,
+        white: classicTheme.white,
+        greySmoke: classicTheme.greySmoke,
+      })
+    } else {
+      setThemeColors({
+        darkness: proTheme.darkness,
+        smoke: proTheme.smoke,
+        carmesi: proTheme.carmesi,
+        white: proTheme.white,
+        greySmoke: proTheme.greySmoke,
+      })
+    }
+  }, [pro])
 
   useEffect(() => {
     if (!chartContainerRef.current) return
@@ -102,7 +134,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     cumulativeReturns.unshift(1)
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
-      color: '#ef233c',
+      color: themeColors?.carmesi,
       priceScaleId: 'left',
     })
 
@@ -114,7 +146,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     lineSeries1?.setData(chartDataPrice1)
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: 'white',
+      color: themeColors?.white,
       priceScaleId: 'left',
     })
 
@@ -186,23 +218,23 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           if (rocScaled > rocCumulative) {
             toolTip.innerHTML = `<div style="color: white">${coin}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
             Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
-            <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
             Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
           } else {
             toolTip.innerHTML = `<div style="color: white">${coin}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: white; font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
             Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
-            <p style="font-size: 10px; margin: 4px 0px; color: #ef233c; font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
             Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
           }
@@ -228,7 +260,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
               <p style="font-size: 10px; margin: 4px 0px; color: gold; font-weight: bold;">
               C: ${close?.toFixed(4)}</p>
             </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #161a1d; color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
               ${dateStr}
             </div>`
           }
@@ -262,7 +294,19 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
-  }, [coin, dates, ohcl, rollingWindow, seriesData1, seriesData2, showCandle, studyCase, volatility, window])
+  }, [
+    coin,
+    dates,
+    ohcl,
+    rollingWindow,
+    seriesData1,
+    seriesData2,
+    showCandle,
+    studyCase,
+    volatility,
+    window,
+    themeColors,
+  ])
 
   return (
     <div className="relative">
