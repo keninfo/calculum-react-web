@@ -137,6 +137,16 @@ export function calculateCumulativeReturns(data) {
   return cumulativeReturns
 }
 
+export function cumprod(data) {
+  const returns = data
+  let cumProd = 1.0
+
+  return returns.map((returnValue) => {
+    cumProd *= 1.0 + returnValue
+    return cumProd
+  })
+}
+
 export function calculateRolling(data, rollingWindow) {
   let rollingStd = []
   for (let i = 0; i < data.length; i++) {

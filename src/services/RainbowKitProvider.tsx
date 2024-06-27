@@ -1,6 +1,5 @@
 'use client'
 
-import type { AvatarComponent } from '@rainbow-me/rainbowkit'
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
@@ -51,10 +50,6 @@ if (typeof window !== 'undefined' && window.ethereum) {
 
 const queryClient = new QueryClient()
 
-const CustomAvatar: AvatarComponent = () => {
-  return <img src="/bearAttack.svg" alt="Bear Protocol" className="h-10" />
-}
-
 export default function RainbowKit({ children, initialState }: { children: ReactNode; initialState?: State }) {
   const { pro } = useContext(ProContext)
 
@@ -89,7 +84,6 @@ export default function RainbowKit({ children, initialState }: { children: React
           appInfo={{
             appName: 'BearProtocol',
           }}
-          avatar={CustomAvatar}
         >
           {children}
         </RainbowKitProvider>
