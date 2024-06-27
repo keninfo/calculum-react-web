@@ -51,7 +51,8 @@ button {
   outline: none;
 }
 
-select {
+select,
+input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-border-radius: 0px;
