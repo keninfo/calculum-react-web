@@ -8,6 +8,7 @@ import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
+import AddToken from '../common/AddToken'
 import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]
@@ -70,7 +71,10 @@ const DepositAssets = () => {
               MAX
             </AlternateButton>
           </div>
-          <p className="mb-[1vh] mt-[2vh] text-left text-xs">You will receive</p>
+          <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
+            <p className="text-left text-xs">You will receive</p>
+            <AddToken />
+          </div>
           <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
         </>
       )}
