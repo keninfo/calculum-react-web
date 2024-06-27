@@ -11,7 +11,7 @@ const AddToken: React.FC = () => {
   const { chain } = useAccount()
 
   const watchAsset = async () => {
-    if (chain?.id !== undefined) {
+    if (chain?.id !== undefined && walletClient) {
       await walletClient.switchChain({ id: chain.id })
       if (typeof window.ethereum !== 'undefined') {
         try {

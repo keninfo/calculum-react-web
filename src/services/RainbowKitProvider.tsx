@@ -40,10 +40,14 @@ const config = getDefaultConfig({
   }),
 })
 
-export const walletClient = createWalletClient({
-  chain: arbitrum,
-  transport: custom(window.ethereum!),
-})
+let walletClient: ReturnType<typeof createWalletClient> | undefined
+
+if (typeof window !== 'undefined' && window.ethereum) {
+  walletClient = createWalletClient({
+    chain: arbitrum,
+    transport: custom(window.ethereum),
+  })
+}
 
 const queryClient = new QueryClient()
 
@@ -75,6 +79,7 @@ export default function RainbowKit({ children, initialState }: { children: React
       })
     }
   }, [pro])
+
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
@@ -92,3 +97,5 @@ export default function RainbowKit({ children, initialState }: { children: React
     </WagmiProvider>
   )
 }
+
+export { walletClient }
