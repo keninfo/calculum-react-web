@@ -8,6 +8,8 @@ import React, { useContext, useEffect, useState, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import { createWalletClient, custom } from 'viem'
+
 import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
@@ -36,6 +38,11 @@ const config = getDefaultConfig({
   storage: createStorage({
     storage: cookieStorage,
   }),
+})
+
+export const walletClient = createWalletClient({
+  chain: arbitrum,
+  transport: custom(window.ethereum!),
 })
 
 const queryClient = new QueryClient()
