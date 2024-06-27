@@ -62,8 +62,8 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
 
   return (
     <Card className="w-full h-fit max-h-full">
-      <div className="flex w-full mb-[4vh] space-x-2">
-        <Select handleChange={() => {}} value={'USDC vol'} options={['USDC vol']} />
+      <div className="flex mb-[4vh] justify-between space-x-2">
+        <Select handleChange={() => {}} value={'USDC vol'} options={['USDC vol']} className="w-fit" />
         <CoinSelect />
       </div>
       <div className="h-fit">
