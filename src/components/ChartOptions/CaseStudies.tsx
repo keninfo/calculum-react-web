@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 
 import { OptionsContext } from '../AppProviders'
+import Select from '../common/Select'
 
 const cases = ['-', 'Market turned bear', 'Market turned bull']
 
@@ -26,20 +27,7 @@ const CaseStudies = () => {
     setStudyCase(caseIndex)
   }
 
-  return (
-    <select
-      className="px-[2vw] py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
-      id="studyCase"
-      onChange={handleCaseChange}
-      value={cases[studyCase]}
-    >
-      {cases.map((c, index) => (
-        <option key={index} value={c}>
-          {c}
-        </option>
-      ))}
-    </select>
-  )
+  return <Select handleChange={handleCaseChange} value={cases[studyCase]} options={cases} />
 }
 
 export default CaseStudies

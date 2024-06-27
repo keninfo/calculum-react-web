@@ -15,6 +15,7 @@ import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
+import Select from '../common/Select'
 import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
@@ -62,15 +63,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   return (
     <Card className="w-full h-fit max-h-full">
       <div className="flex w-full mb-[4vh] space-x-2">
-        <select
-          className="px-2 py-0.5 h-fit w-full text-sm border !border-white bg-smoke text-white text-left"
-          id="cryptoCoin"
-          value={'USDC vol'}
-        >
-          <option key={1} value={'USDC vol'}>
-            {'USDC vol'}
-          </option>
-        </select>
+        <Select handleChange={() => {}} value={'USDC vol'} options={['USDC vol']} />
         <CoinSelect />
       </div>
       <div className="h-fit">
