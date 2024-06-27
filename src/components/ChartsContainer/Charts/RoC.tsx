@@ -316,6 +316,17 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     themeColors,
   ])
 
+  if (coin == 'PEPE' && studyCase == 1) {
+    return (
+      <div className="w-full h-[400px] flex justify-center items-center">
+        <div className="text-center">
+          <p>NO DATA</p>
+          <p className="text-carmesi">please choose other parameters</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="relative">
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
