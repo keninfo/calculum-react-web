@@ -15,8 +15,8 @@ const ChartOptions = () => {
   return (
     <>
       {/* DESKTOP */}
-      <Card className="hidden | md:block w-full mb-[2vh]" title="OPTIONS">
-        <div className="flex justify-between items-center mt-[4vh]">
+      <Card className="hidden | md:block w-full mb-[2vh] relative">
+        <div className="flex justify-between items-center">
           <p className="text-greySmoke text-left text-sm">Asset:</p>
           <CoinSelect />
         </div>

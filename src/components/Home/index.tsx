@@ -91,12 +91,7 @@ const Home = () => {
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
-        <div className="p-[.5vw] col-span-3">
-          <ActionCard />
-          <VaultsInfo />
-        </div>
-
-        <div className="p-[.5vw] col-span-5">
+        <div className="p-[.5vw] col-span-8">
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
           ) : (
@@ -111,7 +106,9 @@ const Home = () => {
         </div>
         <div className="p-[.5vw] col-span-3">
           <ChartOptions />
+          <ActionCard />
           {pro && <RebalancingResults data={prices} />}
+          <VaultsInfo />
         </div>
       </div>
 
