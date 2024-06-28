@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { formatDate } from '@/utils/formatters'
+import { formatDate, hexToRGBA } from '@/utils/formatters'
 
 import { calculateRolling, pct_change } from '../chartComputations'
 import { lineChartConfig, toolTipWidth, tooltipConfig, zeroLine } from '../chartConfig'
@@ -74,13 +74,16 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
           },
         },
         leftPriceScale: {
+          ...lineChartConfig.leftPriceScale,
           mode: 0,
-          visible: true,
-          borderVisible: false,
         },
         layout: {
           background: { type: ColorType.Solid, color: 'transparent' },
           textColor: themeColors?.white,
+        },
+        crosshair: {
+          ...lineChartConfig.crosshair,
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
         },
       })
     }
@@ -121,7 +124,8 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
 
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
-    toolTip.style.background = `rgba(255, 255, 255, 0.10)`
+
+    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
     toolTip.style.color = 'var(--color-white)'
 
     chartContainerRef.current?.appendChild(toolTip)
@@ -143,12 +147,12 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         const rollingVol = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rollingVol !== undefined) {
-          toolTip.innerHTML = `<div style="color: white">${coin}</div>
+          toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: limegreen; font-weight: bold;">
             Vol: ${rollingVol?.toFixed(2)}%</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #var(--color-darkness); color: white; text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
 
@@ -167,7 +171,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     })
 
     if (lineSeries) {
-      lineSeries.createPriceLine({ ...zeroLine, price: 0 })
+      lineSeries.createPriceLine({ ...zeroLine, price: 0, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
 
     return () => {

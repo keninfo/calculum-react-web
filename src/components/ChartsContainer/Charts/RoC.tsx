@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { formatDate } from '@/utils/formatters'
+import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
 import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '../chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
@@ -85,9 +85,8 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             },
           },
           leftPriceScale: {
+            ...lineChartConfig.leftPriceScale,
             mode: 2,
-            visible: true,
-            borderVisible: false,
           },
           layout: {
             background: { type: ColorType.Solid, color: 'transparent' },
@@ -102,6 +101,10 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           layout: {
             background: { type: ColorType.Solid, color: 'transparent' },
             textColor: themeColors?.white,
+          },
+          crosshair: {
+            ...lineChartConfig.crosshair,
+            vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
           },
         })
       }
@@ -193,10 +196,13 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
     const toolTip = document.createElement('div')
 
-    Object.assign(toolTip.style, { height: '400px', ...tooltipConfig })
+    Object.assign(toolTip.style, {
+      height: '400px',
+      ...tooltipConfig,
+    })
 
-    toolTip.style.background = `rgba(255, 255, 255, 0.10)`
-    toolTip.style.color = 'white'
+    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
+    toolTip.style.color = 'var(--color-white)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -212,7 +218,8 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         toolTip.style.display = 'none'
       } else {
         toolTip.style.display = 'block'
-        const dateStr = param.time as string
+        const dateStr = formatDateAmerican(param.time)
+        console.log(param.time)
         const data1 = lineSeries1
           ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
           : undefined
@@ -235,7 +242,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             ${dateStr}
           </div>`
           } else {
-            toolTip.innerHTML = `<div style="color: white">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
             Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
@@ -288,11 +295,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     })
 
     if (lineSeries1) {
-      lineSeries1.createPriceLine(zeroLine)
+      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
 
     if (candlestickSeries) {
-      candlestickSeries.createPriceLine(zeroLine)
+      candlestickSeries.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
 
     return () => {
