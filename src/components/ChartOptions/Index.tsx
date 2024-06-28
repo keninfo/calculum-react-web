@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 
+import Card from '../common/Card'
 import CaseStudies from './CaseStudies'
 import CoinSelect from './CoinSelect'
 import SetWindow from './SetWindow'
@@ -14,61 +15,42 @@ const ChartOptions = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className="hidden | md:flex justify-between items-start -mb-[5vh] w-full">
-        <div className="w-full items-center">
-          <div className="w-full flex justify-end items-end space-x-[1vw]">
-            <div className="inline w-full">
-              <div className="flex items-center space-x-2">
-                <div className="w-[2vw] h-1 bg-white"></div>
-                <span className="text-xs">BTC (Raw Price)</span>
-              </div>
-              <div className="flex items-center space-x-2 w-fit">
-                <div className="w-[2vw] h-1 bg-carmesi"></div>
-                <p className="text-carmesi text-xs">BTC - Vol Target</p>
-              </div>
-            </div>
-            <div className="block space-y-[1vh]">
-              <p className="opacity-30 text-right text-sm">Show:</p>
-              <ShowCandle />
-            </div>
-            <div className="block space-y-[1vh]">
-              <p className="opacity-30 text-right text-sm">Asset:</p>
-              <CoinSelect />
-            </div>
-            <div className="block space-y-[1vh]">
-              <p className="opacity-30 text-right text-sm">Days:</p>
-              {studyCase == 0 && <SetWindow />}
-              {studyCase == 1 && (
-                <p className="px-[1vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
-                  04/01/2021
-                </p>
-              )}
-              {studyCase == 2 && (
-                <p className="px-[1vw] py-0.5 h-fit w-full text-sm border  bg-smoke text-greySmoke text-left">
-                  10/01/2023
-                </p>
-              )}
-            </div>
-            <div className="block space-y-[1vh]">
-              <p className="opacity-30 text-right text-sm">Case Studies:</p>
-              <CaseStudies />
-            </div>
-          </div>
-          {!pro && <div className="h-10 w-full"></div>}
-          {pro && (
-            <div className="w-full flex justify-end items-center space-x-[1vw] mt-[2vh]">
-              <div className="flex text-greySmoke space-x-2">
-                <p>Volatility:</p>
-                <p>{volatility * 100}%</p>
-              </div>
-              <div className="flex text-greySmoke space-x-2">
-                <p>Rolling Window:</p>
-                <p>{rollingWindow} days</p>
-              </div>
-            </div>
+      <Card className="hidden | md:block w-full mb-[2vh]" title="OPTIONS">
+        <div className="flex justify-between items-center mt-[4vh]">
+          <p className="text-greySmoke text-left text-sm">Asset:</p>
+          <CoinSelect />
+        </div>
+        <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Case Studies:</p>
+          <CaseStudies />
+        </div>
+        <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Days:</p>
+          {studyCase == 0 && <SetWindow />}
+          {studyCase == 1 && (
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+          )}
+          {studyCase == 2 && (
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
           )}
         </div>
-      </div>
+        {pro && (
+          <>
+            <div className="flex justify-between items-center mt-[1vh]">
+              <p className="text-greySmoke text-left text-sm">Volatility:</p>
+              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">
+                {volatility * 100}%
+              </p>
+            </div>
+            <div className="flex justify-between items-center mt-[1vh]">
+              <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
+              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">
+                {rollingWindow} days
+              </p>
+            </div>
+          </>
+        )}
+      </Card>
 
       {/* MOBILE */}
       <div className="w-full pl-[2vw] | md:hidden">

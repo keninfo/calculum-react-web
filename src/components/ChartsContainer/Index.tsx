@@ -7,7 +7,6 @@ import { OptionsContext, ProContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
 import { OHCL } from '@/public/ohcl'
 
-import ChartOptions from '../ChartOptions/Index'
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'
 
@@ -53,7 +52,6 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
   return (
     <>
       <Card className="relative w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[3vw]">
-        <ChartOptions />
         <p className="hidden | md:block absolute top-1/2 -left-[45px] -rotate-90 text-white text-sm">
           Return on Capital (%)
         </p>
