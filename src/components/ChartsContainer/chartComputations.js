@@ -2,39 +2,44 @@ export function pct_change(data) {
   const percentageChanges = []
   let startIndex = 0
 
+  // Find the first finite number in the array
   while (startIndex < data.length && !Number.isFinite(data[startIndex])) {
     startIndex++
   }
 
+  // Calculate percentage changes
   for (let i = startIndex + 1; i < data.length; i++) {
     const previous = data[i - 1]
     const current = data[i]
+
     if (!Number.isFinite(previous) || !Number.isFinite(current)) {
       continue
+    } else {
+      const percentageChange = (current - previous) / Math.abs(previous)
+      percentageChanges.push(percentageChange)
     }
-    const percentageChange = (current - previous) / Math.abs(previous)
-    percentageChanges.push(percentageChange)
   }
   return percentageChanges
+}
+
+export function calculateScaledReturnsLeverage(data, rollingWindow, periodsPerYear, targetVol) {
+  const rollingStd = calculateRollingStd(data, rollingWindow)
+  const shiftedRollingStd = shiftArray(rollingStd, 1)
+  const scaledReturn = calculateLeverage(data, shiftedRollingStd, periodsPerYear, targetVol)
+  return scaledReturn
 }
 
 function calculateRollingStd(arr, rollingWindow) {
   let rollingStd = []
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == null) {
-      rollingStd.push(null)
-      continue
-    }
     let start = Math.max(0, i - rollingWindow + 1)
     let end = i + 1
     let slice = arr.slice(start, end)
     let std = null
     if (slice.length >= rollingWindow) {
       std = calculateStd(slice)
-      rollingStd.push(std)
-    } else {
-      rollingStd.push(null)
     }
+    rollingStd.push(std)
   }
   return rollingStd
 }
@@ -60,24 +65,17 @@ function shiftArray(arr, shiftAmount) {
 }
 
 function calculateLeverage(arr, shifted, periodsPerYear, targetVol) {
-  const scaled_return = []
-  const squared = Math.sqrt(periodsPerYear)
+  const scaledReturn = []
+  const sqrtPeriodsPerYear = Math.sqrt(periodsPerYear)
   for (let i = 0; i < arr.length; i++) {
-    if (shifted[i] !== null && arr[i] !== null) {
-      const scaledValue = targetVol / (shifted[i] * squared)
-      scaled_return.push(scaledValue)
+    if (shifted[i] !== null && Number.isFinite(shifted[i])) {
+      const scaledValue = targetVol / (shifted[i] * sqrtPeriodsPerYear)
+      scaledReturn.push(scaledValue)
     } else {
-      scaled_return.push(null)
+      scaledReturn.push(null)
     }
   }
-  return scaled_return
-}
-
-export function calculateScaledReturns(data, rollingWindow, periodsPerYear, targetVol) {
-  const rolling_std = calculateRollingStd(data, rollingWindow)
-  const shifted_rolling_std = shiftArray(rolling_std, 1)
-  const scaled_return = calculateLeverage(data, shifted_rolling_std, periodsPerYear, targetVol)
-  return scaled_return
+  return scaledReturn
 }
 
 export function filterByDate(data, dates, startDate, endDate) {
@@ -138,10 +136,9 @@ export function calculateCumulativeReturns(data) {
 }
 
 export function cumprod(data) {
-  const returns = data
-  let cumProd = 1.0
+  let cumProd = 1
 
-  return returns.map((returnValue) => {
+  return data.map((returnValue) => {
     cumProd *= 1.0 + returnValue
     return cumProd
   })

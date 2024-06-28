@@ -4,7 +4,7 @@ import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { formatDate } from '@/utils/formatters'
 
-import { calculateCumulativeReturns, calculateScaledReturns, pct_change } from '../chartComputations'
+import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '../chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -111,9 +111,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     let selectedWindow = window
 
     if (studyCase == 1) {
-      selectedWindow = 1138
+      selectedWindow = 1171
     } else if (studyCase == 2) {
-      selectedWindow = 224
+      selectedWindow = 258
     }
 
     const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
@@ -122,7 +122,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     const ohclFiltered = ohcl.slice(-selectedWindow)
 
     const data1PercentageChange = pct_change(seriesData1Filtered)
-    const scaledReturns = calculateScaledReturns(data1PercentageChange, rollingWindow, periods, volatility)
+    const scaledReturns = calculateScaledReturnsLeverage(data1PercentageChange, rollingWindow, periods, volatility)
 
     const scaledReturnsLimited = scaledReturns.map((value) => (value ? Math.min(value, 1) : 0))
 

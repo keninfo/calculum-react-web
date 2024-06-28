@@ -3,10 +3,12 @@ import React, { useContext } from 'react'
 import { OptionsContext } from '@/components/AppProviders'
 import {
   pct_change,
-  calculateScaledReturns,
-  calculateCumulativeReturns,
+  calculateScaledReturnsLeverage,
   cummax,
   safeRound,
+  calculateMean,
+  calculateStd,
+  cumprod,
 } from '@/components/ChartsContainer/chartComputations'
 import Card from '@/components/common/Card'
 
@@ -21,9 +23,9 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   let years = 1
 
   if (studyCase == 1) {
-    selectedWindow = 1138
+    selectedWindow = 1171
   } else if (studyCase == 2) {
-    selectedWindow = 224
+    selectedWindow = 258
   }
 
   if (selectedWindow == 30) {
@@ -32,10 +34,10 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
     years = 0.16438356
   } else if (selectedWindow == 90) {
     years = 0.24657534
-  } else if (selectedWindow == 1138) {
-    years = 3.11780822
-  } else if (selectedWindow == 224) {
-    years = 0.61369863
+  } else if (selectedWindow == 1171) {
+    years = 3.20821918
+  } else if (selectedWindow == 258) {
+    years = 0.70684932
   }
 
   const getCoinArray = (amount: number) => {
@@ -60,33 +62,44 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
 
   const filteredPrices = getCoinArray(selectedWindow + 1)
 
-  const percentageChange = pct_change(filteredPrices)
-  percentageChange[0] = 0
+  const dFReturns = pct_change(filteredPrices)
+  dFReturns[0] = 0
 
-  const scaledReturns = calculateScaledReturns(percentageChange, rollingWindow, periods, volatility)
-  const scaledReturnsLimited = scaledReturns.map((value) => (value ? Math.min(value, 1) : 0))
-  const cumulativeReturnsScaled = calculateCumulativeReturns(
-    percentageChange.map((returnValue, index) => returnValue * scaledReturnsLimited[index]),
+  const filteredPricesForScaled = getCoinArray(selectedWindow + rollingWindow + 1)
+  const dFReturnsForScaled = pct_change(filteredPricesForScaled)
+  dFReturnsForScaled[0] = 0
+
+  const leverage = calculateScaledReturnsLeverage(dFReturnsForScaled, rollingWindow, periods, volatility).slice(
+    14,
+    dFReturnsForScaled.length,
+  )
+  const leverageLimited = leverage.map((value) => (value ? Math.min(value, 1) : 0))
+  const dFReturnsScaled = dFReturns.map((returnValue, index) => returnValue * leverageLimited[index])
+
+  // SHARPE ---------------------------------------------------------------------------------------------------------
+  const rawSharpe = safeRound((calculateMean(dFReturns) / calculateStd(dFReturns)) * Math.sqrt(periods), 2)
+
+  const scaledSharpe = safeRound(
+    (calculateMean(dFReturnsScaled) / calculateStd(dFReturnsScaled)) * Math.sqrt(periods),
+    2,
   )
 
-  // const rawSharpe = safeRound(
-  //   (calculateMean(percentageChange) / calculateStd(percentageChange)) * Math.sqrt(periods),
-  //   2,
-  // )
+  // CAGR ---------------------------------------------------------------------------------------------------------
 
-  // const scaledSharpe = safeRound(
-  //   (calculateMean(cumulativeReturnsScaled) / calculateStd(cumulativeReturnsScaled)) * Math.sqrt(periods),
-  //   2,
-  // )
+  const dFReturnsCumRet = cumprod(dFReturns)
+  const dFReturnsScaledCumRet = cumprod(dFReturnsScaled)
 
-  const cumulativeReturns = calculateCumulativeReturns(percentageChange)
-  const cumMaxRaw = cummax(cumulativeReturns)
-  const cumMaxScaled = cummax(cumulativeReturnsScaled)
+  const rawCAGR = safeRound((dFReturnsCumRet[dFReturnsCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
+  const scaledCAGR = safeRound((dFReturnsScaledCumRet[dFReturnsScaledCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
 
-  const dividedRaw = cumulativeReturns.map((value: number, index: number) => {
+  // DRAWDOWN ---------------------------------------------------------------------------------------------------------
+  const cumMaxRaw = cummax(dFReturnsCumRet)
+  const cumMaxScaled = cummax(dFReturnsScaledCumRet)
+
+  const dividedRaw = dFReturnsCumRet.map((value: number, index: number) => {
     return value / cumMaxRaw[index]
   })
-  const dividedScaled = cumulativeReturnsScaled.map((value: number, index: number) => {
+  const dividedScaled = dFReturnsScaledCumRet.map((value: number, index: number) => {
     return value / cumMaxScaled[index]
   })
 
@@ -99,24 +112,17 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   const sortedRaw = absValuesRaw.sort((a: number, b: number) => b - a)
   const sortedScaled = absValuesScaled.sort((a: number, b: number) => b - a)
 
-  const rawCAGR = safeRound((cumulativeReturns[cumulativeReturns.length - 1] ** (1 / years) - 1) * 100, 2)
-  const scaledCAGR = 0
-  // const scaledCAGR = safeRound(
-  //   (cumulativeReturnsScaled[cumulativeReturnsScaled.length - 1] ** (1 / years) - 1) * 100,
-  //   2,
-  //)
-
   const rawDDMax = `-${(sortedRaw[0] * 100).toFixed(1)}`
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
   return (
     <Card className="w-full h-fit mt-[2vh]" title="REBALANCED RESULTS">
-      {/* <p>
+      <p>
         Sharpe Ratio, Raw: <b>{rawSharpe}</b>
       </p>
       <p>
         Constant Volatility: <b>{scaledSharpe}</b>
-      </p> */}
+      </p>
 
       <p className="mt-[2vh]">
         CAGR, Raw: <b>{rawCAGR}%</b>
