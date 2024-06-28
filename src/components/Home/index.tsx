@@ -12,6 +12,7 @@ import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
 import { ProContext } from '../AppProviders'
+import ChartOptions from '../ChartOptions/Index'
 import RebalancingResults from '../RebalancingResults'
 import { PrimaryButton } from '../common/Buttons'
 import CustomConnectButton from '../common/CustomConnectButton'
@@ -90,7 +91,12 @@ const Home = () => {
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
-        <div className="p-[.5vw] col-span-8">
+        <div className="p-[.5vw] col-span-3">
+          <ActionCard />
+          <VaultsInfo />
+        </div>
+
+        <div className="p-[.5vw] col-span-5">
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
           ) : (
@@ -104,9 +110,8 @@ const Home = () => {
           </Card>
         </div>
         <div className="p-[.5vw] col-span-3">
-          <ActionCard />
+          <ChartOptions />
           {pro && <RebalancingResults data={prices} />}
-          <VaultsInfo />
         </div>
       </div>
 

@@ -12,10 +12,6 @@ import {
 } from '@/components/ChartsContainer/chartComputations'
 import Card from '@/components/common/Card'
 
-import CaseStudies from '../ChartOptions/CaseStudies'
-import CoinSelect from '../ChartOptions/CoinSelect'
-import SetWindow from '../ChartOptions/SetWindow'
-
 const RebalancingResults = ({ data }: { data: number[][] }) => {
   const { window, rollingWindow, volatility, coin, studyCase } = useContext(OptionsContext)
 
@@ -137,7 +133,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
       <p>
         Constant Volatility: <b>{scaledDDMax}%</b>
       </p>
-      <div className="w-full mt-[3vh]  space-y-[1vh]">
+      {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
         <div className="block space-y-1 w-fit">
           <p className="text-greySmoke text-left text-sm">Asset:</p>
           <CoinSelect />
@@ -156,7 +152,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
             <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
           )}
         </div>
-      </div>
+      </div> */}
     </Card>
   )
 }
