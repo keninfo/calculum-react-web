@@ -7,6 +7,7 @@ import { TabsList } from '@mui/base/TabsList'
 
 import { useAccount } from 'wagmi'
 
+import CoinSelect from '@/components/ChartOptions/CoinSelect'
 import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
 import Withdraw from '@/components/Withdraw'
@@ -14,6 +15,7 @@ import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
+import Select from '../common/Select'
 import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
@@ -60,10 +62,10 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
 
   return (
     <Card className="w-full h-fit max-h-full">
-      {/* <div className="flex mb-[4vh] justify-between space-x-2">
+      <div className="flex mb-[4vh] justify-between space-x-2">
         <Select handleChange={() => {}} value={'USDC vol'} options={['USDC vol']} className="w-fit" />
         <CoinSelect />
-      </div> */}
+      </div>
       <div className="h-fit">
         {isConnected && whitelistCheck && <ActionCardTabs />}
         {isConnected && !whitelistCheck && <NotWhitelist />}

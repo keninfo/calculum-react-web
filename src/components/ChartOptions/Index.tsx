@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 
+import RebalancingResults from '../RebalancingResults'
 import Card from '../common/Card'
 import CaseStudies from './CaseStudies'
 import CoinSelect from './CoinSelect'
 import SetWindow from './SetWindow'
 import ShowCandle from './ShowCandle'
 
-const ChartOptions = () => {
+const ChartOptions = ({ prices }: { prices: number[][] }) => {
   const { volatility, rollingWindow, studyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
 
@@ -48,6 +49,7 @@ const ChartOptions = () => {
                 {rollingWindow} days
               </p>
             </div>
+            {pro && <RebalancingResults data={prices} />}
           </>
         )}
       </Card>

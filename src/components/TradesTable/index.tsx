@@ -7,7 +7,7 @@ const TradesTable = () => {
   const [selected, setSelected] = useState<number>(0)
   return (
     <div className="w-full">
-      <div className="flex justify-between items-start | md:pl-[5vh]">
+      <div className="flex justify-between items-start">
         <h1 className="text-xl text-center font-bold border-b-carmesi border-b-4 pb-1">TRADES</h1>
         <div className="flex justify-between items-center space-x-1">
           <div
@@ -25,7 +25,7 @@ const TradesTable = () => {
         </div>
       </div>
       {isConnected ? (
-        <div className="md:ml-[5vh]">
+        <div>
           <p className="text-center mt-[10vh] text-2xl">
             {selected == 0 && `You currently have no open trades`}
             {selected == 1 && `You currently have no closed trades`}
@@ -33,8 +33,8 @@ const TradesTable = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center">
-          <div className="space-y-4 mt-[2vh] text-center | md:mt-[10vh]">
-            <p className="text-2xl text-carmesi my-[4vh] | md:my-0">Connect a wallet to see your trades</p>
+          <div className="space-y-4 mt-[2vh] text-center">
+            <p className="text-2xl text-carmesi my-[4vh]">Connect a wallet to see your trades</p>
           </div>
         </div>
       )}

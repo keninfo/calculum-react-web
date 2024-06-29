@@ -112,7 +112,7 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
   return (
-    <Card className="w-full h-fit mt-[2vh]" title="REBALANCED RESULTS">
+    <Card className="w-full h-fit mt-[6vh] !p-0" title="REBALANCED RESULTS">
       <p>
         Sharpe Ratio, Raw: <b>{rawSharpe}</b>
       </p>

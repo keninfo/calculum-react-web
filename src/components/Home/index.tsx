@@ -41,6 +41,8 @@ const Home = () => {
   const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
   const { isConnected } = useAccount()
+  const [leftHidden, setLeftHidden] = useState<boolean>(false)
+  const [rightHidden, setRightHidden] = useState<boolean>(false)
   // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
@@ -91,13 +93,29 @@ const Home = () => {
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
-        <div className="p-[.5vw] col-span-3">
-          <ChartOptions />
-          <ActionCard />
-          {pro && <RebalancingResults data={prices} />}
-          <VaultsInfo />
+        <div className="col-span-11 h-10 flex justify-between items-end px-[1vw]">
+          <p className="font-bold text-xs cursor-pointer" onClick={() => setLeftHidden(!leftHidden)}>
+            {leftHidden ? 'SHOW CHART OPTIONS >' : '< HIDE'}
+          </p>
+          <p
+            className={`font-bold text-xs w-[33.3%] ${leftHidden && rightHidden ? 'text-center' : leftHidden ? 'text-right' : rightHidden ? 'text-left' : 'text-center'}`}
+            onClick={() => setLeftHidden(!leftHidden)}
+          >
+            {'VOLATILITY CHART'}
+          </p>
+          <p className="font-bold text-xs cursor-pointer" onClick={() => setRightHidden(!rightHidden)}>
+            {rightHidden ? '< SHOW TRADE BOX' : 'HIDE >'}
+          </p>
         </div>
-        <div className="p-[.5vw] col-span-8">
+        {!leftHidden && (
+          <div className="p-[.5vw] col-span-3">
+            <ChartOptions prices={prices} />
+            <VaultsInfo />
+          </div>
+        )}
+        <div
+          className={`p-[.5vw]  ${leftHidden && rightHidden ? 'col-span-11' : leftHidden || rightHidden ? 'col-span-8' : 'col-span-5'}`}
+        >
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
           ) : (
@@ -106,10 +124,18 @@ const Home = () => {
             </Card>
           )}
           <Card className=" flex justify-between w-full mt-[2vh]">
-            <CollateralsTable />
             <TradesTable />
           </Card>
         </div>
+
+        {!rightHidden && (
+          <div className="p-[.5vw] col-span-3">
+            <ActionCard />
+            <Card className=" flex justify-between w-full mt-[2vh]">
+              <CollateralsTable />
+            </Card>
+          </div>
+        )}
       </div>
 
       {/* MOBILE */}
