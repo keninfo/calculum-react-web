@@ -13,3 +13,11 @@ export const proTheme = {
   white: '#FFFFFF',
   greySmoke: '#666666',
 }
+
+export const lightTheme = {
+  darkness: '#F9FAF9',
+  smoke: '#E8EBED',
+  carmesi: '#EF233C',
+  white: '#353839',
+  greySmoke: '#999999',
+}
