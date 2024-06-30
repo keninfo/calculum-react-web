@@ -4,5 +4,27 @@
   "trailingComma": "all",
   "singleQuote": true,
   "semi": false,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "importOrder": [
+    "^react$",
+    "^react-dom$",
+    "^next",
+    "^react-hook-form$",
+    "^react-redux$",
+    "^redux$",
+    "^@mui/",
+    "^@vertex-protocol/",
+    "^@tanstack/",
+    "^axios$",
+    "^bignumber.js$",
+    "^ethers",
+    "^viem",
+    "^wagmi",
+    "@/",
+    "^\\..*",
+    "^\\w",
+    "^\\w*$"
+  ],
+  "importOrderSeparation": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

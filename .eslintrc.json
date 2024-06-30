@@ -1,10 +1,21 @@
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended", "next", "prettier", "plugin:prettier/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "next",
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "@next/next/no-img-element": "off",
     "unused-imports/no-unused-imports-ts": "error",
     "@typescript-eslint/consistent-type-imports": "error"
   },
-  "ignorePatterns": ["node_modules/", ".next/", ".github/"],
-  "plugins": ["unused-imports", "@typescript-eslint"]
+  "ignorePatterns": ["node_modules/", ".next/", ".github/", "postcss.config.js", "tailwind.config.js"],
+  "plugins": ["unused-imports", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
 }

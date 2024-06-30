@@ -1,0 +1,15 @@
+.classic {
+  --color-darkness: #161a1d;
+  --color-smoke: #222222;
+  --color-carmesi: #ef233c;
+  --color-white: #ffffff;
+  --color-greySmoke: #666666;
+}
+
+.pro {
+  --color-darkness: #161a1d;
+  --color-smoke: #111111;
+  --color-carmesi: #ef233c;
+  --color-white: #ffffff;
+  --color-greySmoke: #666666;
+}
