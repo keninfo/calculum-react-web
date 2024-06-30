@@ -63,7 +63,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   return (
     <Card className="w-full h-fit max-h-full">
       <div className="flex mb-[4vh] justify-between space-x-2">
-        <Select handleChange={() => {}} value={'USDC vol'} options={['USDC vol']} className="w-fit" />
+        <Select handleChange={() => {}} value={'BETA'} options={['BETA']} className="w-fit !text-carmesi font-bold" />
         <CoinSelect />
       </div>
       <div className="h-fit">

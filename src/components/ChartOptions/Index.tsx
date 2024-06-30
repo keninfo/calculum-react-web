@@ -61,10 +61,10 @@ const ChartOptions = ({ prices }: { prices: number[][] }) => {
             <select
               className="px-10 py-0.5 h-fit w-full text-sm border bg-smoke text-white text-left"
               id="cryptoCoin"
-              value={'USDC vol'}
+              value={'BETA'}
             >
-              <option key={1} value={'USDC vol'}>
-                {'USDC vol'}
+              <option key={1} value={'BETA'}>
+                {'BETA'}
               </option>
             </select>
           </div>

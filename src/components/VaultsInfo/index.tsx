@@ -65,25 +65,25 @@ const VaultsInfo = () => {
     <Card className="w-full h-[80vh] mt-[1vw]" title="VAULTS" subtitle="Last 24H">
       <Input placeholder="Search..." type={'text'} value={searchQuery} handleChange={handleSearch} />
       <table className="table-fixed mt-[2vh] w-full">
-        <thead className="text-[2vh] | md:text-[1vw]">
+        <thead className="text-[2vh] | md:text-[1.5vw]">
           <tr>
-            <th className="text-left cursor-pointer " onClick={() => handleSort('label')}>
+            <th className="text-left md:text-center cursor-pointer " onClick={() => handleSort('label')}>
               Strategy {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th className="text-center cursor-pointer " onClick={() => handleSort('value')}>
               Price {sortConfig.key === 'value' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-right cursor-pointer " onClick={() => handleSort('change')}>
+            <th className="text-right md:text-center cursor-pointer " onClick={() => handleSort('change')}>
               Change {sortConfig.key === 'change' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
           </tr>
         </thead>
-        <tbody className="w-full text-[2vh] | md:text-[1vw] ">
+        <tbody className="w-full text-[2vh] | md:text-[1.2vw]">
           {filteredData.map((row, index) => (
             <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
-              <td className="text-left pt-[2vh] border-r border-white">{row.label}</td>
+              <td className="text-left md:text-center pt-[2vh] border-r border-white">{row.label}</td>
               <td className="text-center pt-[2vh] border-r border-white">{row.value}</td>
-              <td className="text-right pt-[2vh]">{row.change}</td>
+              <td className="text-right md:text-center pt-[2vh]">{row.change}</td>
             </tr>
           ))}
         </tbody>
