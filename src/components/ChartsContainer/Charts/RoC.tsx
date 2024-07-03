@@ -234,9 +234,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
-            Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
+            Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
-            Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
+            Raw Price: ${(rocCumulative / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -245,9 +245,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
-            Raw Price: ${(rocCumulative - 100)?.toFixed(2)}%</p>
+            Raw Price: ${(rocCumulative / 100)?.toFixed(2)}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
-            Vol Scaled: ${(rocScaled - 100)?.toFixed(2)}%</p>
+            Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -336,6 +336,21 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
   return (
     <div className="relative">
+      <div className="absolute top-0 left-[4vw]  w-full">
+        <div className="flex items-center space-x-2">
+          <div className="w-[2vw] h-1 bg-white"></div>
+          <span className="text-sm">
+            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - Raw Price
+          </span>
+        </div>
+        <div className="flex items-center space-x-2 w-fit">
+          <div className="w-[2vw] h-1 bg-carmesi"></div>
+          <p className="text-carmesi text-sm">
+            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin}
+            {pro ? ' - Volatility Scaled' : ' - Low Volatility'}
+          </p>
+        </div>
+      </div>
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
     </div>
   )
