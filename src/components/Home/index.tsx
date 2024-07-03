@@ -90,12 +90,12 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15vh]' : 'mt-[10vh]'}`}>
+      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}>
         <div className={`p-[.5vw]  col-span-8`}>
           {prices.length > 0 ? (
             <ChartsContainer prices={prices} dates={dates} />
           ) : (
-            <Card className="w-full h-full flex justify-center" title="LOADING...">
+            <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
               <></>
             </Card>
           )}
@@ -106,8 +106,16 @@ const Home = () => {
           <VaultsInfo />
         </div>
         <div className="p-[.5vw] col-span-3">
-          <ChartOptions prices={prices} />
-          <ActionCard />
+          {prices.length > 0 ? (
+            <>
+              <ChartOptions prices={prices} />
+              <ActionCard />
+            </>
+          ) : (
+            <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
+              <></>
+            </Card>
+          )}
         </div>
       </div>
 

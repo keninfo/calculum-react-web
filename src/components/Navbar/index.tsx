@@ -21,12 +21,15 @@ const Sidebar = () => {
     <div className="absolute | md:fixed top-0 left-0 w-screen bg-smoke z-50 overflow-hidden" id="Navbar">
       {/* DESKTOP*/}
       <MaintenanceBanner />
-      <div className="hidden | md:flex justify-between items-center px-[1.5vw]">
-        <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} />
-        <div className="flex w-fit justify-left items-center">{navigationItems.map(NavbarItem)}</div>
-        <div className="w-fit flex justify-between items-center space-x-[2vh]">
-          <CustomConnectButton />
+      <div className="hidden | md:grid grid-cols-11 items-center px-[1.5vw] space-x-[1vw]">
+        <div className="col-span-8 flex justify-between items-center pr-[.5vh]">
+          <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} />
+          <div className="flex w-fit justify-left items-center">{navigationItems.map(NavbarItem)}</div>
           <ProToggle />
+        </div>
+
+        <div className="col-span-3 flex justify-end items-center ">
+          <CustomConnectButton />
         </div>
       </div>
 
