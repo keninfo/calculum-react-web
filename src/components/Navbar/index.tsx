@@ -18,10 +18,10 @@ library.add(fas)
 const Sidebar = () => {
   const { pro } = useContext(ProContext)
   return (
-    <div className="absolute | md:fixed top-0 left-0 w-screen bg-smoke z-50">
+    <div className="absolute | md:fixed top-0 left-0 w-screen bg-smoke z-50 overflow-hidden" id="Navbar">
       {/* DESKTOP*/}
       <MaintenanceBanner />
-      <div className="hidden | md:flex justify-between items-center px-[2.5vw]">
+      <div className="hidden | md:flex justify-between items-center px-[1.5vw]">
         <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} />
         <div className="flex w-fit justify-left items-center">{navigationItems.map(NavbarItem)}</div>
         <div className="w-fit flex justify-between items-center space-x-[2vh]">
