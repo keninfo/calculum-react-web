@@ -8,6 +8,7 @@ import { useState } from 'react'
 
 import Head from 'next/head'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import Card from '@/components/common/Card'
 import MetaTags from '@/components/common/MetaTags'
@@ -20,6 +21,8 @@ const Guides = ({
 }>) => {
   const { InMaintenance } = ContractReads()
   const [light, setLight] = useState<boolean>(false)
+
+  const pathname = usePathname()
 
   let status = false
 
@@ -41,22 +44,22 @@ const Guides = ({
           <Card className="relative w-full h-full m-0">
             <p className="text-carmesi mb-[2vh] text-[3vh]">Guides</p>
             <ul className={`text-[2vh] space-y-[2vh] pt-[2vh] sticky ${status ? 'top-[16.5vh]' : 'top-[11.5vh]'}`}>
-              <li>
+              <li className={`${pathname == '/guides' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides'}>Overview</Link>
               </li>
-              <li>
+              <li className={`${pathname == '/guides/graphs' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides/graphs'}>Graphs</Link>
               </li>
-              <li className="text-greySmoke">
+              <li className={`${pathname == '/guides/tradebox' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides'}>Trade Box</Link>
               </li>
-              <li className="text-greySmoke">
+              <li className={`${pathname == '/guides/vaults' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides'}>Vaults</Link>
               </li>
-              <li className="text-greySmoke">
+              <li className={`${pathname == '/guides/collateral' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides'}>Collateral</Link>
               </li>
-              <li className="text-greySmoke">
+              <li className={`${pathname == '/guides/trades' ? 'text-carmesi' : ' '}`}>
                 <Link href={'/guides'}>Trades</Link>
               </li>
               <p className="text-sm text-greySmoke pt-[4vh] mb-[1vh]">Having trouble reading ? </p>
