@@ -26,7 +26,7 @@ const Guides = () => {
       </Head>
 
       <main
-        className={`hidden | md:grid grid-cols-11 h-screen space-x-[1vw] m-0 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}
+        className={`hidden | md:grid grid-cols-11 h-screen space-x-[1vw] m-0 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'} p-[0.5vw]`}
       >
         <div className="col-span-2">
           <Card className="w-full h-full m-0">
