@@ -12,11 +12,13 @@ library.add(fas)
 
 const NavbarItem = (item: NavigationItem) => {
   const pathname = usePathname()
+  const isActive = pathname.startsWith(item.link)
+
   return (
     <div key={item.name}>
-      <Link href={item.link} className="flex items-center justify-start  hover:text-carmesi ">
+      <Link href={item.link} className="flex items-center justify-start hover:text-carmesi">
         <p
-          className={` mx-[1vw] px-[1vw] py-[3vh] ${pathname == item.link ? 'bg-smoke text-carmesi font-bold border-b-4 border-b-carmesi' : 'text-[2vh] mb-[4px]'}`}
+          className={`mx-[1vw] px-[1vw] py-[3vh] ${isActive ? 'bg-smoke text-carmesi font-bold border-b-4 border-b-carmesi' : 'text-[2vh] mb-[4px]'}`}
         >
           {item.name.toUpperCase()}
         </p>
