@@ -127,9 +127,9 @@ const Page = () => {
             0.9 indicates a return on capital of -10%.
           </p>
           {prices.length > 0 && (
-            <>
+            <div className="bg-smoke p-[5vh] ">
               <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
-            </>
+            </div>
           )}
           <p id="rolling-volatility" className="font-bold text-[3vh] mt-[6vh] mb-[4vh] scroll-offset">
             Rolling Volatility
@@ -145,9 +145,9 @@ const Page = () => {
           </p>
           <div className="h-fit">
             {prices.length > 0 && (
-              <>
+              <div className="bg-smoke p-[5vh] ">
                 <RollingVol dates={dates} seriesData={getCoinArray(0)} />
-              </>
+              </div>
             )}
           </div>
           <p id="graph-options" className="font-bold text-[3vh] mt-[6vh] mb-[4vh] scroll-offset">
