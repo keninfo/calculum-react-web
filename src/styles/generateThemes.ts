@@ -1,4 +1,4 @@
-import { classicTheme, proTheme } from './colors'
+import { classicTheme, proTheme, lightTheme } from './colors'
 
 import fs from 'fs'
 
@@ -18,6 +18,14 @@ const generateCSS = () => {
       --color-carmesi: ${proTheme.carmesi};
       --color-white: ${proTheme.white};
       --color-greySmoke: ${proTheme.greySmoke};
+    }
+    
+    .light {
+      --color-darkness: ${lightTheme.darkness};
+      --color-smoke: ${lightTheme.smoke};
+      --color-carmesi: ${lightTheme.carmesi};
+      --color-white: ${lightTheme.white};
+      --color-greySmoke: ${lightTheme.greySmoke};
     }
   `
 
