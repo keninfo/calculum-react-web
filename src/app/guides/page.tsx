@@ -117,7 +117,7 @@ const Page = () => {
             first four and last four characters (e.g., 0x12...34AB). This visual confirmation ensures that you are
             securely connected and can easily access your wallet's features.`}
           </p>
-          <h4 id="guide-interaction" className="mt-[4vh] mb-[2vh] text-[2.5vh] scroll-offset">
+          <h4 id="guide-interaction" className="mt-[4vh] mb-[2vh] text-[2.5vh] font-bold scroll-offset">
             Guide Interaction
           </h4>
           <p className="my-[1vh]">
@@ -126,7 +126,7 @@ const Page = () => {
             "interactive"—exploring these features hands-on is the best way to learn and become familiar with the Bear
             Protocol platform.`}
           </p>
-          <h4 id="whats-next" className="mt-[4vh] mb-[2vh] text-[2.5vh] scroll-offset">{`What's next`}</h4>
+          <h4 id="whats-next" className="mt-[4vh] mb-[2vh] text-[2.5vh] font-bold scroll-offset">{`What's next`}</h4>
           <p className="my-[1vh]">
             {`Next, we recommend reviewing the Graph Guide to deepen your understanding. If you're eager to start trading
             right away, head over to the Trade Guide.`}
