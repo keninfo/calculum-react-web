@@ -77,8 +77,9 @@ const Guides = () => {
               looking to explore advanced features.
             </p>
             <h4 className="mt-[4vh] mb-[2vh] text-[2.5vh]">Mode Toggle Button</h4>
-            <div className="flex justify-center bg-smoke py-[2vh] mb-[2vh]">
+            <div className="relative flex justify-center bg-smoke py-[2vh] mb-[2vh]">
               <ProToggle />
+              <p className="text-xs absolute bottom-[1vh] right-[1vw] text-greySmoke">interactive</p>
             </div>
             <p className="my-[1vh]">
               It allows you to seamlessly switch between Pro and Classic modes, catering to different user preferences
@@ -93,8 +94,9 @@ const Guides = () => {
               interface.
             </p>
             <h4 className="mt-[4vh] mb-[2vh] text-[2.5vh]">Connect Wallet Button</h4>
-            <div className="flex justify-center bg-smoke py-[2vh] mb-[2vh]">
+            <div className="relative flex justify-center bg-smoke py-[2vh] mb-[2vh]">
               <CustomConnectButton />
+              <p className="text-xs absolute bottom-[1vh] right-[1vw] text-greySmoke">interactive</p>
             </div>
             <p className="my-[1vh]">
               The Connect Wallet button allows users to link their cryptocurrency wallet to the Bear Protocol platform.
