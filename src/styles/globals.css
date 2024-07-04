@@ -69,3 +69,7 @@ input {
   -moz-border-radius: 0px;
   appearance: none;
 }
+
+.scroll-offset {
+  scroll-margin-top: 20vh; /* Adjust this value as needed */
+}
