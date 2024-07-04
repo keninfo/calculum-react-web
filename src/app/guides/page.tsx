@@ -44,7 +44,7 @@ const Guides = () => {
             <h2 className="mb-[2vh] text-[4vh] text-carmesi">User Guide Overview</h2>
             <p>
               {`These are user-oriented guides for the Bear Protocol Dashboard. If you're looking for technical
-              documentation, please refer to the`}
+              documentation, please refer to the`}{' '}
               <Link href="/docs" className="text-carmesi">
                 docs
               </Link>
