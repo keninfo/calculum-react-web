@@ -139,7 +139,7 @@ const Page = () => {
             </li>
             <li>
               <Link href="/guides/tradebox" className="text-carmesi pointer-events-none">
-                Trade Guide
+                Trade Box Guide
               </Link>
             </li>
           </ol>
