@@ -2,6 +2,7 @@
 
 import Head from 'next/head'
 
+import Footer from '@/components/Footer'
 import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
@@ -13,9 +14,10 @@ const Dashboard = () => {
         <MetaTags />
       </Head>
 
-      <main>
+      <main className="pb-[.5vw]">
         <Home />
       </main>
+      <Footer />
     </>
   )
 }

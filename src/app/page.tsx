@@ -2,6 +2,7 @@
 
 import Head from 'next/head'
 
+import Footer from '@/components/Footer'
 import IntroQuestionnaire from '@/components/IntroQuestionnaire'
 import MetaTags from '@/components/common/MetaTags'
 
@@ -15,6 +16,7 @@ const BearProtocolApp = () => {
 
       <main>
         <IntroQuestionnaire />
+        <Footer />
       </main>
     </>
   )

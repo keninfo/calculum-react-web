@@ -3,7 +3,6 @@
 import { type ReactNode } from 'react'
 
 import AppProviders from '@/components/AppProviders'
-import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
@@ -20,7 +19,6 @@ const RootLayout = ({
           <AppProviders>
             <Navbar />
             <div className="md:px-[1vw] pb-[.5vw] bg-smoke">{children}</div>
-            <Footer />
           </AppProviders>
         </Providers>
       </body>
