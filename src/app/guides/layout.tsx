@@ -38,7 +38,7 @@ const Guides = ({
       </Head>
 
       <main
-        className={`hidden | md:grid grid-cols-11 h-screen space-x-[1vw] m-0 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'} p-[0.5vw] ${light ? 'light' : ''} text-white`}
+        className={` text-justify hidden | md:grid grid-cols-11 h-screen space-x-[1vw] m-0 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'} p-[0.5vw] ${light ? 'light' : ''} text-white`}
       >
         <div className="col-span-2">
           <Card className="relative w-full h-full m-0">
@@ -51,16 +51,16 @@ const Guides = ({
                 <Link href={'/guides/graphs'}>Graphs</Link>
               </li>
               <li className={`${pathname == '/guides/tradebox' ? 'text-carmesi' : ' '}`}>
-                <Link href={'/guides'}>Trade Box</Link>
+                <Link href={'/guides/tradebox'}>Trade Box</Link>
               </li>
               <li className={`${pathname == '/guides/vaults' ? 'text-carmesi' : ' '}`}>
-                <Link href={'/guides'}>Vaults</Link>
+                <Link href={'/guides/vaults'}>{`Vault's Table`}</Link>
               </li>
-              <li className={`${pathname == '/guides/collateral' ? 'text-carmesi' : ' '}`}>
-                <Link href={'/guides'}>Collateral</Link>
+              <li className={`${pathname == '/guides/collaterals' ? 'text-carmesi' : ' '}`}>
+                <Link href={'/guides/collaterals'}>{`Collateral's table`}</Link>
               </li>
               <li className={`${pathname == '/guides/trades' ? 'text-carmesi' : ' '}`}>
-                <Link href={'/guides'}>Trades</Link>
+                <Link href={'/guides/trades'}>{`Trade's table`}</Link>
               </li>
               <p className="text-sm text-greySmoke pt-[4vh] mb-[1vh]">Having trouble reading ? </p>
               <button onClick={() => setLight(!light)} className="flex justify-left items-center w-full">
