@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 
 import { ProContext } from '../AppProviders'
+import { PrimaryButton } from '../common/Buttons'
 import BearAttack from '../common/Icons/BearAttack'
 import BearPassive from '../common/Icons/BearPassive'
 
@@ -18,9 +19,9 @@ const ProToggle = () => {
   }, [pro])
 
   return (
-    <button
-      onClick={() => setPro(!pro)}
-      className="w-fit flex justify-end items-center text-white hover:scale-105 group md:bg-darkness md:py-[1vh] md:pl-[2vw]"
+    <PrimaryButton
+      handleClick={() => setPro(!pro)}
+      className="w-fit flex justify-end items-center text-white | md:bg-darkness md:py-[1vh] md:pl-[2vw]"
     >
       {!pro ? (
         <div className="flex justify-between items-center space-x-5">
@@ -29,11 +30,11 @@ const ProToggle = () => {
         </div>
       ) : (
         <div className="flex justify-between items-center space-x-5">
-          <p className="hidden font-bold text-carmesi | md:block">PRO</p>
+          <p className="hidden font-bold text-carmesi | md:block ">PRO</p>
           <BearAttack className="h-[5vh] -scale-x-100" />
         </div>
       )}
-    </button>
+    </PrimaryButton>
   )
 }
 
