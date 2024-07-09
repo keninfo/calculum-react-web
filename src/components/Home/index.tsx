@@ -51,8 +51,9 @@ const Home = () => {
   }
 
   const fetchDaily = async () => {
+    const target = `https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/daily_prices_for_jesus.csv`
     try {
-      let dailyData = await d3.csv('/daily_prices_for_jesus.csv')
+      let dailyData = await d3.csv(target)
       dailyData = parseData(dailyData)
 
       const coins = Object.keys(dailyData[0]).filter((key) => key !== 'date')
