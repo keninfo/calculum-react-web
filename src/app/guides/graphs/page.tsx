@@ -208,8 +208,8 @@ const Page = () => {
               </Link>
             </li>
             <li>
-              <Link href="/guides/vaults" className="text-carmesi pointer-events-none">
-                Vaults Guide
+              <Link href="/guides/vaults" className="text-carmesi">
+                {`Vault's Table Guide`}
               </Link>
             </li>
           </ol>
