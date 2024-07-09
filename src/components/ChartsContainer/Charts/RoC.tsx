@@ -219,7 +219,6 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       } else {
         toolTip.style.display = 'block'
         const dateStr = formatDateAmerican(param.time)
-        console.log(param.time)
         const data1 = lineSeries1
           ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
           : undefined

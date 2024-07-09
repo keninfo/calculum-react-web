@@ -16,19 +16,21 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
   const { pro } = useContext(ProContext)
 
   const getCoinArray = (amount: number) => {
-    let index = 0
+    let index = 5
     if (coin == 'PEPE') {
       index = 14
       setVolatility(0.6)
     }
     if (coin == 'ETH') {
-      index = 1
+      index = 10
       setVolatility(0.3)
     }
     if (coin == 'BTC - High Vol') {
+      index = 5
       setVolatility(0.6)
     }
     if (coin == 'BTC - Controlled Vol') {
+      index = 5
       setVolatility(0.2)
     }
     return prices[index].slice(-amount)

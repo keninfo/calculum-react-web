@@ -51,7 +51,7 @@ const Home = () => {
   }
 
   const fetchDaily = async () => {
-    const target = `https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/daily_prices_for_jesus.csv`
+    const target = `/prices`
     try {
       let dailyData = await d3.csv(target)
       dailyData = parseData(dailyData)
@@ -74,6 +74,7 @@ const Home = () => {
       // setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
       setDates(dates)
       setPrices(arrayOfArrays)
+      console.log('API CALLED')
     } catch (error) {
       console.error('Error fetching data :', error)
     }
