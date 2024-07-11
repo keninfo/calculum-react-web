@@ -25,6 +25,15 @@ const Page = () => {
           <h2 id="started" className="mb-[2vh] text-[4vh] text-carmesi scroll-offset">
             User Guide Overview
           </h2>
+          <p className="my-[4vh] bg-carmesi py-[2vh] px-[2vw]">
+            This is a deprecated version of the guides, to keep up with any updates visit our{' '}
+            <b>
+              <Link href={`https://bears-organization.gitbook.io/user-guides/`} target="_blank">
+                Gitbook
+              </Link>
+            </b>
+          </p>
+
           <p className="text-lg">
             {`Welcome to the user-oriented guides for the Bear Protocol Dashboard! These guides are designed to teach you how to use and interact with this dApp. If you're looking for technical documentation, please refer to the`}{' '}
             <Link href="/docs" className="text-carmesi">
