@@ -16,7 +16,7 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
   const { pro } = useContext(ProContext)
 
   const getCoinArray = (amount: number) => {
-    let index = 5
+    let index = 0
     if (coin == 'PEPE') {
       index = 14
       setVolatility(0.6)
@@ -26,11 +26,11 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
       setVolatility(0.3)
     }
     if (coin == 'BTC - High Vol') {
-      index = 5
+      index = 0
       setVolatility(0.6)
     }
     if (coin == 'BTC - Controlled Vol') {
-      index = 5
+      index = 0
       setVolatility(0.2)
     }
     return prices[index].slice(-amount)

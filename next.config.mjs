@@ -38,7 +38,8 @@ const nextConfig = {
     return [
       {
         source: '/prices', // Matches any request starting with /api/
-        destination: 'https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/daily_prices_for_jesus.csv',
+        destination: '/daily_prices_for_jesus.csv',
+        // destination: 'https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/daily_prices_for_jesus.csv',
       },
     ]
   },

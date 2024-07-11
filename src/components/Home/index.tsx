@@ -51,7 +51,7 @@ const Home = () => {
   }
 
   const fetchDaily = async () => {
-    const target = `/prices`
+    const target = `/daily_prices_for_jesus.csv`
     try {
       let dailyData = await d3.csv(target)
       dailyData = parseData(dailyData)
