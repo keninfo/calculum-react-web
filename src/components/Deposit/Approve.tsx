@@ -39,8 +39,8 @@ const Approve = () => {
         <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
       </p>
       <div className="flex justify-between">
-        <Input type="number" value={amount} handleChange={handleAmountChange} />
-        <AlternateButton handleClick={setMax} border={true}>
+        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+        <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
           MAX
         </AlternateButton>
       </div>

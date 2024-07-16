@@ -25,7 +25,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                 return (
                   <button
                     onClick={openConnectModal}
-                    className={`bg-carmesi py-[2vh] px-[4vw] w-fit flex justify-center text-white hover:scale-105 hover:text-smoke`}
+                    className={`bg-carmesi py-[2vh] px-[4vw] w-fit flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke`}
                   >
                     <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
                   </button>
@@ -35,7 +35,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
                     onClick={openChainModal}
-                    className="flex items-center bg-none py-[1vh] px-[1vw]  justify-center hover:scale-105 bg-opacity-0"
+                    className="flex items-center bg-none py-[1vh] px-[1vw]  justify-center rounded-lg hover:scale-105 bg-opacity-0"
                   >
                     {chain.iconUrl && (
                       <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} style={{ width: 30, height: 30 }} />
@@ -43,7 +43,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                   </button>
                   <button
                     onClick={openAccountModal}
-                    className={`bg-carmesi py-[2vh] px-[4vw] flex justify-center text-white hover:scale-105 hover:text-smoke ${className}`}
+                    className={`bg-carmesi py-[2vh] px-[4vw] flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke ${className}`}
                   >
                     {account.displayName}
                   </button>

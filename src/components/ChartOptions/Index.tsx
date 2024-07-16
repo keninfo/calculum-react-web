@@ -29,23 +29,27 @@ const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: b
           <p className="text-greySmoke text-left text-sm">Days:</p>
           {studyCase == 0 && <SetWindow />}
           {studyCase == 1 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border rounded-lg bg-smoke text-greySmoke text-left">
+              04/01/2021
+            </p>
           )}
           {studyCase == 2 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border rounded-lg bg-smoke text-greySmoke text-left">
+              10/01/2023
+            </p>
           )}
         </div>
         {pro && (
           <>
             <div className="flex justify-between items-center mt-[1vh]">
               <p className="text-greySmoke text-left text-sm">Volatility:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">
+              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-lg">
                 {volatility * 100}%
               </p>
             </div>
             <div className="flex justify-between items-center mt-[1vh]">
               <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">
+              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-lg">
                 {rollingWindow} days
               </p>
             </div>

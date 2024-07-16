@@ -72,7 +72,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
         {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>}
       </div>
       {isConnected && (
-        <p className="text-white text-center opacity-50 my-[2vh] border-2 border-white px-[2vw] py-[1vh] text-md | md:text-[.8vw]">
+        <p className="text-white text-center opacity-50 my-[2vh] border-2 border-white rounded-lg px-[2vw] py-[1vh] text-md | md:text-[.8vw]">
           {shortenAddress(address)}
         </p>
       )}

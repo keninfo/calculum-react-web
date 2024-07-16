@@ -74,7 +74,7 @@ const GraphTwo = ({ show = false }: { show?: boolean }) => {
   return (
     <>
       {prices.length > 0 && (
-        <div className="bg-smoke p-[5vh] ">
+        <div className="bg-smoke p-[5vh] rounded-lg">
           <ActualVol dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} rawOnly={!show} />
           <div className="my-[6vh] border-b-2"></div>
           <ActualVolScaling dates={dates} seriesData={getCoinArray(0)} rawOnly={!show} />

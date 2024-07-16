@@ -29,8 +29,8 @@ const WithdrawAsset = () => {
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Withdraw {SymbolAsset().data as string}</p>
       <div className="flex justify-between">
-        <Input type="number" value={amount} handleChange={handleAmountChange} />
-        <AlternateButton handleClick={setMaxAssets} border={true}>
+        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+        <AlternateButton handleClick={setMaxAssets} border={true} className="rounded-l-none">
           MAX
         </AlternateButton>
       </div>

@@ -23,7 +23,7 @@ const ClaimMint = ({ shares, address }: ClaimProps) => {
         {claimerMint ? (
           <ClearButton handleClickClearButton={() => ClaimShares(address)}>Claim All Shares</ClearButton>
         ) : (
-          <p className="text-center w-full bg-carmesi px-[2vw] py-[1vh] ">{`You don't have any to claim.`}</p>
+          <p className="text-center w-full bg-carmesi px-[2vw] rounded-lg py-[1vh] ">{`You don't have any to claim.`}</p>
         )}
       </div>
     </div>

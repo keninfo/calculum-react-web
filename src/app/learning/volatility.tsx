@@ -43,13 +43,13 @@ const Volatility = () => {
         </div>
         <div className="p-[5vw] w-2/5 space-y-[4vh]">
           <p className="text-justify flex items-center">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw]">1</b>The volatility of an asset like BTC
-            changes significantly. Over a 2-month period it ranged from 40% at its lowest to 80% at its highest
+            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
+            like BTC changes significantly. Over a 2-month period it ranged from 40% at its lowest to 80% at its highest
           </p>
           <p className="text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw]">2</b>To control volatility, we can define a
-            “Target Volatility 20%”. This means that the standard deviation of the daily returns will be 20% over time,
-            and not a random number between 40% and 80%
+            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we
+            can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
+            20% over time, and not a random number between 40% and 80%
           </p>
         </div>
       </div>
@@ -60,13 +60,13 @@ const Volatility = () => {
         </div>
         <div className="p-[5vw] w-2/5 space-y-[4vh]">
           <p className="text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw]">1</b>The “Actual Volatility” is the standard
-            deviation of the daily returns of BTC over a specific period. In this chart we are assuming a 14 days
-            window.
+            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The “Actual Volatility” is
+            the standard deviation of the daily returns of BTC over a specific period. In this chart we are assuming a
+            14 days window.
           </p>
           <p className="text-justify flex items-center">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw]">2</b>Calculate the average return over these
-            14 days.
+            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate the average return
+            over these 14 days.
           </p>
           <p className="text-right">Standard Deviation</p>
           <div className="flex justify-end items-center">
@@ -88,11 +88,11 @@ const Volatility = () => {
         </div>
         <div className="p-[5vw] w-2/5">
           <p className="text-justify flex items-center mb-[4vh]">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw]">1</b>Volatility target = 20%.
+            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>Volatility target = 20%.
           </p>
           <p className="text-justify flex items-center mb-[2vh]">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw]">2</b>Calculate Actual Volatility on a
-            specific day rebalancing the following way:
+            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate Actual Volatility
+            on a specific day rebalancing the following way:
           </p>
           <p className="text-left">if target volatility = 20%</p>
           <p className="text-left">and actual volatility today = 60%, then...</p>

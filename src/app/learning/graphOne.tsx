@@ -73,7 +73,7 @@ const GraphOne = () => {
   return (
     <>
       {prices.length > 0 && (
-        <div className="bg-smoke p-[5vh] ">
+        <div className="bg-smoke p-[5vh] rounded-lg ">
           <VolScaling dates={dates} seriesData={getCoinArray(0)} />
         </div>
       )}

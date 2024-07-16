@@ -29,8 +29,8 @@ const Redeem = () => {
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Redeem shares of {SymbolShares().data as string}</p>
       <div className="flex justify-between">
-        <Input type="number" value={amount} handleChange={handleAmountChange} />
-        <AlternateButton handleClick={setMaxShares} border={true}>
+        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+        <AlternateButton handleClick={setMaxShares} border={true} className="rounded-l-none">
           MAX
         </AlternateButton>
       </div>
