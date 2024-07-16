@@ -31,7 +31,7 @@ interface ThemeColorsType {
 const RollingVol = ({ dates, seriesData }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
-  const { coin, rollingWindow, window } = useContext(OptionsContext)
+  const { coin, rollingWindow, window, studyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
@@ -88,8 +88,19 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       })
     }
 
-    const seriesDataFiltered = seriesData.slice(seriesData.length - (window + rollingWindow + 1), seriesData.length)
-    const datesFiltered = dates.slice(dates.length - (window + rollingWindow + 1))
+    let selectedWindow = window
+
+    if (studyCase == 1) {
+      selectedWindow = 1171
+    } else if (studyCase == 2) {
+      selectedWindow = 258
+    }
+
+    const seriesDataFiltered = seriesData.slice(
+      seriesData.length - (selectedWindow + rollingWindow + 1),
+      seriesData.length,
+    )
+    const datesFiltered = dates.slice(dates.length - (selectedWindow + rollingWindow + 1))
 
     const rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
 
@@ -103,7 +114,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       autoscaleInfoProvider: () => ({
         priceRange: {
           minValue: 0,
-          maxValue: coin == 'PEPE' ? 400 : 100,
+          maxValue: coin == 'PEPE' ? 400 : 150,
         },
       }),
     })
@@ -181,7 +192,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
-  }, [coin, dates, rollingWindow, seriesData, window, themeColors])
+  }, [coin, dates, rollingWindow, seriesData, window, themeColors, studyCase])
 
   return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
 }
