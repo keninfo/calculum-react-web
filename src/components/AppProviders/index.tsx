@@ -23,7 +23,7 @@ interface OptionsContextType {
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
-  coin: 'BTC - High Vol',
+  coin: 'BTC - Controlled Vol',
   setCoin: () => {},
   rollingWindow: 14,
   setRollingWindow: () => {},
@@ -50,12 +50,12 @@ export const ProContext = createContext<ProContextType>({
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const [coin, setCoin] = useState<string>('BTC - High Vol')
+  const [coin, setCoin] = useState<string>('BTC - Controlled Vol')
   const [rollingWindow, setRollingWindow] = useState<number>(14)
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
   const [showCandle, setShowCandle] = useState<boolean>(false)
-  const [pro, setPro] = useState<boolean>(true)
+  const [pro, setPro] = useState<boolean>(false)
   const [studyCase, setStudyCase] = useState<number>(1)
 
   return (
