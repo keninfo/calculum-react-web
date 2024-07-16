@@ -80,4 +80,5 @@ export const zeroLine = {
   lineWidth: 2 as LineWidth,
   lineStyle: 0,
   axisLabelVisible: false,
+  priceScaleId: 'left',
 }

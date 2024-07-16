@@ -27,7 +27,7 @@ const IntroQuestionnaire = () => {
     <Card
       className={`flex relative mx-auto flex-col justify-center items-center z-20 px-[5vw] w-screen h-screen | md:mb-[10vh] md:h-fit md:w-[60vw] ${status ? 'md:mt-[20vh]' : 'md:mt-[15vh]'}`}
     >
-      <h2 className="text-center text-carmesi text-xl mb-[6vh]">Why are you here Anon?</h2>
+      <h2 className="text-center text-carmesi text-3xl mb-[6vh] font-bold">Why are you here Anon?</h2>
       <div className="flex justify-center items-start w-full space-x-[5vw]">
         <PrimaryButton
           handleClick={() => setSelected(0)}
