@@ -27,7 +27,7 @@ const IntroQuestionnaire = () => {
     <Card
       className={`flex relative mx-auto flex-col justify-center items-center z-20 px-[5vw] w-screen h-screen | md:mb-[10vh] md:h-fit md:w-[60vw] ${status ? 'md:mt-[20vh]' : 'md:mt-[15vh]'}`}
     >
-      <h2 className="text-center text-carmesi text-3xl mb-[6vh] font-bold">Why are you here Anon?</h2>
+      <h2 className="text-center text-carmesi text-3xl mb-[6vh] font-bold">Why are you here, anon?</h2>
       <div className="flex justify-center items-start w-full space-x-[5vw]">
         <PrimaryButton
           handleClick={() => setSelected(0)}
@@ -55,10 +55,11 @@ const IntroQuestionnaire = () => {
         </PrimaryButton>
       </div>
       <p className="py-[6vh] font-bold text-lg text-center">{options[selected]}</p>
-
-      <Link href="/dashboard" className="font-bold hover:scale-105 bg-carmesi px-[10vw]">
-        Submit
-      </Link>
+      <div className="flex justify-center items-center">
+        <Link href="/dashboard" className="font-bold hover:scale-105 bg-carmesi px-[2vw] py-[2vh] rounded-lg w-fit">
+          ENTER THE BEAR
+        </Link>
+      </div>
     </Card>
   )
 }
