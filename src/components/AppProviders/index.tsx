@@ -1,11 +1,29 @@
+'use client'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CacheProvider } from '@emotion/react'
 import { MetaMaskUIProvider } from '@metamask/sdk-react-ui'
 
 import type { ReactNode } from 'react'
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 
 import RainbowKit from '@/services/RainbowKitProvider'
 import createEmotionCache from '@/utils/createEmotionCache'
+
+import * as d3 from 'd3'
+import { timeParse } from 'd3-time-format'
+
+const parseDate = timeParse('%Y-%m-%d')
+const formatTime = d3.utcFormat('%B %d, %Y')
+
+const parseData = (data: any) => {
+  return data.map((obj: any) => {
+    const { ['']: dateString, ...rest } = obj
+    const date = dateString ? parseDate(dateString) : null
+    const formattedDate = date ? formatTime(date) : null
+    return { date: formattedDate, ...rest }
+  })
+}
 
 interface OptionsContextType {
   coin: string
@@ -47,6 +65,24 @@ export const ProContext = createContext<ProContextType>({
   setPro: () => {},
 })
 
+interface CoinsContextType {
+  dates: Date[] | null
+  values: number[][] | null
+  coins: string[] | null
+  setDates: React.Dispatch<React.SetStateAction<Date[] | null>>
+  setValues: React.Dispatch<React.SetStateAction<number[][] | null>>
+  setCoins: React.Dispatch<React.SetStateAction<string[] | null>>
+}
+
+export const CoinsContext = createContext<CoinsContextType>({
+  dates: null,
+  setDates: () => {},
+  values: null,
+  setValues: () => {},
+  coins: null,
+  setCoins: () => {},
+})
+
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
@@ -57,6 +93,43 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [showCandle, setShowCandle] = useState<boolean>(false)
   const [pro, setPro] = useState<boolean>(false)
   const [studyCase, setStudyCase] = useState<number>(1)
+  const [dates, setDates] = useState<Date[] | null>(null)
+  const [values, setValues] = useState<number[][] | null>(null)
+  const [coins, setCoins] = useState<string[] | null>(null)
+
+  const fetchDaily = async () => {
+    const target = `/daily_prices_for_jesus.csv`
+    try {
+      let dailyData = await d3.csv(target)
+      dailyData = parseData(dailyData)
+
+      const coins = Object.keys(dailyData[0]).filter((key) => key !== 'date')
+      const dates = dailyData.map((obj) => obj.date).filter((date) => date !== null) as unknown as Date[]
+
+      const arrayOfArrays = coins.map((coin) => {
+        const prices = dailyData.map((obj) => parseFloat(obj[coin]) || 0)
+        return prices
+      })
+
+      const coinNames: string[] = dailyData.reduce<string[]>((acc, obj) => {
+        const keys = Object.keys(obj).filter((key) => key !== 'date')
+        return [...acc, ...keys]
+      }, [])
+
+      const uniqueCoinNames = Array.from(new Set(coinNames))
+
+      setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
+      setDates(dates)
+      setValues(arrayOfArrays)
+    } catch (error) {
+      console.error('Error fetching data :', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDaily()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <MetaMaskUIProvider
@@ -84,7 +157,9 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
           }}
         >
           <ProContext.Provider value={{ pro, setPro }}>
-            <RainbowKit>{children}</RainbowKit>
+            <CoinsContext.Provider value={{ dates, setDates, values, setValues, coins, setCoins }}>
+              <RainbowKit>{children}</RainbowKit>
+            </CoinsContext.Provider>
           </ProContext.Provider>
         </OptionsContext.Provider>
       </CacheProvider>

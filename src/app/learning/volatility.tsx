@@ -14,7 +14,7 @@ const Volatility = () => {
           <p className="text-justify ">Our first product is a strategy for scaling the volatility of an asset.</p>
           <p className="text-justify ">
             Volatility is the most common risk metric of a stock. The main aim of the volatility targeting technique is
-            to manage the portfolio’s exposure in such a way that the volatility is as close to the target value as
+            to manage the portfolio's exposure in such a way that the volatility is as close to the target value as
             possible.
           </p>
           <p className="text-justify ">

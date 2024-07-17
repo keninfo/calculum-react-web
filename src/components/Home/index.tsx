@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
@@ -11,37 +10,20 @@ import VaultsInfo from '@/components/VaultsInfo'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
-import { ProContext } from '../AppProviders'
+import { CoinsContext, ProContext } from '../AppProviders'
 import ChartOptions from '../ChartOptions/Index'
 import RebalancingResults from '../RebalancingResults'
 import { PrimaryButton } from '../common/Buttons'
 import CustomConnectButton from '../common/CustomConnectButton'
 import Modal from '../common/Modal'
 
-import * as d3 from 'd3'
-import { timeParse } from 'd3-time-format'
-
-const parseDate = timeParse('%Y-%m-%d')
-const formatTime = d3.utcFormat('%B %d, %Y')
-
-const parseData = (data: any) => {
-  return data.map((obj: any) => {
-    const { ['']: dateString, ...rest } = obj
-    const date = dateString ? parseDate(dateString) : null
-    const formattedDate = date ? formatTime(date) : null
-    return { date: formattedDate, ...rest }
-  })
-}
-
 const Home = () => {
   const { InMaintenance } = ContractReads()
-  const [prices, setPrices] = useState<number[][]>([])
-  const [dates, setDates] = useState<Date[]>([])
   const [open, setOpen] = useState<boolean>(false)
   const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
+  const { dates, values, coins } = useContext(CoinsContext)
   const { isConnected } = useAccount()
-  // const [coins, setCoins] = useState<string[]>([])
 
   let status = false
 
@@ -50,52 +32,20 @@ const Home = () => {
     status = data[0] as boolean
   }
 
-  const fetchDaily = async () => {
-    const target = `/daily_prices_for_jesus.csv`
-    try {
-      let dailyData = await d3.csv(target)
-      dailyData = parseData(dailyData)
-
-      const coins = Object.keys(dailyData[0]).filter((key) => key !== 'date')
-      const dates = dailyData.map((obj) => obj.date).filter((date) => date !== null) as unknown as Date[]
-
-      const arrayOfArrays = coins.map((coin) => {
-        const prices = dailyData.map((obj) => parseFloat(obj[coin]) || 0)
-        return prices
-      })
-
-      // const coinNames: string[] = dailyData.reduce<string[]>((acc, obj) => {
-      //   const keys = Object.keys(obj).filter((key) => key !== 'date')
-      //   return [...acc, ...keys]
-      // }, [])
-
-      // const uniqueCoinNames = Array.from(new Set(coinNames))
-
-      // setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
-      setDates(dates)
-      setPrices(arrayOfArrays)
-      console.log('API CALLED')
-    } catch (error) {
-      console.error('Error fetching data :', error)
-    }
-  }
-
-  useEffect(() => {
-    fetchDaily()
-  }, [])
-
   const toggleModal = (value: number) => {
     setOpen((prevOpen) => !prevOpen)
     setDefaultValue(value)
   }
+
+  console.log(coins)
 
   return (
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}>
         <div className={`p-[.5vw]  col-span-8`}>
-          {prices.length > 0 ? (
-            <ChartsContainer prices={prices} dates={dates} />
+          {values && dates ? (
+            <ChartsContainer prices={values} dates={dates} />
           ) : (
             <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
               <></>
@@ -108,9 +58,9 @@ const Home = () => {
           <VaultsInfo />
         </div>
         <div className="p-[.5vw] col-span-3">
-          {prices.length > 0 ? (
+          {values ? (
             <>
-              <ChartOptions prices={prices} />
+              <ChartOptions prices={values} />
               <ActionCard />
             </>
           ) : (
@@ -123,14 +73,14 @@ const Home = () => {
 
       {/* MOBILE */}
       <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] pb-[20vh] | md:hidden ">
-        {prices.length > 0 ? (
-          <ChartsContainer prices={prices} dates={dates} />
+        {values && dates ? (
+          <ChartsContainer prices={values} dates={dates} />
         ) : (
           <Card className="w-full h-full flex justify-center" title="LOADING...">
             <></>
           </Card>
         )}
-        {pro && <RebalancingResults data={prices} />}
+        {pro && values && <RebalancingResults data={values} />}
         <Card>
           <TradesTable />
         </Card>

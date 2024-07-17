@@ -158,7 +158,7 @@ const ActualVol = ({ dates, seriesData1, seriesData2, rawOnly = true }: ChartPro
     const toolTip = document.createElement('div')
 
     Object.assign(toolTip.style, {
-      height: '200px',
+      height: '230px',
       ...tooltipConfig,
     })
 
