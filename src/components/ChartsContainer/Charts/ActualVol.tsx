@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { formatDate, hexToRGBA } from '@/utils/formatters'
+import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
 import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '../chartComputations'
-import { lineChartConfig, tooltipConfig, zeroLine } from '../chartConfig'
+import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { ColorType, createChart } from 'lightweight-charts'
@@ -167,6 +167,64 @@ const ActualVol = ({ dates, seriesData1, seriesData2, rawOnly = true }: ChartPro
 
     chartContainerRef.current?.appendChild(toolTip)
 
+    chartInstance.current?.subscribeCrosshairMove((param) => {
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > (chartContainerRef.current?.clientWidth ?? 0) ||
+        param.point.y < 0 ||
+        param.point.y > (chartContainerRef.current?.clientHeight ?? 0)
+      ) {
+        toolTip.style.display = 'none'
+      } else {
+        toolTip.style.display = 'block'
+        const dateStr = formatDateAmerican(param.time)
+        const data1 = lineSeries2
+          ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
+          : undefined
+        const rolling = data1?.value !== undefined ? data1.value : data1?.close
+        const data2 = lineSeries1
+          ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
+          : undefined
+        const scaled = data2?.value !== undefined ? data2.value : data2?.close
+
+        if (rolling !== undefined) {
+          if (rawOnly) {
+            toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+                RoC Raw: ${rolling?.toFixed(0)}%</p>
+              ${dateStr}
+            </div>`
+          } else {
+            toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+                RoC Scaled: ${scaled?.toFixed(0)}%</p>    
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+                RoC Raw: ${rolling?.toFixed(0)}%</p>
+                
+              ${dateStr}
+            </div>`
+          }
+        }
+
+        let left = param.point.x as number
+        const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
+        const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
+        const halfTooltipWidth = toolTipWidth / 2
+        left += priceScaleWidth - halfTooltipWidth
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
+        left = Math.max(left, priceScaleWidth)
+
+        toolTip.style.left = left + 'px'
+        toolTip.style.top = '0px'
+      }
+    })
+
+    chartContainerRef.current?.appendChild(toolTip)
+
     if (lineSeries1) {
       lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
@@ -289,17 +347,6 @@ const ActualVol = ({ dates, seriesData1, seriesData2, rawOnly = true }: ChartPro
     rawOnly,
     setVolatility,
   ])
-
-  if (coin == 'PEPE' && studyCase == 1) {
-    return (
-      <div className="w-full h-[400px] flex justify-center items-center">
-        <div className="text-center">
-          <p>NO DATA</p>
-          <p className="text-carmesi">please choose other parameters</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="relative">

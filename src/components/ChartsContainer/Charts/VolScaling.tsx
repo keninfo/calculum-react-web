@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { formatDate, hexToRGBA } from '@/utils/formatters'
+import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
 import { calculateRolling, pct_change } from '../chartComputations'
-import { lineChartConfig, tooltipConfig, zeroLine } from '../chartConfig'
+import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { ColorType, createChart } from 'lightweight-charts'
@@ -129,10 +129,54 @@ const VolScaling = ({ dates, seriesData }: ChartProps) => {
     chartInstance.current?.timeScale().setVisibleRange(visibleRange)
 
     const toolTip = document.createElement('div')
-    Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
+
+    Object.assign(toolTip.style, {
+      height: '400px',
+      ...tooltipConfig,
+    })
 
     toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
     toolTip.style.color = 'var(--color-white)'
+
+    chartContainerRef.current?.appendChild(toolTip)
+
+    chartInstance.current?.subscribeCrosshairMove((param) => {
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > (chartContainerRef.current?.clientWidth ?? 0) ||
+        param.point.y < 0 ||
+        param.point.y > (chartContainerRef.current?.clientHeight ?? 0)
+      ) {
+        toolTip.style.display = 'none'
+      } else {
+        toolTip.style.display = 'block'
+        const dateStr = formatDateAmerican(param.time)
+        const data1 = lineSeries ? (param.seriesData.get(lineSeries) as { value?: number; close?: number }) : undefined
+        const rolling = data1?.value !== undefined ? data1.value : data1?.close
+
+        if (rolling !== undefined) {
+          toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: SteelBlue; font-weight: bold;">
+              Volatility: ${rolling?.toFixed(0)}%</p>  
+            ${dateStr}
+          </div>`
+        }
+
+        let left = param.point.x as number
+        const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
+        const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
+        const halfTooltipWidth = toolTipWidth / 2
+        left += priceScaleWidth - halfTooltipWidth
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
+        left = Math.max(left, priceScaleWidth)
+
+        toolTip.style.left = left + 'px'
+        toolTip.style.top = '0px'
+      }
+    })
 
     chartContainerRef.current?.appendChild(toolTip)
 

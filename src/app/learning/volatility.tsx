@@ -71,11 +71,11 @@ const Volatility = () => {
           <p className="text-right">Standard Deviation</p>
           <div className="flex justify-end items-center">
             <ul className="border-r pr-[2vw]">
-              <li>Day 1: -%</li>
-              <li>Day 2: -%</li>
+              <li>Day 1: 53%</li>
+              <li>Day 2: 52%</li>
               <li>...</li>
-              <li>Day 13: -%</li>
-              <li>Day 14: -%</li>
+              <li>Day 13: 66%</li>
+              <li>Day 14: 67%</li>
             </ul>
             <p className="ml-[2vw]"> = 60% = Actual Volatility</p>
           </div>
