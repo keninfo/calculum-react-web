@@ -14,7 +14,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
   return (
     <div className="relative">
       <select
-        className={`py-0.5 h-fit w-full text-sm border border-white bg-smoke text-white text-left cursor-pointer pr-[2vw] pl-[2vw] rounded-lg | md:w-max md:pr-[2vw] md:pl-[.5vw] ${className}`}
+        className={`py-0.5 h-fit w-full text-sm border border-white bg-smoke text-white text-left cursor-pointer pr-[2vw] pl-[2vw] rounded-md | md:w-max md:pr-[2vw] md:pl-[.5vw] ${className}`}
         id="cryptoCoin"
         onChange={handleChange}
         value={value}

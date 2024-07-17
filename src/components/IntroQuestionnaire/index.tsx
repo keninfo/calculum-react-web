@@ -57,7 +57,7 @@ const IntroQuestionnaire = () => {
       <p className="py-[6vh] font-bold text-lg text-center">{options[selected]}</p>
       <div className="flex justify-center items-center">
         <Link href="/dashboard" className="font-bold hover:scale-105 bg-carmesi px-[2vw] py-[2vh] rounded-lg w-fit">
-          ENTER THE BEAR
+          ENTER THE $BEAR
         </Link>
       </div>
     </Card>
