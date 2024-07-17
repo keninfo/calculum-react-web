@@ -138,27 +138,31 @@ const Home = () => {
         <Card>
           <CollateralsTable />
         </Card>
-
-        <div className="fixed bottom-0 left-0 w-screen z-50 flex justify-around p-[2vh] bg-smoke space-x-1">
-          {!isConnected && <CustomConnectButton />}
-          {isConnected && (
-            <>
-              <PrimaryButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
-                <p className="font-bold">DEPOSIT</p>
-              </PrimaryButton>
-              <PrimaryButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
-                <p className="font-bold">CLAIM</p>
-              </PrimaryButton>
-              <PrimaryButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
-                <p className="font-bold">WITHDRAW</p>
-              </PrimaryButton>
-              {open && (
-                <Modal onClose={() => toggleModal(0)}>
-                  <ActionCard defaultValue={defaultValue} />
-                </Modal>
-              )}
-            </>
-          )}
+        <div className="fixed bottom-0 left-0 w-screen z-50 ">
+          <p className="bg-carmesi w-screen h-fit text-center px-[2vw] py-[1vh]">
+            This is a BETA version, for a better experience head over to the desktop version
+          </p>
+          <div className="flex justify-around p-[2vh] bg-smoke space-x-1">
+            {!isConnected && <CustomConnectButton />}
+            {isConnected && (
+              <>
+                <PrimaryButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
+                  <p className="font-bold">DEPOSIT</p>
+                </PrimaryButton>
+                <PrimaryButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
+                  <p className="font-bold">CLAIM</p>
+                </PrimaryButton>
+                <PrimaryButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
+                  <p className="font-bold">WITHDRAW</p>
+                </PrimaryButton>
+                {open && (
+                  <Modal onClose={() => toggleModal(0)}>
+                    <ActionCard defaultValue={defaultValue} />
+                  </Modal>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
