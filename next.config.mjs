@@ -37,9 +37,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/prices', // Matches any request starting with /api/
+        source: '/live',
+        destination: 'https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/CANDLES_VERTEX_1D_CLOSE.csv',
+      },
+      {
+        source: '/static',
         destination: '/daily_prices_for_jesus.csv',
-        // destination: 'https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/daily_prices_for_jesus.csv',
       },
     ]
   },

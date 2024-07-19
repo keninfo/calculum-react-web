@@ -18,10 +18,10 @@ const formatTime = d3.utcFormat('%B %d, %Y')
 
 const parseData = (data: any) => {
   return data.map((obj: any) => {
-    const { ['']: dateString, ...rest } = obj
-    const date = dateString ? parseDate(dateString) : null
-    const formattedDate = date ? formatTime(date) : null
-    return { date: formattedDate, ...rest }
+    const { ['']: timestampString, ...rest } = obj
+    const timestamp = timestampString ? parseDate(timestampString) : null
+    const formattedDate = timestamp ? formatTime(timestamp) : null
+    return { timestamp: formattedDate, ...rest }
   })
 }
 
@@ -98,27 +98,39 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coins, setCoins] = useState<string[] | null>(null)
 
   const fetchDaily = async () => {
-    const target = `/daily_prices_for_jesus.csv`
-    try {
-      let dailyData = await d3.csv(target)
-      dailyData = parseData(dailyData)
+    const staticDataSrc = '/static'
+    const liveDataSrc = `/live`
 
-      const coins = Object.keys(dailyData[0]).filter((key) => key !== 'date')
-      const dates = dailyData.map((obj) => obj.date).filter((date) => date !== null) as unknown as Date[]
+    try {
+      let liveData = await d3.csv(liveDataSrc)
+      liveData = parseData(liveData)
+
+      let staticData = await d3.csv(staticDataSrc)
+      staticData = parseData(staticData)
+
+      const lastTimestamp = staticData[staticData.length - 1].timestamp
+      const lastDate = new Date(lastTimestamp)
+      const filteredLiveData = liveData.filter((d) => new Date(d.timestamp) > lastDate)
+      const fullData = staticData.concat(filteredLiveData)
+
+      console.log(fullData)
+
+      const coins = Object.keys(fullData[0]).filter((key) => key !== 'timestamp')
+      const dates = fullData.map((obj) => obj.timestamp).filter((date) => date !== null) as unknown as Date[]
 
       const arrayOfArrays = coins.map((coin) => {
-        const prices = dailyData.map((obj) => parseFloat(obj[coin]) || 0)
+        const prices = fullData.map((obj) => parseFloat(obj[coin]) || 0)
         return prices
       })
 
-      const coinNames: string[] = dailyData.reduce<string[]>((acc, obj) => {
-        const keys = Object.keys(obj).filter((key) => key !== 'date')
+      const coinNames: string[] = fullData.reduce<string[]>((acc, obj) => {
+        const keys = Object.keys(obj).filter((key) => key !== 'timestamp')
         return [...acc, ...keys]
       }, [])
 
       const uniqueCoinNames = Array.from(new Set(coinNames))
 
-      setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -4)))
+      setCoins(uniqueCoinNames.map((coin) => coin.slice(0, -5)))
       setDates(dates)
       setValues(arrayOfArrays)
     } catch (error) {
