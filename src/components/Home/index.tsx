@@ -22,7 +22,7 @@ const Home = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
-  const { dates, values, coins } = useContext(CoinsContext)
+  const { dates, values } = useContext(CoinsContext)
   const { isConnected } = useAccount()
 
   let status = false
@@ -36,16 +36,13 @@ const Home = () => {
     setOpen((prevOpen) => !prevOpen)
     setDefaultValue(value)
   }
-
-  console.log(coins)
-
   return (
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}>
         <div className={`p-[.5vw]  col-span-8`}>
           {values && dates ? (
-            <ChartsContainer prices={values} dates={dates} />
+            <ChartsContainer />
           ) : (
             <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
               <></>
@@ -74,7 +71,7 @@ const Home = () => {
       {/* MOBILE */}
       <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] pb-[20vh] | md:hidden ">
         {values && dates ? (
-          <ChartsContainer prices={values} dates={dates} />
+          <ChartsContainer />
         ) : (
           <Card className="w-full h-full flex justify-center" title="LOADING...">
             <></>

@@ -3,37 +3,50 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useState } from 'react'
 
-import { OptionsContext, ProContext } from '@/components/AppProviders'
+import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
-import { OHCL } from '@/public/ohcl'
+import { cutStringToFirstSpace } from '@/utils/formatters'
 
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'
 
-const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
+const Chart = () => {
   const [showSecondChart, setShowSecondChart] = useState<boolean>(true)
   const { coin, setVolatility } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
+  const { dates, values, coins } = useContext(CoinsContext)
 
-  const getCoinArray = (amount: number) => {
-    let index = 0
+  const getCoinArray = () => {
+    let index = 1
+
+    let cutCoinName = cutStringToFirstSpace(coin)
+
+    console.log(index)
+
     if (coin == 'PEPE') {
-      index = 14
+      cutCoinName = 'MPEPE'
       setVolatility(0.6)
     }
     if (coin == 'ETH') {
-      index = 10
+      cutCoinName = 'ETH'
       setVolatility(0.3)
     }
     if (coin == 'BTC - High Vol') {
-      index = 0
+      cutCoinName = 'BTC'
       setVolatility(0.6)
     }
     if (coin == 'BTC - Controlled Vol') {
-      index = 0
+      cutCoinName = 'BTC'
       setVolatility(0.2)
     }
-    return prices[index].slice(-amount)
+
+    if (coins) {
+      index = coins.indexOf(cutCoinName)
+    }
+
+    console.log(index)
+
+    return values && coin ? values[index] : []
   }
 
   const toggleSecondChart = () => {
@@ -41,14 +54,7 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
   }
 
   const getOHCL = () => {
-    let index = 0
-    if (coin == 'PEPE') {
-      index = 2
-    }
-    if (coin == 'ETH') {
-      index = 1
-    }
-    return OHCL[index]
+    return []
   }
 
   return (
@@ -57,7 +63,9 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
         <p className="hidden | md:block absolute top-1/2 -left-[45px] -rotate-90 text-white text-sm">
           Return on Capital
         </p>
-        <RoC dates={dates} seriesData1={getCoinArray(0)} seriesData2={getCoinArray(0)} ohcl={getOHCL()} />
+        {values && dates && (
+          <RoC dates={dates ? dates : []} seriesData1={getCoinArray()} seriesData2={getCoinArray()} ohcl={getOHCL()} />
+        )}
       </Card>
       {pro && (
         <Card className={`w-full !p-0 !py-[2vh] !pr-[3vw] !rounded-t-none | md:!px-[2vw]`}>
@@ -72,7 +80,7 @@ const Chart = ({ prices, dates }: { prices: number[][]; dates: Date[] }) => {
               {showSecondChart ? 'Hide' : 'Show'}
             </button>
           </div>
-          {showSecondChart && <RollingVol dates={dates} seriesData={getCoinArray(0)} />}
+          {showSecondChart && <RollingVol dates={dates ? dates : []} seriesData={getCoinArray()} />}
         </Card>
       )}
     </>
