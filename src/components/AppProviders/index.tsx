@@ -25,6 +25,16 @@ const parseData = (data: any) => {
   })
 }
 
+const parseStaticData = (data: any) => {
+  return data.map((obj: any) => {
+    const { ['']: timestampString, ['MPEPE-PERP']: valueToMultiply, ...rest } = obj
+    const timestamp = timestampString ? parseDate(timestampString) : null
+    const formattedDate = timestamp ? formatTime(timestamp) : null
+    const updatedValue = valueToMultiply ? Number(valueToMultiply) * 1000 : null
+    return { timestamp: formattedDate, ['MPEPE-PERP']: updatedValue, ...rest }
+  })
+}
+
 interface OptionsContextType {
   coin: string
   setCoin: React.Dispatch<React.SetStateAction<string>>
@@ -106,7 +116,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       liveData = parseData(liveData)
 
       let staticData = await d3.csv(staticDataSrc)
-      staticData = parseData(staticData)
+      staticData = parseStaticData(staticData)
 
       const lastTimestamp = staticData[staticData.length - 1].timestamp
       const lastDate = new Date(lastTimestamp)
