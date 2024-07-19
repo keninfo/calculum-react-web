@@ -126,3 +126,11 @@ export function hexToRGBA(hex: string, opacity: number) {
   // Return the RGBA string
   return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }
+
+export function cutStringToFirstSpace(str: string) {
+  const indexOfFirstSpace = str.indexOf(' ')
+  if (indexOfFirstSpace === -1) {
+    return str // No space found, return the entire string
+  }
+  return str.substring(0, indexOfFirstSpace)
+}
