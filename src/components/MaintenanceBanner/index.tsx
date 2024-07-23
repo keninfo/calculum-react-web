@@ -11,8 +11,6 @@ function MaintenanceBanner() {
     status = data[0] as boolean
   }
 
-  status = true
-
   return (
     <>
       {status && (
