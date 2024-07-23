@@ -109,7 +109,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
 
   const fetchDaily = async () => {
     const staticDataSrc = '/static'
-    const liveDataSrc = `/live`
+    const liveDataSrc = `/static`
 
     try {
       let liveData = await d3.csv(liveDataSrc)
@@ -122,8 +122,6 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       const lastDate = new Date(lastTimestamp)
       const filteredLiveData = liveData.filter((d) => new Date(d.timestamp) > lastDate)
       const fullData = staticData.concat(filteredLiveData)
-
-      console.log(fullData)
 
       const coins = Object.keys(fullData[0]).filter((key) => key !== 'timestamp')
       const dates = fullData.map((obj) => obj.timestamp).filter((date) => date !== null) as unknown as Date[]

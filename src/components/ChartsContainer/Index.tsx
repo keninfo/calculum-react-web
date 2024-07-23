@@ -21,8 +21,6 @@ const Chart = () => {
 
     let cutCoinName = cutStringToFirstSpace(coin)
 
-    console.log(index)
-
     if (coin == 'PEPE') {
       cutCoinName = 'MPEPE'
       setVolatility(0.6)
@@ -43,8 +41,6 @@ const Chart = () => {
     if (coins) {
       index = coins.indexOf(cutCoinName)
     }
-
-    console.log(index)
 
     return values && coin ? values[index] : []
   }
