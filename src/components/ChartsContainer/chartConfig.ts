@@ -21,7 +21,7 @@ export const lineChartConfig = {
   timeScale: {
     visible: true,
     borderVisible: false,
-    fixLeftEdge: true,
+    fixLeftEdge: false, // set back to true
     tickMarkFormatter: (time: string | number | Date, locale: Intl.LocalesArgument) => {
       const date = new Date(time)
       return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' })

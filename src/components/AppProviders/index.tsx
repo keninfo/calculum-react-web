@@ -52,17 +52,17 @@ interface OptionsContextType {
 
 export const OptionsContext = createContext<OptionsContextType>({
   coin: 'BTC - Controlled Vol',
-  setCoin: () => { },
+  setCoin: () => {},
   rollingWindow: 14,
-  setRollingWindow: () => { },
+  setRollingWindow: () => {},
   window: 365,
-  setWindow: () => { },
+  setWindow: () => {},
   volatility: 0.2,
-  setVolatility: () => { },
+  setVolatility: () => {},
   showCandle: false,
-  setShowCandle: () => { },
+  setShowCandle: () => {},
   studyCase: 1,
-  setStudyCase: () => { },
+  setStudyCase: () => {},
 })
 
 interface ProContextType {
@@ -72,7 +72,7 @@ interface ProContextType {
 
 export const ProContext = createContext<ProContextType>({
   pro: true,
-  setPro: () => { },
+  setPro: () => {},
 })
 
 interface CoinsContextType {
@@ -86,11 +86,11 @@ interface CoinsContextType {
 
 export const CoinsContext = createContext<CoinsContextType>({
   dates: null,
-  setDates: () => { },
+  setDates: () => {},
   values: null,
-  setValues: () => { },
+  setValues: () => {},
   coins: null,
-  setCoins: () => { },
+  setCoins: () => {},
 })
 
 const clientSideEmotionCache = createEmotionCache()

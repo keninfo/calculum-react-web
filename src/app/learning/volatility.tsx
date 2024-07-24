@@ -37,22 +37,7 @@ const Volatility = () => {
       </div>
 
       <h3 className="my-[6vh] text-2xl font-bold">Step 1: We define the Volatility Targeting</h3>
-      <div className="flex justify-center">
-        <div className="w-3/5">
-          <GraphOne />
-        </div>
-        <div className="p-[5vw] w-2/5 space-y-[4vh]">
-          <p className="text-justify flex items-center">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
-            like BTC changes significantly. Over a 2-month period it ranged from 40% at its lowest to 80% at its highest
-          </p>
-          <p className="text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we
-            can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
-            20% over time, and not a random number between 40% and 80%
-          </p>
-        </div>
-      </div>
+      <GraphOne />
       <h3 className="my-[6vh] text-2xl font-bold">Step 2: We calculate “Actual Volatility”</h3>
       <div className="flex justify-center">
         <div className="w-3/5">

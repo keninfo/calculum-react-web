@@ -106,12 +106,7 @@ const ActualVolScaling = ({ dates, seriesData, rawOnly = false }: ChartProps) =>
     const lineSeries = chartInstance.current?.addLineSeries({
       color: 'SteelBlue',
       priceScaleId: 'left',
-      autoscaleInfoProvider: () => ({
-        priceRange: {
-          minValue: 0,
-          maxValue: 80,
-        },
-      }),
+
       lastValueVisible: false,
     })
 
