@@ -19,19 +19,19 @@ const formatTime = d3.utcFormat('%B %d, %Y')
 const parseData = (data: any) => {
   return data.map((obj: any) => {
     const { ['']: timestampString, ...rest } = obj
-    const timestamp = timestampString ? parseDate(timestampString) : null
-    const formattedDate = timestamp ? formatTime(timestamp) : null
-    return { timestamp: formattedDate, ...rest }
+    const TIMESTAMP = timestampString ? parseDate(timestampString) : null
+    const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
+    return { TIMESTAMP: formattedDate, ...rest }
   })
 }
 
 const parseStaticData = (data: any) => {
   return data.map((obj: any) => {
     const { ['']: timestampString, ['MPEPE-PERP']: valueToMultiply, ...rest } = obj
-    const timestamp = timestampString ? parseDate(timestampString) : null
-    const formattedDate = timestamp ? formatTime(timestamp) : null
+    const TIMESTAMP = timestampString ? parseDate(timestampString) : null
+    const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
     const updatedValue = valueToMultiply ? Number(valueToMultiply) * 1000 : null
-    return { timestamp: formattedDate, ['MPEPE-PERP']: updatedValue, ...rest }
+    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: updatedValue, ...rest }
   })
 }
 
@@ -52,17 +52,17 @@ interface OptionsContextType {
 
 export const OptionsContext = createContext<OptionsContextType>({
   coin: 'BTC - Controlled Vol',
-  setCoin: () => {},
+  setCoin: () => { },
   rollingWindow: 14,
-  setRollingWindow: () => {},
+  setRollingWindow: () => { },
   window: 365,
-  setWindow: () => {},
+  setWindow: () => { },
   volatility: 0.2,
-  setVolatility: () => {},
+  setVolatility: () => { },
   showCandle: false,
-  setShowCandle: () => {},
+  setShowCandle: () => { },
   studyCase: 1,
-  setStudyCase: () => {},
+  setStudyCase: () => { },
 })
 
 interface ProContextType {
@@ -72,7 +72,7 @@ interface ProContextType {
 
 export const ProContext = createContext<ProContextType>({
   pro: true,
-  setPro: () => {},
+  setPro: () => { },
 })
 
 interface CoinsContextType {
@@ -86,11 +86,11 @@ interface CoinsContextType {
 
 export const CoinsContext = createContext<CoinsContextType>({
   dates: null,
-  setDates: () => {},
+  setDates: () => { },
   values: null,
-  setValues: () => {},
+  setValues: () => { },
   coins: null,
-  setCoins: () => {},
+  setCoins: () => { },
 })
 
 const clientSideEmotionCache = createEmotionCache()
@@ -109,7 +109,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
 
   const fetchDaily = async () => {
     const staticDataSrc = '/static'
-    const liveDataSrc = `/static`
+    const liveDataSrc = `/live`
 
     try {
       let liveData = await d3.csv(liveDataSrc)
@@ -118,13 +118,15 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       let staticData = await d3.csv(staticDataSrc)
       staticData = parseStaticData(staticData)
 
-      const lastTimestamp = staticData[staticData.length - 1].timestamp
+      const lastTimestamp = staticData[staticData.length - 1].TIMESTAMP
       const lastDate = new Date(lastTimestamp)
-      const filteredLiveData = liveData.filter((d) => new Date(d.timestamp) > lastDate)
-      const fullData = staticData.concat(filteredLiveData)
+      const filteredLiveData = liveData.filter((d) => new Date(d.TIMESTAMP) > lastDate)
+      let fullData = staticData.concat(filteredLiveData)
 
-      const coins = Object.keys(fullData[0]).filter((key) => key !== 'timestamp')
-      const dates = fullData.map((obj) => obj.timestamp).filter((date) => date !== null) as unknown as Date[]
+      fullData = fullData.slice(0, fullData.length - 1)
+
+      const coins = Object.keys(fullData[0]).filter((key) => key !== 'TIMESTAMP')
+      const dates = fullData.map((obj) => obj.TIMESTAMP).filter((date) => date !== null) as unknown as Date[]
 
       const arrayOfArrays = coins.map((coin) => {
         const prices = fullData.map((obj) => parseFloat(obj[coin]) || 0)
@@ -132,7 +134,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       })
 
       const coinNames: string[] = fullData.reduce<string[]>((acc, obj) => {
-        const keys = Object.keys(obj).filter((key) => key !== 'timestamp')
+        const keys = Object.keys(obj).filter((key) => key !== 'TIMESTAMP')
         return [...acc, ...keys]
       }, [])
 
