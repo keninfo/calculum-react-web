@@ -2,7 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CacheProvider } from '@emotion/react'
-import { MetaMaskUIProvider } from '@metamask/sdk-react-ui'
 
 import type { ReactNode } from 'react'
 import { useState, createContext, useEffect } from 'react'
@@ -154,38 +153,38 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   }, [])
 
   return (
-    <MetaMaskUIProvider
-      sdkOptions={{
-        dappMetadata: {
-          // url: window.location.href,
-        },
-      }}
-    >
-      <CacheProvider value={clientSideEmotionCache}>
-        <OptionsContext.Provider
-          value={{
-            coin,
-            setCoin,
-            rollingWindow,
-            setRollingWindow,
-            window,
-            setWindow,
-            volatility,
-            setVolatility,
-            showCandle,
-            setShowCandle,
-            studyCase,
-            setStudyCase,
-          }}
-        >
-          <ProContext.Provider value={{ pro, setPro }}>
-            <CoinsContext.Provider value={{ dates, setDates, values, setValues, coins, setCoins }}>
-              <RainbowKit>{children}</RainbowKit>
-            </CoinsContext.Provider>
-          </ProContext.Provider>
-        </OptionsContext.Provider>
-      </CacheProvider>
-    </MetaMaskUIProvider>
+    // <MetaMaskUIProvider
+    //   sdkOptions={{
+    //     dappMetadata: {
+    //       // url: window.location.href,
+    //     },
+    //   }}
+    // >
+    <CacheProvider value={clientSideEmotionCache}>
+      <OptionsContext.Provider
+        value={{
+          coin,
+          setCoin,
+          rollingWindow,
+          setRollingWindow,
+          window,
+          setWindow,
+          volatility,
+          setVolatility,
+          showCandle,
+          setShowCandle,
+          studyCase,
+          setStudyCase,
+        }}
+      >
+        <ProContext.Provider value={{ pro, setPro }}>
+          <CoinsContext.Provider value={{ dates, setDates, values, setValues, coins, setCoins }}>
+            <RainbowKit>{children}</RainbowKit>
+          </CoinsContext.Provider>
+        </ProContext.Provider>
+      </OptionsContext.Provider>
+    </CacheProvider>
+    // </MetaMaskUIProvider>
   )
 }
 
