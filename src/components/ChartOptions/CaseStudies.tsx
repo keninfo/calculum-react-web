@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '../AppProviders'
-import Select from '../common/Select'
+import { OptionsContext } from '@/components/AppProviders'
+import Select from '@/components/common/Select'
 
 const cases = ['Select timeframe', 'Market turned bear', 'Market turned bull']
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Card from '@/components/common/Card'
-
-import Input from '../common/Input'
+import Input from '@/components/common/Input'
 
 type DataRow = {
   label: string

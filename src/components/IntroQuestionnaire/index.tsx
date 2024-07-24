@@ -2,10 +2,9 @@ import { useState } from 'react'
 
 import Link from 'next/link'
 
+import { PrimaryButton } from '@/components/common/Buttons'
+import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
-
-import { PrimaryButton } from '../common/Buttons'
-import Card from '../common/Card'
 
 const options = [
   `Cool branding, i'm just curious about what $bear is.`,

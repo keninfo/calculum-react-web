@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
+import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
-import AddToken from '../common/AddToken'
 import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]

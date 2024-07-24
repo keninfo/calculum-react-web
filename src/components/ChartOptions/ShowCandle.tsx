@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '../AppProviders'
+import { OptionsContext } from '@/components/AppProviders'
 
 const ShowCandle = () => {
   const { showCandle, setShowCandle } = useContext(OptionsContext)

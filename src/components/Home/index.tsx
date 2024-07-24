@@ -3,19 +3,18 @@ import React, { useContext, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 import ActionCard from '@/components/ActionCard'
+import { CoinsContext, ProContext } from '@/components/AppProviders'
+import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
+import RebalancingResults from '@/components/RebalancingResults'
 import TradesTable from '@/components/TradesTable'
 import VaultsInfo from '@/components/VaultsInfo'
+import { PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
+import CustomConnectButton from '@/components/common/CustomConnectButton'
+import Modal from '@/components/common/Modal'
 import ContractReads from '@/hooks/useContractReads'
-
-import { CoinsContext, ProContext } from '../AppProviders'
-import ChartOptions from '../ChartOptions/Index'
-import RebalancingResults from '../RebalancingResults'
-import { PrimaryButton } from '../common/Buttons'
-import CustomConnectButton from '../common/CustomConnectButton'
-import Modal from '../common/Modal'
 
 const Home = () => {
   const { InMaintenance } = ContractReads()

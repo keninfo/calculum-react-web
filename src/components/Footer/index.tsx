@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Logo from '../common/Icons/Logo'
+import Logo from '@/components/common/Icons/Logo'
 
 const index = () => {
   return (

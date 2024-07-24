@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Chevron from '../Icons/Chevron'
+import Chevron from '@/components/common/Icons/Chevron'
 
 type SelectProps = {
   handleChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void

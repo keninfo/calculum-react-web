@@ -5,10 +5,10 @@ import React, { useContext } from 'react'
 
 import { ProContext } from '@/components/AppProviders'
 import MaintenanceBanner from '@/components/MaintenanceBanner'
+import CustomConnectButton from '@/components/common/CustomConnectButton'
+import SmallCustomConnectButton from '@/components/common/CustomConnectButton/small'
+import Logo from '@/components/common/Icons/Logo'
 
-import CustomConnectButton from '../common/CustomConnectButton'
-import SmallCustomConnectButton from '../common/CustomConnectButton/small'
-import Logo from '../common/Icons/Logo'
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'

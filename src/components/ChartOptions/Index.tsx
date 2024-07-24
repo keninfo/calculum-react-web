@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
+import RebalancingResults from '@/components/RebalancingResults'
+import Card from '@/components/common/Card'
 
-import RebalancingResults from '../RebalancingResults'
-import Card from '../common/Card'
 import CaseStudies from './CaseStudies'
 import CoinSelect from './CoinSelect'
 import SetWindow from './SetWindow'
