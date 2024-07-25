@@ -2,7 +2,6 @@ import React from 'react'
 
 const BearAttack = ({ className }: { className: string }) => (
   <svg
-    width="100%"
     height="100%"
     viewBox="0 0 1339 1420"
     version="1.1"
