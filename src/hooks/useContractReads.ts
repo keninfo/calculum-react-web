@@ -11,7 +11,7 @@ const useContractReads = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
-      functionName: 'InMaintenance',
+      functionName: 'isMaintenance',
     })
     return { data, isLoading, error }
   }
