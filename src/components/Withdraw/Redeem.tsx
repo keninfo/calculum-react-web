@@ -35,7 +35,7 @@ const Redeem = () => {
         </AlternateButton>
       </div>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
-      <Input type="text" value={formatBalance(ConvertToAssets(amount).data as bigint) + ' BPUSDC'} disabled={true} />
+      <Input type="text" value={formatBalance(ConvertToAssets(amount).data as bigint) + ' USDC'} disabled={true} />
       <PrimaryButton handleClick={() => redeemAssets({ amount, address })} className="mt-[2vh]" disabled={isPending}>
         {isPending ? 'Redeeming...' : 'Redeem'}
       </PrimaryButton>

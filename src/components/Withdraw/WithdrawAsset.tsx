@@ -11,10 +11,13 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
-  const { SymbolAsset, SymbolShares, BalanceAssets, ConvertToShares } = ContractReads()
+  const { SymbolAsset, SymbolShares, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
   const { withdrawAssets, isPending } = useWithdrawAssets()
 
-  const BalanceAssetResult = BalanceAssets(address).data as bigint
+  const BalanceSharesResult = BalanceShares(address).data as bigint
+  const formattedShares = formatShares(BalanceSharesResult)
+  const convertedAssets = ConvertToAssets(parseFloat(formattedShares)).data as bigint
+  const maxAssets = parseFloat(formatBalance(convertedAssets))
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -22,7 +25,7 @@ const WithdrawAsset = () => {
   }
 
   const setMaxAssets = () => {
-    setAmount(parseFloat(formatBalance(BalanceAssetResult)))
+    setAmount(maxAssets)
   }
 
   return (
