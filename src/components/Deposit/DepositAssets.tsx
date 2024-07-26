@@ -109,7 +109,12 @@ const DepositAssets = () => {
             {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
         ) : !Number.isNaN(amount) ? (
-          <Approve amount={amount - parseFloat(formatBalance(allowance))} />
+          <>
+            <p className="text-sm text-carmesi mb-[2vh]">
+              The amount set is above the one you previously approved, set a lower amount or approve the difference
+            </p>
+            <Approve amount={amount - parseFloat(formatBalance(allowance))} />
+          </>
         ) : (
           <PrimaryButton
             handleClick={() => {}}
