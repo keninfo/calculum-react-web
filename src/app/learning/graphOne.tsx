@@ -218,7 +218,7 @@ const GraphOne = () => {
         color: hexToRGBA(themeColors?.white as string, 0.25),
       })
       lineSeries.createPriceLine(targetVol)
-      if (maximunDate < maximunDate) {
+      if (maximunDate < minimumDate) {
         lineSeries.setMarkers([
           {
             time: maximunDate,
