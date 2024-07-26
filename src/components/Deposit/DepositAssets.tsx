@@ -46,16 +46,27 @@ const DepositAssets = () => {
   const setMax = () => {
     const s1 = max - checkAmount
     const s2 = allowance
+    const s3 = balanceAssets
+
     if (Number(allowance) == 0) {
       setAmount(parseFloat(formatBalance(s1)))
       return
     }
 
-    if (s1 < s2) {
+    if (s1 < s2 && s1 < s3) {
       setAmount(parseFloat(formatBalance(s1)))
       return
     }
-    setAmount(parseFloat(formatBalance(s2)))
+
+    if (s2 < s1 && s2 < s3) {
+      setAmount(parseFloat(formatBalance(s2)))
+      return
+    }
+
+    if (s3 < s1 && s3 < s2) {
+      setAmount(parseFloat(formatBalance(s3)))
+      return
+    }
   }
   return (
     <>
