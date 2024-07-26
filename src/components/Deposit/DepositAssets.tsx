@@ -72,25 +72,23 @@ const DepositAssets = () => {
   }
   return (
     <>
-      {Number(allowance) != 0 && (
-        <>
-          <p className="mb-[1vh] mt-[4vh] text-left text-xs">
-            You have {formattedBalance}
-            <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
-          </p>
-          <div className="flex justify-between">
-            <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
-            <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
-              MAX
-            </AlternateButton>
-          </div>
-          <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
-            <p className="text-left text-xs">You will receive</p>
-            <AddToken />
-          </div>
-          <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
-        </>
-      )}
+      <>
+        <p className="mb-[1vh] mt-[4vh] text-left text-xs">
+          You have {formattedBalance}
+          <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
+        </p>
+        <div className="flex justify-between">
+          <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+          <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
+            MAX
+          </AlternateButton>
+        </div>
+        <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
+          <p className="text-left text-xs">You will receive</p>
+          <AddToken />
+        </div>
+        <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
+      </>
       <div className="inline justify-center px-2">
         {coin !== 'BTC - Controlled Vol' ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
@@ -102,7 +100,7 @@ const DepositAssets = () => {
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
-        ) : parseFloat(formatBalance(allowance)) > 0 ? (
+        ) : parseFloat(formatBalance(allowance)) > amount ? (
           <PrimaryButton
             handleClick={() => Deposit({ amount, address })}
             className="mt-[4vh] md:mt-0"
@@ -110,8 +108,16 @@ const DepositAssets = () => {
           >
             {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
+        ) : !Number.isNaN(amount) ? (
+          <Approve amount={amount - parseFloat(formatBalance(allowance))} />
         ) : (
-          <Approve />
+          <PrimaryButton
+            handleClick={() => {}}
+            className="!bg-carmesi mt-[4vh] md:mt-0 hover:scale-100 hover:text-white"
+            disabled={true}
+          >
+            Enter valid amount
+          </PrimaryButton>
         )}
       </div>
     </>
