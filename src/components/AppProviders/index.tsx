@@ -107,7 +107,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coins, setCoins] = useState<string[] | null>(null)
 
   const fetchDaily = async () => {
-    const staticDataSrc = '/static'
+    const staticDataSrc = '/daily_prices_for_jesus.csv'
     // const liveDataSrc = `/live`
 
     try {
