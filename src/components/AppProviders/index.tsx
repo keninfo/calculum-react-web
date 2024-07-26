@@ -15,14 +15,14 @@ import { timeParse } from 'd3-time-format'
 const parseDate = timeParse('%Y-%m-%d')
 const formatTime = d3.utcFormat('%B %d, %Y')
 
-const parseData = (data: any) => {
-  return data.map((obj: any) => {
-    const { ['']: timestampString, ...rest } = obj
-    const TIMESTAMP = timestampString ? parseDate(timestampString) : null
-    const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
-    return { TIMESTAMP: formattedDate, ...rest }
-  })
-}
+// const parseData = (data: any) => {
+//   return data.map((obj: any) => {
+//     const { ['']: timestampString, ...rest } = obj
+//     const TIMESTAMP = timestampString ? parseDate(timestampString) : null
+//     const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
+//     return { TIMESTAMP: formattedDate, ...rest }
+//   })
+// }
 
 const parseStaticData = (data: any) => {
   return data.map((obj: any) => {
@@ -108,31 +108,31 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
 
   const fetchDaily = async () => {
     const staticDataSrc = '/static'
-    const liveDataSrc = `/live`
+    // const liveDataSrc = `/live`
 
     try {
-      let liveData = await d3.csv(liveDataSrc)
-      liveData = parseData(liveData)
+      // let liveData = await d3.csv(liveDataSrc)
+      // liveData = parseData(liveData)
 
       let staticData = await d3.csv(staticDataSrc)
       staticData = parseStaticData(staticData)
 
-      const lastTimestamp = staticData[staticData.length - 1].TIMESTAMP
-      const lastDate = new Date(lastTimestamp)
-      const filteredLiveData = liveData.filter((d) => new Date(d.TIMESTAMP) > lastDate)
-      let fullData = staticData.concat(filteredLiveData)
+      // const lastTimestamp = staticData[staticData.length - 1].TIMESTAMP
+      // const lastDate = new Date(lastTimestamp)
+      // const filteredLiveData = liveData.filter((d) => new Date(d.TIMESTAMP) > lastDate)
+      // let fullData = staticData.concat(filteredLiveData)
 
-      fullData = fullData.slice(0, fullData.length - 1)
+      // fullData = fullData.slice(0, fullData.length - 1)
 
-      const coins = Object.keys(fullData[0]).filter((key) => key !== 'TIMESTAMP')
-      const dates = fullData.map((obj) => obj.TIMESTAMP).filter((date) => date !== null) as unknown as Date[]
+      const coins = Object.keys(staticData[0]).filter((key) => key !== 'TIMESTAMP')
+      const dates = staticData.map((obj) => obj.TIMESTAMP).filter((date) => date !== null) as unknown as Date[]
 
       const arrayOfArrays = coins.map((coin) => {
-        const prices = fullData.map((obj) => parseFloat(obj[coin]) || 0)
+        const prices = staticData.map((obj) => parseFloat(obj[coin]) || 0)
         return prices
       })
 
-      const coinNames: string[] = fullData.reduce<string[]>((acc, obj) => {
+      const coinNames: string[] = staticData.reduce<string[]>((acc, obj) => {
         const keys = Object.keys(obj).filter((key) => key !== 'TIMESTAMP')
         return [...acc, ...keys]
       }, [])
