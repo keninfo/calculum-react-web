@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
@@ -9,6 +9,7 @@ import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
+import { OptionsContext } from '../AppProviders'
 import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]
@@ -20,6 +21,7 @@ const DepositAssets = () => {
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit, isPending } = useDeposit()
+  const { coin } = useContext(OptionsContext)
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
@@ -90,7 +92,13 @@ const DepositAssets = () => {
         </>
       )}
       <div className="inline justify-center px-2">
-        {checkAmount >= max ? (
+        {coin !== 'BTC - Controlled Vol' ? (
+          <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
+            Currently only
+            <br /> {`"BTC - Controlled Vol"`}
+            <br /> is available
+          </p>
+        ) : checkAmount >= max ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
