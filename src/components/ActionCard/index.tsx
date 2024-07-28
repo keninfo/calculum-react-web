@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Tab } from '@mui/base/Tab'
 import { TabPanel } from '@mui/base/TabPanel'
@@ -15,6 +15,7 @@ import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
+import { OptionsContext } from '../AppProviders'
 import NotWhitelist from './NotWhitelist'
 
 const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
@@ -22,6 +23,7 @@ const actions = ['DEPOSIT', 'CLAIM', 'WITHDRAW']
 const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   const { address, isConnected } = useAccount()
   const { CheckWhitelist } = ContractReads()
+  const { coin, setCoin } = useContext(OptionsContext)
 
   const whitelistCheck = CheckWhitelist(address).data as boolean
 
@@ -61,14 +63,27 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
 
   return (
     <Card className="w-full h-fit max-h-full">
-      <div className="flex mb-[4vh] justify-center">
+      <div className="flex mb-[4vh] justify-center space-x-[1vw]">
+        <p>Product: </p>
         <CoinSelect />
       </div>
-      <div className="h-fit">
-        {isConnected && whitelistCheck && <ActionCardTabs />}
-        {isConnected && !whitelistCheck && <NotWhitelist />}
-        {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>}
-      </div>
+      {coin === 'BTC Smoothcoin' ? (
+        <div className="h-fit">
+          {isConnected && whitelistCheck && <ActionCardTabs />}
+          {isConnected && !whitelistCheck && <NotWhitelist />}
+          {!isConnected && (
+            <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>
+          )}
+        </div>
+      ) : (
+        <p className="mb-[4vh]  font-bold text-center">
+          Only{' '}
+          <b className="text-carmesi mx-1 hover:scale-105 cursor-pointer" onClick={() => setCoin('BTC Smoothcoin')}>
+            BTC Smoothcoin
+          </b>{' '}
+          available at the moment
+        </p>
+      )}
       {isConnected && (
         <p className="text-white text-center opacity-50 my-[2vh] border-2 border-white rounded-lg px-[2vw] py-[1vh] text-md | md:text-[.8vw]">
           {shortenAddress(address)}
