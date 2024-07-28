@@ -9,7 +9,7 @@ import CoinSelect from './CoinSelect'
 import SetWindow from './SetWindow'
 import ShowCandle from './ShowCandle'
 
-const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: boolean }) => {
+const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
   const { volatility, rollingWindow, studyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
 
@@ -53,7 +53,7 @@ const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: b
                 {rollingWindow} days
               </p>
             </div>
-            {pro && !guide && <RebalancingResults data={prices} />}
+            {pro && !guide && <RebalancingResults />}
           </>
         )}
       </Card>

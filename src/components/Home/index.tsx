@@ -56,7 +56,7 @@ const Home = () => {
         <div className="p-[.5vw] col-span-3">
           {values ? (
             <>
-              <ChartOptions prices={values} />
+              <ChartOptions />
               <ActionCard />
             </>
           ) : (
@@ -76,7 +76,7 @@ const Home = () => {
             <></>
           </Card>
         )}
-        {pro && values && <RebalancingResults data={values} />}
+        {pro && values && <RebalancingResults />}
         <Card>
           <TradesTable />
         </Card>
