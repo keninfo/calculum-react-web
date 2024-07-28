@@ -50,6 +50,9 @@ const useContractReads = () => {
       address: usdcContract.address as Hash,
       functionName: 'allowance',
       args: [address, calculumVaultContract.address],
+      query: {
+        refetchInterval: 100,
+      },
     })
     return { data, isLoading, error }
   }

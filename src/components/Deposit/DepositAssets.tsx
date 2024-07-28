@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { useAccount } from 'wagmi'
 
 import AddToken from '@/components/common/AddToken'
@@ -22,9 +24,10 @@ const DepositAssets = () => {
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit, isPending } = useDeposit()
 
+  const router = useRouter()
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState(false)
-  const [reload, setReload] = useState(false)
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
@@ -92,16 +95,15 @@ const DepositAssets = () => {
     setIsAgreeChecked(e.target.checked)
   }
 
-  const handleReload = () => {
-    setReload(!reload)
+  const handleConfirm = () => {
+    router.replace('/dashboard')
   }
 
   return (
-    <div key={reload ? 'reload-true' : 'reload-false'}>
+    <>
       <p className="mb-[1vh] mt-[4vh] text-left text-xs">
         You have {formattedBalance}
-        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet Allowed{' '}
-        {formatBalance(allowance)}
+        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
       </p>
       <div className="flex justify-between">
         <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
@@ -119,13 +121,13 @@ const DepositAssets = () => {
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
-        ) : parseFloat(formatBalance(allowance)) > amount ? (
+        ) : parseFloat(formatBalance(allowance)) >= amount ? (
           <PrimaryButton handleClick={() => handleDepositClick()} className="mt-[4vh] md:mt-0" disabled={isPending}>
             {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
         ) : !Number.isNaN(amount) ? (
           <>
-            <Approve amount={amount} onConfirm={handleReload} />
+            <Approve amount={amount} onConfirm={() => handleConfirm} />
           </>
         ) : (
           <PrimaryButton
@@ -145,7 +147,7 @@ const DepositAssets = () => {
           />
         )}
       </div>
-    </div>
+    </>
   )
 }
 
