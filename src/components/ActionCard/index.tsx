@@ -12,7 +12,6 @@ import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
 import Withdraw from '@/components/Withdraw'
 import Card from '@/components/common/Card'
-import Select from '@/components/common/Select'
 import ContractReads from '@/hooks/useContractReads'
 import { shortenAddress } from '@/utils/formatters'
 
@@ -62,8 +61,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
 
   return (
     <Card className="w-full h-fit max-h-full">
-      <div className="flex mb-[4vh] justify-between space-x-2">
-        <Select handleChange={() => {}} value={'BETA'} options={['BETA']} className="w-fit !text-carmesi font-bold" />
+      <div className="flex mb-[4vh] justify-center">
         <CoinSelect />
       </div>
       <div className="h-fit">
