@@ -1,45 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import ApproveModal from '@/components/Disclaimer'
+import ApproveModal from '@/components/ApproveModal'
 import { PrimaryButton } from '@/components/common/Buttons'
 import useApprove from '@/hooks/useApprove'
 
-const Approve = ({ amount }: { amount: number }) => {
-  const { ApproveAssets, isPending } = useApprove()
+interface ApproveProps {
+  amount: number
+  onConfirm: () => void
+}
+
+const Approve: React.FC<ApproveProps> = ({ amount, onConfirm }) => {
+  const { ApproveAssets, isPending, isConfirmed } = useApprove()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false)
 
   const handleApproveClick = () => {
     setIsModalOpen(true)
   }
 
-  const handleAccept = () => {
-    ApproveAssets(amount)
+  const handleAccept = (confirmedAmount: number) => {
+    ApproveAssets(confirmedAmount)
     handleCloseModal()
   }
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
-    setIsAgreeChecked(false) // Reset agreement state when closing modal
   }
 
-  const handleAgreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsAgreeChecked(e.target.checked)
-  }
+  useEffect(() => {
+    if (isConfirmed) {
+      onConfirm()
+    }
+  }, [isConfirmed, onConfirm])
 
   return (
     <>
       <PrimaryButton handleClick={handleApproveClick} disabled={isPending}>
         {isPending ? 'Approving...' : 'Approve'}
       </PrimaryButton>
-      {isModalOpen && (
-        <ApproveModal
-          isAgreeChecked={isAgreeChecked}
-          handleCloseModal={handleCloseModal}
-          handleAgreeChange={handleAgreeChange}
-          handleAccept={handleAccept}
-        />
-      )}
+      {isModalOpen && <ApproveModal handleCloseModal={handleCloseModal} handleAccept={handleAccept} amount={amount} />}
     </>
   )
 }

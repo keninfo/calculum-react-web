@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useAccount } from 'wagmi'
 
@@ -9,7 +9,7 @@ import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
-import { OptionsContext } from '../AppProviders'
+import Disclaimer from '../Disclaimer'
 import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]
@@ -21,7 +21,10 @@ const DepositAssets = () => {
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit, isPending } = useDeposit()
-  const { coin } = useContext(OptionsContext)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false)
+  const [reload, setReload] = useState(false)
 
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
   const checkAmount = depositAssets + depositTotal
@@ -70,62 +73,79 @@ const DepositAssets = () => {
       return
     }
   }
+
+  const handleDepositClick = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleAccept = () => {
+    Deposit({ amount, address })
+    handleCloseModal()
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setIsAgreeChecked(false) // Reset agreement state when closing modal
+  }
+
+  const handleAgreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAgreeChecked(e.target.checked)
+  }
+
+  const handleReload = () => {
+    setReload(!reload)
+  }
+
   return (
-    <>
-      <>
-        <p className="mb-[1vh] mt-[4vh] text-left text-xs">
-          You have {formattedBalance}
-          <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
-        </p>
-        <div className="flex justify-between">
-          <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
-          <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
-            MAX
-          </AlternateButton>
-        </div>
-        <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
-          <p className="text-left text-xs">You will receive</p>
-          <AddToken />
-        </div>
-        <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
-      </>
+    <div key={reload ? 'reload-true' : 'reload-false'}>
+      <p className="mb-[1vh] mt-[4vh] text-left text-xs">
+        You have {formattedBalance}
+        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet Allowed{' '}
+        {formatBalance(allowance)}
+      </p>
+      <div className="flex justify-between">
+        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+        <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
+          MAX
+        </AlternateButton>
+      </div>
+      <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
+        <p className="text-left text-xs">You will receive</p>
+        <AddToken />
+      </div>
+      <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
       <div className="inline justify-center px-2">
-        {coin !== 'BTC - Controlled Vol' ? (
-          <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
-            Currently only
-            <br /> {`"BTC - Controlled Vol"`}
-            <br /> is available
-          </p>
-        ) : checkAmount >= max ? (
+        {checkAmount >= max ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
             {`You've reached the current limit you can deposit on Bear Protocol`}
           </p>
         ) : parseFloat(formatBalance(allowance)) > amount ? (
-          <PrimaryButton
-            handleClick={() => Deposit({ amount, address })}
-            className="mt-[4vh] md:mt-0"
-            disabled={isPending}
-          >
+          <PrimaryButton handleClick={() => handleDepositClick()} className="mt-[4vh] md:mt-0" disabled={isPending}>
             {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
         ) : !Number.isNaN(amount) ? (
           <>
-            <p className="text-sm text-carmesi mb-[2vh]">
-              The amount set is above the one you previously approved, set a lower amount or approve the difference
-            </p>
-            <Approve amount={amount - parseFloat(formatBalance(allowance))} />
+            <Approve amount={amount} onConfirm={handleReload} />
           </>
         ) : (
           <PrimaryButton
             handleClick={() => {}}
-            className="!bg-carmesi mt-[4vh] md:mt-0 hover:scale-100 hover:text-white"
+            className="!bg-smoke mt-[4vh] md:mt-0 hover:!scale-100 hover:!text-white"
             disabled={true}
           >
-            Enter valid amount
+            Enter a valid amount
           </PrimaryButton>
         )}
+        {isModalOpen && (
+          <Disclaimer
+            isAgreeChecked={isAgreeChecked}
+            handleCloseModal={handleCloseModal}
+            handleAgreeChange={handleAgreeChange}
+            handleAccept={handleAccept}
+          />
+        )}
       </div>
-    </>
+    </div>
   )
 }
 
