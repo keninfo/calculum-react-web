@@ -322,7 +322,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     themeColors,
   ])
 
-  if (coin == 'PEPE' && studyCase == 1) {
+  if (coin == 'PEPE Smoothcoin' && studyCase == 1) {
     return (
       <div className="w-full h-[400px] flex justify-center items-center">
         <div className="text-center">
@@ -339,15 +339,12 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         <div className="flex items-center space-x-2">
           <div className="w-[2vw] h-1 bg-white"></div>
           <span className="text-sm">
-            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - Raw Price
+            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
           </span>
         </div>
         <div className="flex items-center space-x-2 w-fit">
           <div className="w-[2vw] h-1 bg-carmesi"></div>
-          <p className="text-carmesi text-sm">
-            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin}
-            {pro ? ' - Volatility Scaled' : ' - Low Volatility'}
-          </p>
+          <p className="text-carmesi text-sm">{coin}</p>
         </div>
       </div>
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />

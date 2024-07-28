@@ -43,16 +43,16 @@ const RebalancingResults = () => {
 
     let cutCoinName = cutStringToFirstSpace(coin)
 
-    if (coin == 'PEPE') {
+    if (coin == 'PEPE Smoothcoin') {
       cutCoinName = 'MPEPE'
     }
-    if (coin == 'ETH') {
+    if (coin == 'ETH Smoothcoin') {
       cutCoinName = 'ETH'
     }
-    if (coin == 'BTC - High Vol') {
+    if (coin == 'BTC Smoothcoin 3X') {
       cutCoinName = 'BTC'
     }
-    if (coin == 'BTC - Controlled Vol') {
+    if (coin == 'BTC Smoothcoin') {
       cutCoinName = 'BTC'
     }
 

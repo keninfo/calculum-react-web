@@ -362,7 +362,7 @@ const ActualVol = ({ dates, seriesData1, seriesData2, rawOnly = true }: ChartPro
             <div className="w-[2vw] h-1 bg-carmesi"></div>
             <p className="text-carmesi text-sm">
               {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin}
-              {pro ? ' - Volatility Scaled' : ' - Low Volatility'}
+              {pro ? 'Smoothing' : 'Smoothing'}
             </p>
           </div>
         )}

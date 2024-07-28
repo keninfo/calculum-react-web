@@ -21,19 +21,19 @@ const Chart = () => {
 
     let cutCoinName = cutStringToFirstSpace(coin)
 
-    if (coin == 'PEPE') {
+    if (coin == 'PEPE Smoothcoin') {
       cutCoinName = 'MPEPE'
       setVolatility(0.6)
     }
-    if (coin == 'ETH') {
+    if (coin == 'ETH Smoothcoin') {
       cutCoinName = 'ETH'
       setVolatility(0.3)
     }
-    if (coin == 'BTC - High Vol') {
+    if (coin == 'BTC Smoothcoin 3X') {
       cutCoinName = 'BTC'
       setVolatility(0.6)
     }
-    if (coin == 'BTC - Controlled Vol') {
+    if (coin == 'BTC Smoothcoin') {
       cutCoinName = 'BTC'
       setVolatility(0.2)
     }

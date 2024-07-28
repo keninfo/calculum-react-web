@@ -11,13 +11,11 @@ type DataRow = {
 }
 
 const data: DataRow[] = [
-  { label: 'Vol BTC', value: '2900.10', change: '-5.12%', active: true },
-  { label: 'Vol ETH', value: '2987.32', change: '3.45%', active: true },
-  { label: 'Vol PEPE', value: '750.45', change: '-1.23%', active: true },
-  { label: 'Vol ADA', value: '1580.47', change: '+3.45%', active: false },
-  { label: 'Vol ARB', value: '780.67', change: '+6.78%', active: false },
-  { label: 'Vol SOL', value: '1345.67', change: '-2.78%', active: false },
-  { label: 'Vol MATIC', value: '3120.89', change: '+9.87%', active: false },
+  { label: 'BTC Smoothcoin', value: '100,000.00', change: '100%', active: true },
+  { label: 'BTC Smoothcoin 3X', value: '300,000.00', change: '300%', active: true },
+  { label: 'ARB Smoothcoin', value: '0', change: '0', active: false },
+  { label: 'ETH Smoothcoin', value: '0', change: '0', active: false },
+  { label: 'PEPE Smoothcoin', value: '0', change: '0', active: false },
 ]
 
 const VaultsInfo = () => {
@@ -67,7 +65,7 @@ const VaultsInfo = () => {
         <thead className="text-[2vh] | md:text-[1.5vw]">
           <tr>
             <th className="text-left md:text-center cursor-pointer " onClick={() => handleSort('label')}>
-              Strategy {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              Product {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th className="text-center cursor-pointer " onClick={() => handleSort('value')}>
               Price {sortConfig.key === 'value' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
