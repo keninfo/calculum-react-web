@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import { useRouter } from 'next/navigation'
-
 import { useAccount } from 'wagmi'
 
 import AddToken from '@/components/common/AddToken'
@@ -12,7 +10,6 @@ import useDeposit from '@/hooks/useDeposit'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
 import Disclaimer from '../Disclaimer'
-import Approve from './Approve'
 
 type DepositData = [number, bigint, bigint, bigint]
 
@@ -23,8 +20,6 @@ const DepositAssets = () => {
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit, isPending } = useDeposit()
-
-  const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState(false)
@@ -95,15 +90,14 @@ const DepositAssets = () => {
     setIsAgreeChecked(e.target.checked)
   }
 
-  const handleConfirm = () => {
-    router.replace('/dashboard')
-  }
-
   return (
     <>
-      <p className="mb-[1vh] mt-[4vh] text-left text-xs">
-        You have {formattedBalance}
-        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
+      <p className="mb-[1vh] mt-[2vh] text-left text-xs">
+        You have
+        <b className="text-carmesi mx-1">
+          {formattedBalance} {SymbolAsset().data as string}
+        </b>{' '}
+        in Wallet
       </p>
       <div className="flex justify-between">
         <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
@@ -125,10 +119,6 @@ const DepositAssets = () => {
           <PrimaryButton handleClick={() => handleDepositClick()} className="mt-[4vh] md:mt-0" disabled={isPending}>
             {isPending ? 'Depositing...' : 'Deposit'}
           </PrimaryButton>
-        ) : !Number.isNaN(amount) ? (
-          <>
-            <Approve amount={amount} onConfirm={() => handleConfirm} />
-          </>
         ) : (
           <PrimaryButton
             handleClick={() => {}}
