@@ -29,7 +29,9 @@ const Deposit = () => {
   }, [allowance])
 
   const handleApproved = () => {
-    setSelected(1)
+    if (Number(allowance) > 0) {
+      setSelected(1)
+    }
   }
 
   return (
