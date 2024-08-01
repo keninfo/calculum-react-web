@@ -13,18 +13,18 @@ interface ClaimProps {
 }
 
 const ClaimMint = ({ shares, address }: ClaimProps) => {
-  const { ClaimShares, isConfirmed, error } = useClaimShares()
+  const { ClaimShares, hash, error } = useClaimShares()
   const { IsClaimerMint } = ContractReads()
   const claimerMint = IsClaimerMint(address).data as boolean
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, error])
+  }, [hash, error])
 
   return (
     <div className="inline p-[1vw] my-[2vh] text-sm">

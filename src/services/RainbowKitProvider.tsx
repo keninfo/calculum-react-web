@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { createWalletClient, custom } from 'viem'
 
-import { cookieStorage, createStorage } from 'wagmi'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
 
@@ -34,9 +33,6 @@ const config = getDefaultConfig({
   projectId: projectId,
   chains: [arbitrum, arbitrumSepolia],
   ssr: true, // If your dApp uses server side rendering (SSR)
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
 })
 
 let walletClient: ReturnType<typeof createWalletClient> | undefined

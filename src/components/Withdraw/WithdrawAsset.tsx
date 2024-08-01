@@ -13,7 +13,7 @@ const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
   const { SymbolAsset, SymbolShares, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
-  const { withdrawAssets, isPending, isConfirmed, error } = useWithdrawAssets()
+  const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
   const formattedShares = formatShares(BalanceSharesResult)
@@ -30,13 +30,13 @@ const WithdrawAsset = () => {
   }
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, error])
+  }, [hash, error])
 
   return (
     <>

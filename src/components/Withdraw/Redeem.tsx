@@ -13,7 +13,7 @@ const Redeem = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
   const { SymbolShares, BalanceShares, ConvertToAssets } = ContractReads()
-  const { redeemAssets, isPending, isConfirmed, error } = useRedeemAssets()
+  const { redeemAssets, isPending, hash, error } = useRedeemAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
 
@@ -27,13 +27,13 @@ const Redeem = () => {
   }
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, error])
+  }, [hash, error])
 
   return (
     <>

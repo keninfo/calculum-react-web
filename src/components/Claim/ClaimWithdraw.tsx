@@ -13,19 +13,19 @@ interface ClaimProps {
 }
 
 const ClaimWithdraw = ({ assets, address }: ClaimProps) => {
-  const { ClaimAssets, isConfirmed, error } = useClaimAssets()
+  const { ClaimAssets, hash, error } = useClaimAssets()
   const { IsClaimerWithdraw } = ContractReads()
 
   const claimerWithdraw = IsClaimerWithdraw(address).data as boolean
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, error])
+  }, [hash, error])
 
   return (
     <div className="inline p-[1vw] my-[2vh] text-sm">

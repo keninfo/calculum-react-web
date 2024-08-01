@@ -11,7 +11,7 @@ import createTransactionAlert from '@/utils/createTransactionAlert'
 import Input from '../common/Input'
 
 const Approve = ({ onApprove }: { onApprove: () => void }) => {
-  const { ApproveAssets, isPending, isConfirmed, error } = useApprove()
+  const { ApproveAssets, isPending, error, hash } = useApprove()
   const [amount, setAmount] = useState<number>(0)
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,13 +20,13 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
   }
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       onApprove()
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, onApprove, error])
+  }, [hash, onApprove, error])
 
   return (
     <>

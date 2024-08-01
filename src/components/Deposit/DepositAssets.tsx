@@ -20,7 +20,7 @@ const DepositAssets = () => {
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
-  const { Deposit, isPending, isConfirmed, error } = useDeposit()
+  const { Deposit, isPending, hash, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState(false)
@@ -92,13 +92,13 @@ const DepositAssets = () => {
   }
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (hash) {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [isConfirmed, error])
+  }, [hash, error])
 
   return (
     <>
