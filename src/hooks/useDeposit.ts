@@ -11,7 +11,10 @@ interface DepositProps {
 }
 
 const useDeposit = () => {
-  const { data: hash, writeContract, isPending } = useWriteContract()
+  const { data: hash, writeContract, isPending, error } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
 
   const Deposit = ({ amount, address }: DepositProps) => {
     writeContract({
@@ -22,11 +25,7 @@ const useDeposit = () => {
     })
   }
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  })
-
-  return { Deposit, isPending, isConfirming, isConfirmed }
+  return { Deposit, isPending, isConfirming, isConfirmed, hash, error }
 }
 
 export default useDeposit
