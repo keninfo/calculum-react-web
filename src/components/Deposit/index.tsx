@@ -27,13 +27,13 @@ const Deposit = () => {
     if (Number(allowance) === 0) {
       setSelected(0)
     }
+    if (Number(allowance) > 0) {
+      setSelected(1)
+    }
   }, [allowance])
 
   const handleApproved = () => {
     createTransactionAlert('Transaction Approved!', true)
-    if (Number(allowance) > 0) {
-      setSelected(1)
-    }
   }
 
   return (
