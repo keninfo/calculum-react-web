@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 import ContractReads from '@/hooks/useContractReads'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance } from '@/utils/formatters'
 
 import Approve from './Approve'
@@ -29,6 +30,7 @@ const Deposit = () => {
   }, [allowance])
 
   const handleApproved = () => {
+    createTransactionAlert('Transaction Approved!', true)
     if (Number(allowance) > 0) {
       setSelected(1)
     }
@@ -41,20 +43,20 @@ const Deposit = () => {
           You have approved
           <b className="text-carmesi mx-1"> {formatBalance(allowance)} USDC</b>
         </p>
-        <div className="flex  p-[1vw] mb-[2vh] text-sm justify-center space-x-[4vw] | md:justify-between md:space-x-0">
+        <div className="flex p-[1vw] mb-[2vh] text-sm justify-center space-x-[4vw] | md:justify-between md:space-x-0">
           <div
-            className={`text-center border-2  bg-smoke  px-[2vw] py-[1vh] cursor-pointer  rounded-lg hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+            className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
           >
             <h4>1. Approve</h4>
           </div>
           {allowance == BigInt(0) ? (
-            <div className={`text-center bg-smoke px-[2vw] py-[1vh] rounded-lg opacity-50`}>
+            <div className="text-center bg-smoke px-[2vw] py-[1vh] rounded-lg opacity-50">
               <h4>2. Deposit</h4>
             </div>
           ) : (
             <div
-              className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  rounded-lg hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+              className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
               onClick={() => setSelected(1)}
             >
               <h4>2. Deposit</h4>

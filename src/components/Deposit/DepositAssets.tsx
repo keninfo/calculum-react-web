@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import { type BaseError, useAccount } from 'wagmi'
 
 import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
 import Disclaimer from '../Disclaimer'
@@ -19,7 +20,7 @@ const DepositAssets = () => {
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const [formattedShares, setFormattedShares] = useState<string>('')
   const [formattedBalance, setFormattedBalance] = useState<number>(0)
-  const { Deposit, isPending } = useDeposit()
+  const { Deposit, isPending, isConfirmed, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState(false)
@@ -89,6 +90,15 @@ const DepositAssets = () => {
   const handleAgreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsAgreeChecked(e.target.checked)
   }
+
+  useEffect(() => {
+    if (isConfirmed) {
+      createTransactionAlert('Transaction Confirmed', true)
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [isConfirmed, error])
 
   return (
     <>
