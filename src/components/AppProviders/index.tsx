@@ -122,11 +122,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       const filteredLiveData = liveData.filter((d) => new Date(d.TIMESTAMP) > lastDate)
       let fullData = staticData.concat(filteredLiveData)
 
-      console.log(fullData)
-
       fullData = fullData.slice(0, fullData.length - 1)
-
-      console.log(fullData)
 
       const coins = Object.keys(fullData[0]).filter((key) => key !== 'TIMESTAMP')
       const dates = fullData.map((obj) => obj.TIMESTAMP).filter((date) => date !== null) as unknown as Date[]
