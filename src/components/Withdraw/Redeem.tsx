@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import { useAccount, type BaseError } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useRedeemAssets from '@/hooks/useRedeemAssets'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
 const Redeem = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
   const { SymbolShares, BalanceShares, ConvertToAssets } = ContractReads()
-  const { redeemAssets, isPending } = useRedeemAssets()
+  const { redeemAssets, isPending, isConfirmed, error } = useRedeemAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
 
@@ -24,6 +25,15 @@ const Redeem = () => {
   const setMaxShares = () => {
     setAmount(parseFloat(formatShares(BalanceSharesResult)))
   }
+
+  useEffect(() => {
+    if (isConfirmed) {
+      createTransactionAlert('Transaction Confirmed', true)
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [isConfirmed, error])
 
   return (
     <>

@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import { useAccount, type BaseError } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useWithdrawAssets from '@/hooks/useWithdrawAssets'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
 const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
   const { SymbolAsset, SymbolShares, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
-  const { withdrawAssets, isPending } = useWithdrawAssets()
+  const { withdrawAssets, isPending, isConfirmed, error } = useWithdrawAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
   const formattedShares = formatShares(BalanceSharesResult)
@@ -27,6 +28,15 @@ const WithdrawAsset = () => {
   const setMaxAssets = () => {
     setAmount(maxAssets)
   }
+
+  useEffect(() => {
+    if (isConfirmed) {
+      createTransactionAlert('Transaction Confirmed', true)
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [isConfirmed, error])
 
   return (
     <>
