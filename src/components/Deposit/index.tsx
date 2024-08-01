@@ -39,11 +39,11 @@ const Deposit = () => {
   return (
     <>
       <div className="mb-[1vh] text-left text-sm">
-        <p className="mt-[4vh] text-center text-sm">
+        <p className="mt-[2vh] text-center text-sm">
           You have approved
           <b className="text-carmesi mx-1"> {formatBalance(allowance)} USDC</b>
         </p>
-        <div className="flex p-[1vw] mb-[2vh] text-sm justify-center space-x-[4vw] | md:justify-between md:space-x-0">
+        <div className="flex my-[2vh] text-sm justify-between w-full">
           <div
             className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
