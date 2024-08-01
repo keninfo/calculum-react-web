@@ -40,7 +40,7 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
         </Link>
       </p>
       <div className="flex justify-between">
-        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
+        <Input type="number" value={amount} handleChange={handleAmountChange} />
       </div>
       <PrimaryButton handleClick={() => ApproveAssets(amount)} disabled={isPending} className="my-[4vh]">
         {isPending ? 'Approving...' : 'Approve'}
