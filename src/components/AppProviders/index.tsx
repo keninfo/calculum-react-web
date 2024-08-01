@@ -17,10 +17,10 @@ const formatTime = d3.utcFormat('%B %d, %Y')
 
 const parseData = (data: any) => {
   return data.map((obj: any) => {
-    const { ['']: timestampString, ...rest } = obj
+    const { ['']: timestampString, ['MPEPE-PERP']: movePepe, ...rest } = obj
     const TIMESTAMP = timestampString ? parseDate(timestampString) : null
     const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
-    return { TIMESTAMP: formattedDate, ...rest }
+    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: movePepe, ...rest }
   })
 }
 
@@ -30,7 +30,7 @@ const parseStaticData = (data: any) => {
     const TIMESTAMP = timestampString ? parseDate(timestampString) : null
     const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
     const updatedValue = valueToMultiply ? Number(valueToMultiply) * 1000 : null
-    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: updatedValue, ...rest }
+    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: updatedValue ? updatedValue.toString() : '', ...rest }
   })
 }
 
@@ -122,7 +122,11 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
       const filteredLiveData = liveData.filter((d) => new Date(d.TIMESTAMP) > lastDate)
       let fullData = staticData.concat(filteredLiveData)
 
+      console.log(fullData)
+
       fullData = fullData.slice(0, fullData.length - 1)
+
+      console.log(fullData)
 
       const coins = Object.keys(fullData[0]).filter((key) => key !== 'TIMESTAMP')
       const dates = fullData.map((obj) => obj.TIMESTAMP).filter((date) => date !== null) as unknown as Date[]
