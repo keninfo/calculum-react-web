@@ -1,11 +1,14 @@
 import type { Hash } from 'viem'
 
-import { useWriteContract } from 'wagmi'
+import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
 
 const useClaimAssets = () => {
-  const { writeContract } = useWriteContract()
+  const { data: hash, isPending, writeContract, error } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
 
   const ClaimAssets = (address: string | undefined) => {
     writeContract({
@@ -16,7 +19,7 @@ const useClaimAssets = () => {
     })
   }
 
-  return { ClaimAssets }
+  return { ClaimAssets, isPending, isConfirming, isConfirmed, hash, error }
 }
 
 export default useClaimAssets
