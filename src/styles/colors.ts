@@ -15,7 +15,7 @@ export const proTheme = {
 }
 
 export const lightTheme = {
-  darkness: '#F9FAF9',
+  darkness: '#F9FAF8',
   smoke: '#E8EBED',
   carmesi: '#EF233C',
   white: '#353839',
