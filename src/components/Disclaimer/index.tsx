@@ -19,7 +19,7 @@ const Index = ({
       <div className="relative p-4">
         <h2 className="text-carmesi text-2xl my-[4vh] text-center">Disclaimer and User Responsibility</h2>
         <div className="absolute bottom-[15vh] left-0 w-full h-[15vh] bg-gradient-to-t from-darkness pointer-events-none"></div>
-        <div className=" px-[20%] text-justify overflow-y-scroll h-[50vh]">
+        <div className=" px-[10%] text-justify overflow-y-scroll h-[50vh]">
           <p className="text-white">
             By using this smart contract, you acknowledge and agree to engage with this technology at your own risk.
             This Minimum Viable Product (MVP) is for testing purposes only and has not undergone a formal security
@@ -49,7 +49,7 @@ const Index = ({
           <p className="text-white">
             {`By interacting with this smart contract, you acknowledge that you have read, understood, and agree to all the terms outlined in this disclaimer. You accept the inherent risks and agree not to hold the developers, contributors, or associated parties liable for any losses or damages incurred.`}
           </p>
-          <div className="flex justify-center items-center mt-[4vh] mb-[20vh]">
+          <div className="flex justify-center items-center mt-[4vh] mb-[8vh]">
             <input
               type="checkbox"
               id="agree"

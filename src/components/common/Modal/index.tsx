@@ -37,8 +37,8 @@ const Modal = ({ children, closeMessage, onClose }: ModalProps) => {
 
   if (open) {
     return (
-      <div className="fixed top-0 left-0 bg-black/50 w-screen h-screen z-50 flex items-end justify-center | md:items-center">
-        <div ref={modalRef} className="bg-darkness w-screen h-[90vh] z-40 drop-shadow-xl | md:h-fit">
+      <div className="fixed top-0 left-0 bg-black/80 w-screen h-screen z-50 flex items-end justify-center | md:items-center">
+        <div ref={modalRef} className="bg-darkness w-[50vw] h-[90vh] z-40 drop-shadow-xl rounded-xl | md:h-fit">
           <button
             onClick={handleClose}
             className="absolute -top-0 translate-y-[4vh] left-1/2 -translate-x-1/2 font-bold z-50 text-[#ffffff] | md:-top-[8vh]"
