@@ -1,5 +1,8 @@
 'use client'
 
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinsContext } from '@/components/AppProviders'
@@ -7,7 +10,7 @@ import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { calculateRolling, pct_change } from '@/components/ChartsContainer/chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
+import { formatDate, formatDateAmerican, formatDateAmericanSimple, hexToRGBA } from '@/utils/formatters'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { ColorType, createChart } from 'lightweight-charts'
@@ -25,7 +28,14 @@ interface ThemeColorsType {
   greySmoke: string
 }
 
-const GraphOne = () => {
+interface GraphOneProps {
+  startDate: number
+  endDate: number
+  incrementDate: (days: number) => void
+  decreaseDate: (days: number) => void
+}
+
+const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneProps) => {
   const { dates, values } = useContext(CoinsContext)
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
@@ -37,7 +47,7 @@ const GraphOne = () => {
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
 
   const getCoinArray = () => {
-    return values ? values[0] : []
+    return values ? values[1] : []
   }
 
   useEffect(() => {
@@ -71,7 +81,7 @@ const GraphOne = () => {
 
     if (chartContainerRef.current) {
       chartInstance.current = createChart(chartContainerRef.current, {
-        height: 400,
+        height: 200,
         ...lineChartConfig,
         localization: {
           dateFormat: "dd MMMM 'yy",
@@ -80,7 +90,7 @@ const GraphOne = () => {
           },
         },
         leftPriceScale: {
-          visible: true,
+          ...lineChartConfig.leftPriceScale,
           mode: 0,
         },
         layout: {
@@ -94,24 +104,24 @@ const GraphOne = () => {
       })
     }
 
-    setWindow(61)
+    const seriesDataFiltered = seriesData.slice(startDate, endDate)
+    const datesFiltered = dates.slice(startDate, endDate)
 
-    const seriesDataFiltered = seriesData.slice(seriesData.length - (window + rollingWindow + 1), seriesData.length)
-    const datesFiltered = dates.slice(dates.length - (window + rollingWindow + 1), dates.length)
-
-    const rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
+    let rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
 
     for (let i = 0; i < rolled.length; i++) {
       rolled[i] *= Math.sqrt(365)
     }
+
+    rolled = rolled.slice(1)
 
     const lineSeries = chartInstance.current?.addLineSeries({
       color: 'SteelBlue',
       priceScaleId: 'left',
       autoscaleInfoProvider: () => ({
         priceRange: {
-          minValue: 0,
-          maxValue: 200,
+          minValue: Math.min(...rolled) * 100 - 20,
+          maxValue: Math.max(...rolled) * 100 + 10,
         },
       }),
       lastValueVisible: false,
@@ -134,7 +144,7 @@ const GraphOne = () => {
     const toolTip = document.createElement('div')
 
     Object.assign(toolTip.style, {
-      height: '400px',
+      height: '200px',
       ...tooltipConfig,
     })
 
@@ -208,7 +218,6 @@ const GraphOne = () => {
       color: themeColors?.carmesi,
       lineStyle: 0, // LineStyle.Dotted
       axisLabelVisible: true,
-      title: '[2] Target Volatility 20%',
     }
 
     if (lineSeries) {
@@ -263,30 +272,90 @@ const GraphOne = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coin, dates, rollingWindow, window, themeColors, setWindow])
+  }, [coin, dates, rollingWindow, window, themeColors, setWindow, endDate, startDate])
+
+  const getDates = () => {
+    if (!dates) return
+    const start: string = formatDateAmericanSimple(dates[startDate - 3])
+    const end = formatDateAmericanSimple(dates[endDate - 3])
+    return `${start} - ${end}`
+  }
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="w-3/5">
-          {values && dates && (
-            <div className="bg-smoke p-[5vh] rounded-lg ">
-              <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
+      <div>
+        {values && dates ? (
+          <>
+            <div className="bg-smoke p-[5vh] rounded-lg">
+              <div
+                ref={chartContainerRef}
+                style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }}
+              />
             </div>
-          )}
-        </div>
-        <div className="p-[5vw] w-2/5 space-y-[4vh]">
-          <p className="text-justify flex items-center">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
-            like BTC changes significantly. Over a 2-month period it ranged from {min.toFixed(0)}% at its lowest to{' '}
-            {max.toFixed(0)}% at its highest
-          </p>
-          <p className="text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we
-            can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
-            20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
-          </p>
-        </div>
+            <div className="block w-full mt-[2vh]">
+              <div className="flex items-center justify-center  space-x-2">
+                <div className="w-[2vw] h-1 bg-[#4682B4]"></div>
+                <span className="text-sm text-[#4682B4]">90-Day Rolling Volatility</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-[2vw] h-1 bg-carmesi"></div>
+                <p className="text-carmesi text-sm">20% Target Volatility</p>
+              </div>
+            </div>
+            <div className="flex justify-center items-center mt-[4vh] space-x-10">
+              <button
+                className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => decreaseDate(30)}
+              >
+                <p className="text-lg">
+                  <FontAwesomeIcon icon={['fas', 'backward' as IconName]} />
+                </p>
+                <p className="text-xs ml-2">30</p>
+              </button>
+              <button
+                className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => decreaseDate(1)}
+              >
+                <p>
+                  <FontAwesomeIcon icon={['fas', 'caret-left' as IconName]} />
+                </p>
+              </button>
+
+              <p className=" text-greySmoke text-xl rounded-md">{getDates()}</p>
+              <button
+                className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => incrementDate(1)}
+              >
+                <p>
+                  <FontAwesomeIcon icon={['fas', 'caret-right' as IconName]} />
+                </p>
+              </button>
+              <button
+                className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => incrementDate(30)}
+              >
+                <p className="text-xs mr-2">30</p>
+                <p className="text-lg">
+                  <FontAwesomeIcon icon={['fas', 'forward' as IconName]} />
+                </p>
+              </button>
+            </div>
+          </>
+        ) : (
+          <p className="text-center text-md text-carmesi">Loading ... </p>
+        )}
+      </div>
+      <div className="space-y-[2vh] mt-[4vh] text-lg w-[90%] mx-auto">
+        <p className="text-justify flex items-center">
+          <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
+          like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest to{' '}
+          {max.toFixed(0)}% at its highest
+        </p>
+        <p className="text-justify flex items-center">
+          <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we can
+          define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be 20% over
+          time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
+        </p>
       </div>
     </>
   )
