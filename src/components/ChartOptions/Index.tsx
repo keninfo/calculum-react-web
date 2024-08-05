@@ -53,9 +53,13 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
                 {rollingWindow} days
               </p>
             </div>
-            {pro && !guide && <RebalancingResults />}
           </>
         )}
+        <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Price Candlestick:</p>
+          <ShowCandle />
+        </div>
+        {pro && !guide && <RebalancingResults />}
       </Card>
 
       {/* MOBILE */}
