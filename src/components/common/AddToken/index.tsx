@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import { walletClient } from '@/services/RainbowKitProvider'
 
 const AddToken: React.FC = () => {
-  const tokenAddress = '0xEcb1B3676a929f46C723Ac76A7e17c472338e76C'
+  const tokenAddress = '0x8D95d199b19De32bCd59cf02362249362f8aA614'
   const tokenSymbol = 'vbUSDC'
   const tokenDecimals = 18
   const { chain } = useAccount()
