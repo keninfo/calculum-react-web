@@ -114,9 +114,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     let selectedWindow = window
 
     if (studyCase == 1) {
-      selectedWindow = 1171
+      selectedWindow = seriesData1.length - 573
     } else if (studyCase == 2) {
-      selectedWindow = 258
+      selectedWindow = seriesData1.length - 1486
     }
 
     const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
@@ -255,11 +255,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         } else if (showCandle) {
           const candlestick = candlestickSeries
             ? (param.seriesData.get(candlestickSeries) as {
-                open?: number
-                high?: number
-                low?: number
-                close?: number
-              })
+              open?: number
+              high?: number
+              low?: number
+              close?: number
+            })
             : undefined
           if (candlestick) {
             const { open, high, low, close } = candlestick
