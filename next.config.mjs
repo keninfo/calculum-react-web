@@ -38,7 +38,7 @@ const nextConfig = {
     return [
       {
         source: '/live',
-        destination: process.env.NEXT_LIVE_PRICES
+        destination: process.env.NEXT_LIVE_PRICES,
       },
       {
         source: '/static',
