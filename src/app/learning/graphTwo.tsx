@@ -157,6 +157,14 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly = t
       rolled[i] *= Math.sqrt(365)
     }
 
+    let dailyReturn = seriesData.slice()
+
+    for (let i = 1; i < dailyReturn.length; i++) {
+      dailyReturn[i] = dailyReturn[i] / (dailyReturn[i - 1] - 1)
+    }
+
+    dailyReturn = dailyReturn.slice(startDate, endDate - 1)
+
     const data1PercentageChange = pct_change(seriesData1Filtered)
     const scaledReturns = calculateScaledReturnsLeverage(data1PercentageChange, rollingWindow, periods, volatility)
 
@@ -174,7 +182,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly = t
     const cumulativeReturns = calculateCumulativeReturns(data2PercentageChange)
     cumulativeReturns.unshift(1)
 
-    setResults(cumulativeReturns)
+    setResults(dailyReturn)
 
     const lineSeries1 = chartInstance2.current?.addLineSeries({
       color: 'SteelBlue',
@@ -504,122 +512,125 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly = t
   return (
     <>
       {values && dates ? (
-        <>
+        <div className="flex justify-between items-center">
           <div className="bg-smoke p-[5vh] rounded-lg">
             <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
-          </div>
-          <div className="block w-full mt-[2vh]">
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-[2vw] h-1 bg-white"></div>
-              <span className="text-sm">
-                {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - RoC %
-              </span>
+            <div className="block w-full mt-[2vh]">
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-[2vw] h-1 bg-white"></div>
+                <span className="text-sm">
+                  {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - RoC %
+                </span>
+              </div>
+              {!rawOnly ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-[2vw] h-1 bg-carmesi"></div>
+                  <p className="text-carmesi text-sm">
+                    {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Smoothcoin -
+                    RoC %
+                  </p>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-2 h-2 bg-carmesi rounded-full"></div>
+                  <span className="text-sm">Rolling Window of 14 Days</span>
+                </div>
+              )}
             </div>
-            {!rawOnly ? (
-              <div className="flex items-center justify-center space-x-2">
-                <div className="w-[2vw] h-1 bg-carmesi"></div>
-                <p className="text-carmesi text-sm">
-                  {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Smoothcoin - RoC
-                  %
+            <div className="flex justify-center items-center mt-[4vh] space-x-10">
+              <button
+                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => decreaseDate(30)}
+              >
+                <p className="text-lg">
+                  <FontAwesomeIcon icon={['fas', 'backward' as IconName]} />
                 </p>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center space-x-2">
-                <div className="w-2 h-2 bg-carmesi rounded-full"></div>
-                <span className="text-sm">Rolling Window of 14 Days</span>
-              </div>
-            )}
-          </div>
-          <div className="flex justify-center items-center mt-[4vh] space-x-10">
-            <button
-              className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
-              onClick={() => decreaseDate(30)}
-            >
-              <p className="text-lg">
-                <FontAwesomeIcon icon={['fas', 'backward' as IconName]} />
-              </p>
-              <p className="text-xs ml-2">30</p>
-            </button>
-            <button
-              className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
-              onClick={() => decreaseDate(1)}
-            >
-              <p>
-                <FontAwesomeIcon icon={['fas', 'caret-left' as IconName]} />
-              </p>
-            </button>
+                <p className="text-xs ml-2">30</p>
+              </button>
+              <button
+                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => decreaseDate(1)}
+              >
+                <p>
+                  <FontAwesomeIcon icon={['fas', 'caret-left' as IconName]} />
+                </p>
+              </button>
 
-            <p className=" text-greySmoke text-xl rounded-md">{getDates()}</p>
-            <button
-              className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
-              onClick={() => incrementDate(1)}
-            >
-              <p>
-                <FontAwesomeIcon icon={['fas', 'caret-right' as IconName]} />
-              </p>
-            </button>
-            <button
-              className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
-              onClick={() => incrementDate(30)}
-            >
-              <p className="text-xs mr-2">30</p>
-              <p className="text-lg">
-                <FontAwesomeIcon icon={['fas', 'forward' as IconName]} />
-              </p>
-            </button>
+              <p className=" text-greySmoke text-sm rounded-md">{getDates()}</p>
+              <button
+                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => incrementDate(1)}
+              >
+                <p>
+                  <FontAwesomeIcon icon={['fas', 'caret-right' as IconName]} />
+                </p>
+              </button>
+              <button
+                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                onClick={() => incrementDate(30)}
+              >
+                <p className="text-xs mr-2">30</p>
+                <p className="text-lg">
+                  <FontAwesomeIcon icon={['fas', 'forward' as IconName]} />
+                </p>
+              </button>
+            </div>
           </div>
-        </>
+          {rawOnly ? (
+            <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The “Actual Volatility”
+                is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking
+                at the last 14 days daily return.
+              </p>
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate the average
+                return of the first of these 14 days using Standard Deviation.
+              </p>
+              <div className="flex justify-start items-center mx-auto mt-[4vh]">
+                {results && (
+                  <ul className="flex border-r pr-[2vw]">
+                    <li className="text-center">Day 1: {results[results.length - 14]}%</li>
+                    <li className="text-center">Day 2: {results[results.length - 13]}%</li>
+                    <li className="text-center">Day 3: {results[results.length - 12]}%</li>
+                    <li className="text-center">Day 4: {results[results.length - 11]}%</li>
+                    <li className="text-center">Day 5: {results[results.length - 10]}%</li>
+                    <li className="text-center">Day 6: {results[results.length - 9]}%</li>
+                    <li className="text-center">Day 7: {results[results.length - 8]}%</li>
+                    <li className="text-center">Day 8: {results[results.length - 7]}%</li>
+                    <li className="text-center">Day 9: {results[results.length - 6]}%</li>
+                    <li className="text-center">Day 10: {results[results.length - 5]}%</li>
+                    <li className="text-center">Day 11: {results[results.length - 4]}%</li>
+                    <li className="text-center">Day 12: {results[results.length - 3]}%</li>
+                    <li className="text-center">Day 14: {results[results.length - 1]}%</li>
+                    <li className="text-center">Day 13: {results[results.length - 2]}%</li>
+                  </ul>
+                )}
+                <p className="ml-[2vw]"> = ????? = Actual Volatility</p>
+              </div>
+              <p className="mt-[4vh] text-xs mx-auto text-justify flex items-center">
+                Why did we choose a 14 day window ?<br /> This parameter closely approximates the one that maximized the
+                Sharpe Ratio over a four-year period. It was chosen based on fundamental reasoning rather than being an
+                arbitrary selection; for instance, a two-week lookback period is more logical and justifiable compared
+                to 10 or 11 days.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>Volatility target = 20%.
+              </p>
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-start">
+                <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate Actual
+                Volatility on a specific day rebalancing the following way: If target volatility = 20% and actual
+                volatility today = ????%, then... Target volatility / actual volatility = rebalanced - 20/???? = ????%
+                <br /> We then invest ????% BTC and ????% Cash
+              </p>
+            </div>
+          )}
+        </div>
       ) : (
         <p className="text-center text-md text-carmesi">Loading ... </p>
-      )}
-      {rawOnly ? (
-        <>
-          <p className="mt-[4vh] text-lg w-[90%] mx-auto text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The “Actual Volatility” is
-            the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at the
-            last 14 days daily return.
-          </p>
-          <p className="mt-[4vh] text-lg w-[90%] mx-auto text-justify flex items-center">
-            Why did we choose a 14 day window ?<br /> In our testing the 14 day window gives the best result.
-          </p>
-          <p className="mt-[4vh] text-lg w-[90%] mx-auto text-justify flex items-center">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate the average return
-            of the first of these 14 days using Standard Deviation.
-          </p>
-          <div className="flex justify-start items-center w-[90%] mx-auto mt-[4vh]">
-            {results && (
-              <ul className="flex border-r pr-[2vw]">
-                <li className="text-center">Day 1: {(results[results.length - 14] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 2: {(results[results.length - 13] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 3: {(results[results.length - 12] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 4: {(results[results.length - 11] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 5: {(results[results.length - 10] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 6: {(results[results.length - 9] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 7: {(results[results.length - 8] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 8: {(results[results.length - 7] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 9: {(results[results.length - 6] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 10: {(results[results.length - 5] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 11: {(results[results.length - 4] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 12: {(results[results.length - 3] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 13: {(results[results.length - 2] * 100).toFixed(0)}%</li>
-                <li className="text-center">Day 14: {(results[results.length - 1] * 100).toFixed(0)}%</li>
-              </ul>
-            )}
-            <p className="ml-[2vw]"> = ????? = Actual Volatility</p>
-          </div>
-        </>
-      ) : (
-        <>
-          <p className="mt-[4vh] text-lg w-[90%] mx-auto text-justify flex items-center">
-            <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>Volatility target = 20%.
-          </p>
-          <p className="mt-[4vh] text-lg w-[90%] mx-auto text-justify flex items-start">
-            <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate Actual Volatility
-            on a specific day rebalancing the following way: If target volatility = 20% and actual volatility today =
-            ????%, then... Target volatility / actual volatility = rebalanced - 20/???? = ????%
-            <br /> We then invest ????% BTC and ????% Cash
-          </p>
-        </>
       )}
       {values && dates ? (
         <>

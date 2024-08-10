@@ -51,33 +51,45 @@ const Volatility = () => {
           <p className="text-justify ">But how do we do this?</p>
         </div>
         <ul className="flex justify-around items-start w-[100%] text-left my-[6vh]">
-          <li className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness">
+          <Link
+            href="#stepOne"
+            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+          >
             <h3>
               Step 1 : <br />
               We define the Volatility Targeting, in this case 20%
             </h3>
-          </li>
-          <li className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness">
+          </Link>
+          <Link
+            href="#stepTwo"
+            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+          >
             <h3>
               Step 2 : <br />
               We calculate “Actual Volatility” of the asset.
             </h3>
-          </li>
-          <li className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness">
+          </Link>
+          <Link
+            href="#stepThree"
+            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+          >
             <h3>
               Step 3 : <br /> We rebalance between the asset and cash.
             </h3>
-          </li>
+          </Link>
         </ul>
       </Card>
+      <div className="divider" id="stepOne"></div>
       <Card className="mt-[4vh] w-full">
-        <h3 className="mb-[2vh] text-2xl font-bold text-center">Step 1: We define the Volatility Targeting</h3>
+        <h3 className="mb-[6vh] text-2xl font-bold text-center">Step 1: We define the Volatility Targeting</h3>
         <GraphOne startDate={startDate} endDate={endDate} incrementDate={incrementDate} decreaseDate={decreaseDate} />
       </Card>
+      <div className="divider" id="stepTwo"></div>
       <Card className="mt-[4vh] w-full">
         <h3 className="mb-[2vh] text-2xl font-bold text-center">Step 2: We calculate “Actual Volatility”</h3>
         <GraphTwo startDate={startDate} endDate={endDate} incrementDate={incrementDate} decreaseDate={decreaseDate} />
       </Card>
+      <div className="divider" id="stepThree"></div>
       <Card className="mt-[4vh] w-full">
         <h3 className="mb-[2vh] text-2xl font-bold text-center">
           Step 3: We rebalance the portfolio between the asset and cash

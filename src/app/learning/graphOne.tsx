@@ -283,15 +283,10 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
 
   return (
     <>
-      <div>
-        {values && dates ? (
-          <>
-            <div className="bg-smoke p-[5vh] rounded-lg">
-              <div
-                ref={chartContainerRef}
-                style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }}
-              />
-            </div>
+      {values && dates ? (
+        <div className="flex justify-between items-center">
+          <div className="bg-smoke p-[5vh] rounded-lg">
+            <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }} />
             <div className="block w-full mt-[2vh]">
               <div className="flex items-center justify-center  space-x-2">
                 <div className="w-[2vw] h-1 bg-[#4682B4]"></div>
@@ -304,7 +299,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
             </div>
             <div className="flex justify-center items-center mt-[4vh] space-x-10">
               <button
-                className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
                 onClick={() => decreaseDate(30)}
               >
                 <p className="text-lg">
@@ -313,7 +308,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 <p className="text-xs ml-2">30</p>
               </button>
               <button
-                className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
                 onClick={() => decreaseDate(1)}
               >
                 <p>
@@ -321,9 +316,9 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
 
-              <p className=" text-greySmoke text-xl rounded-md">{getDates()}</p>
+              <p className=" text-greySmoke text-sm rounded-md">{getDates()}</p>
               <button
-                className="text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
                 onClick={() => incrementDate(1)}
               >
                 <p>
@@ -331,7 +326,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
               <button
-                className="flex justify-center items-center text-center text-xl cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
                 onClick={() => incrementDate(30)}
               >
                 <p className="text-xs mr-2">30</p>
@@ -340,23 +335,23 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
             </div>
-          </>
-        ) : (
-          <p className="text-center text-md text-carmesi">Loading ... </p>
-        )}
-      </div>
-      <div className="space-y-[2vh] mt-[4vh] text-lg w-[90%] mx-auto">
-        <p className="text-justify flex items-center">
-          <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
-          like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest to{' '}
-          {max.toFixed(0)}% at its highest
-        </p>
-        <p className="text-justify flex items-center">
-          <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we can
-          define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be 20% over
-          time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
-        </p>
-      </div>
+          </div>
+          <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
+            <p className="text-justify flex items-center">
+              <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
+              like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest to{' '}
+              {max.toFixed(0)}% at its highest
+            </p>
+            <p className="text-justify flex items-center">
+              <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we
+              can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
+              20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
+            </p>
+          </div>
+        </div>
+      ) : (
+        <p className="text-center text-md text-carmesi">Loading ... </p>
+      )}
     </>
   )
 }

@@ -255,11 +255,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         } else if (showCandle) {
           const candlestick = candlestickSeries
             ? (param.seriesData.get(candlestickSeries) as {
-              open?: number
-              high?: number
-              low?: number
-              close?: number
-            })
+                open?: number
+                high?: number
+                low?: number
+                close?: number
+              })
             : undefined
           if (candlestick) {
             const { open, high, low, close } = candlestick
