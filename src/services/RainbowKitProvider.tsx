@@ -39,7 +39,7 @@ let walletClient: ReturnType<typeof createWalletClient> | undefined
 
 if (typeof window !== 'undefined' && window.ethereum) {
   walletClient = createWalletClient({
-    chain: arbitrum,
+    chain: arbitrumSepolia,
     transport: custom(window.ethereum),
   })
 }
