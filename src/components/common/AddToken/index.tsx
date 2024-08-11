@@ -4,10 +4,19 @@ import { useAccount } from 'wagmi'
 
 import { walletClient } from '@/services/RainbowKitProvider'
 
-const AddToken: React.FC = () => {
-  const tokenAddress = '0x8D95d199b19De32bCd59cf02362249362f8aA614'
-  const tokenSymbol = 'vbUSDC'
-  const tokenDecimals = 18
+interface tokenInfo {
+  tokenAddress?: string
+  tokenSymbol?: string
+  tokenDecimals?: number
+  classname?: string
+}
+
+const AddToken = ({
+  tokenAddress = '0x8D95d199b19De32bCd59cf02362249362f8aA614',
+  tokenSymbol = 'vbUSDC',
+  tokenDecimals = 18,
+  classname,
+}: tokenInfo) => {
   const { chain } = useAccount()
 
   const watchAsset = async () => {
@@ -45,7 +54,7 @@ const AddToken: React.FC = () => {
 
   return (
     <div>
-      <button onClick={watchAsset} className="text-carmesi text-center cursor-pointer w-full text-xs">
+      <button onClick={watchAsset} className={`text-carmesi text-center cursor-pointer w-full text-xs ${classname}`}>
         Add Token to Wallet
       </button>
     </div>
