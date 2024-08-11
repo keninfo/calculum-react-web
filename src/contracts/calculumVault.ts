@@ -1,6 +1,6 @@
 export const calculumVaultContract = {
   chainId: '421614',
-  address: '0x6d7c6567DdC757Bdc187A4A71A3C3Ab5C2691FE1',
+  address: '0xED9bb7baC5FbE74fAfa02018C962Ecd63C3705a3',
   abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     { inputs: [], name: 'AccessControlBadConfirmation', type: 'error' },
