@@ -65,7 +65,7 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
       {/* MOBILE */}
       <div className="w-full pl-[2vw] | md:hidden">
         <div className="w-full grid grid-cols-2 items-center mt-[6vh] px-6">
-          <div className="col-span-1 mr-[2vw]">
+          {/* <div className="col-span-1 mr-[2vw]">
             <select
               className="px-10 py-0.5 h-fit w-full text-sm border bg-smoke text-white text-left"
               id="cryptoCoin"
@@ -75,7 +75,7 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
                 {'BETA'}
               </option>
             </select>
-          </div>
+          </div> */}
           <div className="col-span-1 ml-[2vw]">
             <CoinSelect />
           </div>

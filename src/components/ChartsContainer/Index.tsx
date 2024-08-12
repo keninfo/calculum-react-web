@@ -1,7 +1,7 @@
 'use client'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
@@ -16,33 +16,30 @@ const Chart = () => {
   const { pro } = useContext(ProContext)
   const { dates, values, coins } = useContext(CoinsContext)
 
+  useEffect(() => {
+    let newVolatility = 0
+
+    if (coin === 'PEPE Smoothcoin') {
+      newVolatility = 0.6
+    } else if (coin === 'ETH Smoothcoin') {
+      newVolatility = 0.3
+    } else if (coin === 'BTC Smoothcoin 3X') {
+      newVolatility = 0.6
+    } else if (coin === 'BTC Smoothcoin') {
+      newVolatility = 0.2
+    }
+
+    setVolatility(newVolatility)
+  }, [coin, setVolatility])
+
   const getCoinArray = () => {
-    let index = 1
-
     let cutCoinName = cutStringToFirstSpace(coin)
-
-    if (coin == 'PEPE Smoothcoin') {
-      cutCoinName = 'MPEPE'
-      setVolatility(0.6)
-    }
-    if (coin == 'ETH Smoothcoin') {
-      cutCoinName = 'ETH'
-      setVolatility(0.3)
-    }
-    if (coin == 'BTC Smoothcoin 3X') {
-      cutCoinName = 'BTC'
-      setVolatility(0.6)
-    }
-    if (coin == 'BTC Smoothcoin') {
-      cutCoinName = 'BTC'
-      setVolatility(0.2)
-    }
-
+    if (coin === 'PEPE Smoothcoin') cutCoinName = 'MPEPE'
     if (coins) {
-      index = coins.indexOf(cutCoinName)
+      const index = coins.indexOf(cutCoinName)
+      return values ? values[index] : []
     }
-
-    return values && coin ? values[index] : []
+    return []
   }
 
   const toggleSecondChart = () => {
