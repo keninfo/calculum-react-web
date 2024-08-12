@@ -7,11 +7,13 @@ import type { Hash } from 'viem'
 import type { BaseError } from 'wagmi'
 import { useAccount } from 'wagmi'
 
+import NotWhitelist from '@/components/ActionCard/NotWhitelist'
 import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
 import Input from '@/components/common/Input'
 import Select from '@/components/common/Select'
+import ContractReads from '@/hooks/useContractReads'
 import useMint from '@/hooks/useMint'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
@@ -31,11 +33,14 @@ const Page = () => {
   const { MintTokens, isPending, error, hash } = useMint()
   const [amount, setAmount] = useState<number>(0)
   const [selectedCoin, setSelectedCoin] = useState<number>(0)
+  const { CheckWhitelist } = ContractReads()
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const amount = event.target.value
     setAmount(parseFloat(amount))
   }
+
+  const whitelistCheck = CheckWhitelist(address).data as boolean
 
   useEffect(() => {
     if (hash) {
@@ -64,7 +69,7 @@ const Page = () => {
       <Card className="h-fit w-[50%] mx-auto">
         <p className="text-carmesi text-3xl mx-auto w-fit pb-[4vh]">REQUEST TOKENS</p>
         {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to get tokens </p>}
-        {isConnected && (
+        {isConnected && whitelistCheck && (
           <div className="space-y-4 ">
             <Select
               handleChange={handleSelected}
@@ -105,6 +110,11 @@ const Page = () => {
             >
               {isPending ? 'Minting...' : 'Mint Token'}
             </PrimaryButton>
+          </div>
+        )}
+        {isConnected && !whitelistCheck && (
+          <div className="w-[50%] mx-auto">
+            <NotWhitelist />
           </div>
         )}
       </Card>

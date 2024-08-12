@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CustomConnectButton from '@/components/common/CustomConnectButton'
+import Link from 'next/link'
 
 const NotWhitelist = () => {
   return (
@@ -11,8 +11,11 @@ const NotWhitelist = () => {
         <br></br>
         {`We're here to help!`}
       </p>
-      <p className="text-center my-4 text-carmesi text-md | md:text-[1vw]">bearprotocol@placeholder.com</p>
-      <CustomConnectButton className="bg-smoke" />
+      <p className="bg-carmesi text-center my-4 py-[1vh] rounded-md text-white text-md hover:scale-105">
+        <Link href="https://bear-landing-eight.vercel.app/" target="_blank">
+          Join Waitlist
+        </Link>
+      </p>
     </>
   )
 }
