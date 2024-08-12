@@ -40,10 +40,10 @@ const nextConfig = {
         source: '/live',
         destination: process.env.NEXT_LIVE_PRICES,
       },
-      {
-        source: '/static',
-        destination: '/daily_prices_for_jesus.csv',
-      },
+      // {
+      //   source: '/static',
+      //   destination: '/daily_prices_for_jesus.csv',
+      // },
     ]
   },
 }
