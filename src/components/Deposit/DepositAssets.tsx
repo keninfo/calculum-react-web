@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { type BaseError, useAccount } from 'wagmi'
 
-import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
@@ -117,7 +116,6 @@ const DepositAssets = () => {
       </div>
       <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
         <p className="text-left text-xs">You will receive</p>
-        <AddToken />
       </div>
       <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
       <div className="inline justify-center px-2">
