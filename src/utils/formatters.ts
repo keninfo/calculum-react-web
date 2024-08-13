@@ -82,8 +82,21 @@ export const formatPercentage = (percentage: number): string => {
   return formattedPercentage
 }
 
-export const formatDate = (date: Date): string => {
-  const newDate = new Date(date)
+export const formatDate = (date: string | Date): string => {
+  let newDate: Date
+
+  if (typeof date === 'string') {
+    const isoDate = date.replace(' ', 'T') + 'Z' // Ensure UTC
+    newDate = new Date(isoDate)
+  } else {
+    newDate = new Date(date)
+  }
+
+  if (isNaN(newDate.getTime())) {
+    console.error('Invalid date passed:', date)
+    return 'Invalid Date'
+  }
+
   const year = newDate.getUTCFullYear()
   const month = String(newDate.getUTCMonth() + 1).padStart(2, '0')
   const day = String(newDate.getUTCDate()).padStart(2, '0')

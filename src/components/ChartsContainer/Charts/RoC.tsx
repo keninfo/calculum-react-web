@@ -149,10 +149,14 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       priceScaleId: 'left',
     })
 
-    const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => ({
-      time: formatDate(datesFiltered[index]) as Time,
-      value: data * 100,
-    }))
+    const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => {
+      const date = datesFiltered[index]
+      const formattedDate = formatDate(date)
+      return {
+        time: formattedDate as Time,
+        value: data * 100,
+      }
+    })
 
     lineSeries1?.setData(chartDataPrice1)
 
