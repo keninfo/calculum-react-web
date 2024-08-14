@@ -36,7 +36,7 @@ const Volatility = () => {
             Our first product are what we call <b className="text-carmesi">Smoothcoins</b>
           </p>
           <p className="text-justify ">
-            {`The technology behind "Smoothcoin" is called "Volatility Targeting". There is a significant amount of
+            {`The math behind "Smoothcoin" is called "Volatility Targeting". There is a significant amount of
             research about it, and we encourage you to`}{' '}
             <Link
               href="https://quantpedia.com/an-introduction-to-volatility-targeting/"
