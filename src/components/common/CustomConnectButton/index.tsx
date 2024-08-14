@@ -4,7 +4,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 const CustomConnectButton = ({ className }: { className?: string }) => {
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openAccountModal, openChainModal, openConnectModal, authenticationStatus, mounted }) => {
+      {({ account, chain, openAccountModal, openConnectModal, authenticationStatus, mounted }) => {
         const ready = mounted && authenticationStatus !== 'loading'
         const connected =
           ready && account && chain && (!authenticationStatus || authenticationStatus === 'authenticated')
@@ -23,9 +23,9 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
             {(() => {
               if (!connected) {
                 return (
-                  <div className='flex justify-end items-center space-x-[2vw]'>
-                    <div className='py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2'>
-                      <div className='h-3 w-3 rounded-full bg-carmesi animate-pulse'></div>
+                  <div className="flex justify-end items-center space-x-[2vw]">
+                    <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
+                      <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
                       <p>TESTNET</p>
                     </div>
                     <button
@@ -39,8 +39,8 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               }
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div className='py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2'>
-                    <div className='h-3 w-3 rounded-full bg-carmesi animate-pulse'></div>
+                  <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
+                    <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
                     <p>TESTNET</p>
                   </div>
                   <button

@@ -6,6 +6,7 @@ import { CoinsContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
 
 import GraphOne from './graphOne'
+import GraphThree from './graphThree'
 import GraphTwo from './graphTwo'
 
 const Volatility = () => {
@@ -28,7 +29,7 @@ const Volatility = () => {
   }
   return (
     <>
-      <Card className="w-full">
+      <Card className="w-full bg-transparent">
         <p className="text-carmesi text-3xl mx-auto w-fit">Smoothcoin & Volatility Targeting</p>
         <div className="space-y-[2vh] mt-[4vh] w-[60%] mx-auto text-lg">
           <p className="text-justify ">
@@ -94,7 +95,7 @@ const Volatility = () => {
         <h3 className="mb-[2vh] text-2xl font-bold text-center">
           Step 3: We rebalance the portfolio between the asset and cash
         </h3>
-        <GraphTwo
+        <GraphThree
           startDate={startDate}
           endDate={endDate}
           incrementDate={incrementDate}

@@ -116,7 +116,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
     rolled = rolled.slice(1)
 
     const lineSeries = chartInstance.current?.addLineSeries({
-      color: 'SteelBlue',
+      color: themeColors?.white as string,
       priceScaleId: 'left',
       autoscaleInfoProvider: () => ({
         priceRange: {
@@ -171,8 +171,8 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
 
         if (rolling !== undefined) {
           toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            <p style="font-size: 10px; margin: 4px 0px; color: SteelBlue; font-weight: bold;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
           </div>`
@@ -216,7 +216,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
     const targetVol = {
       price: 20,
       color: themeColors?.carmesi,
-      lineStyle: 0, // LineStyle.Dotted
+      lineStyle: 1, // LineStyle.Dotted
       axisLabelVisible: true,
     }
 
@@ -289,8 +289,8 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
             <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }} />
             <div className="block w-full mt-[2vh]">
               <div className="flex items-center justify-center  space-x-2">
-                <div className="w-[2vw] h-1 bg-[#4682B4]"></div>
-                <span className="text-sm text-[#4682B4]">90-Day Rolling Volatility</span>
+                <div className="w-[2vw] h-1 bg-white"></div>
+                <span className="text-sm text-white">90-Day Rolling Volatility</span>
               </div>
               <div className="flex items-center justify-center space-x-2">
                 <div className="w-[2vw] h-1 bg-carmesi"></div>

@@ -10,8 +10,8 @@ import {
   calculateCumulativeReturns,
   calculateRolling,
   calculateScaledReturnsLeverage,
-  pct_change,
   calculateStd,
+  pct_change,
 } from '@/components/ChartsContainer/chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { classicTheme, proTheme } from '@/styles/colors'
@@ -33,14 +33,15 @@ interface ThemeColorsType {
   greySmoke: string
 }
 
-interface GraphTwoProps {
+interface GraphThreeProps {
   startDate: number
   endDate: number
   incrementDate: (days: number) => void
   decreaseDate: (days: number) => void
+  rawOnly?: boolean
 }
 
-const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoProps) => {
+const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly = true }: GraphThreeProps) => {
   const { dates, values } = useContext(CoinsContext)
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
@@ -195,13 +196,26 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       priceScaleId: 'left',
     })
 
-    const chartDataPrice2: PriceChartData[] = dailyReturn.map((data, index) => ({
+    const chartDataPrice2: PriceChartData[] = cumulativeReturns.map((data, index) => ({
+      time: formatDate(datesFiltered[index]) as Time,
+      value: data * 100,
+    }))
+
+    const lineSeries3 = chartInstance.current?.addLineSeries({
+      color: themeColors?.carmesi,
+      priceScaleId: 'left',
+    })
+
+    const chartDataPrice3: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => ({
       time: formatDate(datesFiltered[index]) as Time,
       value: data * 100,
     }))
 
     lineSeries1?.setData(chartDataPrice1)
     lineSeries2?.setData(chartDataPrice2)
+    if (!rawOnly) {
+      lineSeries3?.setData(chartDataPrice3)
+    }
 
     const visibleRange = {
       from: formatDate(datesFiltered[0]) as Time,
@@ -240,12 +254,19 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         const data1 = lineSeries2
           ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
           : undefined
+        const data2 = lineSeries3
+          ? (param.seriesData.get(lineSeries3) as { value?: number; close?: number })
+          : undefined
+        const scaled = data2?.value !== undefined ? data2.value : data2?.close
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
         if (rolling !== undefined) {
           toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+                RoC Scaled: ${scaled?.toFixed(0)}%</p>    
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
-                Daily Return: ${rolling?.toFixed(0)}%</p>
+                RoC Raw: ${rolling?.toFixed(0)}%</p>
+                
               ${dateStr}
             </div>`
         }
@@ -297,8 +318,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
 
         if (rolling !== undefined) {
           toolTip2.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: SteelBlue; font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
           </div>`
@@ -329,7 +350,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       }
     }
 
-    if (lineSeries1) {
+    if (lineSeries1 && rawOnly) {
       lineSeries1.createPriceLine({
         ...zeroLine,
         price: 0,
@@ -337,103 +358,107 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       })
       lineSeries1.setMarkers([
         {
-          time: formatDate(dates[endDate - 1 - 3]),
+          time: formatDate(dates[endDate - 1 - 1]),
           position: 'aboveBar',
-          color: themeColors?.carmesi as string,
+          color: 'white',
           shape: 'arrowDown',
           text: '[2]',
         },
       ])
     }
 
-    if (lineSeries2) {
+    if (lineSeries2 && rawOnly) {
       lineSeries2.setMarkers([
         {
-          time: formatDate(dates[endDate - 14 - 3]),
+          time: formatDate(dates[endDate - 14 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 13 - 3]),
+          time: formatDate(dates[endDate - 13 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 12 - 3]),
+          time: formatDate(dates[endDate - 12 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 11 - 3]),
+          time: formatDate(dates[endDate - 11 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 10 - 3]),
+          time: formatDate(dates[endDate - 10 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 9 - 3]),
+          time: formatDate(dates[endDate - 9 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 8 - 3]),
+          time: formatDate(dates[endDate - 8 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 7 - 3]),
+          time: formatDate(dates[endDate - 7 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 6 - 3]),
+          time: formatDate(dates[endDate - 6 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 5 - 3]),
+          time: formatDate(dates[endDate - 5 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 4 - 3]),
+          time: formatDate(dates[endDate - 4 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 3 - 3]),
+          time: formatDate(dates[endDate - 3 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 2 - 3]),
+          time: formatDate(dates[endDate - 2 - 1]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'circle',
         },
         {
-          time: formatDate(dates[endDate - 1 - 3]),
+          time: formatDate(dates[endDate - 1 - 1]),
           position: 'aboveBar',
-          color: themeColors?.carmesi as string,
+          color: 'red',
           shape: 'arrowDown',
           text: '[1]',
         },
       ])
+    }
+
+    if (lineSeries3 && !rawOnly) {
+      lineSeries3.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
 
     return () => {
@@ -457,6 +482,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
     setWindow,
     setVolatility,
     values,
+    rawOnly,
     endDate,
     startDate,
   ])
@@ -475,22 +501,6 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         <div className="flex justify-between items-start">
           <div className="mt-[3vh]">
             <div className="bg-smoke p-[5vh] rounded-lg">
-              <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
-              <div className="block w-full mt-[2vh]">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-[2vw] h-1 bg-white"></div>
-                  <span className="text-sm">
-                    {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - Daily Returns
-                    %
-                  </span>
-                </div>
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-2 h-2 bg-carmesi rounded-full"></div>
-                  <span className="text-sm">Rolling Window of 14 Days</span>
-                </div>
-              </div>
-            </div>
-            <div className="bg-smoke p-[5vh] rounded-lg">
               <div ref={chartContainerRef2} style={{ width: '100%', height: '100%', position: 'relative' }} />
 
               <div className="block w-full mt-[2vh]">
@@ -498,9 +508,23 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   <div className="w-[2vw] h-1 bg-carmesi"></div>
                   <span className="text-sm text-carmesi">90-Day Rolling Volatility</span>
                 </div>
+              </div>
+            </div>
+            <div className="bg-smoke p-[5vh] rounded-lg">
+              <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
+              <div className="block w-full mt-[2vh]">
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="w-2 h-2 bg-white"></div>
-                  <p className="text-white text-sm">BTC “Actual vol”</p>
+                  <div className="w-[2vw] h-1 bg-white"></div>
+                  <span className="text-sm">
+                    {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - RoC %
+                  </span>
+                </div>
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-[2vw] h-1 bg-carmesi"></div>
+                  <p className="text-carmesi text-sm">
+                    {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Smoothcoin -
+                    RoC %
+                  </p>
                 </div>
               </div>
               <div className="flex justify-center items-center mt-[4vh] space-x-10">
@@ -543,85 +567,135 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
               </div>
             </div>
           </div>
-          <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
-            <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
-              <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The “Actual Volatility” is
-              the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at
-              the last 14 days daily return.
-            </p>
-            <div className="mt-[4vh] text-lg mx-auto text-justify flex items-start">
-              <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>
-              <div>
-                <p>Calculate the average return of the first of these 14 days using Standard Deviation.</p>
-                <div className="flex justify-start items-center mx-auto mt-[4vh]">
-                  {results && (
-                    <ul className="border-r pr-[2vw] text-sm">
-                      <li className="text-left">
-                        Day 1: <b className="text-carmesi">{(results[results.length - 15] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 2: <b className="text-carmesi">{(results[results.length - 14] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 3: <b className="text-carmesi">{(results[results.length - 13] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 4: <b className="text-carmesi">{(results[results.length - 12] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 5: <b className="text-carmesi">{(results[results.length - 11] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 6: <b className="text-carmesi">{(results[results.length - 10] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 7: <b className="text-carmesi">{(results[results.length - 9] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 8: <b className="text-carmesi">{(results[results.length - 8] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 9: <b className="text-carmesi">{(results[results.length - 7] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 10: <b className="text-carmesi">{(results[results.length - 6] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 11: <b className="text-carmesi">{(results[results.length - 5] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 12: <b className="text-carmesi">{(results[results.length - 4] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 13: <b className="text-carmesi">{(results[results.length - 3] * 100).toFixed(2)}%</b>
-                      </li>
-                      <li className="text-left">
-                        Day 14: <b className="text-carmesi">{(results[results.length - 2] * 100).toFixed(2)}%</b>
-                      </li>
-                    </ul>
-                  )}
-                  {results && (
-                    <p className="ml-[2vw]">
-                      {' '}
-                      ={' '}
+
+          {rawOnly ? (
+            <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The “Actual Volatility”
+                is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking
+                at the last 14 days daily return.
+              </p>
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>Calculate the average
+                return of the first of these 14 days using Standard Deviation.
+              </p>
+              <div className="flex justify-start items-center mx-auto mt-[4vh]">
+                {results && (
+                  <ul className="flex border-r pr-[2vw]">
+                    <li className="text-center">Day 1: {results[results.length - 14]}%</li>
+                    <li className="text-center">Day 2: {results[results.length - 13]}%</li>
+                    <li className="text-center">Day 3: {results[results.length - 12]}%</li>
+                    <li className="text-center">Day 4: {results[results.length - 11]}%</li>
+                    <li className="text-center">Day 5: {results[results.length - 10]}%</li>
+                    <li className="text-center">Day 6: {results[results.length - 9]}%</li>
+                    <li className="text-center">Day 7: {results[results.length - 8]}%</li>
+                    <li className="text-center">Day 8: {results[results.length - 7]}%</li>
+                    <li className="text-center">Day 9: {results[results.length - 6]}%</li>
+                    <li className="text-center">Day 10: {results[results.length - 5]}%</li>
+                    <li className="text-center">Day 11: {results[results.length - 4]}%</li>
+                    <li className="text-center">Day 12: {results[results.length - 3]}%</li>
+                    <li className="text-center">Day 14: {results[results.length - 1]}%</li>
+                    <li className="text-center">Day 13: {results[results.length - 2]}%</li>
+                  </ul>
+                )}
+                <p className="ml-[2vw]"> = ????? = Actual Volatility</p>
+              </div>
+              <p className="mt-[4vh] text-xs mx-auto text-justify flex items-center">
+                Why did we choose a 14 day window ?<br /> This parameter closely approximates the one that maximized the
+                Sharpe Ratio over a four-year period. It was chosen based on fundamental reasoning rather than being an
+                arbitrary selection; for instance, a two-week lookback period is more logical and justifiable compared
+                to 10 or 11 days.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
+              <p className="mt-[4vh] text-lg mx-auto text-justify flex items-center">
+                <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>If volatility target =
+                20%.
+              </p>
+              {results && (
+                <div className="mt-[4vh] text-lg mx-auto text-justify flex items-start">
+                  <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>
+                  <div>
+                    <p>
+                      Actual volatility ={' '}
                       {(
                         calculateStd(results.slice(results.length - 15, results.length - 2)) *
                         100 *
                         Math.sqrt(365)
                       ).toFixed(2)}
-                      % = Actual Volatility
+                      %{' '}
                     </p>
-                  )}
+                    <p className="mt-[2vh]">We divide target volatility by actual volatility: </p>
+                    <p>
+                      20% /{' '}
+                      {(
+                        calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                        100 *
+                        Math.sqrt(365)
+                      ).toFixed(2)}
+                      % ={' '}
+                      {(
+                        (20 /
+                          (calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                            100 *
+                            Math.sqrt(365))) *
+                        100
+                      ).toFixed(2)}
+                      %
+                    </p>
+                    <p className="mt-[2vh]">We subtract from 100%: </p>
+                    <p>
+                      100% -{' '}
+                      {(
+                        (20 /
+                          (calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                            100 *
+                            Math.sqrt(365))) *
+                        100
+                      ).toFixed(2)}
+                      % ={' '}
+                      {(
+                        100 -
+                        (20 /
+                          (calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                            100 *
+                            Math.sqrt(365))) *
+                          100
+                      ).toFixed(2)}
+                      %
+                    </p>
+                    <p className="mt-[2vh]">
+                      We get that we must invest{' '}
+                      <b className="text-carmesi">
+                        {(
+                          (20 /
+                            (calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                              100 *
+                              Math.sqrt(365))) *
+                          100
+                        ).toFixed(2)}
+                        %
+                      </b>{' '}
+                      BTC and{' '}
+                      <b className="text-carmesi">
+                        {(
+                          100 -
+                          (20 /
+                            (calculateStd(results.slice(results.length - 15, results.length - 2)) *
+                              100 *
+                              Math.sqrt(365))) *
+                            100
+                        ).toFixed(2)}
+                        %
+                      </b>{' '}
+                      Cash
+                    </p>
+                  </div>
                 </div>
-                <p className="mt-[4vh] text-xs mx-auto text-justify">
-                  <b className="text-carmesi">Why did we choose a 14 day window ?</b>
-                  <br /> This parameter closely approximates the one that maximized the Sharpe Ratio over a four-year
-                  period. It was chosen based on fundamental reasoning rather than being an arbitrary selection; for
-                  instance, a two-week lookback period is more logical and justifiable compared to 10 or 11 days.
-                </p>
-              </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <p className="text-center text-md text-carmesi">Loading ... </p>
@@ -630,4 +704,4 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
   )
 }
 
-export default GraphTwo
+export default GraphThree
