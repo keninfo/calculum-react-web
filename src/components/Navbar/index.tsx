@@ -3,6 +3,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import React, { useContext } from 'react'
 
+import Image from 'next/image'
+
 import { ProContext } from '@/components/AppProviders'
 import MaintenanceBanner from '@/components/MaintenanceBanner'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
@@ -23,7 +25,8 @@ const Sidebar = () => {
       <MaintenanceBanner />
       <div className="hidden | md:grid grid-cols-11 items-center px-[1.5vw] space-x-[1vw]">
         <div className="col-span-8 flex justify-between items-center pr-[.5vh]">
-          <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} />
+          {/* <Logo className={`h-[6vh] mr-[4vw] w-fit ${pro ? 'fill-carmesi' : 'fill-white'}`} /> */}
+          <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="pl-[2vw]" />
           <div className="flex w-fit justify-start items-center">{navigationItems.map(NavbarItem)}</div>
           <ProToggle />
         </div>
