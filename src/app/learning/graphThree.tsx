@@ -318,7 +318,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
 
         if (rolling !== undefined) {
           toolTip2.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             <p style="font-size: 10px; margin: 4px 0px; color: SteelBlue; font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
