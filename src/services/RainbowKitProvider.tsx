@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createWalletClient, custom } from 'viem'
 
 import { type State, WagmiProvider } from 'wagmi'
-import { arbitrum, arbitrumSepolia } from 'wagmi/chains'
+import { arbitrumSepolia } from 'wagmi/chains'
 
 import { ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
@@ -31,7 +31,7 @@ if (!projectId) throw new Error('Project ID is not defined')
 const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
-  chains: [arbitrum, arbitrumSepolia],
+  chains: [arbitrumSepolia], // Only using Arbitrum Sepolia
   ssr: true, // If your dApp uses server side rendering (SSR)
 })
 
@@ -39,7 +39,7 @@ let walletClient: ReturnType<typeof createWalletClient> | undefined
 
 if (typeof window !== 'undefined' && window.ethereum) {
   walletClient = createWalletClient({
-    chain: arbitrumSepolia,
+    chain: arbitrumSepolia, // Using Arbitrum Sepolia
     transport: custom(window.ethereum),
   })
 }
