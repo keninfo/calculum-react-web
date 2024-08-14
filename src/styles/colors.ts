@@ -1,17 +1,17 @@
 export const classicTheme = {
-  darkness: '#161A1D',
-  smoke: '#222222',
-  carmesi: '#EF233C',
-  white: '#FFFFFF',
-  greySmoke: '#666666',
+  darkness: 'rgba(1, 42, 74, .5)',
+  smoke: '#181818',
+  carmesi: '#61A5C2',
+  white: '#F8F8F8',
+  greySmoke: '#A0A0A0',
 }
 
 export const proTheme = {
-  darkness: '#161A1D',
+  darkness: 'rgba(1, 42, 74, .5)',
   smoke: '#111111',
-  carmesi: '#EF233C',
-  white: '#FFFFFF',
-  greySmoke: '#666666',
+  carmesi: '#61A5C2',
+  white: '#F8F8F8',
+  greySmoke: '#A0A0A0',
 }
 
 export const lightTheme = {

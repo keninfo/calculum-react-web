@@ -55,10 +55,10 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
             </div>
           </>
         )}
-        <div className="flex justify-between items-center mt-[1vh]">
+        {/* <div className="flex justify-between items-center mt-[1vh]">
           <p className="text-greySmoke text-left text-sm">Price Candlestick:</p>
           <ShowCandle />
-        </div>
+        </div> */}
         {pro && !guide && <RebalancingResults />}
       </Card>
 

@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}>
+      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
         <div className={`p-[.5vw]  col-span-8`}>
           {values && dates ? (
             <ChartsContainer />
