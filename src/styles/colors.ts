@@ -1,5 +1,5 @@
 export const classicTheme = {
-  darkness: 'rgba(1, 42, 74, .5)',
+  darkness: 'rgba(1, 42, 74, .25)',
   smoke: '#181818',
   carmesi: '#61A5C2',
   white: '#F8F8F8',
@@ -7,7 +7,7 @@ export const classicTheme = {
 }
 
 export const proTheme = {
-  darkness: 'rgba(1, 42, 74, .5)',
+  darkness: 'rgba(1, 42, 74, .25)',
   smoke: '#111111',
   carmesi: '#61A5C2',
   white: '#F8F8F8',

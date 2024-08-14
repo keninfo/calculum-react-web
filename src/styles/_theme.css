@@ -1,6 +1,6 @@
 /* DO NOT EDIT - Edit colors.ts instead and then npm run css-vars or yarn run css-vars */
 .classic {
-  --color-darkness: rgba(1, 42, 74, .5);
+  --color-darkness: rgba(1, 42, 74, .25);
   --color-smoke: #181818;
   --color-carmesi: #61A5C2;
   --color-white: #F8F8F8;
@@ -8,7 +8,7 @@
 }
 
 .pro {
-  --color-darkness: rgba(1, 42, 74, .5);
+  --color-darkness: rgba(1, 42, 74, .25);
   --color-smoke: #111111;
   --color-carmesi: #61A5C2;
   --color-white: #F8F8F8;
