@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 
 import Card from '@/components/common/Card'
+import ContractReads from '@/hooks/useContractReads'
+import { formatShares } from '@/utils/formatters'
 
 import { CoinsContext } from '../AppProviders'
 
@@ -55,6 +57,7 @@ const data: DataRow[] = [
 
 const VaultsInfo = () => {
   // const [searchQuery, setSearchQuery] = useState('')
+  const { ConvertToShares } = ContractReads()
   const [filteredData, setFilteredData] = useState(data)
   const [sortConfig, setSortConfig] = useState<{ key: keyof DataRow; direction: 'ascending' | 'descending' }>({
     key: 'label',
@@ -80,7 +83,7 @@ const VaultsInfo = () => {
 
     BTCSmooth = {
       label: 'BTC Smoothcoin',
-      value: 1.0,
+      value: 0,
       change: '0%',
       token: 'BTC',
       tokenValue: currentValue.toFixed(2),
@@ -151,7 +154,7 @@ const VaultsInfo = () => {
           <tr className={`${!BTCSmooth.active ? 'text-greySmoke' : ''}`}>
             <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.label}</td>
             <td className="text-center pt-[2vh] border-r border-white">
-              {BTCSmooth.value} {BTCSmooth.value == 1 ? 'share' : 'shares'}{' '}
+              {formatShares(ConvertToShares(1.0).data as bigint)} USDC
             </td>
             <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.change}</td>
             <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.token}</td>
@@ -161,9 +164,7 @@ const VaultsInfo = () => {
           {filteredData.map((row, index) => (
             <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
               <td className="text-center pt-[2vh] border-r border-white">{row.label}</td>
-              <td className="text-center pt-[2vh] border-r border-white">
-                {row.value} {row.value == 1 ? 'share' : 'shares'}{' '}
-              </td>
+              <td className="text-center pt-[2vh] border-r border-white">{row.value}</td>
               <td className="text-center pt-[2vh] border-r border-white">{row.change}</td>
               <td className="text-center pt-[2vh] border-r border-white">{row.token}</td>
               <td className="text-center pt-[2vh] border-r border-white">{row.tokenValue}</td>
