@@ -29,12 +29,12 @@ const ClaimMint = ({ shares, address }: ClaimProps) => {
   return (
     <div className="inline p-[1vw] my-[2vh] text-sm">
       <div className="mb-[1vh]">
-        <h4>SHARES</h4>
+        <h4>SMOOTHCOINS</h4>
         <p>{shares}</p>
       </div>
       <div className="">
         {claimerMint ? (
-          <ClearButton handleClickClearButton={() => ClaimShares(address)}>Claim All Shares</ClearButton>
+          <ClearButton handleClickClearButton={() => ClaimShares(address)}>Claim All Smoothcoins</ClearButton>
         ) : (
           <p className="text-center w-full bg-carmesi px-[2vw] rounded-lg py-[1vh] ">{`You don't have any to claim.`}</p>
         )}

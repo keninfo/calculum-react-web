@@ -42,11 +42,10 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">
-        You have
         <b className="text-carmesi mx-1">
           {formattedBalance} {SymbolAsset().data as string}
-        </b>{' '}
-        in Wallet
+        </b>
+        in Wallet.
       </p>
       <div className="flex justify-between">
         <Input type="number" value={amount} handleChange={handleAmountChange} />

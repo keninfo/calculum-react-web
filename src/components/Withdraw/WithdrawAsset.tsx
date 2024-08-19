@@ -12,7 +12,7 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
-  const { SymbolAsset, SymbolShares, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
+  const { SymbolAsset, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
   const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
@@ -50,7 +50,7 @@ const WithdrawAsset = () => {
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
       <Input
         type="text"
-        value={formatShares(ConvertToShares(amount).data as bigint) + ' Shares of ' + (SymbolShares().data as string)}
+        value={formatShares(ConvertToShares(amount).data as bigint) + ' smoothcoins'}
         disabled={true}
       />
       <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-[2vh]" disabled={isPending}>
