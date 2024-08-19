@@ -58,7 +58,7 @@ const Page = () => {
 
   const setMax = () => {
     if (selectedCoin <= 1) {
-      setAmount(1000)
+      setAmount(10000)
     } else {
       setAmount(99)
     }
@@ -67,7 +67,7 @@ const Page = () => {
   return (
     <div className={`w-full h-screen flex justify-center items-center`}>
       <Card className="h-fit w-[50%] mx-auto">
-        <p className="text-carmesi text-3xl mx-auto w-fit pb-[4vh]">REQUEST TOKENS</p>
+        <p className="text-white text-3xl mx-auto w-fit pb-[4vh] font-bold">REQUEST TOKENS</p>
         {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to get tokens </p>}
         {isConnected && whitelistCheck && (
           <div className="space-y-4 ">
