@@ -18,7 +18,7 @@ const Index = ({
     <Modal onClose={handleCloseModal}>
       <div className="relative p-4">
         <h2 className="text-carmesi text-2xl my-[4vh] text-center">Disclaimer and User Responsibility</h2>
-        <div className="absolute bottom-[15vh] left-0 w-full h-[15vh] bg-gradient-to-t from-darkness pointer-events-none"></div>
+        <div className="absolute bottom-[15vh] left-0 w-full h-[15vh] pointer-events-none"></div>
         <div className=" px-[10%] text-justify overflow-y-scroll h-[50vh]">
           <p className="text-white">
             By using this smart contract, you acknowledge and agree to engage with this technology at your own risk.
