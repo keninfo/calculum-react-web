@@ -13,7 +13,7 @@ import Disclaimer from '../Disclaimer'
 
 type DepositData = [number, bigint, bigint, bigint]
 
-const DepositAssets = () => {
+const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
   const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
@@ -61,12 +61,12 @@ const DepositAssets = () => {
       return
     }
 
-    if (s2 < s1 && s2 < s3) {
+    if (s2 < s3) {
       setAmount(parseFloat(formatBalance(s2)))
       return
     }
 
-    if (s3 < s1 && s3 < s2) {
+    if (s3 < s2) {
       setAmount(parseFloat(formatBalance(s3)))
       return
     }
@@ -92,21 +92,20 @@ const DepositAssets = () => {
 
   useEffect(() => {
     if (hash) {
-      createTransactionAlert('Transaction Confirmed', true)
+      onDeposit()
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
-  }, [hash, error])
+  }, [hash, error, onDeposit])
 
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">
-        You have
         <b className="text-carmesi mx-1">
           {formattedBalance} {SymbolAsset().data as string}
-        </b>{' '}
-        in Wallet
+        </b>
+        in Wallet.
       </p>
       <div className="flex justify-between">
         <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
@@ -117,11 +116,11 @@ const DepositAssets = () => {
       <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
         <p className="text-left text-xs">You will receive</p>
       </div>
-      <Input type="text" value={formattedShares + ' Shares'} disabled={true} />
+      <Input type="text" value={formattedShares + ' Smoothcoins'} disabled={true} />
       <div className="inline justify-center px-2">
         {checkAmount >= max ? (
           <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
-            {`You've reached the current limit you can deposit on Bear Protocol`}
+            {`You've reached the current limit you can deposit on the Testnet`}
           </p>
         ) : parseFloat(formatBalance(allowance)) >= amount ? (
           <PrimaryButton handleClick={() => handleDepositClick()} className="mt-[4vh] md:mt-0" disabled={isPending}>

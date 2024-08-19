@@ -30,9 +30,14 @@ const Deposit = () => {
     if (Number(allowance) > 0) {
       setSelected(1)
     }
-  }, [allowance])
+  }, [allowance, finalAmount])
 
   const handleApproved = () => {
+    createTransactionAlert('Transaction Approved!', true)
+  }
+
+  const handleDeposit = () => {
+    setSelected(0)
     createTransactionAlert('Transaction Approved!', true)
   }
 
@@ -40,7 +45,7 @@ const Deposit = () => {
     <>
       <div className="mb-[1vh] text-left text-sm">
         <p className="mt-[2vh] text-center text-sm">
-          You have approved
+          Approved to deposit
           <b className="text-carmesi mx-1"> {formatBalance(allowance)} USDC</b>
         </p>
         <div className="flex my-[2vh] text-sm justify-between w-full">
@@ -65,10 +70,10 @@ const Deposit = () => {
         </div>
 
         {selected == 0 && <Approve onApprove={handleApproved} />}
-        {selected == 1 && depositStatus == 0 && <DepositAssets />}
+        {selected == 1 && depositStatus == 0 && <DepositAssets onDeposit={handleDeposit} />}
         {selected == 1 && depositStatus == 1 && <Pending />}
         {selected == 1 && depositStatus == 2 && <Claimet />}
-        {selected == 1 && depositStatus == 3 && <DepositAssets />}
+        {selected == 1 && depositStatus == 3 && <DepositAssets onDeposit={handleDeposit} />}
 
         <div className="flex justify-between">
           <p>Pending Assets: </p>
