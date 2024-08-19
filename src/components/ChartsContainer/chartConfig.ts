@@ -1,6 +1,9 @@
 import type { DeepPartial, LineWidth } from 'lightweight-charts'
 
 export const lineChartConfig = {
+  layout: {
+    attributionLogo: false,
+  },
   grid: {
     vertLines: {
       visible: false,

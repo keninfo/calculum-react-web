@@ -98,6 +98,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           },
         },
         layout: {
+          ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
           textColor: themeColors?.white,
         },
@@ -133,6 +134,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           mode: 0,
         },
         layout: {
+          ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
           textColor: themeColors?.white,
         },

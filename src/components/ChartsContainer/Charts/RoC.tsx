@@ -89,6 +89,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             mode: 2,
           },
           layout: {
+            ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
             textColor: themeColors?.white,
           },
@@ -99,6 +100,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           ...lineChartConfig,
           // timeScale: { visible: false },
           layout: {
+            ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
             textColor: themeColors?.white,
           },

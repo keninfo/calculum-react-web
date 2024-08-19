@@ -94,6 +94,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           mode: 0,
         },
         layout: {
+          ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
           textColor: themeColors?.white,
         },
