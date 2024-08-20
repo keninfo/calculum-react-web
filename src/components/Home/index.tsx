@@ -47,7 +47,7 @@ const Home = () => {
               <></>
             </Card>
           )}
-          <Card className=" flex justify-between w-full mt-[2vh]">
+          <Card className="w-full mt-[2vh]" title="TRANSACTION HISTORY">
             <TradesTable />
           </Card>
           <VaultsInfo />
