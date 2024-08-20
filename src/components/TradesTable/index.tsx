@@ -70,7 +70,7 @@ const TradesTable = () => {
   return (
     <div className="w-full">
       <div className="flex justify-between items-start | md:pl-[5vh]">
-        <h1 className="text-xl text-center font-bold border-b-carmesi border-b-4 pb-1">TRANSACTION</h1>
+        <h1 className="text-xl text-center font-bold border-b-carmesi border-b-4 pb-1">TRANSACTION HISTORY</h1>
         <div className="flex justify-between items-center space-x-1">
           <div
             className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected === 0 ? 'border-white' : 'border-smoke'}`}
