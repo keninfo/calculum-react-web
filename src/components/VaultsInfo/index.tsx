@@ -127,48 +127,66 @@ const VaultsInfo = () => {
   return (
     <Card className="w-full h-[80vh] mt-[1vw]" title="VAULTS">
       {/* <Input placeholder="Search..." type={'text'} value={searchQuery} handleChange={handleSearch} /> */}
-      <table className="table-fixed mt-[2vh] w-full">
+      <table className="table-fixed mt-[4vh] w-full">
         <thead className="text-[1vh]| md:text-[1vw]">
           <tr>
-            <th className="text-center pb-[2vh] cursor-pointer " onClick={() => handleSort('label')}>
+            <th
+              className="text-left px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('label')}
+            >
               Product {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center pb-[2vh]  cursor-pointer " onClick={() => handleSort('value')}>
+            <th
+              className="text-center px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('value')}
+            >
               Price {sortConfig.key === 'value' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center pb-[2vh] cursor-pointer " onClick={() => handleSort('change')}>
+            <th
+              className="text-center px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('change')}
+            >
               Change (24H) {sortConfig.key === 'change' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center pb-[2vh]  cursor-pointer " onClick={() => handleSort('token')}>
+            <th
+              className="text-center px-4 py-2  border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('token')}
+            >
               Token {sortConfig.key === 'token' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center pb-[2vh]  cursor-pointer " onClick={() => handleSort('tokenValue')}>
+            <th
+              className="text-center px-4 py-2  border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('tokenValue')}
+            >
               Price {sortConfig.key === 'tokenValue' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
-            <th className="text-center pb-[2vh]  cursor-pointer " onClick={() => handleSort('tokenChange')}>
+            <th
+              className="text-center px-4 py-2 border-greySmoke cursor-pointer text-carmesi"
+              onClick={() => handleSort('tokenChange')}
+            >
               Change (24H) {sortConfig.key === 'tokenChange' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
           </tr>
         </thead>
-        <tbody className="w-full text-[1vh] | md:text-[.8vw]">
+        <tbody className="w-full text-[1vh] | md:text-[1vw]">
           <tr className={`${!BTCSmooth.active ? 'text-greySmoke' : ''}`}>
-            <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.label}</td>
-            <td className="text-center pt-[2vh] border-r border-white">
+            <td className="text-left border-r-2 border-greySmoke px-4 py-2 text-[.8vw]">{BTCSmooth.label}</td>
+            <td className="text-center border-r-2 border-greySmoke px-4 py-2">
               {formatShares(ConvertToShares(1.0).data as bigint)} USDC
             </td>
-            <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.change}</td>
-            <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.token}</td>
-            <td className="text-center pt-[2vh] border-r border-white">{BTCSmooth.tokenValue}</td>
-            <td className="text-center pt-[2vh]">{BTCSmooth.tokenChange}</td>
+            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.change}</td>
+            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.token}</td>
+            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.tokenValue}</td>
+            <td className="text-center  border-greySmoke px-4 py-2">{BTCSmooth.tokenChange}</td>
           </tr>
           {filteredData.map((row, index) => (
             <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
-              <td className="text-center pt-[2vh] border-r border-white">{row.label}</td>
-              <td className="text-center pt-[2vh] border-r border-white">{row.value}</td>
-              <td className="text-center pt-[2vh] border-r border-white">{row.change}</td>
-              <td className="text-center pt-[2vh] border-r border-white">{row.token}</td>
-              <td className="text-center pt-[2vh] border-r border-white">{row.tokenValue}</td>
-              <td className="text-center pt-[2vh]">{row.tokenChange}</td>
+              <td className="text-left border-r-2 border-greySmoke px-4 py-2 text-[.8vw]">{row.label}</td>
+              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.value}</td>
+              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.change}</td>
+              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.token}</td>
+              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.tokenValue}</td>
+              <td className="text-center  border-greySmoke px-4 py-2">{row.tokenChange}</td>
             </tr>
           ))}
         </tbody>
