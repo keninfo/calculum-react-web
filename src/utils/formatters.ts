@@ -136,6 +136,15 @@ function timeToDate(time: Time): Date {
   }
 }
 
+export function timeToWordDate(time: string): string {
+  const newDate = new Date(parseInt(time) * 1000)
+  return newDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
 export function hexToRGBA(hex: string, opacity: number) {
   if (hex == undefined) return 'white'
   hex = hex.replace(/^#/, '')
