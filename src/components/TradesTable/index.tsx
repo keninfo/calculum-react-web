@@ -5,12 +5,13 @@ import React, { useState, useEffect } from 'react'
 
 import Link from 'next/link'
 
+import type { Hash } from 'viem'
 import { createPublicClient, http, parseAbiItem } from 'viem'
 
 import { useAccount } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
-import { formatBalance, formatShares, shortenAddress } from '@/utils/formatters'
+import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 const TradesTable = () => {
   const { isConnected, address } = useAccount()
@@ -39,28 +40,28 @@ const TradesTable = () => {
 
         const [getWithdraws, getPendingWithdraws, getDeposits, getPendingDeposits] = await Promise.all([
           client.getLogs({
-            address: calculumVaultContract.address as `0x${string}`,
+            address: calculumVaultContract.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiWithdraw,
             args: { caller: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as `0x${string}`,
+            address: calculumVaultContract.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingWithdraw,
             args: { receiver: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as `0x${string}`,
+            address: calculumVaultContract.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiDeposit,
             args: { caller: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as `0x${string}`,
+            address: calculumVaultContract.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingDeposit,
@@ -68,41 +69,59 @@ const TradesTable = () => {
           }),
         ])
 
-        console.log(getPendingDeposits)
+        const blockNumbers = [
+          ...getWithdraws.map((log) => log.blockNumber),
+          ...getPendingWithdraws.map((log) => log.blockNumber),
+          ...getDeposits.map((log) => log.blockNumber),
+          ...getPendingDeposits.map((log) => log.blockNumber),
+        ]
+
+        // Fetch the block data to get the timestamp
+        const blocks = await Promise.all(blockNumbers.map((blockNumber) => client.getBlock({ blockNumber })))
 
         // Format and combine logs
         const formattedLogs = [
-          ...getWithdraws.map((log) => ({
+          ...getWithdraws.map((log, index) => ({
             block: log.blockNumber.toString(),
-            type: 'Claimed Assets',
+            date: timeToWordDate(blocks[index].timestamp.toString()),
+            type: 'Claimed USDC',
             usdc: formatBalance(log.args.shares as bigint),
             smoothcoins: formatShares(log.args.assets as bigint),
             transactionHash: log.transactionHash,
+            blockNumber: log.blockNumber,
           })),
-          ...getPendingWithdraws.map((log) => ({
+          ...getPendingWithdraws.map((log, index) => ({
             block: log.blockNumber.toString(),
+            date: timeToWordDate(blocks[index].timestamp.toString()),
             type: 'Withdraw',
             usdc: formatBalance(log.args.assets as bigint),
             smoothcoins: formatShares(log.args.estimationOfShares as bigint),
             transactionHash: log.transactionHash,
+            blockNumber: log.blockNumber,
           })),
-          ...getDeposits.map((log) => ({
+          ...getDeposits.map((log, index) => ({
             block: log.blockNumber.toString(),
+            date: timeToWordDate(blocks[index].timestamp.toString()),
             type: 'Claimed Smoothcoins',
             usdc: formatBalance(log.args.totalAssets as bigint),
             smoothcoins: formatShares(log.args.shares as bigint),
             transactionHash: log.transactionHash,
+            blockNumber: log.blockNumber,
           })),
-          ...getPendingDeposits.map((log) => ({
+          ...getPendingDeposits.map((log, index) => ({
             block: log.blockNumber.toString(),
+            date: timeToWordDate(blocks[index].timestamp.toString()),
             type: 'Deposit',
             usdc: formatBalance(log.args.assets as bigint),
             smoothcoins: formatShares(log.args.estimationOfShares as bigint),
             transactionHash: log.transactionHash,
+            blockNumber: log.blockNumber,
           })),
         ]
 
-        setTransactions(formattedLogs)
+        const sortedLogs = formattedLogs.sort((a, b) => Number(b.block) - Number(a.block))
+
+        setTransactions(sortedLogs)
       } catch (error) {
         console.error('Error fetching logs:', error)
       }
@@ -124,7 +143,7 @@ const TradesTable = () => {
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-carmesi">Block</th>
+                    <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-carmesi">Date</th>
                     <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-carmesi">Type</th>
                     <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-carmesi">USDC</th>
                     <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-carmesi">Smoothcoins</th>
@@ -136,7 +155,7 @@ const TradesTable = () => {
                 <tbody>
                   {transactions.map((log, index) => (
                     <tr key={index}>
-                      <td className="border-b border-greySmoke px-4 py-2">{log.block}</td>
+                      <td className="border-b border-greySmoke px-4 py-2">{log.date}</td>
                       <td className="border-b border-greySmoke px-4 py-2">{log.type}</td>
                       <td className="border-b border-greySmoke px-4 py-2 text-right">{log.usdc}</td>
                       <td className="border-b border-greySmoke px-4 py-2 text-right">{log.smoothcoins}</td>
@@ -155,7 +174,7 @@ const TradesTable = () => {
       ) : (
         <div className="flex justify-center items-center">
           <div className="space-y-4 mt-[2vh] text-center | md:mt-[10vh]">
-            <p className="text-2xl text-carmesi my-[4vh] | md:my-0">Connect a wallet to see your trades</p>
+            <p className="text-2xl text-carmesi my-[4vh] | md:my-0">Connect a wallet to see your transactions</p>
           </div>
         </div>
       )}
