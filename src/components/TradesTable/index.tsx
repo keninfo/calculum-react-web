@@ -57,9 +57,6 @@ const TradesTable = () => {
 
         setDeposits(getDeposits)
         setWithdraws(getWithdraws)
-
-        console.log(getWithdraws)
-        console.log(getDeposits)
       } catch (error) {
         console.error('Error fetching logs:', error)
       }
