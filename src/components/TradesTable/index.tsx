@@ -92,10 +92,10 @@ const TradesTable = () => {
       {isConnected ? (
         <div className="md:ml-[5vh] mt-[4vh]">
           {selected === 0 && deposits.length === 0 && (
-            <p className="text-center text-2xl">You currently have no deposit transactions.</p>
+            <p className="text-left text-2xl">You currently have no deposit transactions.</p>
           )}
           {selected === 1 && withdraws.length === 0 && (
-            <p className="text-center text-2xl">You currently have no withdrawal transactions.</p>
+            <p className="text-left text-2xl">You currently have no withdrawal transactions.</p>
           )}
           {(selected === 0 && deposits.length > 0) || (selected === 1 && withdraws.length > 0) ? (
             <div className="mt-4">
