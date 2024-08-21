@@ -89,7 +89,9 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
             </div>
           )}
           {!isConnected && (
-            <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to start trading</p>
+            <p className="text-xl text-carmesi mx-auto text-center">
+              Connect a wallet to start trading and see your positions
+            </p>
           )}
         </div>
       ) : (
