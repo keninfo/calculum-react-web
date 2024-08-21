@@ -8,7 +8,7 @@ import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
 import RebalancingResults from '@/components/RebalancingResults'
-import TradesTable from '@/components/TradesTable'
+import Transactions from '@/components/Transactions'
 import VaultsInfo from '@/components/VaultsInfo'
 import { PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
@@ -47,16 +47,17 @@ const Home = () => {
               <></>
             </Card>
           )}
-          <Card className="w-full mt-[2vh]" title="TRANSACTION HISTORY">
-            <TradesTable />
-          </Card>
           <VaultsInfo />
+          <Card className="w-full mt-[2vh]" title="TRANSACTION HISTORY">
+            <Transactions />
+          </Card>
         </div>
         <div className="p-[.5vw] col-span-3">
           {values ? (
             <>
               <ChartOptions />
               <ActionCard />
+              {/* <Positions /> */}
             </>
           ) : (
             <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
@@ -77,7 +78,7 @@ const Home = () => {
         )}
         {pro && values && <RebalancingResults />}
         <Card>
-          <TradesTable />
+          <Transactions />
         </Card>
         <VaultsInfo />
         <Card>

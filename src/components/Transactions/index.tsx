@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { arbitrumSepolia } from '@wagmi/core/chains'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import Link from 'next/link'
 
@@ -13,9 +13,12 @@ import { useAccount } from 'wagmi'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
-const TradesTable = () => {
+import { ProContext } from '../AppProviders'
+
+const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
+  const { pro } = useContext(ProContext)
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -79,45 +82,69 @@ const TradesTable = () => {
         // Fetch the block data to get the timestamp
         const blocks = await Promise.all(blockNumbers.map((blockNumber) => client.getBlock({ blockNumber })))
 
-        // Format and combine logs
-        const formattedLogs = [
-          ...getWithdraws.map((log, index) => ({
-            block: log.blockNumber.toString(),
-            date: timeToWordDate(blocks[index].timestamp.toString()),
-            type: 'Claimed USDC',
-            usdc: formatBalance(log.args.shares as bigint),
-            smoothcoins: formatShares(log.args.assets as bigint),
-            transactionHash: log.transactionHash,
-            blockNumber: log.blockNumber,
-          })),
-          ...getPendingWithdraws.map((log, index) => ({
-            block: log.blockNumber.toString(),
-            date: timeToWordDate(blocks[index].timestamp.toString()),
-            type: 'Withdraw',
-            usdc: formatBalance(log.args.assets as bigint),
-            smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-            transactionHash: log.transactionHash,
-            blockNumber: log.blockNumber,
-          })),
-          ...getDeposits.map((log, index) => ({
-            block: log.blockNumber.toString(),
-            date: timeToWordDate(blocks[index].timestamp.toString()),
-            type: 'Claimed Smoothcoins',
-            usdc: formatBalance(log.args.totalAssets as bigint),
-            smoothcoins: formatShares(log.args.shares as bigint),
-            transactionHash: log.transactionHash,
-            blockNumber: log.blockNumber,
-          })),
-          ...getPendingDeposits.map((log, index) => ({
-            block: log.blockNumber.toString(),
-            date: timeToWordDate(blocks[index].timestamp.toString()),
-            type: 'Deposit',
-            usdc: formatBalance(log.args.assets as bigint),
-            smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-            transactionHash: log.transactionHash,
-            blockNumber: log.blockNumber,
-          })),
-        ]
+        let formattedLogs = []
+
+        if (pro) {
+          formattedLogs = [
+            ...getWithdraws.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Claimed USDC',
+              usdc: formatBalance(log.args.shares as bigint),
+              smoothcoins: formatShares(log.args.assets as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+            ...getPendingWithdraws.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Withdraw',
+              usdc: formatBalance(log.args.assets as bigint),
+              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+            ...getDeposits.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Claimed Smoothcoins',
+              usdc: formatBalance(log.args.totalAssets as bigint),
+              smoothcoins: formatShares(log.args.shares as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+            ...getPendingDeposits.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Deposit',
+              usdc: formatBalance(log.args.assets as bigint),
+              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+          ]
+        } else {
+          formattedLogs = [
+            ...getPendingWithdraws.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Withdraw',
+              usdc: formatBalance(log.args.assets as bigint),
+              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+            ...getPendingDeposits.map((log, index) => ({
+              block: log.blockNumber.toString(),
+              date: timeToWordDate(blocks[index].timestamp.toString()),
+              type: 'Deposit',
+              usdc: formatBalance(log.args.assets as bigint),
+              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
+              transactionHash: log.transactionHash,
+              blockNumber: log.blockNumber,
+            })),
+          ]
+        }
 
         const sortedLogs = formattedLogs.sort((a, b) => Number(b.block) - Number(a.block))
 
@@ -130,7 +157,7 @@ const TradesTable = () => {
     if (isConnected && address) {
       fetchLogs()
     }
-  }, [isConnected, address])
+  }, [isConnected, address, pro])
 
   return (
     <div className="w-full">
@@ -173,8 +200,8 @@ const TradesTable = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center">
-          <div className="space-y-4 mt-[2vh] text-center | md:mt-[10vh]">
-            <p className="text-2xl text-carmesi my-[4vh] | md:my-0">Connect a wallet to see your transactions</p>
+          <div className="space-y-4 mt-[2vh] text-center">
+            <p className="text-2xl text-carmesi my-[4vh]">Connect a wallet to see your transactions</p>
           </div>
         </div>
       )}
@@ -182,4 +209,4 @@ const TradesTable = () => {
   )
 }
 
-export default TradesTable
+export default Transactions
