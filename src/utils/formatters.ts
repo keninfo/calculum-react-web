@@ -26,7 +26,7 @@ export const formatBalance = (number: bigint): string => {
     }
 
     let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    formattedNumber = parseFloat(formattedNumber).toFixed(6)
 
     return formattedNumber
   } catch (error) {
@@ -51,7 +51,7 @@ export const formatShares = (share: bigint): string => {
     }
 
     let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    formattedNumber = parseFloat(formattedNumber).toFixed(6)
 
     return formattedNumber
   } catch (error) {
