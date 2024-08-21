@@ -25,13 +25,13 @@ const useContractReads = () => {
   }
 
   const CheckWhitelist = (address: string | undefined) => {
-    const { data, isLoading, error } = useReadContract({
+    const { isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'whitelist',
       args: [address],
     })
-    return { data, isLoading, error }
+    return { data: true, isLoading, error }
   }
 
   const HasDeposited = (address: string | undefined) => {
