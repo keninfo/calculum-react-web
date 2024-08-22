@@ -56,7 +56,7 @@ const data: DataRow[] = [
 ]
 
 const VaultsInfo = () => {
-  // const [searchQuery, setSearchQuery] = useState('')
+  const { values } = useContext(CoinsContext)
   const { ConvertToShares } = ContractReads()
   const [filteredData, setFilteredData] = useState(data)
   const [sortConfig, setSortConfig] = useState<{ key: keyof DataRow; direction: 'ascending' | 'descending' }>({
@@ -74,7 +74,6 @@ const VaultsInfo = () => {
     active: true,
   }
 
-  const { values } = useContext(CoinsContext)
   if (values) {
     const previousValue = values[1][values[1].length - 2]
     const currentValue = values[1][values[1].length - 1]
@@ -84,10 +83,10 @@ const VaultsInfo = () => {
     BTCSmooth = {
       label: 'BTC Smoothcoin',
       value: 0,
-      change: '0%',
+      change: '0',
       token: 'BTC',
-      tokenValue: currentValue.toFixed(2),
-      tokenChange: tokenChangePercentage.toFixed(2) + '%',
+      tokenValue: currentValue.toLocaleString('en-US'),
+      tokenChange: tokenChangePercentage.toLocaleString('en-US') + '%',
       active: true,
     }
   }
@@ -172,9 +171,9 @@ const VaultsInfo = () => {
           <tr className={`${!BTCSmooth.active ? 'text-greySmoke' : ''}`}>
             <td className="text-left border-r-2 border-greySmoke px-4 py-2 text-[.8vw]">{BTCSmooth.label}</td>
             <td className="text-center border-r-2 border-greySmoke px-4 py-2">
-              {formatShares(ConvertToShares(1.0).data as bigint)} USDC
+              {parseFloat(formatShares(ConvertToShares(1.0).data as bigint)).toLocaleString('en-US')} USDC
             </td>
-            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.change}</td>
+            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{0}%</td>
             <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.token}</td>
             <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.tokenValue}</td>
             <td className="text-center  border-greySmoke px-4 py-2">{BTCSmooth.tokenChange}</td>

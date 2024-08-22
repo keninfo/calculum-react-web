@@ -15,11 +15,31 @@ const useContractReads = () => {
     })
     return { data, isLoading, error }
   }
+
+  const CurrentEpoch = () => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'CURRENT_EPOCH',
+    })
+    return { data, isLoading, error }
+  }
+
   const MaxDeposit = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'MAX_DEPOSIT',
+    })
+    return { data, isLoading, error }
+  }
+
+  const TokenPriceAt = (epoch: number | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'VAULT_TOKEN_PRICE',
+      args: [epoch],
     })
     return { data, isLoading, error }
   }
@@ -174,7 +194,9 @@ const useContractReads = () => {
 
   return {
     InMaintenance,
+    CurrentEpoch,
     MaxDeposit,
+    TokenPriceAt,
     CheckWhitelist,
     HasDeposited,
     Allowance,
