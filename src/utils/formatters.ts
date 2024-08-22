@@ -26,7 +26,7 @@ export const formatBalance = (number: bigint): string => {
     }
 
     let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(6)
+    formattedNumber = parseFloat(formattedNumber).toLocaleString('es-US')
 
     return formattedNumber
   } catch (error) {
@@ -51,7 +51,7 @@ export const formatShares = (share: bigint): string => {
     }
 
     let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(6)
+    formattedNumber = parseFloat(formattedNumber).toLocaleString('es-US')
 
     return formattedNumber
   } catch (error) {
@@ -67,7 +67,7 @@ export const formatPrice = (price: string): string => {
   let formattedPrice
 
   if (Math.abs(priceNum) >= 1000) formattedPrice = priceNum.toFixed(2)
-  else formattedPrice = priceNum.toFixed(4)
+  else formattedPrice = priceNum.toLocaleString('es-US')
 
   return formattedPrice.replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
