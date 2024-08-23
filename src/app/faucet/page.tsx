@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 
+import Head from 'next/head'
+
 import type { Hash } from 'viem'
 
 import type { BaseError } from 'wagmi'
@@ -12,6 +14,7 @@ import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
 import Input from '@/components/common/Input'
+import MetaTags from '@/components/common/MetaTags'
 import Select from '@/components/common/Select'
 import ContractReads from '@/hooks/useContractReads'
 import useMint from '@/hooks/useMint'
@@ -65,60 +68,66 @@ const Page = () => {
   }
 
   return (
-    <div className={`w-full h-screen flex justify-center items-center`}>
-      <Card className="h-fit w-[50%] mx-auto">
-        <p className="text-white text-3xl mx-auto w-fit pb-[4vh] font-bold">REQUEST TOKENS</p>
-        {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to get tokens </p>}
-        {isConnected && whitelistCheck && (
-          <div className="space-y-4 ">
-            <Select
-              handleChange={handleSelected}
-              value={coins[selectedCoin]}
-              options={coins}
-              className="!w-full text-center py-[1vh] border-2 !text-md"
-            />
-            <Input
-              placeholder={address}
-              type={'text'}
-              value={`${contracts[selectedCoin]}`}
-              disabled={true}
-              className="text-center bg-smoke !text-greySmoke"
-            />
-            <AddToken
-              tokenAddress={contracts[selectedCoin]}
-              tokenSymbol={coins[selectedCoin]}
-              tokenDecimals={selectedCoin <= 1 ? 6 : 18}
-              classname={'!text-lg hover:scale-105'}
-            />
-            <div className="flex justify-center items-center">
-              <Input
-                placeholder={'Amount...'}
-                type={'number'}
-                value={amount}
-                handleChange={handleSearch}
-                className="text-center rounded-r-none"
+    <>
+      <Head>
+        <title key="default-title">Faucet - BearProtocol</title>
+        <MetaTags />
+      </Head>
+      <main className={`w-full h-screen flex justify-center items-center`}>
+        <Card className="h-fit w-[50%] mx-auto">
+          <p className="text-white text-3xl mx-auto w-fit pb-[4vh] font-bold">REQUEST TOKENS</p>
+          {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to get tokens </p>}
+          {isConnected && whitelistCheck && (
+            <div className="space-y-4 ">
+              <Select
+                handleChange={handleSelected}
+                value={coins[selectedCoin]}
+                options={coins}
+                className="!w-full text-center py-[1vh] border-2 !text-md"
               />
-              <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
-                MAX
-              </AlternateButton>
-            </div>
+              <Input
+                placeholder={address}
+                type={'text'}
+                value={`${contracts[selectedCoin]}`}
+                disabled={true}
+                className="text-center bg-smoke !text-greySmoke"
+              />
+              <AddToken
+                tokenAddress={contracts[selectedCoin]}
+                tokenSymbol={coins[selectedCoin]}
+                tokenDecimals={selectedCoin <= 1 ? 6 : 18}
+                classname={'!text-lg hover:scale-105'}
+              />
+              <div className="flex justify-center items-center">
+                <Input
+                  placeholder={'Amount...'}
+                  type={'number'}
+                  value={amount}
+                  handleChange={handleSearch}
+                  className="text-center rounded-r-none"
+                />
+                <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
+                  MAX
+                </AlternateButton>
+              </div>
 
-            <PrimaryButton
-              handleClick={() =>
-                MintTokens(contracts[selectedCoin], address as Hash, amount, selectedCoin <= 1 ? 6 : 18)
-              }
-            >
-              {isPending ? 'Minting...' : 'Mint Token'}
-            </PrimaryButton>
-          </div>
-        )}
-        {isConnected && !whitelistCheck && (
-          <div className="w-[50%] mx-auto">
-            <NotWhitelist />
-          </div>
-        )}
-      </Card>
-    </div>
+              <PrimaryButton
+                handleClick={() =>
+                  MintTokens(contracts[selectedCoin], address as Hash, amount, selectedCoin <= 1 ? 6 : 18)
+                }
+              >
+                {isPending ? 'Minting...' : 'Mint Token'}
+              </PrimaryButton>
+            </div>
+          )}
+          {isConnected && !whitelistCheck && (
+            <div className="w-[50%] mx-auto">
+              <NotWhitelist />
+            </div>
+          )}
+        </Card>
+      </main>
+    </>
   )
 }
 

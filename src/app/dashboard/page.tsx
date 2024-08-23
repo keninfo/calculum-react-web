@@ -10,7 +10,7 @@ const Dashboard = () => {
   return (
     <>
       <Head>
-        <title key="default-title">Bear Protocol</title>
+        <title key="default-title">Dashboard - BearProtocol</title>
         <MetaTags />
       </Head>
 
