@@ -48,7 +48,7 @@ const Positions = () => {
             <b>Current:</b> {formatBalance(convertSingleAsset)} USDC
           </p>
           <p className="flex justify-between">
-            <b>PNL:</b> {(1 / parseFloat(formatBalance(convertSingleAsset)) - 1).toFixed(6)}%
+            <b>PNL:</b> {(1 / parseFloat(formatBalance(convertSingleAsset)) - 1).toFixed(2)}%
           </p>
         </Card>
       ) : (
