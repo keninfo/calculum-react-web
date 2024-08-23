@@ -1,3 +1,5 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import React, { useContext, useState } from 'react'
 
 import { useAccount } from 'wagmi'
@@ -23,6 +25,8 @@ const Home = () => {
   const { pro } = useContext(ProContext)
   const { dates, values } = useContext(CoinsContext)
   const { isConnected } = useAccount()
+  const [parent1] = useAutoAnimate()
+  const [parent2] = useAutoAnimate()
 
   let status = false
 
@@ -39,7 +43,7 @@ const Home = () => {
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
-        <div className={`p-[.5vw]  col-span-8`}>
+        <div className={`p-[.5vw]  col-span-8`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
@@ -52,7 +56,7 @@ const Home = () => {
             <Transactions />
           </Card>
         </div>
-        <div className="p-[.5vw] col-span-3">
+        <div className="p-[.5vw] col-span-3" ref={parent2}>
           {values ? (
             <>
               <ChartOptions />

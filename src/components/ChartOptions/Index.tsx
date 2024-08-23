@@ -1,3 +1,5 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import React, { useContext } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
@@ -12,9 +14,10 @@ import ShowCandle from './ShowCandle'
 const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
   const { volatility, rollingWindow, studyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
+  const [parent] = useAutoAnimate()
 
   return (
-    <>
+    <div>
       {/* DESKTOP */}
       <Card className="hidden | md:block w-full mb-[2vh] relative">
         <div className="flex justify-between items-center">
@@ -39,27 +42,29 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
             </p>
           )}
         </div>
-        {pro && (
-          <>
-            <div className="flex justify-between items-center mt-[1vh]">
-              <p className="text-greySmoke text-left text-sm">Volatility:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
-                {volatility * 100}%
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-[1vh]">
-              <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
-                {rollingWindow} days
-              </p>
-            </div>
-          </>
-        )}
-        {/* <div className="flex justify-between items-center mt-[1vh]">
+        <div ref={parent}>
+          {pro && (
+            <>
+              <div className="flex justify-between items-center mt-[1vh]">
+                <p className="text-greySmoke text-left text-sm">Volatility:</p>
+                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+                  {volatility * 100}%
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-[1vh]">
+                <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
+                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+                  {rollingWindow} days
+                </p>
+              </div>
+            </>
+          )}
+          {/* <div className="flex justify-between items-center mt-[1vh]">
           <p className="text-greySmoke text-left text-sm">Price Candlestick:</p>
           <ShowCandle />
         </div> */}
-        {pro && !guide && <RebalancingResults />}
+          {pro && !guide && <RebalancingResults />}
+        </div>
       </Card>
 
       {/* MOBILE */}
@@ -126,7 +131,7 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

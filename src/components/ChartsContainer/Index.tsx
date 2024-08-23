@@ -1,6 +1,8 @@
 'use client'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import React, { useContext, useState, useEffect } from 'react'
 
 import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
@@ -15,6 +17,7 @@ const Chart = () => {
   const { coin, setVolatility } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
   const { dates, values, coins } = useContext(CoinsContext)
+  const [parent] = useAutoAnimate()
 
   useEffect(() => {
     let newVolatility = 0
@@ -51,7 +54,7 @@ const Chart = () => {
   }
 
   return (
-    <>
+    <div ref={parent}>
       <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[3vw] ${pro ? '!rounded-b-none ' : ''}`}>
         <p className="hidden | md:block absolute top-1/2 -left-[45px] -rotate-90 text-white text-sm">
           Return on Capital
@@ -76,7 +79,7 @@ const Chart = () => {
           {showSecondChart && <RollingVol dates={dates ? dates : []} seriesData={getCoinArray()} />}
         </Card>
       )}
-    </>
+    </div>
   )
 }
 
