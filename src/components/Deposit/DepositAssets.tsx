@@ -56,7 +56,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
       return
     }
 
-    if (s1 < s2 && s1 < s3) {
+    if (s1 < s2 && s1 <= s3) {
       setAmount(parseFloat(formatBalance(s1)))
       return
     }
@@ -66,7 +66,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
       return
     }
 
-    if (s3 < s2) {
+    if (s3 <= s2) {
       setAmount(parseFloat(formatBalance(s3)))
       return
     }
