@@ -14,6 +14,7 @@ import { calculumVaultContract } from '@/contracts/calculumVault'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 import { ProContext } from '../AppProviders'
+import Card from '../common/Card'
 
 const Transactions = () => {
   const { isConnected, address } = useAccount()
@@ -160,7 +161,7 @@ const Transactions = () => {
   }, [isConnected, address, pro])
 
   return (
-    <div className="w-full">
+    <Card className="w-full mt-[2vh] grow min-h-0" title="TRANSACTION HISTORY">
       {isConnected ? (
         <div className="mt-[4vh]">
           {transactions.length === 0 ? (
@@ -205,7 +206,7 @@ const Transactions = () => {
           </div>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 

@@ -9,6 +9,7 @@ import { CoinsContext, ProContext } from '@/components/AppProviders'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
+import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
 import Transactions from '@/components/Transactions'
 import VaultsInfo from '@/components/VaultsInfo'
@@ -43,7 +44,7 @@ const Home = () => {
     <>
       {/* DESKTOP */}
       <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
-        <div className={`p-[.5vw]  col-span-8`} ref={parent1}>
+        <div className={`p-[.5vw]  col-span-8 flex flex-col`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
@@ -52,16 +53,14 @@ const Home = () => {
             </Card>
           )}
           <VaultsInfo />
-          <Card className="w-full mt-[2vh]" title="TRANSACTION HISTORY">
-            <Transactions />
-          </Card>
+          <Transactions />
         </div>
-        <div className="p-[.5vw] col-span-3" ref={parent2}>
+        <div className="p-[.5vw] col-span-3 h-full flex flex-col" ref={parent2}>
           {values ? (
             <>
               <ChartOptions />
               <ActionCard />
-              {/* <Positions /> */}
+              <Positions />
             </>
           ) : (
             <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
