@@ -25,10 +25,14 @@ export const formatBalance = (number: bigint): string => {
       decimalPart = '0'.repeat(6 - length) + toStringNumber
     }
 
-    let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    const formattedNumber = `${integerPart}.${decimalPart}`
+    const parsedNumber = parseFloat(formattedNumber).toFixed(2)
 
-    return formattedNumber
+    // Add thousands separator
+    const [intPart, decPart] = parsedNumber.split('.')
+    const formattedWithCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart
+
+    return formattedWithCommas
   } catch (error) {
     return '0.0'
   }
@@ -50,10 +54,14 @@ export const formatShares = (share: bigint): string => {
       decimalPart = '0'.repeat(18 - length) + toStringNumber
     }
 
-    let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    const formattedNumber = `${integerPart}.${decimalPart}`
+    const parsedNumber = parseFloat(formattedNumber).toFixed(2)
 
-    return formattedNumber
+    // Add thousands separator
+    const [intPart, decPart] = parsedNumber.split('.')
+    const formattedWithCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart
+
+    return formattedWithCommas
   } catch (error) {
     return '0.0'
   }
