@@ -17,10 +17,10 @@ const formatTime = d3.utcFormat('%B %d, %Y')
 
 const parseData = (data: any) => {
   return data.map((obj: any) => {
-    const { ['']: timestampString, ...rest } = obj
+    const { ['']: timestampString, ['MPEPE-PERP']: movePepe, ...rest } = obj
     const TIMESTAMP = timestampString ? parseDate(timestampString) : null
     const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
-    return { TIMESTAMP: formattedDate, ...rest }
+    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: movePepe, ...rest }
   })
 }
 
@@ -30,7 +30,7 @@ const parseStaticData = (data: any) => {
     const TIMESTAMP = timestampString ? parseDate(timestampString) : null
     const formattedDate = TIMESTAMP ? formatTime(TIMESTAMP) : null
     const updatedValue = valueToMultiply ? Number(valueToMultiply) * 1000 : null
-    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: updatedValue, ...rest }
+    return { TIMESTAMP: formattedDate, ['MPEPE-PERP']: updatedValue ? updatedValue.toString() : '', ...rest }
   })
 }
 
@@ -50,7 +50,7 @@ interface OptionsContextType {
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
-  coin: 'BTC - Controlled Vol',
+  coin: 'BTC Smoothcoin',
   setCoin: () => {},
   rollingWindow: 14,
   setRollingWindow: () => {},
@@ -95,7 +95,7 @@ export const CoinsContext = createContext<CoinsContextType>({
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const [coin, setCoin] = useState<string>('BTC - Controlled Vol')
+  const [coin, setCoin] = useState<string>('BTC Smoothcoin')
   const [rollingWindow, setRollingWindow] = useState<number>(14)
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
@@ -107,7 +107,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [coins, setCoins] = useState<string[] | null>(null)
 
   const fetchDaily = async () => {
-    const staticDataSrc = '/static'
+    const staticDataSrc = '/daily_prices_for_jesus.csv'
     const liveDataSrc = `/live`
 
     try {

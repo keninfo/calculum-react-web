@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import { useAccount, type BaseError } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import ContractReads from '@/hooks/useContractReads'
 import useWithdrawAssets from '@/hooks/useWithdrawAssets'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
 const WithdrawAsset = () => {
   const [amount, setAmount] = useState<number>(10)
   const { address } = useAccount()
-  const { SymbolAsset, SymbolShares, BalanceAssets, ConvertToShares } = ContractReads()
-  const { withdrawAssets, isPending } = useWithdrawAssets()
+  const { SymbolAsset, BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
+  const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
 
-  const BalanceAssetResult = BalanceAssets(address).data as bigint
+  const BalanceSharesResult = BalanceShares(address).data as bigint
+  const formattedShares = formatShares(BalanceSharesResult)
+  const convertedAssets = ConvertToAssets(parseFloat(formattedShares)).data as bigint
+  const maxAssets = parseFloat(formatBalance(convertedAssets))
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -22,8 +26,17 @@ const WithdrawAsset = () => {
   }
 
   const setMaxAssets = () => {
-    setAmount(parseFloat(formatBalance(BalanceAssetResult)))
+    setAmount(maxAssets)
   }
+
+  useEffect(() => {
+    if (hash) {
+      createTransactionAlert('Transaction Confirmed', true)
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [hash, error])
 
   return (
     <>
@@ -37,7 +50,7 @@ const WithdrawAsset = () => {
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">Equivalent to</p>
       <Input
         type="text"
-        value={formatShares(ConvertToShares(amount).data as bigint) + ' Shares of ' + (SymbolShares().data as string)}
+        value={formatShares(ConvertToShares(amount).data as bigint) + ' smoothcoins'}
         disabled={true}
       />
       <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-[2vh]" disabled={isPending}>

@@ -1,6 +1,6 @@
 export const usdcContract = {
-  chainId: '42161',
-  address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+  chainId: '421614',
+  address: '0xD32ea1C76ef1c296F131DD4C5B2A0aac3b22485a',
   abi: [
     {
       anonymous: false,
@@ -60,13 +60,32 @@ export const usdcContract = {
     {
       anonymous: false,
       inputs: [
-        { indexed: true, internalType: 'address', name: 'minter', type: 'address' },
-        { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-        { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+        {
+          indexed: true,
+          internalType: 'address',
+          name: '_to',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: '_amount',
+          type: 'uint256',
+        },
       ],
       name: 'Mint',
       type: 'event',
     },
+    // {
+    //   anonymous: false,
+    //   inputs: [
+    //     { indexed: true, internalType: 'address', name: 'minter', type: 'address' },
+    //     { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+    //     { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+    //   ],
+    //   name: 'Mint',
+    //   type: 'event',
+    // },
     {
       anonymous: false,
       inputs: [

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { type BaseError } from 'wagmi'
 
 import ClearButton from '@/components/common/ClearButton'
 import useClaimAssets from '@/hooks/useClaimAssets'
 import ContractReads from '@/hooks/useContractReads'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 
 interface ClaimProps {
   assets: string
@@ -10,10 +13,19 @@ interface ClaimProps {
 }
 
 const ClaimWithdraw = ({ assets, address }: ClaimProps) => {
-  const { ClaimAssets } = useClaimAssets()
+  const { ClaimAssets, hash, error } = useClaimAssets()
   const { IsClaimerWithdraw } = ContractReads()
 
   const claimerWithdraw = IsClaimerWithdraw(address).data as boolean
+
+  useEffect(() => {
+    if (hash) {
+      createTransactionAlert('Transaction Confirmed', true)
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [hash, error])
 
   return (
     <div className="inline p-[1vw] my-[2vh] text-sm">

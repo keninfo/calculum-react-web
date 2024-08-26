@@ -1,5 +1,3 @@
-'use client'
-
 import { type ReactNode } from 'react'
 
 import AppProviders from '@/components/AppProviders'
@@ -18,7 +16,7 @@ const RootLayout = ({
         <Providers>
           <AppProviders>
             <Navbar />
-            <div className="md:px-[1vw] pb-[.5vw] bg-smoke">{children}</div>
+            <div className="md:px-[1vw] pb-[.5vw]  bg-gradient-to-t from-darkness to-smoke">{children}</div>
           </AppProviders>
         </Providers>
       </body>

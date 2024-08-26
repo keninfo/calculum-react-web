@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { CoinsContext, OptionsContext } from '@/components/AppProviders'
+import Card from '@/components/common/Card'
 import {
   pct_change,
   calculateScaledReturnsLeverage,
@@ -9,11 +10,12 @@ import {
   calculateMean,
   calculateStd,
   cumprod,
-} from '@/components/ChartsContainer/chartComputations'
-import Card from '@/components/common/Card'
+} from '@/utils/chartComputations'
+import { cutStringToFirstSpace } from '@/utils/formatters'
 
-const RebalancingResults = ({ data }: { data: number[][] }) => {
-  const { window, rollingWindow, volatility, coin, studyCase } = useContext(OptionsContext)
+const RebalancingResults = () => {
+  const { window, rollingWindow, coin, studyCase, volatility } = useContext(OptionsContext)
+  const { values, coins } = useContext(CoinsContext)
 
   let selectedWindow = window
   let years = 1
@@ -37,23 +39,30 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   }
 
   const getCoinArray = (amount: number) => {
-    let index = 0
-    if (coin == 'PEPE') {
-      index = 14
+    let index = 1
+
+    let cutCoinName = cutStringToFirstSpace(coin)
+
+    if (coin == 'PEPE Smoothcoin') {
+      cutCoinName = 'MPEPE'
     }
-    if (coin == 'ETH') {
-      index = 1
+    if (coin == 'ETH Smoothcoin') {
+      cutCoinName = 'ETH'
     }
-    return data[index].slice(-amount)
+    if (coin == 'BTC Smoothcoin 3X') {
+      cutCoinName = 'BTC'
+    }
+    if (coin == 'BTC Smoothcoin') {
+      cutCoinName = 'BTC'
+    }
+
+    if (coins) {
+      index = coins.indexOf(cutCoinName)
+    }
+
+    return values && coin ? values[index].slice(-amount) : []
   }
 
-  if (data.length <= 0) {
-    return (
-      <Card className="w-full h-full flex justify-center" title="LOADING...">
-        <></>
-      </Card>
-    )
-  }
   const periods = 365 // only for daily, have to change if hourly
 
   const filteredPrices = getCoinArray(selectedWindow + 1)
@@ -112,28 +121,30 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
   return (
-    <Card className="w-full h-fit mt-[6vh] | md:!p-0" title="REBALANCED RESULTS">
-      <p>
-        Sharpe Ratio, Raw: <b>{rawSharpe}</b>
-      </p>
-      <p>
-        Constant Volatility: <b>{scaledSharpe}</b>
-      </p>
+    <>
+      {values && (
+        <Card className="w-full h-fit mt-[6vh] !bg-transparent | md:!p-0" title="REBALANCED RESULTS">
+          <p>
+            Sharpe Ratio, Raw: <b>{rawSharpe}</b>
+          </p>
+          <p>
+            Constant Volatility: <b>{scaledSharpe}</b>
+          </p>
 
-      <p className="mt-[2vh]">
-        CAGR, Raw: <b>{rawCAGR}%</b>
-      </p>
-      <p>
-        Constant Volatility: <b>{scaledCAGR}%</b>
-      </p>
+          <p className="mt-[2vh]">
+            CAGR, Raw: <b>{rawCAGR}%</b>
+          </p>
+          <p>
+            Constant Volatility: <b>{scaledCAGR}%</b>
+          </p>
 
-      <p className="mt-[2vh]">
-        Largest Drawdown, Raw: <b>{rawDDMax}%</b>
-      </p>
-      <p>
-        Constant Volatility: <b>{scaledDDMax}%</b>
-      </p>
-      {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
+          <p className="mt-[2vh]">
+            Largest Drawdown, Raw: <b>{rawDDMax}%</b>
+          </p>
+          <p>
+            Constant Volatility: <b>{scaledDDMax}%</b>
+          </p>
+          {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
         <div className="block space-y-1 w-fit">
           <p className="text-greySmoke text-left text-sm">Asset:</p>
           <CoinSelect />
@@ -153,7 +164,9 @@ const RebalancingResults = ({ data }: { data: number[][] }) => {
           )}
         </div>
       </div> */}
-    </Card>
+        </Card>
+      )}
+    </>
   )
 }
 

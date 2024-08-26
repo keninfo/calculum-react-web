@@ -11,10 +11,20 @@ const useContractReads = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
-      functionName: 'InMaintenance',
+      functionName: 'isMaintenance',
     })
     return { data, isLoading, error }
   }
+
+  const CurrentEpoch = () => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'CURRENT_EPOCH',
+    })
+    return { data, isLoading, error }
+  }
+
   const MaxDeposit = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
@@ -24,14 +34,24 @@ const useContractReads = () => {
     return { data, isLoading, error }
   }
 
-  const CheckWhitelist = (address: string | undefined) => {
+  const TokenPriceAt = (epoch: number | undefined) => {
     const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'VAULT_TOKEN_PRICE',
+      args: [epoch],
+    })
+    return { data, isLoading, error }
+  }
+
+  const CheckWhitelist = (address: string | undefined) => {
+    const { isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
       address: calculumVaultContract.address as Hash,
       functionName: 'whitelist',
       args: [address],
     })
-    return { data, isLoading, error }
+    return { data: true, isLoading, error }
   }
 
   const HasDeposited = (address: string | undefined) => {
@@ -50,6 +70,9 @@ const useContractReads = () => {
       address: usdcContract.address as Hash,
       functionName: 'allowance',
       args: [address, calculumVaultContract.address],
+      query: {
+        refetchInterval: 100,
+      },
     })
     return { data, isLoading, error }
   }
@@ -171,7 +194,9 @@ const useContractReads = () => {
 
   return {
     InMaintenance,
+    CurrentEpoch,
     MaxDeposit,
+    TokenPriceAt,
     CheckWhitelist,
     HasDeposited,
     Allowance,

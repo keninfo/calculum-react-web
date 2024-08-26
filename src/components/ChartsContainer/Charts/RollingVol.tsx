@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
+import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, hexToRGBA } from '@/utils/formatters'
 
-import { calculateRolling, pct_change } from '../chartComputations'
 import { lineChartConfig, toolTipWidth, tooltipConfig, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -78,6 +78,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
           mode: 0,
         },
         layout: {
+          ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
           textColor: themeColors?.white,
         },
@@ -109,12 +110,12 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     }
 
     const lineSeries = chartInstance.current?.addLineSeries({
-      color: 'limegreen',
+      color: '#29947A',
       priceScaleId: 'left',
       autoscaleInfoProvider: () => ({
         priceRange: {
           minValue: 0,
-          maxValue: coin == 'PEPE' ? 400 : 150,
+          maxValue: coin == 'PEPE Smoothcoin' ? 400 : 150,
         },
       }),
     })
@@ -160,7 +161,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         if (rollingVol !== undefined) {
           toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: limegreen; font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: #29947A; font-weight: bold;">
             Vol: ${rollingVol?.toFixed(2)}%</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">

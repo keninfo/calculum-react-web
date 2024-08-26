@@ -1,50 +1,65 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import Link from 'next/link'
 
-import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
-import Input from '@/components/common/Input'
+import { type BaseError, useAccount } from 'wagmi'
+
+import { PrimaryButton } from '@/components/common/Buttons'
 import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance } from '@/utils/formatters'
 
-type DepositData = [number, bigint, bigint, bigint]
+import Input from '../common/Input'
 
-const Approve = () => {
+const Approve = ({ onApprove }: { onApprove: () => void }) => {
+  const { ApproveAssets, isPending, error, hash } = useApprove()
+  const { SymbolAsset, BalanceAssets } = ContractReads()
   const [amount, setAmount] = useState<number>(0)
+  const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { address } = useAccount()
-  const { Deposits, MaxDeposit, SymbolAsset, BalanceAssets } = ContractReads()
-  const { ApproveAssets, isPending } = useApprove()
 
-  const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as DepositData
-  const checkAmount = depositAssets + depositTotal
-
-  const max = MaxDeposit().data as bigint
-  const BalanceAssetResult = BalanceAssets(address).data as bigint
+  const balanceAssets = BalanceAssets(address).data as bigint
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
     setAmount(value)
   }
 
-  const setMax = () => {
-    const s1 = max - checkAmount
-    setAmount(parseFloat(formatBalance(s1)))
-  }
+  useEffect(() => {
+    setFormattedBalance(parseFloat(formatBalance(balanceAssets)))
+  }, [balanceAssets])
+
+  useEffect(() => {
+    if (hash) {
+      onApprove()
+    }
+    if (error) {
+      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+    }
+  }, [hash, onApprove, error])
 
   return (
     <>
-      <p className="mb-[1vh] text-left text-xs">
-        You have {parseFloat(formatBalance(BalanceAssetResult))}
-        <b className="text-carmesi mx-1"> {SymbolAsset().data as string}</b> in Wallet
+      <p className="mb-[1vh] mt-[2vh] text-left text-xs">
+        <b className="text-carmesi mx-1">
+          {formattedBalance} {SymbolAsset().data as string}
+        </b>
+        in Wallet.
       </p>
       <div className="flex justify-between">
-        <Input type="number" value={amount} handleChange={handleAmountChange} className="rounded-r-none" />
-        <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
-          MAX
-        </AlternateButton>
+        <Input type="number" value={amount} handleChange={handleAmountChange} />
       </div>
-      <PrimaryButton handleClick={() => ApproveAssets(amount)} className="my-[2vh]" disabled={isPending}>
+      <p className="mt-[1vh] text-center text-xs">
+        <Link
+          href={'https://revoke.cash/learn/approvals/what-are-token-approvals'}
+          target="_blank"
+          className="text-carmesi cursor-pointer"
+        >
+          Why do I have to approve?
+        </Link>
+      </p>
+      <PrimaryButton handleClick={() => ApproveAssets(amount)} disabled={isPending} className="my-[2vh]">
         {isPending ? 'Approving...' : 'Approve'}
       </PrimaryButton>
     </>

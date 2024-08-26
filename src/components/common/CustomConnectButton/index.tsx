@@ -4,7 +4,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 const CustomConnectButton = ({ className }: { className?: string }) => {
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openAccountModal, openChainModal, openConnectModal, authenticationStatus, mounted }) => {
+      {({ account, chain, openAccountModal, openConnectModal, authenticationStatus, mounted }) => {
         const ready = mounted && authenticationStatus !== 'loading'
         const connected =
           ready && account && chain && (!authenticationStatus || authenticationStatus === 'authenticated')
@@ -23,24 +23,26 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
             {(() => {
               if (!connected) {
                 return (
-                  <button
-                    onClick={openConnectModal}
-                    className={`bg-carmesi py-[2vh] px-[4vw] w-fit flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke`}
-                  >
-                    <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
-                  </button>
+                  <div className="flex justify-end items-center space-x-[2vw]">
+                    <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
+                      <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
+                      <p>TESTNET</p>
+                    </div>
+                    <button
+                      onClick={openConnectModal}
+                      className={`bg-carmesi py-[2vh] px-[2vw] w-fit flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke`}
+                    >
+                      <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
+                    </button>
+                  </div>
                 )
               }
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <button
-                    onClick={openChainModal}
-                    className="flex items-center bg-none py-[1vh] px-[1vw]  justify-center rounded-lg hover:scale-105 bg-opacity-0"
-                  >
-                    {chain.iconUrl && (
-                      <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} style={{ width: 30, height: 30 }} />
-                    )}
-                  </button>
+                  <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
+                    <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
+                    <p>TESTNET</p>
+                  </div>
                   <button
                     onClick={openAccountModal}
                     className={`bg-carmesi py-[2vh] px-[4vw] flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke ${className}`}

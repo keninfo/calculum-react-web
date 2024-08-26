@@ -1,7 +1,7 @@
 import type { Hash } from 'viem'
 import { parseEther } from 'viem'
 
-import { useWriteContract } from 'wagmi'
+import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 
 import { calculumVaultContract } from '@/contracts/calculumVault'
 
@@ -10,7 +10,10 @@ interface WithdrawProps {
   address: string | undefined
 }
 const useRedeemAssets = () => {
-  const { writeContract, isPending } = useWriteContract()
+  const { data: hash, isPending, writeContract, error } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  })
 
   const redeemAssets = ({ amount, address }: WithdrawProps) => {
     writeContract({
@@ -21,7 +24,7 @@ const useRedeemAssets = () => {
     })
   }
 
-  return { redeemAssets, isPending }
+  return { redeemAssets, isPending, isConfirming, isConfirmed, hash, error }
 }
 
 export default useRedeemAssets

@@ -25,10 +25,14 @@ export const formatBalance = (number: bigint): string => {
       decimalPart = '0'.repeat(6 - length) + toStringNumber
     }
 
-    let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    const formattedNumber = `${integerPart}.${decimalPart}`
+    const parsedNumber = parseFloat(formattedNumber).toFixed(2)
 
-    return formattedNumber
+    // Add thousands separator
+    const [intPart, decPart] = parsedNumber.split('.')
+    const formattedWithCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart
+
+    return formattedWithCommas
   } catch (error) {
     return '0.0'
   }
@@ -50,10 +54,14 @@ export const formatShares = (share: bigint): string => {
       decimalPart = '0'.repeat(18 - length) + toStringNumber
     }
 
-    let formattedNumber = `${integerPart}.${decimalPart}`
-    formattedNumber = parseFloat(formattedNumber).toFixed(2)
+    const formattedNumber = `${integerPart}.${decimalPart}`
+    const parsedNumber = parseFloat(formattedNumber).toFixed(2)
 
-    return formattedNumber
+    // Add thousands separator
+    const [intPart, decPart] = parsedNumber.split('.')
+    const formattedWithCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart
+
+    return formattedWithCommas
   } catch (error) {
     return '0.0'
   }
@@ -67,7 +75,7 @@ export const formatPrice = (price: string): string => {
   let formattedPrice
 
   if (Math.abs(priceNum) >= 1000) formattedPrice = priceNum.toFixed(2)
-  else formattedPrice = priceNum.toFixed(4)
+  else formattedPrice = priceNum.toLocaleString('es-US')
 
   return formattedPrice.replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
@@ -82,12 +90,34 @@ export const formatPercentage = (percentage: number): string => {
   return formattedPercentage
 }
 
-export const formatDate = (date: Date): string => {
-  const newDate = new Date(date)
+export const formatDate = (date: string | Date): string => {
+  let newDate: Date
+
+  if (typeof date === 'string') {
+    const isoDate = date.replace(' ', 'T') + 'Z' // Ensure UTC
+    newDate = new Date(isoDate)
+  } else {
+    newDate = new Date(date)
+  }
+
+  if (isNaN(newDate.getTime())) {
+    console.error('Invalid date passed:', date)
+    return 'Invalid Date'
+  }
+
   const year = newDate.getUTCFullYear()
   const month = String(newDate.getUTCMonth() + 1).padStart(2, '0')
   const day = String(newDate.getUTCDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
+}
+
+export function formatDateAmericanSimple(date: Date): string {
+  const newDate = new Date(date)
+  const year = newDate.getUTCFullYear()
+  const month = String(newDate.getUTCMonth() + 1).padStart(2, '0')
+  const day = String(newDate.getUTCDate()).padStart(2, '0')
+
+  return `${month}/${day}/${year}`
 }
 
 export function formatDateAmerican(time: Time): string {
@@ -112,6 +142,15 @@ function timeToDate(time: Time): Date {
     const unixTimestamp = time as number
     return new Date(unixTimestamp * 1000)
   }
+}
+
+export function timeToWordDate(time: string): string {
+  const newDate = new Date(parseInt(time) * 1000)
+  return newDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
 }
 
 export function hexToRGBA(hex: string, opacity: number) {

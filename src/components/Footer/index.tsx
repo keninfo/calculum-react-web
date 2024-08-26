@@ -1,6 +1,8 @@
 import React from 'react'
 
-import Logo from '@/components/common/Icons/Logo'
+import Image from 'next/image'
+
+// import Logo from '@/components/common/Icons/Logo'
 
 const index = () => {
   return (
@@ -10,7 +12,8 @@ const index = () => {
         <p>|</p>
         <p>Github</p>
       </div>
-      <Logo className="fill-greySmoke w-fit h-[30%]" />
+      {/* <Logo className="fill-greySmoke w-fit h-[30%]" /> */}
+      <Image src="/bearLogo2.png" width={200} height={100} alt="Picture of the author" />
       <p className="text-greySmoke">BEAR PROTOCOL @ 2024. All Rights Reserved</p>
     </footer>
   )

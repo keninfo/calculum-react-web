@@ -1,5 +1,3 @@
-'use client'
-
 import Head from 'next/head'
 
 import Footer from '@/components/Footer'
@@ -10,7 +8,7 @@ const BearProtocolApp = () => {
   return (
     <>
       <Head>
-        <title key="default-title">Bear Protocol</title>
+        <title key="default-title">BearProtocol</title>
         <MetaTags />
       </Head>
 

@@ -1,3 +1,5 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import React, { useContext } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
@@ -9,12 +11,13 @@ import CoinSelect from './CoinSelect'
 import SetWindow from './SetWindow'
 import ShowCandle from './ShowCandle'
 
-const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: boolean }) => {
+const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
   const { volatility, rollingWindow, studyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
+  const [parent] = useAutoAnimate()
 
   return (
-    <>
+    <div>
       {/* DESKTOP */}
       <Card className="hidden | md:block w-full mb-[2vh] relative">
         <div className="flex justify-between items-center">
@@ -39,29 +42,35 @@ const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: b
             </p>
           )}
         </div>
-        {pro && (
-          <>
-            <div className="flex justify-between items-center mt-[1vh]">
-              <p className="text-greySmoke text-left text-sm">Volatility:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
-                {volatility * 100}%
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-[1vh]">
-              <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
-              <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
-                {rollingWindow} days
-              </p>
-            </div>
-            {pro && !guide && <RebalancingResults data={prices} />}
-          </>
-        )}
+        <div ref={parent}>
+          {pro && (
+            <>
+              <div className="flex justify-between items-center mt-[1vh]">
+                <p className="text-greySmoke text-left text-sm">Volatility:</p>
+                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+                  {volatility * 100}%
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-[1vh]">
+                <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
+                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+                  {rollingWindow} days
+                </p>
+              </div>
+            </>
+          )}
+          {/* <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Price Candlestick:</p>
+          <ShowCandle />
+        </div> */}
+          {pro && !guide && <RebalancingResults />}
+        </div>
       </Card>
 
       {/* MOBILE */}
       <div className="w-full pl-[2vw] | md:hidden">
         <div className="w-full grid grid-cols-2 items-center mt-[6vh] px-6">
-          <div className="col-span-1 mr-[2vw]">
+          {/* <div className="col-span-1 mr-[2vw]">
             <select
               className="px-10 py-0.5 h-fit w-full text-sm border bg-smoke text-white text-left"
               id="cryptoCoin"
@@ -71,7 +80,7 @@ const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: b
                 {'BETA'}
               </option>
             </select>
-          </div>
+          </div> */}
           <div className="col-span-1 ml-[2vw]">
             <CoinSelect />
           </div>
@@ -122,7 +131,7 @@ const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: b
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

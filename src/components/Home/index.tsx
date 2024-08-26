@@ -1,3 +1,7 @@
+'use client'
+
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import React, { useContext, useState } from 'react'
 
 import { useAccount } from 'wagmi'
@@ -7,8 +11,9 @@ import { CoinsContext, ProContext } from '@/components/AppProviders'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
+import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
-import TradesTable from '@/components/TradesTable'
+import Transactions from '@/components/Transactions'
 import VaultsInfo from '@/components/VaultsInfo'
 import { PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
@@ -23,6 +28,8 @@ const Home = () => {
   const { pro } = useContext(ProContext)
   const { dates, values } = useContext(CoinsContext)
   const { isConnected } = useAccount()
+  const [parent1] = useAutoAnimate()
+  const [parent2] = useAutoAnimate()
 
   let status = false
 
@@ -38,8 +45,8 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'}`}>
-        <div className={`p-[.5vw]  col-span-8`}>
+      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
+        <div className={`p-[.5vw]  col-span-8 flex flex-col`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
@@ -47,17 +54,15 @@ const Home = () => {
               <></>
             </Card>
           )}
-          <Card className=" flex justify-between w-full mt-[2vh]">
-            <CollateralsTable />
-            <TradesTable />
-          </Card>
           <VaultsInfo />
+          <Transactions />
         </div>
-        <div className="p-[.5vw] col-span-3">
+        <div className="p-[.5vw] col-span-3 h-full flex flex-col" ref={parent2}>
           {values ? (
             <>
-              <ChartOptions prices={values} />
+              <ChartOptions />
               <ActionCard />
+              <Positions />
             </>
           ) : (
             <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
@@ -76,9 +81,9 @@ const Home = () => {
             <></>
           </Card>
         )}
-        {pro && values && <RebalancingResults data={values} />}
+        {pro && values && <RebalancingResults />}
         <Card>
-          <TradesTable />
+          <Transactions />
         </Card>
         <VaultsInfo />
         <Card>

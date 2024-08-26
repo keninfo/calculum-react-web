@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
+import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
-import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '../chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
@@ -89,6 +89,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             mode: 2,
           },
           layout: {
+            ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
             textColor: themeColors?.white,
           },
@@ -99,6 +100,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           ...lineChartConfig,
           // timeScale: { visible: false },
           layout: {
+            ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
             textColor: themeColors?.white,
           },
@@ -114,9 +116,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     let selectedWindow = window
 
     if (studyCase == 1) {
-      selectedWindow = 1171
+      selectedWindow = seriesData1.length - 573
     } else if (studyCase == 2) {
-      selectedWindow = 258
+      selectedWindow = seriesData1.length - 1486
     }
 
     const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
@@ -149,10 +151,14 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       priceScaleId: 'left',
     })
 
-    const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => ({
-      time: formatDate(datesFiltered[index]) as Time,
-      value: data * 100,
-    }))
+    const chartDataPrice1: PriceChartData[] = cumulativeReturnsScaledSliced.map((data, index) => {
+      const date = datesFiltered[index]
+      const formattedDate = formatDate(date)
+      return {
+        time: formattedDate as Time,
+        value: data * 100,
+      }
+    })
 
     lineSeries1?.setData(chartDataPrice1)
 
@@ -322,7 +328,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     themeColors,
   ])
 
-  if (coin == 'PEPE' && studyCase == 1) {
+  if (coin == 'PEPE Smoothcoin' && studyCase == 1) {
     return (
       <div className="w-full h-[400px] flex justify-center items-center">
         <div className="text-center">
@@ -339,15 +345,12 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         <div className="flex items-center space-x-2">
           <div className="w-[2vw] h-1 bg-white"></div>
           <span className="text-sm">
-            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - Raw Price
+            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
           </span>
         </div>
         <div className="flex items-center space-x-2 w-fit">
           <div className="w-[2vw] h-1 bg-carmesi"></div>
-          <p className="text-carmesi text-sm">
-            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin}
-            {pro ? ' - Volatility Scaled' : ' - Low Volatility'}
-          </p>
+          <p className="text-carmesi text-sm">{coin}</p>
         </div>
       </div>
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />

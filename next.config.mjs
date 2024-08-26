@@ -38,12 +38,12 @@ const nextConfig = {
     return [
       {
         source: '/live',
-        destination: 'https://bear-protocol-ux.s3.ap-northeast-1.amazonaws.com/CANDLES_VERTEX_1D_CLOSE.csv',
+        destination: process.env.NEXT_LIVE_PRICES,
       },
-      {
-        source: '/static',
-        destination: '/daily_prices_for_jesus.csv',
-      },
+      // {
+      //   source: '/static',
+      //   destination: '/daily_prices_for_jesus.csv',
+      // },
     ]
   },
 }
