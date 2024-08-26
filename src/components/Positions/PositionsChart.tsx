@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { OptionsContext, ProContext } from '@/components/AppProviders'
+import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
-import { calculateRolling, pct_change } from '@/utils/chartComputations'
-import { formatDate, hexToRGBA } from '@/utils/formatters'
+import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
-import { lineChartConfig, toolTipWidth, tooltipConfig, zeroLine } from '../chartConfig'
+import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from './chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'
 import { ColorType, createChart } from 'lightweight-charts'
@@ -13,11 +12,6 @@ import { ColorType, createChart } from 'lightweight-charts'
 interface PriceChartData {
   time: Time
   value: number
-}
-
-interface ChartProps {
-  dates: Date[]
-  seriesData: number[]
 }
 
 interface ThemeColorsType {
@@ -28,11 +22,13 @@ interface ThemeColorsType {
   greySmoke: string
 }
 
-const RollingVol = ({ dates, seriesData }: ChartProps) => {
+const PositionsChart = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
-  const { coin, rollingWindow, window, studyCase } = useContext(OptionsContext)
+  const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
+  const { rollingWindow, volatility } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
+  const { dates } = useContext(CoinsContext)
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
 
@@ -57,7 +53,10 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
   }, [pro])
 
   useEffect(() => {
+    const values = [1, 1, 1, 1, 1, 1, 1]
     if (!chartContainerRef.current) return
+
+    if (!values || !dates) return
 
     if (chartInstance.current) {
       chartInstance.current.remove()
@@ -67,16 +66,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       chartInstance.current = createChart(chartContainerRef.current, {
         height: 200,
         ...lineChartConfig,
-        localization: {
-          dateFormat: "dd MMMM 'yy",
-          priceFormatter: (price: number) => {
-            return price.toFixed(0) + '%' // Append a string (e.g., currency symbol) to each value
-          },
-        },
-        leftPriceScale: {
-          ...lineChartConfig.leftPriceScale,
-          mode: 0,
-        },
+        // timeScale: { visible: false },
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
@@ -89,53 +79,38 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       })
     }
 
-    let selectedWindow = window
+    const datesFiltered = dates.slice(-7)
 
-    if (studyCase == 1) {
-      selectedWindow = 1171
-    } else if (studyCase == 2) {
-      selectedWindow = 258
-    }
-
-    const seriesDataFiltered = seriesData.slice(
-      seriesData.length - (selectedWindow + rollingWindow + 1),
-      seriesData.length,
-    )
-    const datesFiltered = dates.slice(dates.length - (selectedWindow + rollingWindow + 1))
-
-    const rolled = calculateRolling(pct_change(seriesDataFiltered), rollingWindow)
-
-    for (let i = 0; i < rolled.length; i++) {
-      rolled[i] *= Math.sqrt(365)
-    }
-
-    const lineSeries = chartInstance.current?.addLineSeries({
-      color: '#29947A',
+    const lineSeries1 = chartInstance.current?.addLineSeries({
+      color: themeColors?.carmesi,
       priceScaleId: 'left',
-      autoscaleInfoProvider: () => ({
-        priceRange: {
-          minValue: 0,
-          maxValue: coin == 'PEPE Smoothcoin' ? 400 : 150,
-        },
-      }),
     })
 
-    const chartDataPrice1: PriceChartData[] = rolled.map((data, index) => ({
-      time: formatDate(datesFiltered[index]) as Time,
-      value: data * 100,
-    }))
+    const chartDataPrice1: PriceChartData[] = values.map((data, index) => {
+      const date = datesFiltered[index]
+      const formattedDate = formatDate(date)
+      return {
+        time: formattedDate as Time,
+        value: data * 100,
+      }
+    })
 
-    lineSeries?.setData(chartDataPrice1)
+    lineSeries1?.setData(chartDataPrice1)
 
     const visibleRange = {
       from: formatDate(datesFiltered[0]) as Time,
       to: formatDate(datesFiltered[datesFiltered.length - 1]) as Time,
     }
 
+    initialVisibleRange.current = visibleRange
     chartInstance.current?.timeScale().setVisibleRange(visibleRange)
 
     const toolTip = document.createElement('div')
-    Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
+
+    Object.assign(toolTip.style, {
+      height: '200',
+      ...tooltipConfig,
+    })
 
     toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
     toolTip.style.color = 'var(--color-white)'
@@ -153,37 +128,39 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       ) {
         toolTip.style.display = 'none'
       } else {
-        toolTip.style.display = 'block'
-        const dateStr = param.time as string
-        const data1 = lineSeries ? (param.seriesData.get(lineSeries) as { value?: number; close?: number }) : undefined
-        const rollingVol = data1?.value !== undefined ? data1.value : data1?.close
+        toolTip.style.display = 'block '
+        const dateStr = formatDateAmerican(param.time)
+        const data1 = lineSeries1
+          ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
+          : undefined
+        const rocScaled = data1?.value !== undefined ? data1.value : data1?.close
 
-        if (rollingVol !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
+        if (rocScaled !== undefined) {
+          toolTip.innerHTML = `<div style="color: var(--color-white)">${'BTC Smoothcoin'}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: #29947A; font-weight: bold;">
-            Vol: ${rollingVol?.toFixed(2)}%</p>
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+            Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
-
-          let left = param.point.x as number
-          const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
-          const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
-          const halfTooltipWidth = toolTipWidth / 2
-          left += priceScaleWidth - halfTooltipWidth
-          left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
-          left = Math.max(left, priceScaleWidth)
-
-          toolTip.style.left = left + 'px'
-          toolTip.style.top = '0px'
         }
+
+        let left = param.point.x as number
+        const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
+        const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
+        const halfTooltipWidth = toolTipWidth / 2
+        left += priceScaleWidth - halfTooltipWidth
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
+        left = Math.max(left, priceScaleWidth)
+
+        toolTip.style.left = left + 'px'
+        toolTip.style.top = '0px'
       }
     })
 
-    if (lineSeries) {
-      lineSeries.createPriceLine({ ...zeroLine, price: 0, color: hexToRGBA(themeColors?.white as string, 0.25) })
+    if (lineSeries1) {
+      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
     }
 
     return () => {
@@ -193,9 +170,9 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
-  }, [coin, dates, rollingWindow, seriesData, window, themeColors, studyCase])
+  }, [dates, rollingWindow, volatility, themeColors])
 
   return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
 }
 
-export default RollingVol
+export default PositionsChart

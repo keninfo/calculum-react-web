@@ -6,15 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext, CoinsContext } from '@/components/AppProviders'
+import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
+import { classicTheme, proTheme } from '@/styles/colors'
 import {
   calculateCumulativeReturns,
   calculateRolling,
   calculateScaledReturnsLeverage,
   pct_change,
   calculateStd,
-} from '@/components/ChartsContainer/chartComputations'
-import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
-import { classicTheme, proTheme } from '@/styles/colors'
+} from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, formatDateAmericanSimple, hexToRGBA } from '@/utils/formatters'
 
 import type { IChartApi, Time } from 'lightweight-charts'

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 
 import { CoinsContext, OptionsContext } from '@/components/AppProviders'
+import Card from '@/components/common/Card'
 import {
   pct_change,
   calculateScaledReturnsLeverage,
@@ -9,8 +10,7 @@ import {
   calculateMean,
   calculateStd,
   cumprod,
-} from '@/components/ChartsContainer/chartComputations'
-import Card from '@/components/common/Card'
+} from '@/utils/chartComputations'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 const RebalancingResults = () => {

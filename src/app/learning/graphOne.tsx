@@ -7,9 +7,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinsContext } from '@/components/AppProviders'
 import { OptionsContext, ProContext } from '@/components/AppProviders'
-import { calculateRolling, pct_change } from '@/components/ChartsContainer/chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { classicTheme, proTheme } from '@/styles/colors'
+import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, formatDateAmericanSimple, hexToRGBA } from '@/utils/formatters'
 
 import type { IChartApi, Time } from 'lightweight-charts'

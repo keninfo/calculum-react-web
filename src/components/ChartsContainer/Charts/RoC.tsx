@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext, ProContext } from '@/components/AppProviders'
 import { classicTheme, proTheme } from '@/styles/colors'
+import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 
-import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '../chartComputations'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '../chartConfig'
 
 import type { IChartApi, Time } from 'lightweight-charts'

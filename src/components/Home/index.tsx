@@ -1,3 +1,5 @@
+'use client'
+
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useState } from 'react'

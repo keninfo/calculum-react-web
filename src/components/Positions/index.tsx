@@ -6,6 +6,8 @@ import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance } from '@/utils/formatters'
 
+import PositionsChart from './PositionsChart'
+
 type responseData = [number, bigint, bigint, bigint]
 
 const Positions = () => {
@@ -50,6 +52,7 @@ const Positions = () => {
           <p className="flex justify-between">
             <b>PNL:</b> {(1 / parseFloat(formatBalance(convertSingleAsset)) - 1).toFixed(2)}%
           </p>
+          <PositionsChart />
         </Card>
       ) : (
         <Card title="OPEN POSITIONS" className="mt-[2vh] w-full grow min-h-0">
