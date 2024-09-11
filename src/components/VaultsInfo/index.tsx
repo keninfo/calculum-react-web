@@ -58,7 +58,7 @@ const data: DataRow[] = [
 const VaultsInfo = () => {
   const { values } = useContext(CoinsContext)
   const { ConvertToShares } = ContractReads()
-  const [filteredData, setFilteredData] = useState(data)
+  const [, setFilteredData] = useState(data)
   const [sortConfig, setSortConfig] = useState<{ key: keyof DataRow; direction: 'ascending' | 'descending' }>({
     key: 'label',
     direction: 'ascending',
@@ -124,7 +124,7 @@ const VaultsInfo = () => {
   }
 
   return (
-    <Card className="w-full h-[80vh] mt-[1vw]" title="VAULTS">
+    <Card className="w-full h-[80vh] mt-[1vw]" title="PRODUCT LIST">
       {/* <Input placeholder="Search..." type={'text'} value={searchQuery} handleChange={handleSearch} /> */}
       <table className="table-fixed mt-[4vh] w-full">
         <thead className="text-[1vh]| md:text-[1vw]">
@@ -178,16 +178,6 @@ const VaultsInfo = () => {
             <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.tokenValue}</td>
             <td className="text-center  border-greySmoke px-4 py-2">{BTCSmooth.tokenChange}</td>
           </tr>
-          {filteredData.map((row, index) => (
-            <tr key={index} className={`${!row.active ? 'text-greySmoke' : ''}`}>
-              <td className="text-left border-r-2 border-greySmoke px-4 py-2 text-[.8vw]">{row.label}</td>
-              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.value}</td>
-              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.change}</td>
-              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.token}</td>
-              <td className="text-center border-r-2 border-greySmoke px-4 py-2">{row.tokenValue}</td>
-              <td className="text-center  border-greySmoke px-4 py-2">{row.tokenChange}</td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </Card>
