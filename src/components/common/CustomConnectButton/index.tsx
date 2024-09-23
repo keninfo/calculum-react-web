@@ -24,7 +24,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               if (!connected) {
                 return (
                   <div className="flex justify-end items-center space-x-[2vw]">
-                    <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
+                    <div className="hidden | md:flex py-[2vh] px-[2vw] text-sm text-white items-center space-x-2">
                       <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
                       <p>TESTNET</p>
                     </div>
