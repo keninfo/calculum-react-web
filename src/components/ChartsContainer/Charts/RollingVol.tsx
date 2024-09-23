@@ -162,7 +162,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
           toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: #29947A; font-weight: bold;">
-            Vol: ${rollingVol?.toFixed(2)}%</p>
+            Vol: <br/>${rollingVol?.toFixed(2)}%</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
