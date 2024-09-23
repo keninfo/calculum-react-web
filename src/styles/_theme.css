@@ -1,24 +1,24 @@
 /* DO NOT EDIT - Edit colors.ts instead and then npm run css-vars or yarn run css-vars */
 .classic {
-  --color-darkness: #1A2534;
+  --color-darkness: #1a2534;
   --color-smoke: #181818;
-  --color-carmesi: #24AC96;
-  --color-white: #F8F8F8;
-  --color-greySmoke: #A0A0A0;
+  --color-carmesi: #24ac96;
+  --color-white: #f8f8f8;
+  --color-greySmoke: #a0a0a0;
 }
 
 .pro {
-  --color-darkness: #1A2534;
+  --color-darkness: #1a2534;
   --color-smoke: #111111;
-  --color-carmesi: #24AC96;
-  --color-white: #F8F8F8;
-  --color-greySmoke: #A0A0A0;
+  --color-carmesi: #24ac96;
+  --color-white: #f8f8f8;
+  --color-greySmoke: #a0a0a0;
 }
 
 .light {
-  --color-darkness: #F9FAF8;
-  --color-smoke: #E8EBED;
-  --color-carmesi: #EF233C;
+  --color-darkness: #f9faf8;
+  --color-smoke: #e8ebed;
+  --color-carmesi: #ef233c;
   --color-white: #353839;
   --color-greySmoke: #999999;
 }
