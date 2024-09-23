@@ -42,7 +42,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, showCandle, studyCase } = useContext(OptionsContext)
+  const { coin, window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
@@ -239,9 +239,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
-            Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
+            Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
-            Raw Price: ${(rocCumulative / 100)?.toFixed(2)}</p>
+            Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -250,9 +250,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
-            Raw Price: ${(rocCumulative / 100)?.toFixed(2)}</p>
+            Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
-            Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
+            Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -329,26 +329,19 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   ])
 
   if (coin == 'PEPE Smoothcoin' && studyCase == 1) {
-    return (
-      <div className="w-full h-[400px] flex justify-center items-center">
-        <div className="text-center">
-          <p>NO DATA</p>
-          <p className="text-carmesi">please choose other parameters</p>
-        </div>
-      </div>
-    )
+    setStudyCase(0)
   }
 
   return (
     <div className="relative">
-      <div className="absolute top-0 left-[4vw]  w-full">
-        <div className="flex items-center space-x-2">
+      <div className="absolute top-0 right-[2vw] | md:left-[4vw] md:w-full">
+        <div className="flex items-center space-x-2 justify-end | md:justify-start">
           <div className="w-[2vw] h-1 bg-white"></div>
           <span className="text-sm">
             {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
           </span>
         </div>
-        <div className="flex items-center space-x-2 w-fit">
+        <div className="flex items-center space-x-2 w-fit justify-end | md:justify-start">
           <div className="w-[2vw] h-1 bg-carmesi"></div>
           <p className="text-carmesi text-sm">{coin}</p>
         </div>
