@@ -71,6 +71,27 @@ export default function RainbowKit({ children, initialState }: { children: React
     }
   }, [pro])
 
+  // Ensure the user is on the correct chain (Arbitrum Sepolia)
+  useEffect(() => {
+    const ensureCorrectChain = async () => {
+      if (walletClient) {
+        try {
+          const currentChainId = await walletClient.getChainId()
+          const targetChainId = arbitrumSepolia.id
+
+          if (currentChainId !== targetChainId) {
+            // Prompt the user to switch to Arbitrum Sepolia
+            await walletClient.switchChain({ id: targetChainId })
+          }
+        } catch (error) {
+          console.error('Error switching chain:', error)
+        }
+      }
+    }
+
+    ensureCorrectChain()
+  }, [])
+
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
