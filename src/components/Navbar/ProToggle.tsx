@@ -4,6 +4,7 @@ import { ProContext } from '../AppProviders'
 import { PrimaryButton } from '../common/Buttons'
 import BearAttack from '../common/Icons/BearAttack'
 import BearPassive from '../common/Icons/BearPassive'
+import ToggleSwitch from '../common/ToggleSwitch'
 
 const ProToggle = () => {
   const { pro, setPro } = useContext(ProContext)
@@ -25,12 +26,12 @@ const ProToggle = () => {
     >
       {!pro ? (
         <div className="flex justify-between items-center space-x-5">
-          <p className="hidden font-bold | md:block">CLASSIC</p>
+          <ToggleSwitch />
           <BearPassive className="h-[5vh] -scale-x-100" />
         </div>
       ) : (
         <div className="flex justify-between items-center space-x-5">
-          <p className="hidden font-bold text-carmesi | md:block ">PRO</p>
+          <ToggleSwitch />
           <BearAttack className="h-[5vh] -scale-x-100" />
         </div>
       )}
