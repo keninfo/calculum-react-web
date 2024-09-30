@@ -31,15 +31,15 @@ if (!projectId) throw new Error('Project ID is not defined')
 const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
-  chains: [arbitrumSepolia], // Only using Arbitrum Sepolia
-  ssr: true, // If your dApp uses server side rendering (SSR)
+  chains: [arbitrumSepolia],
+  ssr: true,
 })
 
 let walletClient: ReturnType<typeof createWalletClient> | undefined
 
 if (typeof window !== 'undefined' && window.ethereum) {
   walletClient = createWalletClient({
-    chain: arbitrumSepolia, // Using Arbitrum Sepolia
+    chain: arbitrumSepolia,
     transport: custom(window.ethereum),
   })
 }
@@ -71,7 +71,6 @@ export default function RainbowKit({ children, initialState }: { children: React
     }
   }, [pro])
 
-  // Ensure the user is on the correct chain (Arbitrum Sepolia)
   useEffect(() => {
     const ensureCorrectChain = async () => {
       if (walletClient) {
@@ -80,7 +79,6 @@ export default function RainbowKit({ children, initialState }: { children: React
           const targetChainId = arbitrumSepolia.id
 
           if (currentChainId !== targetChainId) {
-            // Prompt the user to switch to Arbitrum Sepolia
             await walletClient.switchChain({ id: targetChainId })
           }
         } catch (error) {
@@ -89,7 +87,9 @@ export default function RainbowKit({ children, initialState }: { children: React
       }
     }
 
-    ensureCorrectChain()
+    const intervalId = setInterval(ensureCorrectChain, 1000)
+
+    return () => clearInterval(intervalId)
   }, [])
 
   return (
