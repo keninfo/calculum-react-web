@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import type { Hash } from 'viem'
@@ -72,6 +71,23 @@ const FaucetComponent = () => {
     }
   }
 
+  // const handleSendTokens = () => {
+  //   const faucetAccount = privateKeyToAccount(`0x${PRIVATE_KEY}`)
+  //   const faucetClient = createWalletClient({
+  //     chain: arbitrumSepolia,
+  //     transport: http(),
+  //     account: faucetAccount,
+  //   })
+
+  //   const txHash = faucetClient.sendTransaction({
+  //     account: faucetAccount,
+  //     to: address as Hash,
+  //     value: parseUnits((0.0005).toString(), 18),
+  //   })
+
+  //   console.log('Transaction Hash:', txHash)
+  // }
+
   return (
     <Card className="h-fit w-[50%] mx-auto">
       <p className="text-white text-3xl mx-auto w-fit pb-[4vh] font-bold">REQUEST TOKENS</p>
@@ -114,15 +130,14 @@ const FaucetComponent = () => {
           <NotWhitelist />
         </div>
       )}
-      <div className="w-full border-t border-greySmoke my-[4vh]"></div>
+      {/* <div className="w-full border-t border-greySmoke my-[4vh]"></div>
       <p className="text-greySmoke mx-auto text-center mb-[1vh]">{`Don't have any ETH for gas fees?`}</p>
-      <Link
-        href={'/'}
-        target="_blank"
+      <button
         className={`bg-smoke text-sm py-[2vh] flex justify-center text-white  hover:scale-110 w-[100%] rounded-lg  hover:text-carmesi`}
+        onClick={handleSendTokens}
       >
-        Contact Us
-      </Link>
+        Send transaction
+      </button> */}
     </Card>
   )
 }
