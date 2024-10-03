@@ -34,6 +34,9 @@ const nextConfig = {
 
     return config
   },
+  env: {
+    NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY, // pulls from .env file
+  },
   async rewrites() {
     return [
       {
