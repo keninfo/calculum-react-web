@@ -7,7 +7,7 @@ const PASSWORD = STAGING_PASSWORD
 
 export function middleware(req: NextRequest) {
   const hostname = req.headers.get('host')
-  const isStaging = hostname?.includes('staging-app.bearprotocol.io')
+  const isStaging = hostname?.includes('staging-app.smoothcoin.io')
 
   if (isStaging) {
     // Get the password cookie if it exists
@@ -30,7 +30,7 @@ export function middleware(req: NextRequest) {
       <body>
         <script>
           if (prompt('Enter the password:') !== '${PASSWORD}') {
-            window.location.href = 'https://app.bearprotocol.io'; // Redirect if wrong password
+            window.location.href = 'https://app.smoothcoin.io'; // Redirect if wrong password
           } else {
             document.cookie = 'password=${PASSWORD}; path=/'; // Set a cookie if correct
             window.location.reload(); // Reload the page to allow access
