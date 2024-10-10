@@ -15,7 +15,7 @@ import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
 import Transactions from '@/components/Transactions'
 import VaultsInfo from '@/components/VaultsInfo'
-import { PrimaryButton } from '@/components/common/Buttons'
+import { AlternateButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
 import Modal from '@/components/common/Modal'
@@ -73,9 +73,12 @@ const Home = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen overflow-x-hidden mt-[10vh] space-y-[3vh] pb-[20vh] | md:hidden ">
+      <div className="block w-screen overflow-x-hidden mt-[10vh] pb-[20vh] | md:hidden ">
         {values && dates ? (
-          <ChartsContainer />
+          <>
+            <ChartOptions />
+            <ChartsContainer />
+          </>
         ) : (
           <Card className="w-full h-full flex justify-center" title="LOADING...">
             <></>
@@ -90,22 +93,19 @@ const Home = () => {
           <CollateralsTable />
         </Card>
         <div className="fixed bottom-0 left-0 w-screen z-50 ">
-          <p className="bg-carmesi w-screen h-fit text-center px-[2vw] py-[1vh]">
-            This is a BETA version, for a better experience head over to the desktop version
-          </p>
           <div className="flex justify-around p-[2vh] bg-smoke space-x-1">
             {!isConnected && <CustomConnectButton />}
             {isConnected && (
               <>
-                <PrimaryButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
+                <AlternateButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
                   <p className="font-bold">DEPOSIT</p>
-                </PrimaryButton>
-                <PrimaryButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
+                </AlternateButton>
+                <AlternateButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
                   <p className="font-bold">CLAIM</p>
-                </PrimaryButton>
-                <PrimaryButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
+                </AlternateButton>
+                <AlternateButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
                   <p className="font-bold">WITHDRAW</p>
-                </PrimaryButton>
+                </AlternateButton>
                 {open && (
                   <Modal onClose={() => toggleModal(0)}>
                     <ActionCard defaultValue={defaultValue} />

@@ -31,15 +31,15 @@ if (!projectId) throw new Error('Project ID is not defined')
 const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
-  chains: [arbitrumSepolia], // Only using Arbitrum Sepolia
-  ssr: true, // If your dApp uses server side rendering (SSR)
+  chains: [arbitrumSepolia],
+  ssr: true,
 })
 
 let walletClient: ReturnType<typeof createWalletClient> | undefined
 
 if (typeof window !== 'undefined' && window.ethereum) {
   walletClient = createWalletClient({
-    chain: arbitrumSepolia, // Using Arbitrum Sepolia
+    chain: arbitrumSepolia,
     transport: custom(window.ethereum),
   })
 }
@@ -70,6 +70,27 @@ export default function RainbowKit({ children, initialState }: { children: React
       })
     }
   }, [pro])
+
+  useEffect(() => {
+    const ensureCorrectChain = async () => {
+      if (walletClient) {
+        try {
+          const currentChainId = await walletClient.getChainId()
+          const targetChainId = arbitrumSepolia.id
+
+          if (currentChainId !== targetChainId) {
+            await walletClient.switchChain({ id: targetChainId })
+          }
+        } catch (error) {
+          console.error('Error switching chain:', error)
+        }
+      }
+    }
+
+    const intervalId = setInterval(ensureCorrectChain, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     <WagmiProvider config={config} initialState={initialState}>

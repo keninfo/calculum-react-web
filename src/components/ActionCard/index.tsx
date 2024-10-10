@@ -39,6 +39,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
           }),
         }}
         value={index}
+        key={index}
       >
         <p className="text-lg | md:text-[1vw]">{tab}</p>
       </Tab>

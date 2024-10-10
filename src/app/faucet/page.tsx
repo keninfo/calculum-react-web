@@ -1,14 +1,18 @@
+import type { Metadata } from 'next'
 import Head from 'next/head'
 
 import FaucetComponent from '@/components/FaucetComponent'
 import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
+export const metadata: Metadata = {
+  title: 'Bear Protocol - Faucet',
+}
+
 const Faucet = () => {
   return (
     <>
       <Head>
-        <title key="default-title">Dashboard - BearProtocol</title>
         <MetaTags />
       </Head>
 

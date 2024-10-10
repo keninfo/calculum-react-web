@@ -1,9 +1,15 @@
 import { type ReactNode } from 'react'
 
+import type { Metadata } from 'next'
+
 import AppProviders from '@/components/AppProviders'
 import Navbar from '@/components/Navbar'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
+
+export const metadata: Metadata = {
+  title: 'Bear Protocol',
+}
 
 const RootLayout = ({
   children,
