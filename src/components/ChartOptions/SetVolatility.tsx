@@ -8,7 +8,7 @@ const SetVolatility = () => {
   const { volatility, setVolatility } = useContext(OptionsContext)
   return (
     <select
-      className="px-10 py-0.5 h-fit w-fit text-sm border border-white bg-smoke text-white text-left"
+      className="h-fit w-fit border border-white bg-smoke px-10 py-0.5 text-left text-sm text-white"
       id="cryptoCoin"
       onChange={(e) => setVolatility(parseFloat(e.target.value))}
       value={volatility}

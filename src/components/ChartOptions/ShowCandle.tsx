@@ -10,7 +10,7 @@ const ShowCandle = () => {
   return (
     <PrimaryButton
       handleClick={() => setShowCandle(!showCandle)}
-      className="!w-fit py-[.5vh] text-xs px-[2vw] rounded-md"
+      className="!w-fit rounded-md px-[2vw] py-[.5vh] text-xs"
     >
       {showCandle ? 'Hide' : 'Show'}
     </PrimaryButton>

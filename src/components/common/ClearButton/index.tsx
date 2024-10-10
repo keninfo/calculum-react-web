@@ -11,7 +11,7 @@ type ClearButtonProps = {
 const ClearButton = ({ handleClickClearButton, children, disabled }: ClearButtonProps) => (
   <Button
     onClick={handleClickClearButton}
-    className="bg-smoke py-6 flex justify-center text-white hover:scale-110 w-[100%] hover:text-carmesi !rounded-lg"
+    className="flex w-[100%] justify-center !rounded-lg bg-smoke py-6 text-white hover:scale-110 hover:text-carmesi"
     disabled={disabled}
   >
     {children}

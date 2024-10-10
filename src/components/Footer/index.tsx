@@ -6,8 +6,8 @@ import Image from 'next/image'
 
 const index = () => {
   return (
-    <footer className="hidden | md:flex justify-evenly items-center h-[20vh] bg-darkness rounded-lg mx-[0.5vw]">
-      <div className=" flex justify-center items-center space-x-2 text-greySmoke">
+    <footer className="| mx-[0.5vw] hidden h-[20vh] items-center justify-evenly rounded-lg bg-darkness md:flex">
+      <div className="flex items-center justify-center space-x-2 text-greySmoke">
         <p>LinkedIn</p>
         <p>|</p>
         <p>Github</p>

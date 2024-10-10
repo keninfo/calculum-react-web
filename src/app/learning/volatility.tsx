@@ -30,12 +30,12 @@ const Volatility = () => {
   return (
     <>
       <Card className="w-full bg-transparent">
-        <p className="text-carmesi text-3xl mx-auto w-fit">Smoothcoin & Volatility Targeting</p>
-        <div className="space-y-[2vh] mt-[4vh] w-[60%] mx-auto text-lg">
-          <p className="text-justify ">
+        <p className="mx-auto w-fit text-3xl text-carmesi">Smoothcoin & Volatility Targeting</p>
+        <div className="mx-auto mt-[4vh] w-[60%] space-y-[2vh] text-lg">
+          <p className="text-justify">
             Our first product are what we call <b className="text-carmesi">Smoothcoins</b>
           </p>
-          <p className="text-justify ">
+          <p className="text-justify">
             {`The math behind "Smoothcoin" is called "Volatility Targeting". There is a significant amount of
             research about it, and we encourage you to`}{' '}
             <Link
@@ -49,12 +49,12 @@ const Volatility = () => {
             Vol Targeting we are converting a volatile asset into one with a “constant” level of risk (or volatility) by
             rebalancing between your token of choice and cash.`}
           </p>
-          <p className="text-justify ">But how do we do this?</p>
+          <p className="text-justify">But how do we do this?</p>
         </div>
-        <ul className="flex justify-around items-start w-[100%] text-left my-[6vh]">
+        <ul className="my-[6vh] flex w-[100%] items-start justify-around text-left">
           <Link
             href="#stepOne"
-            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
           >
             <h3>
               Step 1 : <br />
@@ -63,7 +63,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepTwo"
-            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
           >
             <h3>
               Step 2 : <br />
@@ -72,7 +72,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepThree"
-            className="border rounded-lg w-[25%] px-[1vw] py-[1vh] hover:border-carmesi cursor-pointer bg-darkness"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
           >
             <h3>
               Step 3 : <br /> We rebalance between the asset and cash.
@@ -82,17 +82,17 @@ const Volatility = () => {
       </Card>
       <div className="divider" id="stepOne"></div>
       <Card className="mt-[4vh] w-full">
-        <h3 className="mb-[6vh] text-2xl font-bold text-center">Step 1: We define the Volatility Targeting</h3>
+        <h3 className="mb-[6vh] text-center text-2xl font-bold">Step 1: We define the Volatility Targeting</h3>
         <GraphOne startDate={startDate} endDate={endDate} incrementDate={incrementDate} decreaseDate={decreaseDate} />
       </Card>
       <div className="divider" id="stepTwo"></div>
       <Card className="mt-[4vh] w-full">
-        <h3 className="mb-[2vh] text-2xl font-bold text-center">Step 2: We calculate “Actual Volatility”</h3>
+        <h3 className="mb-[2vh] text-center text-2xl font-bold">Step 2: We calculate “Actual Volatility”</h3>
         <GraphTwo startDate={startDate} endDate={endDate} incrementDate={incrementDate} decreaseDate={decreaseDate} />
       </Card>
       <div className="divider" id="stepThree"></div>
       <Card className="mt-[4vh] w-full">
-        <h3 className="mb-[2vh] text-2xl font-bold text-center">
+        <h3 className="mb-[2vh] text-center text-2xl font-bold">
           Step 3: We rebalance the portfolio between the asset and cash
         </h3>
         <GraphThree

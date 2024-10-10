@@ -18,25 +18,25 @@ library.add(fas)
 
 const Sidebar = () => {
   return (
-    <div className="absolute | md:fixed top-0 left-0 w-screen bg-smoke z-50 overflow-hidden" id="Navbar">
+    <div className="| absolute left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
       {/* DESKTOP*/}
       <MaintenanceBanner />
-      <div className="hidden | md:grid grid-cols-11 items-center px-[1.5vw] space-x-[1vw]">
-        <div className="col-span-8 flex justify-between items-center pr-[.5vh]">
+      <div className="| hidden grid-cols-11 items-center space-x-[1vw] px-[1.5vw] md:grid">
+        <div className="col-span-8 flex items-center justify-between pr-[.5vh]">
           <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="pl-[2vw]" />
-          <div className="flex w-fit justify-start items-center">{navigationItems.map(NavbarItem)}</div>
+          <div className="flex w-fit items-center justify-start">{navigationItems.map(NavbarItem)}</div>
           <ProToggle />
         </div>
-        <div className="col-span-3 flex justify-end items-center ">
+        <div className="col-span-3 flex items-center justify-end">
           <CustomConnectButton />
         </div>
       </div>
       {/* MOBILE */}
-      <div className="flex justify-around items-center h-fit p-6  | md:hidden">
+      <div className="| flex h-fit items-center justify-around p-6 md:hidden">
         <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="h-auto w-[50%]" />
-        <div className="text-md text-white flex justify-end items-center space-x-2 w-full">
+        <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
           <p>TESTNET</p>
-          <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
+          <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
         </div>
       </div>
     </div>

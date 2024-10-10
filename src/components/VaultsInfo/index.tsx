@@ -124,59 +124,59 @@ const VaultsInfo = () => {
   }
 
   return (
-    <Card className="w-full h-[80vh] mt-[1vw]" title="PRODUCT LIST">
+    <Card className="mt-[1vw] h-[80vh] w-full" title="PRODUCT LIST">
       {/* <Input placeholder="Search..." type={'text'} value={searchQuery} handleChange={handleSearch} /> */}
-      <table className="table-fixed mt-[4vh] w-full">
+      <table className="mt-[4vh] w-full table-fixed">
         <thead className="text-[1vh]| md:text-[1vw]">
           <tr>
             <th
-              className="text-left px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-r-2 border-greySmoke px-4 py-2 text-left text-carmesi"
               onClick={() => handleSort('label')}
             >
               Product {sortConfig.key === 'label' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th
-              className="text-center px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-r-2 border-greySmoke px-4 py-2 text-center text-carmesi"
               onClick={() => handleSort('value')}
             >
               Price {sortConfig.key === 'value' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th
-              className="text-center px-4 py-2 border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-r-2 border-greySmoke px-4 py-2 text-center text-carmesi"
               onClick={() => handleSort('change')}
             >
               Change (24H) {sortConfig.key === 'change' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th
-              className="text-center px-4 py-2  border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-r-2 border-greySmoke px-4 py-2 text-center text-carmesi"
               onClick={() => handleSort('token')}
             >
               Token {sortConfig.key === 'token' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th
-              className="text-center px-4 py-2  border-r-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-r-2 border-greySmoke px-4 py-2 text-center text-carmesi"
               onClick={() => handleSort('tokenValue')}
             >
               Price {sortConfig.key === 'tokenValue' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
             <th
-              className="text-center px-4 py-2 border-greySmoke cursor-pointer text-carmesi"
+              className="cursor-pointer border-greySmoke px-4 py-2 text-center text-carmesi"
               onClick={() => handleSort('tokenChange')}
             >
               Change (24H) {sortConfig.key === 'tokenChange' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
             </th>
           </tr>
         </thead>
-        <tbody className="w-full text-[1vh] | md:text-[1vw]">
+        <tbody className="| w-full text-[1vh] md:text-[1vw]">
           <tr className={`${!BTCSmooth.active ? 'text-greySmoke' : ''}`}>
-            <td className="text-left border-r-2 border-greySmoke px-4 py-2 text-[.8vw]">{BTCSmooth.label}</td>
-            <td className="text-center border-r-2 border-greySmoke px-4 py-2">
+            <td className="border-r-2 border-greySmoke px-4 py-2 text-left text-[.8vw]">{BTCSmooth.label}</td>
+            <td className="border-r-2 border-greySmoke px-4 py-2 text-center">
               {parseFloat(formatShares(ConvertToShares(1.0).data as bigint)).toLocaleString('en-US')} USDC
             </td>
-            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{0}%</td>
-            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.token}</td>
-            <td className="text-center border-r-2 border-greySmoke px-4 py-2">{BTCSmooth.tokenValue}</td>
-            <td className="text-center  border-greySmoke px-4 py-2">{BTCSmooth.tokenChange}</td>
+            <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{0}%</td>
+            <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{BTCSmooth.token}</td>
+            <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{BTCSmooth.tokenValue}</td>
+            <td className="border-greySmoke px-4 py-2 text-center">{BTCSmooth.tokenChange}</td>
           </tr>
         </tbody>
       </table>

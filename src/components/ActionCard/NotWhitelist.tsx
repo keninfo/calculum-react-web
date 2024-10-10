@@ -11,7 +11,7 @@ const NotWhitelist = () => {
         <br></br>
         {`We're here to help!`}
       </p>
-      <p className="bg-carmesi text-center my-4 py-[1vh] rounded-md text-white text-md hover:scale-105">
+      <p className="text-md my-4 rounded-md bg-carmesi py-[1vh] text-center text-white hover:scale-105">
         <Link href="https://bear-landing-eight.vercel.app/" target="_blank">
           Join Waitlist
         </Link>

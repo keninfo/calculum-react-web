@@ -161,7 +161,7 @@ const Transactions = () => {
   }, [isConnected, address, pro])
 
   return (
-    <Card className="w-full mt-[2vh] grow min-h-0" title="TRANSACTION HISTORY">
+    <Card className="mt-[2vh] min-h-0 w-full grow" title="TRANSACTION HISTORY">
       {isConnected ? (
         <div className="mt-[4vh]">
           {transactions.length === 0 ? (
@@ -187,7 +187,7 @@ const Transactions = () => {
                       <td className="border-b border-greySmoke px-4 py-2">{log.type}</td>
                       <td className="border-b border-greySmoke px-4 py-2 text-right">{log.usdc}</td>
                       <td className="border-b border-greySmoke px-4 py-2 text-right">{log.smoothcoins}</td>
-                      <td className="border-b border-greySmoke px-4 py-2 text-right cursor-pointer hover:text-carmesi">
+                      <td className="cursor-pointer border-b border-greySmoke px-4 py-2 text-right hover:text-carmesi">
                         <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                           {shortenAddress(log.transactionHash)}
                         </Link>
@@ -200,9 +200,9 @@ const Transactions = () => {
           )}
         </div>
       ) : (
-        <div className="flex justify-center items-center">
-          <div className="space-y-4 mt-[2vh] text-center">
-            <p className="text-2xl text-carmesi my-[4vh]">Connect a wallet to see your transactions</p>
+        <div className="flex items-center justify-center">
+          <div className="mt-[2vh] space-y-4 text-center">
+            <p className="my-[4vh] text-2xl text-carmesi">Connect a wallet to see your transactions</p>
           </div>
         </div>
       )}

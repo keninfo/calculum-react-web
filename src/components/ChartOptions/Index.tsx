@@ -18,25 +18,25 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
   return (
     <div>
       {/* DESKTOP */}
-      <Card className="block w-full mb-[2vh] relative">
-        <div className="flex justify-between items-center">
-          <p className="text-greySmoke text-left text-sm">Asset:</p>
+      <Card className="relative mb-[2vh] block w-full">
+        <div className="flex items-center justify-between">
+          <p className="text-left text-sm text-greySmoke">Asset:</p>
           <CoinSelect />
         </div>
-        <div className="flex justify-between items-center mt-[1vh]">
-          <p className="text-greySmoke text-left text-sm">Case Studies:</p>
+        <div className="mt-[1vh] flex items-center justify-between">
+          <p className="text-left text-sm text-greySmoke">Case Studies:</p>
           <CaseStudies />
         </div>
-        <div className="flex justify-between items-center mt-[1vh]">
-          <p className="text-greySmoke text-left text-sm">Days:</p>
+        <div className="mt-[1vh] flex items-center justify-between">
+          <p className="text-left text-sm text-greySmoke">Days:</p>
           {studyCase == 0 && <SetWindow />}
           {studyCase == 1 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border rounded-md bg-smoke text-greySmoke text-left">
+            <p className="h-fit w-fit rounded-md border bg-smoke px-[1vw] py-0.5 text-left text-sm text-greySmoke">
               04/01/2021
             </p>
           )}
           {studyCase == 2 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border rounded-md bg-smoke text-greySmoke text-left">
+            <p className="h-fit w-fit rounded-md border bg-smoke px-[1vw] py-0.5 text-left text-sm text-greySmoke">
               10/01/2023
             </p>
           )}
@@ -44,15 +44,15 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
         <div ref={parent}>
           {pro && (
             <>
-              <div className="flex justify-between items-center mt-[1vh]">
-                <p className="text-greySmoke text-left text-sm">Volatility:</p>
-                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+              <div className="mt-[1vh] flex items-center justify-between">
+                <p className="text-left text-sm text-greySmoke">Volatility:</p>
+                <p className="h-fit w-fit rounded-md border bg-smoke px-[1vw] py-0.5 text-left text-sm text-greySmoke">
                   {volatility * 100}%
                 </p>
               </div>
-              <div className="flex justify-between items-center mt-[1vh]">
-                <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
-                <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left rounded-md">
+              <div className="mt-[1vh] flex items-center justify-between">
+                <p className="text-left text-sm text-greySmoke">Rolling Window:</p>
+                <p className="h-fit w-fit rounded-md border bg-smoke px-[1vw] py-0.5 text-left text-sm text-greySmoke">
                   {rollingWindow} days
                 </p>
               </div>

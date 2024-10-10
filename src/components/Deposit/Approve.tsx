@@ -42,7 +42,7 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">
-        <b className="text-carmesi mx-1">
+        <b className="mx-1 text-carmesi">
           {formattedBalance} {SymbolAsset().data as string}
         </b>
         in Wallet.
@@ -54,7 +54,7 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
         <Link
           href={'https://revoke.cash/learn/approvals/what-are-token-approvals'}
           target="_blank"
-          className="text-carmesi cursor-pointer"
+          className="cursor-pointer text-carmesi"
         >
           Why do I have to approve?
         </Link>

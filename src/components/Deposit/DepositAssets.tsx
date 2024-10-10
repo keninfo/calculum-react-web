@@ -102,7 +102,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
   return (
     <>
       <p className="mb-[1vh] mt-[2vh] text-left text-xs">
-        <b className="text-carmesi mx-1">
+        <b className="mx-1 text-carmesi">
           {formattedBalance} {SymbolAsset().data as string}
         </b>
         in Wallet.
@@ -113,13 +113,13 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
           MAX
         </AlternateButton>
       </div>
-      <div className="flex justify-between items-end mb-[1vh] mt-[2vh] ">
+      <div className="mb-[1vh] mt-[2vh] flex items-end justify-between">
         <p className="text-left text-xs">You will receive</p>
       </div>
       <Input type="text" value={formattedShares + ' Smoothcoins'} disabled={true} />
       <div className="inline justify-center px-2">
         {checkAmount >= max ? (
-          <p className="bg-carmesi px-[2vw] py-[1vh] rounded-lg">
+          <p className="rounded-lg bg-carmesi px-[2vw] py-[1vh]">
             {`You've reached the current limit you can deposit on the Testnet`}
           </p>
         ) : parseFloat(formatBalance(allowance)) >= amount ? (
@@ -129,7 +129,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
         ) : (
           <PrimaryButton
             handleClick={() => {}}
-            className="!bg-smoke mt-[4vh] md:mt-0 hover:!scale-100 hover:!text-white"
+            className="mt-[4vh] !bg-smoke hover:!scale-100 hover:!text-white md:mt-0"
             disabled={true}
           >
             Enter a valid amount

@@ -23,14 +23,14 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
             {(() => {
               if (!connected) {
                 return (
-                  <div className="flex justify-end items-center space-x-[2vw]">
-                    <div className="hidden | md:flex py-[2vh] px-[2vw] text-sm text-white items-center space-x-2">
-                      <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
+                  <div className="flex items-center justify-end space-x-[2vw]">
+                    <div className="| hidden items-center space-x-2 px-[2vw] py-[2vh] text-sm text-white md:flex">
+                      <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
                       <p>TESTNET</p>
                     </div>
                     <button
                       onClick={openConnectModal}
-                      className={`bg-carmesi py-[2vh] px-[2vw] w-fit flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke`}
+                      className={`flex w-fit justify-center rounded-lg bg-carmesi px-[2vw] py-[2vh] text-white hover:scale-105 hover:text-smoke`}
                     >
                       <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
                     </button>
@@ -39,13 +39,13 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               }
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div className="py-[2vh] px-[2vw] text-sm text-white flex items-center space-x-2">
-                    <div className="h-3 w-3 rounded-full bg-carmesi animate-pulse"></div>
+                  <div className="flex items-center space-x-2 px-[2vw] py-[2vh] text-sm text-white">
+                    <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
                     <p>TESTNET</p>
                   </div>
                   <button
                     onClick={openAccountModal}
-                    className={`bg-carmesi py-[2vh] px-[4vw] flex justify-center text-white rounded-lg hover:scale-105 hover:text-smoke ${className}`}
+                    className={`flex justify-center rounded-lg bg-carmesi px-[4vw] py-[2vh] text-white hover:scale-105 hover:text-smoke ${className}`}
                   >
                     {account.displayName}
                   </button>

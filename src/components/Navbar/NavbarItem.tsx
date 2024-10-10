@@ -18,7 +18,7 @@ const NavbarItem = (item: NavigationItem) => {
     <div key={item.name}>
       <Link href={item.link} className="flex items-center justify-start hover:text-carmesi" target={item.target}>
         <p
-          className={`mx-[1vw] px-[1vw] py-[4vh] ${isActive ? 'bg-smoke text-carmesi font-bold border-b-4 border-b-carmesi' : 'text-[2vh] mb-[4px]'}`}
+          className={`mx-[1vw] px-[1vw] py-[4vh] ${isActive ? 'border-b-4 border-b-carmesi bg-smoke font-bold text-carmesi' : 'mb-[4px] text-[2vh]'}`}
         >
           {item.name.toUpperCase()}
         </p>

@@ -123,7 +123,7 @@ const RebalancingResults = () => {
   return (
     <>
       {values && (
-        <Card className="w-full h-fit mt-[6vh] !bg-transparent | md:!p-0" title="REBALANCED RESULTS">
+        <Card className="| mt-[6vh] h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
           <p>
             Sharpe Ratio, Raw: <b>{rawSharpe}</b>
           </p>

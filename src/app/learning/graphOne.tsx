@@ -285,31 +285,31 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
   return (
     <>
       {values && dates ? (
-        <div className="flex justify-between items-center">
-          <div className="bg-smoke p-[5vh] rounded-lg">
+        <div className="flex items-center justify-between">
+          <div className="rounded-lg bg-smoke p-[5vh]">
             <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }} />
-            <div className="block w-full mt-[2vh]">
-              <div className="flex items-center justify-center  space-x-2">
-                <div className="w-[2vw] h-1 bg-white"></div>
+            <div className="mt-[2vh] block w-full">
+              <div className="flex items-center justify-center space-x-2">
+                <div className="h-1 w-[2vw] bg-white"></div>
                 <span className="text-sm text-white">90-Day Rolling Volatility</span>
               </div>
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-[2vw] h-1 bg-carmesi"></div>
-                <p className="text-carmesi text-sm">20% Target Volatility</p>
+                <div className="h-1 w-[2vw] bg-carmesi"></div>
+                <p className="text-sm text-carmesi">20% Target Volatility</p>
               </div>
             </div>
-            <div className="flex justify-center items-center mt-[4vh] space-x-10">
+            <div className="mt-[4vh] flex items-center justify-center space-x-10">
               <button
-                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
                 onClick={() => decreaseDate(30)}
               >
                 <p className="text-lg">
                   <FontAwesomeIcon icon={['fas', 'backward' as IconName]} />
                 </p>
-                <p className="text-xs ml-2">30</p>
+                <p className="ml-2 text-xs">30</p>
               </button>
               <button
-                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
                 onClick={() => decreaseDate(1)}
               >
                 <p>
@@ -317,9 +317,9 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
 
-              <p className=" text-greySmoke text-sm rounded-md">{getDates()}</p>
+              <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
               <button
-                className="text-center text-xl cursor-pointer bg-darkness rounded-sm px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
                 onClick={() => incrementDate(1)}
               >
                 <p>
@@ -327,31 +327,31 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
               <button
-                className="flex justify-center items-center text-center text-sm cursor-pointer bg-darkness rounded-md px-[2vw] py-[.5vh] hover:text-carmesi hover:scale-105"
+                className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
                 onClick={() => incrementDate(30)}
               >
-                <p className="text-xs mr-2">30</p>
+                <p className="mr-2 text-xs">30</p>
                 <p className="text-lg">
                   <FontAwesomeIcon icon={['fas', 'forward' as IconName]} />
                 </p>
               </button>
             </div>
           </div>
-          <div className="space-y-[2vh] text-lg w-[40%] mx-auto px-[2vw]">
-            <p className="text-justify flex items-center">
-              <b className="bg-white text-carmesi py-[1vh] px-[1vw] mr-[2vw] rounded-lg">1</b>The volatility of an asset
+          <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
+            <p className="flex items-center text-justify">
+              <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-carmesi">1</b>The volatility of an asset
               like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest to{' '}
               {max.toFixed(0)}% at its highest
             </p>
-            <p className="text-justify flex items-center">
-              <b className="bg-carmesi text-white py-[1vh] px-[1vw] mr-[2vw] rounded-lg">2</b>To control volatility, we
+            <p className="flex items-center text-justify">
+              <b className="mr-[2vw] rounded-lg bg-carmesi px-[1vw] py-[1vh] text-white">2</b>To control volatility, we
               can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
               20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
             </p>
           </div>
         </div>
       ) : (
-        <p className="text-center text-md text-carmesi">Loading ... </p>
+        <p className="text-md text-center text-carmesi">Loading ... </p>
       )}
     </>
   )

@@ -36,7 +36,7 @@ const Index = ({
 
   return (
     <Modal onClose={handleCloseModal}>
-      <h2 className="text-carmesi text-2xl my-[2vh]">Approve Contract</h2>
+      <h2 className="my-[2vh] text-2xl text-carmesi">Approve Contract</h2>
       <p>
         <b className="font-bold text-carmesi">First Step: </b>Approve the amount the contract is allowed to access
       </p>
@@ -46,14 +46,14 @@ const Index = ({
       <Link
         href={'https://www.ledger.com/academy/ethereum-token-approvals-explained'}
         target="_blank"
-        className="text-carmesi cursor-pointer"
+        className="cursor-pointer text-carmesi"
       >
         Learn More
       </Link>
-      <div className=" w-fit mx-auto mt-[4vh]">
+      <div className="mx-auto mt-[4vh] w-fit">
         <PrimaryButton
           handleClick={() => setSelected(0)}
-          className={`my-[4vh] !rounded-lg px-[4vw] py-[2vh] overflow-hidden w-[100%] ${selected == 0 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105'}`}
+          className={`my-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 0 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105'}`}
         >
           <p>
             Approve Maximum Deposit Amount <br /> $200
@@ -61,7 +61,7 @@ const Index = ({
         </PrimaryButton>
         <PrimaryButton
           handleClick={() => setSelected(1)}
-          className={`mb-[4vh] !rounded-lg px-[4vw] py-[2vh] overflow-hidden w-[100%] ${selected == 1 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105 '}`}
+          className={`mb-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 1 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105'}`}
         >
           <p>
             Approve Previously Chosen Amount
@@ -70,7 +70,7 @@ const Index = ({
         </PrimaryButton>
         <PrimaryButton
           handleClick={() => setSelected(2)}
-          className={`!block !rounded-lg px-[4vw] py-[2vh] overflow-hidden w-[100%] ${selected == 2 ? 'border-4 border-carmesi !rounded-b-none' : 'opacity-80 mb-[4vh] hover:scale-105 '}`}
+          className={`!block w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 2 ? '!rounded-b-none border-4 border-carmesi' : 'mb-[4vh] opacity-80 hover:scale-105'}`}
         >
           <p>Approve New amount</p>
         </PrimaryButton>
@@ -80,16 +80,16 @@ const Index = ({
             type={'number'}
             value={confirmedAmount}
             handleChange={handleSearch}
-            className="mb-[4vh] text-center border-carmesi rounded-t-none"
+            className="mb-[4vh] rounded-t-none border-carmesi text-center"
           />
         )}
       </div>
 
-      <div className="flex justify-center items-center space-x-[2vw] my-[4vh]">
-        <PrimaryButton handleClick={handleCloseModal} className="w-fit py-[1vh] px-[2vw]">
+      <div className="my-[4vh] flex items-center justify-center space-x-[2vw]">
+        <PrimaryButton handleClick={handleCloseModal} className="w-fit px-[2vw] py-[1vh]">
           Decline
         </PrimaryButton>
-        <AlternateButton handleClick={() => handleAccept(handleAmount())} className={`w-fit py-[1vh] px-[2vw]`}>
+        <AlternateButton handleClick={() => handleAccept(handleAmount())} className={`w-fit px-[2vw] py-[1vh]`}>
           Accept
         </AlternateButton>
       </div>

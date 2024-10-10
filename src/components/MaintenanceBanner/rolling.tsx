@@ -14,23 +14,23 @@ function MaintenanceBanner() {
   return (
     <>
       {status && (
-        <div className="hidden w-full min-h-[34px] z-50 bg-carmesi text-white py-2 text-sm overflow-hidden | md:block">
+        <div className="| z-50 hidden min-h-[34px] w-full overflow-hidden bg-carmesi py-2 text-sm text-white md:block">
           <div
             className="relative w-full whitespace-nowrap"
             style={{
               animation: 'marquee 10s linear infinite',
             }}
           >
-            <span className="absolute -translate-x-1/2 left-0">
+            <span className="absolute left-0 -translate-x-1/2">
               The contract is currently undergoing maintenance. Thank you for your patience.
             </span>
             <span className="absolute left-1/2 -translate-x-1/2">
               The contract is currently undergoing maintenance. Thank you for your patience.
             </span>
-            <span className="absolute translate-x-1/2 right-0">
+            <span className="absolute right-0 translate-x-1/2">
               The contract is currently undergoing maintenance. Thank you for your patience.
             </span>
-            <span className="absolute translate-x-1/2 -right-1/2">
+            <span className="absolute -right-1/2 translate-x-1/2">
               The contract is currently undergoing maintenance. Thank you for your patience.
             </span>
           </div>

@@ -89,16 +89,16 @@ const FaucetComponent = () => {
   // }
 
   return (
-    <Card className="h-fit w-[50%] mx-auto">
-      <p className="text-white text-3xl mx-auto w-fit pb-[4vh] font-bold">REQUEST TOKENS</p>
-      {!isConnected && <p className="text-2xl text-carmesi mx-auto text-center">Connect a wallet to get tokens </p>}
+    <Card className="mx-auto h-fit w-[50%]">
+      <p className="mx-auto w-fit pb-[4vh] text-3xl font-bold text-white">REQUEST TOKENS</p>
+      {!isConnected && <p className="mx-auto text-center text-2xl text-carmesi">Connect a wallet to get tokens </p>}
       {isConnected && whitelistCheck && (
         <div className="space-y-4">
           <Select
             handleChange={handleSelected}
             value={coins[selectedCoin]}
             options={coins}
-            className="!w-full text-center py-[1vh] border-2 !text-md"
+            className="!text-md !w-full border-2 py-[1vh] text-center"
           />
           <AddToken
             tokenAddress={contracts[selectedCoin]}
@@ -106,13 +106,13 @@ const FaucetComponent = () => {
             tokenDecimals={selectedCoin <= 1 ? 6 : 18}
             classname={'!text-lg hover:scale-105'}
           />
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <Input
               placeholder={'Amount...'}
               type={'number'}
               value={amount}
               handleChange={handleSearch}
-              className="text-center rounded-r-none"
+              className="rounded-r-none text-center"
             />
             <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
               MAX
@@ -126,7 +126,7 @@ const FaucetComponent = () => {
         </div>
       )}
       {isConnected && !whitelistCheck && (
-        <div className="w-[50%] mx-auto">
+        <div className="mx-auto w-[50%]">
           <NotWhitelist />
         </div>
       )}

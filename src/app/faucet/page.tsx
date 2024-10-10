@@ -16,7 +16,7 @@ const Faucet = () => {
         <MetaTags />
       </Head>
 
-      <main className="w-full h-screen flex justify-center items-center mt-10">
+      <main className="mt-10 flex h-screen w-full items-center justify-center">
         <FaucetComponent />
       </main>
       <Footer />

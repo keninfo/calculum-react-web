@@ -36,9 +36,9 @@ const SmallCustomConnectButton = ({ className }: { className?: string }) => {
           >
             <button
               onClick={handleClick}
-              className={`py-[2vh] px-[4vw] w-full flex justify-center text-white hover:scale-105 hover:text-smoke ${className}`}
+              className={`flex w-full justify-center px-[4vw] py-[2vh] text-white hover:scale-105 hover:text-smoke ${className}`}
             >
-              <p className="text-white flex items-center">
+              <p className="flex items-center text-white">
                 <FontAwesomeIcon icon={['fas', 'wallet' as IconName]} className="h-[4vh]" />
               </p>
             </button>

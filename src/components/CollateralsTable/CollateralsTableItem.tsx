@@ -5,9 +5,9 @@ import { formatBalance } from '@/utils/formatters'
 
 const CollateralsTableItem = (amount: bigint) => {
   return (
-    <tr className="w-full cursor-pointer text-md hover:scale-105 [&>td]:py-[2vh] [&>td]:border-b [&>td]:border-darkness | md:text-sm ">
-      <td className="flex justify-start items-center |  md:mr-[4vw]">
-        <CryptoIcon coin={'USDC'} className="size-[2rem] mr-[2vw] | md:mr-[.5vw] md:size-[1.5rem]" /> USDC
+    <tr className="text-md | w-full cursor-pointer hover:scale-105 md:text-sm [&>td]:border-b [&>td]:border-darkness [&>td]:py-[2vh]">
+      <td className="| flex items-center justify-start md:mr-[4vw]">
+        <CryptoIcon coin={'USDC'} className="| mr-[2vw] size-[2rem] md:mr-[.5vw] md:size-[1.5rem]" /> USDC
       </td>
       <td className="text-right">${formatBalance(amount)}</td>
     </tr>

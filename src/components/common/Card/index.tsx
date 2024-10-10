@@ -14,11 +14,11 @@ const Card = ({ title, subtitle, children, className }: CardProps) => {
   const [parent] = useAutoAnimate()
   return (
     <div
-      className={`h-fit w-fit py-[4vh] px-[4vw] md:p-[5vh] transition ease-in-out bg-darkness rounded-lg ${className}`}
+      className={`h-fit w-fit rounded-lg bg-darkness px-[4vw] py-[4vh] transition ease-in-out md:p-[5vh] ${className}`}
       ref={parent}
     >
       {(title || subtitle) && (
-        <div className="flex justify-between items-center h-fit font-bold border-b-carmesi border-b-4 pb-2 mb-[2vh]">
+        <div className="mb-[2vh] flex h-fit items-center justify-between border-b-4 border-b-carmesi pb-2 font-bold">
           <h4 className="text-xl">{title}</h4>
           <p className="text-md">{subtitle}</p>
         </div>

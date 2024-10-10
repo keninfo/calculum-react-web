@@ -45,19 +45,19 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden | md:grid grid-cols-11 ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
-        <div className={`p-[.5vw]  col-span-8 flex flex-col`} ref={parent1}>
+      <div className={`| hidden grid-cols-11 md:grid ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
+        <div className={`col-span-8 flex flex-col p-[.5vw]`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
-            <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
+            <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
               <></>
             </Card>
           )}
           <VaultsInfo />
           <Transactions />
         </div>
-        <div className="p-[.5vw] col-span-3 h-full flex flex-col" ref={parent2}>
+        <div className="col-span-3 flex h-full flex-col p-[.5vw]" ref={parent2}>
           {values ? (
             <>
               <ChartOptions />
@@ -65,7 +65,7 @@ const Home = () => {
               <Positions />
             </>
           ) : (
-            <Card className="w-full h-full flex justify-center pt-[15vh]" title="LOADING...">
+            <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
               <></>
             </Card>
           )}
@@ -73,14 +73,14 @@ const Home = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen overflow-x-hidden mt-[10vh] pb-[20vh] | md:hidden ">
+      <div className="| mt-[10vh] block w-screen overflow-x-hidden pb-[20vh] md:hidden">
         {values && dates ? (
           <>
             <ChartOptions />
             <ChartsContainer />
           </>
         ) : (
-          <Card className="w-full h-full flex justify-center" title="LOADING...">
+          <Card className="flex h-full w-full justify-center" title="LOADING...">
             <></>
           </Card>
         )}
@@ -92,8 +92,8 @@ const Home = () => {
         <Card>
           <CollateralsTable />
         </Card>
-        <div className="fixed bottom-0 left-0 w-screen z-50 ">
-          <div className="flex justify-around p-[2vh] bg-smoke space-x-1">
+        <div className="fixed bottom-0 left-0 z-50 w-screen">
+          <div className="flex justify-around space-x-1 bg-smoke p-[2vh]">
             {!isConnected && <CustomConnectButton />}
             {isConnected && (
               <>

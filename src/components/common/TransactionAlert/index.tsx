@@ -19,7 +19,7 @@ const TransactionAlert: React.FC<TransactionAlertProps> = ({ message, confirmed,
 
   return ReactDOM.createPortal(
     <div
-      className={`fixed bottom-4 right-4 p-3 rounded shadow transition-all duration-500 transform ${
+      className={`fixed bottom-4 right-4 transform rounded p-3 shadow transition-all duration-500 ${
         confirmed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
       }`}
     >

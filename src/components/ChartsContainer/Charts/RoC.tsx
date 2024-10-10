@@ -334,16 +334,16 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute top-0 right-[2vw] | md:left-[4vw] md:w-full">
-        <div className="flex items-center space-x-2 justify-end | md:justify-start">
-          <div className="w-[2vw] h-1 bg-white"></div>
+      <div className="| absolute right-[2vw] top-0 md:left-[4vw] md:w-full">
+        <div className="| flex items-center justify-end space-x-2 md:justify-start">
+          <div className="h-1 w-[2vw] bg-white"></div>
           <span className="text-sm">
             {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
           </span>
         </div>
-        <div className="flex items-center space-x-2 w-fit justify-end | md:justify-start">
-          <div className="w-[2vw] h-1 bg-carmesi"></div>
-          <p className="text-carmesi text-sm">{coin}</p>
+        <div className="| flex w-fit items-center justify-end space-x-2 md:justify-start">
+          <div className="h-1 w-[2vw] bg-carmesi"></div>
+          <p className="text-sm text-carmesi">{coin}</p>
         </div>
       </div>
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />

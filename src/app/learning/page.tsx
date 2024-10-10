@@ -27,7 +27,7 @@ const page = () => {
       </Head>
 
       <main
-        className={`hidden | md:grid grid-cols-11 h-screen space-x-[1vw] m-0 ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'} p-[0.5vw] text-white`}
+        className={`| m-0 hidden h-screen grid-cols-11 space-x-[1vw] md:grid ${status ? 'mt-[13.5vh]' : 'mt-[8.5vh]'} p-[0.5vw] text-white`}
       >
         <div className="col-span-11">
           <Volatility />

@@ -29,21 +29,21 @@ const Withdraw = () => {
 
   return (
     <div className="text-sm">
-      <div className="flex  p-[1vw] my-[2vh] text-sm justify-center space-x-[4vw] | md:justify-between md:space-x-0">
+      <div className="| my-[2vh] flex justify-center space-x-[4vw] p-[1vw] text-sm md:justify-between md:space-x-0">
         <div
-          className={`text-center border-2  bg-smoke  px-[2vw] py-[1vh] cursor-pointer  rounded-lg hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+          className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(0)}
         >
           <h4>Withdraw</h4>
         </div>
         <div
-          className={`text-center border-2  bg-smoke px-[2vw] py-[1vh] cursor-pointer  rounded-lg hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+          className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(1)}
         >
           <h4>Redeem</h4>
         </div>
       </div>
-      <p className="text-center text-sm ">
+      <p className="text-center text-sm">
         {parseFloat(formatShares(BalanceSharesResult))}
         <b className="text-carmesi"> Smoothcoins</b> in Wallet
       </p>

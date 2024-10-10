@@ -55,8 +55,8 @@ const Chart = () => {
 
   return (
     <div ref={parent}>
-      <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] | md:!px-[3vw] ${pro ? '!rounded-b-none ' : ''}`}>
-        <p className="hidden | md:block absolute top-1/2 -left-[45px] -rotate-90 text-white text-sm">
+      <Card className={`| relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
+        <p className="| absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-white md:block">
           Return on Capital
         </p>
         {values && dates && (
@@ -64,13 +64,13 @@ const Chart = () => {
         )}
       </Card>
       {pro && (
-        <Card className={`w-full !p-0 !py-[2vh] !pr-[3vw] !rounded-t-none | md:!px-[2vw]`}>
-          <div className={`w-full flex justify-between items-center py-[3vh] | md:pb-[4vh] md:pt-[3vh]`}>
-            <div className="flex items-center space-x-2 w-fit ml-[6vw] | md:ml-0">
-              <p className="text-white text-2xl">Rolling Volatility </p>
+        <Card className={`| w-full !rounded-t-none !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
+          <div className={`| flex w-full items-center justify-between py-[3vh] md:pb-[4vh] md:pt-[3vh]`}>
+            <div className="| ml-[6vw] flex w-fit items-center space-x-2 md:ml-0">
+              <p className="text-2xl text-white">Rolling Volatility </p>
             </div>
             <button
-              className="border py-[.5vh] px-[1vw] text-xs rounded-lg hover:scale-105 | mr:ml-0"
+              className="| mr:ml-0 rounded-lg border px-[1vw] py-[.5vh] text-xs hover:scale-105"
               onClick={toggleSecondChart}
             >
               {showSecondChart ? 'Hide' : 'Show'}

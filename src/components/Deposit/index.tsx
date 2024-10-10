@@ -46,22 +46,22 @@ const Deposit = () => {
       <div className="mb-[1vh] text-left text-sm">
         <p className="mt-[2vh] text-center text-sm">
           Approved to deposit
-          <b className="text-carmesi mx-1"> {formatBalance(allowance)} USDC</b>
+          <b className="mx-1 text-carmesi"> {formatBalance(allowance)} USDC</b>
         </p>
-        <div className="flex my-[2vh] text-sm justify-between w-full">
+        <div className="my-[2vh] flex w-full justify-between text-sm">
           <div
-            className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
+            className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
           >
             <h4>1. Approve</h4>
           </div>
           {allowance == BigInt(0) ? (
-            <div className="text-center bg-smoke px-[2vw] py-[1vh] rounded-lg opacity-50">
+            <div className="rounded-lg bg-smoke px-[2vw] py-[1vh] text-center opacity-50">
               <h4>2. Deposit</h4>
             </div>
           ) : (
             <div
-              className={`text-center border-2 bg-smoke px-[2vw] py-[1vh] cursor-pointer rounded-lg hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
+              className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
               onClick={() => setSelected(1)}
             >
               <h4>2. Deposit</h4>

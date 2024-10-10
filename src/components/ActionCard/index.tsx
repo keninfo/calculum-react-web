@@ -41,7 +41,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
         value={index}
         key={index}
       >
-        <p className="text-lg | md:text-[1vw]">{tab}</p>
+        <p className="| text-lg md:text-[1vw]">{tab}</p>
       </Tab>
     )
   }
@@ -49,7 +49,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   const ActionCardTabs = () => {
     return (
       <Tabs defaultValue={defaultValue}>
-        <TabsList className="w-min flex justify-between space-x-[6vw] mx-auto | md:space-x-[2vw]">
+        <TabsList className="| mx-auto flex w-min justify-between space-x-[6vw] md:space-x-[2vw]">
           {actions.map((tab, index) => ActionTab({ tab, index }))}
         </TabsList>
         <TabPanel value={0} className="text-center">
@@ -66,8 +66,8 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
   }
 
   return (
-    <Card className="w-full h-fit max-h-full">
-      <div className="flex mb-[4vh] justify-center space-x-[1vw]">
+    <Card className="h-fit max-h-full w-full">
+      <div className="mb-[4vh] flex justify-center space-x-[1vw]">
         <p>Product: </p>
         <CoinSelect />
       </div>
@@ -84,28 +84,28 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
                 <b className="text-carmesi">$Bear</b> in mind you are in testnet and can mint any amount of tokens you
                 want in our faucet.
               </p>
-              <p className="bg-carmesi text-center my-4 py-[1vh] rounded-md text-white text-md hover:scale-105">
+              <p className="text-md my-4 rounded-md bg-carmesi py-[1vh] text-center text-white hover:scale-105">
                 <Link href={'/faucet'}>Go To Faucet</Link>
               </p>
             </div>
           )}
           {!isConnected && (
-            <p className="text-xl text-carmesi mx-auto text-center">
+            <p className="mx-auto text-center text-xl text-carmesi">
               Connect a wallet to start trading and see your positions
             </p>
           )}
         </div>
       ) : (
-        <p className="mb-[4vh]  font-bold text-center">
+        <p className="mb-[4vh] text-center font-bold">
           Only{' '}
-          <b className="text-carmesi mx-1 hover:scale-105 cursor-pointer" onClick={() => setCoin('BTC Smoothcoin')}>
+          <b className="mx-1 cursor-pointer text-carmesi hover:scale-105" onClick={() => setCoin('BTC Smoothcoin')}>
             BTC Smoothcoin
           </b>{' '}
           available at the moment
         </p>
       )}
       {isConnected && (
-        <p className="text-white text-center opacity-50 my-[2vh] border-2 border-white rounded-lg px-[2vw] py-[1vh] text-md | md:text-[.8vw]">
+        <p className="text-md | my-[2vh] rounded-lg border-2 border-white px-[2vw] py-[1vh] text-center text-white opacity-50 md:text-[.8vw]">
           {shortenAddress(address)}
         </p>
       )}

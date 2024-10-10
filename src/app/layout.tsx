@@ -18,11 +18,11 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className="overscroll-none classic">
+      <body className="classic overscroll-none">
         <Providers>
           <AppProviders>
             <Navbar />
-            <div className="md:px-[1vw] pb-[.5vw]  bg-gradient-to-t from-darkness to-smoke">{children}</div>
+            <div className="bg-gradient-to-t from-darkness to-smoke pb-[.5vw] md:px-[1vw]">{children}</div>
           </AppProviders>
         </Providers>
       </body>

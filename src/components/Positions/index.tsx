@@ -35,8 +35,8 @@ const Positions = () => {
   return (
     <>
       {openPositions ? (
-        <Card title="OPEN POSITIONS" className="mt-[2vh] w-full grow min-h-0">
-          <h2 className="text-left font-bold mb-[2vh] text-carmesi text-lg">BTC Smoothcoins</h2>
+        <Card title="OPEN POSITIONS" className="mt-[2vh] min-h-0 w-full grow">
+          <h2 className="mb-[2vh] text-left text-lg font-bold text-carmesi">BTC Smoothcoins</h2>
           <p className="flex justify-between">
             <b>Size:</b> {openPositions} Smoothcoins
           </p>
@@ -55,8 +55,8 @@ const Positions = () => {
           <PositionsChart />
         </Card>
       ) : (
-        <Card title="OPEN POSITIONS" className="mt-[2vh] w-full grow min-h-0">
-          <h2 className="text-center mb-[2vh]  text-lg">You have no open positions</h2>
+        <Card title="OPEN POSITIONS" className="mt-[2vh] min-h-0 w-full grow">
+          <h2 className="mb-[2vh] text-center text-lg">You have no open positions</h2>
         </Card>
       )}
     </>

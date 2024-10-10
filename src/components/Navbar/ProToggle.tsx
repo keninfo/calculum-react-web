@@ -22,15 +22,15 @@ const ProToggle = () => {
   return (
     <PrimaryButton
       handleClick={() => setPro(!pro)}
-      className="!w-fit flex justify-end items-center text-white | md:bg-darkness md:py-[1vh] md:pl-[2vw] hover:text-white"
+      className="| flex !w-fit items-center justify-end text-white hover:text-white md:bg-darkness md:py-[1vh] md:pl-[2vw]"
     >
       {!pro ? (
-        <div className="flex justify-between items-center space-x-5">
+        <div className="flex items-center justify-between space-x-5">
           <ToggleSwitch />
           <BearPassive className="h-[5vh] -scale-x-100" />
         </div>
       ) : (
-        <div className="flex justify-between items-center space-x-5">
+        <div className="flex items-center justify-between space-x-5">
           <ToggleSwitch />
           <BearAttack className="h-[5vh] -scale-x-100" />
         </div>

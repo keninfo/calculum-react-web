@@ -14,7 +14,7 @@ function MaintenanceBanner() {
   return (
     <>
       {status && (
-        <div className="hidden w-full h-fit z-50 bg-carmesi text-white text-center py-2 text-sm | md:block">
+        <div className="| z-50 hidden h-fit w-full bg-carmesi py-2 text-center text-sm text-white md:block">
           The contract is currently undergoing maintenance. Thank you for your patience.
         </div>
       )}
