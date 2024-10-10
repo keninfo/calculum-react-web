@@ -35,14 +35,13 @@ const nextConfig = {
     return config
   },
   env: {
-    NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY, // pulls from .env file
-    NEXT_LIVE_PRICES: process.env.NEXT_LIVE_PRICES,
+    NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY,
   },
   async rewrites() {
     return [
       {
         source: '/live',
-        destination: process.env.NEXT_LIVE_PRICES,
+        destination: process.env.NEXT_PUBLIC_LIVE_PRICES,
       },
       // {
       //   source: '/static',
