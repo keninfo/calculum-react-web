@@ -36,6 +36,7 @@ const nextConfig = {
   },
   env: {
     NEXT_PRIVATE_KEY: process.env.NEXT_PRIVATE_KEY, // pulls from .env file
+    NEXT_LIVE_PRICES: process.env.NEXT_LIVE_PRICES,
   },
   async rewrites() {
     return [
