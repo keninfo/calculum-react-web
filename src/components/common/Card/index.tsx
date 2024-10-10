@@ -19,7 +19,7 @@ const Card = ({ title, subtitle, children, className }: CardProps) => {
     >
       {(title || subtitle) && (
         <div className="mb-[2vh] flex h-fit items-center justify-between border-b-4 border-b-carmesi pb-2 font-bold">
-          <h4 className="text-xl">{title}</h4>
+          <h4 className="w-full text-center text-xl md:text-left">{title}</h4>
           <p className="text-md">{subtitle}</p>
         </div>
       )}

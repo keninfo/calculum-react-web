@@ -45,7 +45,7 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`| hidden grid-cols-11 md:grid ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
+      <div className={`hidden grid-cols-11 md:grid ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
         <div className={`col-span-8 flex flex-col p-[.5vw]`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
@@ -73,7 +73,7 @@ const Home = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="| mt-[10vh] block w-screen overflow-x-hidden pb-[20vh] md:hidden">
+      <div className="block w-screen space-y-[1vh] overflow-x-hidden pb-[20vh] md:hidden">
         {values && dates ? (
           <>
             <ChartOptions />
@@ -85,13 +85,14 @@ const Home = () => {
           </Card>
         )}
         {pro && values && <RebalancingResults />}
-        <Card>
-          <Transactions />
-        </Card>
+        <Positions />
+        <Transactions />
         <VaultsInfo />
+
         <Card>
           <CollateralsTable />
         </Card>
+
         <div className="fixed bottom-0 left-0 z-50 w-screen">
           <div className="flex justify-around space-x-1 bg-smoke p-[2vh]">
             {!isConnected && <CustomConnectButton />}

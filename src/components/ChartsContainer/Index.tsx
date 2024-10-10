@@ -55,10 +55,8 @@ const Chart = () => {
 
   return (
     <div ref={parent}>
-      <Card className={`| relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
-        <p className="| absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-white md:block">
-          Return on Capital
-        </p>
+      <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
+        <p className="absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-white md:block">Return on Capital</p>
         {values && dates && (
           <RoC dates={dates ? dates : []} seriesData1={getCoinArray()} seriesData2={getCoinArray()} ohcl={getOHCL()} />
         )}

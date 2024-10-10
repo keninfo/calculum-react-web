@@ -18,7 +18,7 @@ library.add(fas)
 
 const Sidebar = () => {
   return (
-    <div className="| absolute left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
+    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
       {/* DESKTOP*/}
       <MaintenanceBanner />
       <div className="| hidden grid-cols-11 items-center space-x-[1vw] px-[1.5vw] md:grid">
@@ -32,7 +32,7 @@ const Sidebar = () => {
         </div>
       </div>
       {/* MOBILE */}
-      <div className="| flex h-fit items-center justify-around p-6 md:hidden">
+      <div className="flex h-fit items-center justify-around p-6 md:hidden">
         <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="h-auto w-[50%]" />
         <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
           <p>TESTNET</p>

@@ -18,7 +18,7 @@ const ChartOptions = ({ guide = false }: { guide?: boolean }) => {
   return (
     <div>
       {/* DESKTOP */}
-      <Card className="relative mb-[2vh] block w-full">
+      <Card className="relative block w-full md:mb-[2vh]">
         <div className="flex items-center justify-between">
           <p className="text-left text-sm text-greySmoke">Asset:</p>
           <CoinSelect />

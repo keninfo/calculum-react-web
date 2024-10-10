@@ -48,7 +48,7 @@ const Deposit = () => {
           Approved to deposit
           <b className="mx-1 text-carmesi"> {formatBalance(allowance)} USDC</b>
         </p>
-        <div className="my-[2vh] flex w-full justify-between text-sm">
+        <div className="my-[2vh] flex w-full justify-center space-x-4 text-sm md:justify-between md:space-x-0">
           <div
             className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
