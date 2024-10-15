@@ -11,7 +11,6 @@ import { CoinsContext, ProContext } from '@/components/AppProviders'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
-import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
 import Transactions from '@/components/Transactions'
 import VaultsInfo from '@/components/VaultsInfo'
@@ -62,7 +61,7 @@ const Home = () => {
             <>
               <ChartOptions />
               <ActionCard />
-              <Positions />
+              {/* <Positions /> */}
             </>
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
@@ -85,7 +84,7 @@ const Home = () => {
           </Card>
         )}
         {pro && values && <RebalancingResults />}
-        <Positions />
+        {/* <Positions /> */}
         <Transactions />
         <VaultsInfo />
 
