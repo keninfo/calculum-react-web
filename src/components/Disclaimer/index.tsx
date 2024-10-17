@@ -64,16 +64,16 @@ const Index = ({
         </div>
 
         <div className="my-[4vh] flex items-center justify-center space-x-[2vw]">
-          <PrimaryButton handleClick={handleCloseModal} className="w-fit px-[2vw] py-[1vh]">
+          <AlternateButton handleClick={handleCloseModal} className="w-fit px-[2vw] py-[1vh]">
             Decline
-          </PrimaryButton>
-          <AlternateButton
+          </AlternateButton>
+          <PrimaryButton
             handleClick={handleAccept}
             className={`w-fit px-[2vw] py-[1vh] ${!isAgreeChecked ? 'cursor-not-allowed bg-gray-500' : ''}`}
             disabled={!isAgreeChecked}
           >
             Accept
-          </AlternateButton>
+          </PrimaryButton>
         </div>
       </div>
     </Modal>
