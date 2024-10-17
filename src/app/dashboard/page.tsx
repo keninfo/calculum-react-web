@@ -6,7 +6,7 @@ import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
-  title: 'Bear Protocol - Dashboard',
+  title: 'Smoothcoin - Dashboard',
 }
 
 const Dashboard = () => {

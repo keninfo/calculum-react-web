@@ -22,7 +22,7 @@ const page = () => {
   return (
     <>
       <Head>
-        <title key="default-title">Bear Protocol - Learning</title>
+        <title key="default-title">Smoothcoin - Learning</title>
         <MetaTags />
       </Head>
 

@@ -20,7 +20,7 @@ if (!projectId) throw new Error('Project ID is not defined')
 
 const metadata = {
   name: 'Bear-Protocol',
-  description: 'Connect to Bear Protocol',
+  description: 'Connect to Smoothcoin',
   url: 'http://localhost:3000/', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 }

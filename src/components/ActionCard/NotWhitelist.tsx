@@ -7,7 +7,7 @@ const NotWhitelist = () => {
     <>
       <p className="text-center">
         {`Hey there! It seems you're not on our whitelist. Please reach out to us so we can get you properly authorized
-        and you can start using Bear Protocol.`}
+        and you can start using Smoothcoin.`}
         <br></br>
         {`We're here to help!`}
       </p>

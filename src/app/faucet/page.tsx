@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
-  title: 'Bear Protocol - Faucet',
+  title: 'Smoothcoin - Faucet',
 }
 
 const Faucet = () => {

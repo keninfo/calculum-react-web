@@ -13,7 +13,7 @@ const index = () => {
         <p>Github</p>
       </div>
       <Image src="/bearLogo2.png" width={200} height={100} alt="Picture of the author" />
-      <p className="text-greySmoke">BEAR PROTOCOL @ 2024. All Rights Reserved</p>
+      <p className="text-greySmoke">Smoothcoin @ 2024. All Rights Reserved</p>
     </footer>
   )
 }
