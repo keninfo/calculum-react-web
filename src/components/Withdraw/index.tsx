@@ -28,13 +28,14 @@ const Withdraw = () => {
 
   return (
     <div className="text-sm">
-      <div className="| my-[2vh] flex justify-center space-x-[4vw] p-[1vw] text-sm md:justify-between md:space-x-0">
+      <div className="my-[2vh] flex items-center justify-center space-x-[4vw] text-sm md:justify-between md:space-x-[.5vw]">
         <div
           className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(0)}
         >
           <h4>Withdraw</h4>
         </div>
+        <p>or</p>
         <div
           className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
           onClick={() => setSelected(1)}

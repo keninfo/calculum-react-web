@@ -48,16 +48,17 @@ const Deposit = () => {
           Approved to deposit
           <b className="mx-1 text-carmesi"> {formatBalance(allowance)} USDC</b>
         </p>
-        <div className="my-[2vh] flex w-full justify-center space-x-4 text-sm md:justify-between md:space-x-0">
+        <div className="my-[2vh] flex w-full items-center justify-center space-x-4 text-sm md:justify-between md:space-x-0">
           <div
             className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 0 ? 'border-white' : 'border-smoke'}`}
             onClick={() => setSelected(0)}
           >
-            <h4>1. Approve</h4>
+            <h4>Approve</h4>
           </div>
+          <p>and</p>
           {allowance == BigInt(0) ? (
             <div className="rounded-lg bg-smoke px-[2vw] py-[1vh] text-center opacity-50">
-              <h4>2. Deposit</h4>
+              <h4>Deposit</h4>
             </div>
           ) : (
             <div
