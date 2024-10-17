@@ -12,7 +12,7 @@ interface tokenInfo {
 }
 
 const AddToken = ({
-  tokenAddress = '0xB970030c38150c8a51CE953e5bB6455e8b6ba3e2',
+  tokenAddress = '0x1728C1a9e2a65b7A9530344284959E26D05af8E7',
   tokenSymbol = 'vbUSDc',
   tokenDecimals = 18,
   classname,
