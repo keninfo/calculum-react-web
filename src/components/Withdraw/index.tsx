@@ -5,7 +5,6 @@ import { useAccount } from 'wagmi'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
-import AddToken from '../common/AddToken'
 import Claimet from './Status/Claimet'
 import Completed from './Status/Completed'
 import Pending from './Status/Pending'
@@ -47,7 +46,6 @@ const Withdraw = () => {
         {parseFloat(formatShares(BalanceSharesResult))}
         <b className="text-carmesi"> Smoothcoins</b> in Wallet
       </p>
-      <AddToken />
       {/* {depositStatus == 0 && <Inactive />} */}
       {withdrawalStatus == 0 && <Completed selected={selected} />}
       {withdrawalStatus == 1 && <Pending />}

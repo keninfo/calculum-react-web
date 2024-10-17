@@ -7,6 +7,8 @@ import useClaimShares from '@/hooks/useClaimShares'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
+import AddToken from '../common/AddToken'
+
 interface ClaimProps {
   shares: string
   address: string | undefined
@@ -27,16 +29,18 @@ const ClaimMint = ({ shares, address }: ClaimProps) => {
   }, [hash, error])
 
   return (
-    <div className="my-[2vh] inline p-[1vw] text-sm">
-      <div className="mb-[1vh]">
-        <h4>SMOOTHCOINS</h4>
+    <div className="my-[2vh] w-full rounded-lg border-2 pt-[1vw] text-sm">
+      <AddToken />
+      <div className="my-[2vh]">
         <p>{shares}</p>
+        <h4>SMOOTHCOINS</h4>
       </div>
+
       <div className="">
         {claimerMint ? (
           <ClearButton handleClickClearButton={() => ClaimShares(address)}>Claim All Smoothcoins</ClearButton>
         ) : (
-          <p className="w-full rounded-lg bg-carmesi px-[2vw] py-[1vh] text-center">{`You don't have any to claim.`}</p>
+          <p className="w-full rounded-lg bg-smoke px-[2vw] py-[1vh] text-center">{`You don't have any to claim.`}</p>
         )}
       </div>
     </div>

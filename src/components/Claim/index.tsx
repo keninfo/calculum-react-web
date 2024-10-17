@@ -23,7 +23,7 @@ const Claim = () => {
   const userDepositsStatusResult = Number(userDepositsStatus)
 
   return (
-    <div className="text-sm">
+    <div className="space-y-[2vh] py-[2vh] text-sm">
       {/* {userDepositsStatusResult == 0 && <InactiveDeposit />} */}
       {userDepositsStatusResult == 1 ? (
         <PendingDeposit shares={formatShares(userDepositsShares)} />
