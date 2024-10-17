@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import AppProviders from '@/components/AppProviders'
 import Navbar from '@/components/Navbar'
+import Watermark from '@/components/common/Watermark'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
 
@@ -19,6 +20,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className="classic overscroll-none">
+        <Watermark />
         <Providers>
           <AppProviders>
             <Navbar />

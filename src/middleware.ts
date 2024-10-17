@@ -10,15 +10,12 @@ export function middleware(req: NextRequest) {
   const isStaging = hostname?.includes('staging-app.smoothcoin.io')
 
   if (isStaging) {
-    // Get the password cookie if it exists
     const cookie = req.cookies.get('password')?.value
 
-    // If the cookie exists and matches the password, allow access
     if (cookie === PASSWORD) {
       return NextResponse.next()
     }
 
-    // If no valid cookie, create a new HTML response with the password prompt
     const html = `
       <!DOCTYPE html>
       <html lang="en">
@@ -40,7 +37,6 @@ export function middleware(req: NextRequest) {
       </html>
     `
 
-    // Return the custom HTML response with the password prompt
     return new NextResponse(html, {
       headers: {
         'Content-Type': 'text/html',
@@ -48,10 +44,9 @@ export function middleware(req: NextRequest) {
     })
   }
 
-  // Allow access to all other requests (e.g., production environment)
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|favicon.ico).*)'], // Match all routes except API and Next.js internals
+  matcher: ['/((?!api|_next|favicon.ico).*)'],
 }
