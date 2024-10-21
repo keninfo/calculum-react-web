@@ -93,6 +93,9 @@ const Home = () => {
         </Card>
 
         <div className="fixed bottom-0 left-0 z-50 w-screen">
+          <p className="w-full bg-carmesi p-6 text-center">
+            For a better experience, please use your desktop browser to interact with our platform.
+          </p>
           <div className="flex justify-around space-x-1 bg-smoke p-[2vh]">
             {!isConnected && <CustomConnectButton />}
             {isConnected && (
