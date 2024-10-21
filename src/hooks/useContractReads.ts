@@ -7,6 +7,15 @@ import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 
 const useContractReads = () => {
+  const ContractGenesisEpoch = () => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'EPOCH_START',
+    })
+    return { data, isLoading, error }
+  }
+
   const InMaintenance = () => {
     const { data, isLoading, error } = useReadContract({
       abi: calculumVaultContract.abi,
@@ -203,6 +212,7 @@ const useContractReads = () => {
   }
 
   return {
+    ContractGenesisEpoch,
     InMaintenance,
     CurrentEpoch,
     MaxDeposit,
