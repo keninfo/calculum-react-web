@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
-import { formatShares } from '@/utils/formatters'
+import { formatBalance } from '@/utils/formatters'
 
 import { CoinsContext } from '../AppProviders'
 
@@ -57,7 +57,17 @@ const data: DataRow[] = [
 
 const VaultsInfo = () => {
   const { values } = useContext(CoinsContext)
-  const { ConvertToShares } = ContractReads()
+  const { EpochSharePrice } = ContractReads()
+  const { CurrentEpoch } = ContractReads()
+
+  const epochNumber = CurrentEpoch().data as bigint
+
+  const daySharePrice = EpochSharePrice(Number(epochNumber) - 1).data as bigint
+  const previousDaySharePrice = EpochSharePrice(Number(epochNumber) - 4).data as bigint
+
+  const pricePercentageChange =
+    ((Number(daySharePrice) - Number(previousDaySharePrice)) / Number(previousDaySharePrice)) * 100
+
   const [, setFilteredData] = useState(data)
   const [sortConfig, setSortConfig] = useState<{ key: keyof DataRow; direction: 'ascending' | 'descending' }>({
     key: 'label',
@@ -126,11 +136,11 @@ const VaultsInfo = () => {
             </div>
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Price:</span>
-              <span>{parseFloat(formatShares(ConvertToShares(1.0).data as bigint)).toLocaleString('en-US')} USDC</span>
+              <span>{formatBalance(daySharePrice)} USDC</span>
             </div>
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Change (24H):</span>
-              <span>{0}%</span>
+              <span>{pricePercentageChange.toFixed(2)} %</span>
             </div>
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Token:</span>
@@ -192,10 +202,8 @@ const VaultsInfo = () => {
           <tbody className="| w-full text-[1vh] md:text-[1vw]">
             <tr className={`${!BTCSmooth.active ? 'text-greySmoke' : ''}`}>
               <td className="border-r-2 border-greySmoke px-4 py-2 text-left text-[.8vw]">{BTCSmooth.label}</td>
-              <td className="border-r-2 border-greySmoke px-4 py-2 text-center">
-                {parseFloat(formatShares(ConvertToShares(1.0).data as bigint)).toLocaleString('en-US')} USDC
-              </td>
-              <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{0}%</td>
+              <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{formatBalance(daySharePrice)} USDC</td>
+              <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{pricePercentageChange.toFixed(2)}%</td>
               <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{BTCSmooth.token}</td>
               <td className="border-r-2 border-greySmoke px-4 py-2 text-center">{BTCSmooth.tokenValue}</td>
               <td className="border-greySmoke px-4 py-2 text-center">{BTCSmooth.tokenChange}</td>

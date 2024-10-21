@@ -192,6 +192,16 @@ const useContractReads = () => {
     return { data, isLoading, error }
   }
 
+  const EpochSharePrice = (epochNumber: number | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: calculumVaultContract.abi,
+      address: calculumVaultContract.address as Hash,
+      functionName: 'VAULT_TOKEN_PRICE',
+      args: [epochNumber],
+    })
+    return { data, isLoading, error }
+  }
+
   return {
     InMaintenance,
     CurrentEpoch,
@@ -211,6 +221,7 @@ const useContractReads = () => {
     ConvertToShares,
     ConvertToAssets,
     TotalAssets,
+    EpochSharePrice,
   }
 }
 
