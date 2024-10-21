@@ -57,8 +57,7 @@ const data: DataRow[] = [
 
 const VaultsInfo = () => {
   const { values } = useContext(CoinsContext)
-  const { EpochSharePrice } = ContractReads()
-  const { CurrentEpoch } = ContractReads()
+  const { CurrentEpoch, EpochSharePrice } = ContractReads()
 
   const epochNumber = CurrentEpoch().data as bigint
 
