@@ -1,36 +1,110 @@
 import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import type { Hash } from 'viem'
+import { createPublicClient, parseAbiItem } from 'viem'
+import { arbitrumSepolia } from 'viem/chains'
+
+import { http, useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
+import { calculumVaultContract } from '@/contracts/calculumVault'
 import ContractReads from '@/hooks/useContractReads'
-import { formatBalance } from '@/utils/formatters'
-
-import PositionsChart from './PositionsChart'
+import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
 type responseData = [number, bigint, bigint, bigint]
+type pendingDeposit = {
+  block: string
+  date: string
+  usdc: string
+  smoothcoins: string
+  transactionHash: Hash
+  epoch: number
+}
 
 const Positions = () => {
-  const { address } = useAccount()
-  const { Withdrawals, Deposits, ConvertToAssets } = ContractReads()
+  const { isConnected, address } = useAccount()
+  const { Withdrawals, Deposits, ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch } =
+    ContractReads()
   const [, withdrawnAssets, , withdrawalTotal] = (Withdrawals(address).data || []) as responseData
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as responseData
+  const [pendingDeposit, setPendingDeposit] = useState<pendingDeposit>()
+  const genesisTimestamp = ContractGenesisEpoch().data as number
+  const epochLengthInSeconds = 14400 // make it contract read
+
+  useEffect(() => {
+    const fetchLastPendingDeposit = async () => {
+      try {
+        const client = createPublicClient({
+          chain: arbitrumSepolia,
+          transport: http(),
+        })
+
+        const eventAbiPendingDeposit = parseAbiItem(
+          `event PendingDeposit(address indexed caller,address indexed receiver,uint256 assets,uint256 estimationOfShares)`,
+        )
+
+        const [getPendingDeposits] = await Promise.all([
+          client.getLogs({
+            address: calculumVaultContract.address as Hash,
+            fromBlock: 'earliest',
+            toBlock: 'latest',
+            event: eventAbiPendingDeposit,
+            args: { receiver: address },
+          }),
+        ])
+
+        if (getPendingDeposits.length > 0) {
+          const latestDepositLog = getPendingDeposits[getPendingDeposits.length - 1]
+
+          const block = await client.getBlock({ blockNumber: latestDepositLog.blockNumber })
+          const blockTimestamp = block.timestamp
+
+          const depositEpoch = Math.floor((Number(blockTimestamp) - Number(genesisTimestamp)) / epochLengthInSeconds)
+
+          const formattedLog = {
+            block: latestDepositLog.blockNumber.toString(),
+            date: timeToWordDate(blockTimestamp.toString()),
+            usdc: formatBalance(latestDepositLog.args.assets as bigint),
+            smoothcoins: formatShares(latestDepositLog.args.estimationOfShares as bigint),
+            transactionHash: latestDepositLog.transactionHash,
+            epoch: depositEpoch, // Add the computed epoch here
+          }
+
+          setPendingDeposit(formattedLog)
+        }
+      } catch (error) {
+        console.error('Error fetching the last pending deposit:', error)
+      }
+    }
+
+    if (isConnected && address) {
+      fetchLastPendingDeposit()
+    }
+  }, [isConnected, address, genesisTimestamp])
+
+  const epochNumber = CurrentEpoch().data as bigint
+
+  const daySharePrice = EpochSharePrice(Number(epochNumber) - 1).data as bigint
+  const entrySharePrice = EpochSharePrice(pendingDeposit?.epoch || 0).data as bigint
 
   const [openPositions, setOpenPositions] = useState<number>(0)
 
   useEffect(() => {
     const finalAmount = parseFloat(formatBalance(depositAssets + depositTotal))
-    const finalAmountWithdrawn = parseFloat(formatBalance(withdrawnAssets + withdrawalTotal))
+    const finalAmountWithdrawn = parseFloat(formatBalance(withdrawalTotal))
     setOpenPositions(finalAmount - finalAmountWithdrawn)
   }, [depositAssets, depositTotal, withdrawalTotal, withdrawnAssets])
 
-  // Call ConvertToAssets hooks outside of any conditionals
   const convertOpenPositions = ConvertToAssets(openPositions).data as bigint
-  const convertSingleAsset = ConvertToAssets(1).data as bigint
 
   if (!address) {
     return null
   }
+
+  const pnl =
+    entrySharePrice && daySharePrice
+      ? (((Number(daySharePrice) - Number(entrySharePrice)) / Number(entrySharePrice)) * 100).toFixed(2)
+      : '0.00'
 
   return (
     <>
@@ -38,21 +112,20 @@ const Positions = () => {
         <Card title="OPEN POSITIONS" className="min-h-0 w-full grow md:mt-[2vh]">
           <h2 className="mb-[2vh] text-left text-lg font-bold text-carmesi">BTC Smoothcoins</h2>
           <p className="flex justify-between">
-            <b>Size:</b> {openPositions} Smoothcoins
+            <b>Size:</b> {openPositions.toLocaleString('US')} Smoothcoins
           </p>
           <p className="flex justify-between">
-            <b>Collateral:</b> {formatBalance(convertOpenPositions)} USDC
+            <b>Collateral:</b> {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDC
           </p>
           <p className="flex justify-between">
-            <b>Entry:</b> {formatBalance(convertSingleAsset)} USDC
+            <b>Entry:</b> {formatBalance(entrySharePrice)} USDC
           </p>
           <p className="flex justify-between">
-            <b>Current:</b> {formatBalance(convertSingleAsset)} USDC
+            <b>Current:</b> {formatBalance(daySharePrice)} USDC
           </p>
-          <p className="flex justify-between">
-            <b>PNL:</b> {(1 / parseFloat(formatBalance(convertSingleAsset)) - 1).toFixed(2)}%
+          <p className="mb-10 flex justify-between">
+            <b>PNL:</b> {pnl}%
           </p>
-          <PositionsChart />
         </Card>
       ) : (
         <Card title="OPEN POSITIONS" className="mt-[2vh] min-h-0 w-full grow">
