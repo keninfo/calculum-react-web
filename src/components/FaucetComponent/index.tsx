@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import type { Hash } from 'viem'
+import { createPublicClient, createWalletClient, parseUnits, TransactionReceiptNotFoundError, type Hash } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { arbitrumSepolia } from 'viem/chains'
 
-import type { BaseError } from 'wagmi'
-import { useAccount } from 'wagmi'
+import { http, useAccount, useBalance } from 'wagmi'
 
-import NotWhitelist from '@/components/ActionCard/NotWhitelist'
 import AddToken from '@/components/common/AddToken'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
@@ -17,20 +17,10 @@ import Input from '@/components/common/Input'
 import Select from '@/components/common/Select'
 import ContractReads from '@/hooks/useContractReads'
 import useMint from '@/hooks/useMint'
+import { PRIVATE_KEY } from '@/utils/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
-// const coins = ['USDC', 'wUSDT', 'BTC', 'ETH', 'WARB', 'VRTX']
 const coins = ['USDC']
-
-// const contracts = [
-//   '0xD32ea1C76ef1c296F131DD4C5B2A0aac3b22485a',
-//   '0xA1c062ddEf8f7B0a97e3Bb219108Ce73410772cE',
-//   '0xA7Fcb606611358afa388b6bd23b3B2F2c6abEd82',
-//   '0x94B3173E0a23C28b2BA9a52464AC24c2B032791c',
-//   '0x0881FAabdDdECf1B4c3D5331DF33C13A1b6589ea',
-//   '0x00aBCa5597d51e6C06eCfA655E73CE70A1e2cdCf',
-// ]
-
 const contracts = ['0xD32ea1C76ef1c296F131DD4C5B2A0aac3b22485a']
 
 const FaucetComponent = () => {
@@ -41,9 +31,18 @@ const FaucetComponent = () => {
   const [selectedCoin, setSelectedCoin] = useState<number>(0)
   const { CheckWhitelist } = ContractReads()
 
+  const [isSending, setIsSending] = useState(false)
+  const [hasRequestedETH, setHasRequestedETH] = useState(false)
+
+  const { data: ethBalanceData, refetch: refetchBalance } = useBalance({
+    address,
+  })
+
+  const ethBalance = parseFloat(ethBalanceData?.formatted || '0')
+  const isEligibleForEth = ethBalance < 0.0005 && !hasRequestedETH
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const amount = event.target.value
-    setAmount(parseFloat(amount))
+    setAmount(parseFloat(event.target.value))
   }
 
   const whitelistCheck = CheckWhitelist(address).data as boolean
@@ -54,44 +53,82 @@ const FaucetComponent = () => {
       router.push('/dashboard')
     }
     if (error) {
-      createTransactionAlert((error as BaseError).shortMessage || error.message, false)
+      createTransactionAlert('Erro: Tokens Not Minted', false)
     }
   }, [hash, error, router])
 
   const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const number = coins.indexOf(event.target.value)
-    setSelectedCoin(number)
+    setSelectedCoin(coins.indexOf(event.target.value))
   }
 
   const setMax = () => {
-    if (selectedCoin <= 1) {
-      setAmount(10000)
-    } else {
-      setAmount(99)
+    setAmount(selectedCoin <= 1 ? 10000 : 99)
+  }
+
+  const handleSendTokens = async () => {
+    try {
+      setIsSending(true)
+      const faucetAccount = privateKeyToAccount(`0x${PRIVATE_KEY}`)
+      const faucetClient = createWalletClient({
+        chain: arbitrumSepolia,
+        transport: http(),
+        account: faucetAccount,
+      })
+      const publicClient = createPublicClient({
+        chain: arbitrumSepolia,
+        transport: http(),
+      })
+
+      const txHash = await faucetClient.sendTransaction({
+        account: faucetAccount,
+        to: address as Hash,
+        value: parseUnits((0.0005 - ethBalance).toString(), 18),
+      })
+
+      createTransactionAlert('ETH sent successfully!', true)
+      setHasRequestedETH(true)
+
+      let receipt = null
+      while (!receipt) {
+        try {
+          receipt = await publicClient.getTransactionReceipt({ hash: txHash })
+        } catch (error) {
+          if (!(error instanceof TransactionReceiptNotFoundError)) {
+            throw error
+          }
+        }
+        if (!receipt) {
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+        }
+      }
+
+      await refetchBalance()
+      createTransactionAlert('Balance updated successfully!', true)
+
+      return txHash
+    } catch (err) {
+      createTransactionAlert('Failed to send ETH. Please try again.', false)
+      throw err
+    } finally {
+      setIsSending(false)
     }
   }
 
-  // const handleSendTokens = () => {
-  //   const faucetAccount = privateKeyToAccount(`0x${PRIVATE_KEY}`)
-  //   const faucetClient = createWalletClient({
-  //     chain: arbitrumSepolia,
-  //     transport: http(),
-  //     account: faucetAccount,
-  //   })
-
-  //   const txHash = faucetClient.sendTransaction({
-  //     account: faucetAccount,
-  //     to: address as Hash,
-  //     value: parseUnits((0.0005).toString(), 18),
-  //   })
-
-  //   console.log('Transaction Hash:', txHash)
-  // }
+  const handleMint = async () => {
+    if (isEligibleForEth) {
+      try {
+        await handleSendTokens()
+      } catch {
+        return
+      }
+    }
+    await MintTokens(contracts[selectedCoin], address as Hash, amount, selectedCoin <= 1 ? 6 : 18)
+  }
 
   return (
     <Card className="mx-auto h-fit w-[50%]">
       <p className="mx-auto w-fit pb-[4vh] text-3xl font-bold text-white">REQUEST TOKENS</p>
-      {!isConnected && <p className="mx-auto text-center text-2xl text-carmesi">Connect a wallet to get tokens </p>}
+      {!isConnected && <p className="mx-auto text-center text-2xl text-carmesi">Connect a wallet to get tokens</p>}
       {isConnected && whitelistCheck && (
         <div className="space-y-4">
           <Select
@@ -104,40 +141,44 @@ const FaucetComponent = () => {
             tokenAddress={contracts[selectedCoin]}
             tokenSymbol={coins[selectedCoin]}
             tokenDecimals={selectedCoin <= 1 ? 6 : 18}
-            classname={'!text-lg hover:scale-105'}
+            classname="!text-lg hover:scale-105"
           />
           <div className="flex items-center justify-center">
             <Input
-              placeholder={'Amount...'}
-              type={'number'}
+              placeholder="Amount..."
+              type="number"
               value={amount}
               handleChange={handleSearch}
               className="rounded-r-none text-center"
             />
-            <AlternateButton handleClick={setMax} border={true} className="rounded-l-none">
+            <AlternateButton handleClick={setMax} border className="rounded-l-none">
               MAX
             </AlternateButton>
           </div>
-          <PrimaryButton
-            handleClick={() => MintTokens(contracts[selectedCoin], address as Hash, amount, selectedCoin <= 1 ? 6 : 18)}
-          >
-            {isPending ? 'Minting...' : 'Mint Token'}
-          </PrimaryButton>
+          <PrimaryButton handleClick={handleMint}>{isPending ? 'Minting...' : 'Mint Token'}</PrimaryButton>
         </div>
       )}
-      {isConnected && !whitelistCheck && (
-        <div className="mx-auto w-[50%]">
-          <NotWhitelist />
-        </div>
+
+      {isConnected && (
+        <>
+          <div className="my-[4vh] w-full border-t border-greySmoke" />
+          {!isSending ? (
+            <>
+              <p className="mx-auto mb-[1vh] text-center text-greySmoke">
+                Your ETH Balance: {ethBalance.toFixed(6)} ETH
+              </p>
+              <div className="mb-[2vh] flex items-center justify-center">
+                <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-carmesi' : 'bg-red-500'}`} />
+                <p className="ml-2 text-white">
+                  {isEligibleForEth ? 'Eligible to receive ETH' : 'Not eligible to receive ETH'}
+                </p>
+              </div>{' '}
+            </>
+          ) : (
+            <p className="text-center text-carmesi">Sending Gas Eth...</p>
+          )}
+        </>
       )}
-      {/* <div className="w-full border-t border-greySmoke my-[4vh]"></div>
-      <p className="text-greySmoke mx-auto text-center mb-[1vh]">{`Don't have any ETH for gas fees?`}</p>
-      <button
-        className={`bg-smoke text-sm py-[2vh] flex justify-center text-white  hover:scale-110 w-[100%] rounded-lg  hover:text-carmesi`}
-        onClick={handleSendTokens}
-      >
-        Send transaction
-      </button> */}
     </Card>
   )
 }
