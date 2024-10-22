@@ -16,7 +16,7 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
   const { ApproveAssets, isPending, error, hash } = useApprove()
   const { SymbolAsset, BalanceAssets } = ContractReads()
   const [amount, setAmount] = useState<number>(0)
-  const [formattedBalance, setFormattedBalance] = useState<number>(0)
+  const [formattedBalance, setFormattedBalance] = useState<string>('')
   const { address } = useAccount()
 
   const balanceAssets = BalanceAssets(address).data as bigint
@@ -27,7 +27,7 @@ const Approve = ({ onApprove }: { onApprove: () => void }) => {
   }
 
   useEffect(() => {
-    setFormattedBalance(parseFloat(formatBalance(balanceAssets)))
+    setFormattedBalance(formatBalance(balanceAssets))
   }, [balanceAssets])
 
   useEffect(() => {
