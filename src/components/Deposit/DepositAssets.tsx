@@ -18,7 +18,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
   const { address } = useAccount()
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const [formattedShares, setFormattedShares] = useState<string>('')
-  const [formattedBalance, setFormattedBalance] = useState<string>('')
+  const [formattedBalance, setFormattedBalance] = useState<number>(0)
   const { Deposit, isPending, hash, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -37,7 +37,7 @@ const DepositAssets = ({ onDeposit }: { onDeposit: () => void }) => {
       setFormattedShares(formatShares(convertedShares))
     }
     if (balanceAssets) {
-      setFormattedBalance(formatBalance(balanceAssets))
+      setFormattedBalance(parseFloat(formatBalance(balanceAssets)))
     }
   }, [convertedShares, balanceAssets])
 

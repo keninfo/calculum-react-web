@@ -65,7 +65,7 @@ const Deposit = () => {
               className={`cursor-pointer rounded-lg border-2 bg-smoke px-[2vw] py-[1vh] text-center hover:scale-105 ${selected == 1 ? 'border-white' : 'border-smoke'}`}
               onClick={() => setSelected(1)}
             >
-              <h4>2. Deposit</h4>
+              <h4>Deposit</h4>
             </div>
           )}
         </div>
