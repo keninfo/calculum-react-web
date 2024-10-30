@@ -109,19 +109,18 @@ const Positions = () => {
   return (
     <>
       {openPositions ? (
-        <Card title="OPEN POSITIONS" className="min-h-0 w-full grow md:mt-[2vh]">
-          <h2 className="mb-[2vh] text-left text-lg font-bold text-carmesi">BTC Smoothcoins</h2>
+        <Card title="OPEN POSITIONS" className="min-h-0 w-full grow">
           <p className="flex justify-between">
-            <b>Size:</b> {openPositions.toLocaleString('US')} Smoothcoins
+            <b>Size:</b> {openPositions.toLocaleString('US')} scUSDc
           </p>
           <p className="flex justify-between">
-            <b>Collateral:</b> {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDC
+            <b>Collateral:</b> {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
           </p>
           <p className="flex justify-between">
-            <b>Entry:</b> {formatBalance(entrySharePrice)} USDC
+            <b>Entry:</b> {formatBalance(entrySharePrice)} USDc
           </p>
           <p className="flex justify-between">
-            <b>Current:</b> {formatBalance(daySharePrice)} USDC
+            <b>Current:</b> {formatBalance(daySharePrice)} USDc
           </p>
           <p className="mb-10 flex justify-between">
             <b>PNL:</b> {pnl}%

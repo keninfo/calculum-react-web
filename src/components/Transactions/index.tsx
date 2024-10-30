@@ -167,17 +167,17 @@ const Transactions = () => {
           {transactions.length === 0 ? (
             <p className="text-left text-2xl">You currently have no transactions.</p>
           ) : (
-            <div className="md:mt-4">
+            <div className="md:my-4">
               {/* Make the table horizontally scrollable on small screens */}
               <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[600px] border-collapse">
                   <thead>
                     <tr>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-carmesi">Date</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-carmesi">Type</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-carmesi">USDC</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-carmesi">Smoothcoins</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-carmesi">
+                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-[#4D70C2]">Date</th>
+                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-[#4D70C2]">Type</th>
+                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">USDc</th>
+                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">scUSDc</th>
+                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">
                         Transaction Details
                       </th>
                     </tr>
