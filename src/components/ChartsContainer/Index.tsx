@@ -19,7 +19,7 @@ const Chart = () => {
   const { dates, values, coins } = useContext(CoinsContext)
   const [parent] = useAutoAnimate()
 
-  const coinStrategy = coin + " " + strategy
+  const coinStrategy = coin + ' ' + strategy
 
   useEffect(() => {
     let newVolatility = 0
