@@ -37,6 +37,8 @@ const parseStaticData = (data: any) => {
 interface OptionsContextType {
   coin: string
   setCoin: React.Dispatch<React.SetStateAction<string>>
+  strategy: string
+  setStrategy: React.Dispatch<React.SetStateAction<string>>
   rollingWindow: number
   setRollingWindow: React.Dispatch<React.SetStateAction<number>>
   window: number
@@ -50,8 +52,10 @@ interface OptionsContextType {
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
-  coin: 'BTC Smoothcoin',
+  coin: 'BTC',
   setCoin: () => {},
+  strategy: 'Smoothcoin',
+  setStrategy: () => {},
   rollingWindow: 14,
   setRollingWindow: () => {},
   window: 365,
@@ -95,7 +99,8 @@ export const CoinsContext = createContext<CoinsContextType>({
 const clientSideEmotionCache = createEmotionCache()
 
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
-  const [coin, setCoin] = useState<string>('BTC Smoothcoin')
+  const [coin, setCoin] = useState<string>('BTC')
+  const [strategy, setStrategy] = useState<string>('Smoothcoin')
   const [rollingWindow, setRollingWindow] = useState<number>(14)
   const [window, setWindow] = useState<number>(365)
   const [volatility, setVolatility] = useState<number>(0.2)
@@ -165,6 +170,8 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
         value={{
           coin,
           setCoin,
+          strategy,
+          setStrategy,
           rollingWindow,
           setRollingWindow,
           window,
