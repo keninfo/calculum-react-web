@@ -1,0 +1,21 @@
+import React, { useContext } from 'react'
+
+import { OptionsContext } from '@/components/AppProviders'
+
+import News from './News'
+
+const StrategyInfoTitle = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+
+  return (
+    <div className="flex items-center justify-between space-x-10 py-5 pl-2">
+      <div className="w-fit">
+        <h2 className="text-nowrap text-4xl font-bold italic text-yellow-300">{strategy + ' ' + coin}</h2>
+        <p className="text-nowrap text-carmesi">$1.0 (+0%) - BTC: $72,000 (+20%) - Last 24H</p>
+      </div>
+      <News />
+    </div>
+  )
+}
+
+export default StrategyInfoTitle
