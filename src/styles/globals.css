@@ -70,6 +70,15 @@ input {
   appearance: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 .scroll-offset {
   scroll-margin-top: 20vh; /* Adjust this value as needed */
 }

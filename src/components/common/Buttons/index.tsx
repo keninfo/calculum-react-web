@@ -11,7 +11,7 @@ type ButtonProps = {
 export const PrimaryButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}
-    className={`flex w-[100%] justify-center rounded-lg bg-carmesi py-6 text-white hover:scale-110 hover:text-smoke ${border ? 'border-2' : ''} ${className}`}
+    className={`flex w-[100%] justify-center rounded-lg bg-carmesi py-2 text-white hover:scale-110 hover:text-smoke ${border ? 'border-2' : ''} ${className}`}
     disabled={disabled}
   >
     {children}
@@ -31,7 +31,7 @@ export const SecondaryButton = ({ handleClick, children, disabled, border, class
 export const AlternateButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}
-    className={`flex items-center justify-center rounded-lg bg-smoke px-[2vw] py-[1vh] text-white hover:text-carmesi ${border ? 'border-2 border-white' : ''} ${className}`}
+    className={`flex items-center justify-center rounded-lg bg-[#DCCD5B] px-2 py-1 text-xs text-smoke ${border ? 'border-2' : ''} ${className}`}
     disabled={disabled}
   >
     {children}
