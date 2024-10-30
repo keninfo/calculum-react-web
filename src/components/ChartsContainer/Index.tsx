@@ -35,7 +35,7 @@ const Chart = () => {
     }
 
     setVolatility(newVolatility)
-  }, [coin, setVolatility])
+  }, [coin, setVolatility, coinStrategy])
 
   const getCoinArray = () => {
     let cutCoinName = cutStringToFirstSpace(coin)
