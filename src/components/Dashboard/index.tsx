@@ -16,6 +16,7 @@ import RebalancingResults from '@/components/RebalancingResults'
 import VaultsInfo from '@/components/StrategyInfoTitle'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
+import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import { AlternateButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
@@ -56,7 +57,7 @@ const Dashboard = () => {
         <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>
           {values ? (
             <>
-              <ActionCard />
+              <TradeBox />
               <Positions />
             </>
           ) : (

@@ -9,9 +9,9 @@ import { TabsList } from '@mui/base/TabsList'
 
 import { useAccount } from 'wagmi'
 
-import CoinSelect from '@/components/ChartOptions/CoinSelect'
 import Claim from '@/components/Claim'
 import Deposit from '@/components/Deposit'
+import CoinSelect from '@/components/StrategyOptions/CoinSelect'
 import Withdraw from '@/components/Withdraw'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'

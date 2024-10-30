@@ -161,7 +161,7 @@ const Transactions = () => {
   }, [isConnected, address, pro])
 
   return (
-    <Card className="min-h-0 w-full grow md:mt-[2vh]" title="TRANSACTION HISTORY">
+    <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">
       {isConnected ? (
         <div className="mt-[4vh] w-full">
           {transactions.length === 0 ? (
