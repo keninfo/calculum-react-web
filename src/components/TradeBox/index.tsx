@@ -110,35 +110,35 @@ const TradeBox = () => {
               <Approve />
             </TradeBoxActionContainer>
           ) : (
-            <TradeBoxButton action="Approve" type={step < 1 ? 1 : 0} />
+            <TradeBoxButton action="Approve" type={step < 2 ? 1 : 0} />
           )}
           {step == 3 ? (
             <TradeBoxActionContainer>
               <Deposit />
             </TradeBoxActionContainer>
           ) : (
-            <TradeBoxButton action="Deposit" type={step < 2 ? 1 : 0} />
+            <TradeBoxButton action="Deposit" type={step < 3 ? 1 : 0} />
           )}
           {step == 4 ? (
             <TradeBoxActionContainer>
               <ClaimShares />
             </TradeBoxActionContainer>
           ) : (
-            <TradeBoxButton action="Claim Shares" type={step < 3 ? 1 : 0} />
+            <TradeBoxButton action="Claim Shares" type={step < 4 ? 1 : 0} />
           )}
           {step == 5 ? (
             <TradeBoxActionContainer>
               <Withdraw />
             </TradeBoxActionContainer>
           ) : (
-            <TradeBoxButton action="Withdraw" type={step < 4 ? 1 : 0} />
+            <TradeBoxButton action="Withdraw" type={step < 5 ? 1 : 0} />
           )}
           {step == 6 ? (
             <TradeBoxActionContainer>
               <ClaimAssets />
             </TradeBoxActionContainer>
           ) : (
-            <TradeBoxButton action="Claim Assets" type={step < 5 ? 1 : 0} />
+            <TradeBoxButton action="Claim Assets" type={step < 6 ? 1 : 0} />
           )}
         </ul>
       )}
