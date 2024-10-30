@@ -16,7 +16,7 @@ const DashboardPage = () => {
         <MetaTags />
       </Head>
 
-      <main className="pb-[.5vw]">
+      <main className="pb-5">
         <Dashboard />
       </main>
       <Footer />
