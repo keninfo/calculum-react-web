@@ -123,26 +123,26 @@ const RebalancingResults = () => {
   return (
     <>
       {values && (
-        <Card className="| mt-[6vh] h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
+        <Card className="h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
           <p>
-            Sharpe Ratio, Raw: <b>{rawSharpe}</b>
+            Sharpe Ratio, Raw: <b className="text-[#4D70C2]">{rawSharpe}</b>
           </p>
           <p>
-            Constant Volatility: <b>{scaledSharpe}</b>
+            Constant Volatility: <b className="text-[#DF7153]">{scaledSharpe}</b>
           </p>
 
           <p className="mt-[2vh]">
-            CAGR, Raw: <b>{rawCAGR}%</b>
+            CAGR, Raw: <b className="text-[#4D70C2]">{rawCAGR}%</b>
           </p>
           <p>
-            Constant Volatility: <b>{scaledCAGR}%</b>
+            Constant Volatility: <b className="text-[#DF7153]">{scaledCAGR}%</b>
           </p>
 
           <p className="mt-[2vh]">
-            Largest Drawdown, Raw: <b>{rawDDMax}%</b>
+            Largest Drawdown, Raw: <b className="text-[#4D70C2]">{rawDDMax}%</b>
           </p>
           <p>
-            Constant Volatility: <b>{scaledDDMax}%</b>
+            Constant Volatility: <b className="text-[#DF7153]">{scaledDDMax}%</b>
           </p>
           {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
         <div className="block space-y-1 w-fit">

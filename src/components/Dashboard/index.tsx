@@ -58,6 +58,11 @@ const Dashboard = () => {
           {values ? (
             <>
               <TradeBox />
+              {pro && (
+                <Card className="w-full">
+                  <RebalancingResults />
+                </Card>
+              )}
               <Positions />
             </>
           ) : (
