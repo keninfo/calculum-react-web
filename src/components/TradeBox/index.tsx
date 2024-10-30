@@ -68,11 +68,11 @@ const TradeBox = () => {
       setStep(6)
     } else if (userDepositStatus == 3) {
       setStep(5)
-    } else if (userWithdrawalsStatus == 0) {
+    } else if (userWithdrawalsStatus == 0 && userDepositStatus != 0) {
       setStep(4)
     } else if (userDepositStatus == 1) {
       setStep(4)
-    } else if (userDepositStatus == 0) {
+    } else if (userDepositStatus == 0 && balanceAssets > 0 && allowance > 0) {
       setStep(3)
     } else if (balanceAssets <= 0) {
       setStep(1)
@@ -88,12 +88,12 @@ const TradeBox = () => {
       <CustomConnectButton />
       {!isConnected && (
         <ul className="mt-5 space-y-2">
-          <TradeBoxButton action="Mint" type={0} />
-          <TradeBoxButton action="Approve" type={0} />
-          <TradeBoxButton action="Deposit" type={0} />
-          <TradeBoxButton action="Claim Shares" type={0} />
-          <TradeBoxButton action="Withdraw" type={0} />
-          <TradeBoxButton action="Claim Assets" type={0} />
+          <TradeBoxButton action="Mint" type={1} />
+          <TradeBoxButton action="Approve" type={1} />
+          <TradeBoxButton action="Deposit" type={1} />
+          <TradeBoxButton action="Claim Shares" type={1} />
+          <TradeBoxButton action="Withdraw" type={1} />
+          <TradeBoxButton action="Claim Assets" type={1} />
         </ul>
       )}
       {isConnected && (
