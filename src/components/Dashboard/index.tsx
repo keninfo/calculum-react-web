@@ -40,8 +40,8 @@ const Dashboard = () => {
       {/* DESKTOP */}
       <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
         <div className={`col-span-11 flex flex-col gap-4`}>
-          <StrategyInfoTitle />
           <StrategyOptions />
+          <StrategyInfoTitle />
         </div>
         <div className={`col-span-8 flex flex-col gap-4`} ref={parent1}>
           {values && dates ? (

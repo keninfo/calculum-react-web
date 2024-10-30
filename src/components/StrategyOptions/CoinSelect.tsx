@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { OptionsContext } from '@/components/AppProviders'
 import Select from '@/components/common/Select'
 
-const coins = ['BTC Smoothcoin 3X', 'BTC Smoothcoin', 'ETH Smoothcoin', 'PEPE Smoothcoin']
+const coins = ['BTC 3X', 'BTC', 'ETH', 'PEPE']
 
 const CoinSelect = () => {
   const { coin, setCoin } = useContext(OptionsContext)
