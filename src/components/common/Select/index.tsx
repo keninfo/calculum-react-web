@@ -12,9 +12,9 @@ type SelectProps = {
 
 const Select = ({ handleChange, value, options, className = '', disabled = false }: SelectProps) => {
   return (
-    <div className="relative">
+    <div className="relative w-fit">
       <select
-        className={`| h-fit w-full cursor-pointer rounded-md border border-white bg-smoke py-0.5 pl-[2vw] pr-[2vw] text-left text-sm text-white md:w-max md:pl-[.5vw] md:pr-[2vw] ${className}`}
+        className={`border-graySmoke h-fit w-full cursor-pointer border-b-2 border-greySmoke bg-transparent py-1 pr-10 text-left text-sm text-white md:w-max ${className}`}
         id="cryptoCoin"
         onChange={handleChange}
         value={value}
@@ -26,7 +26,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
           </option>
         ))}
       </select>
-      <div className="| pointer-events-none absolute right-[2vw] top-1/2 -translate-y-1/2 md:right-[.5vw]">
+      <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
         <Chevron />
       </div>
     </div>
