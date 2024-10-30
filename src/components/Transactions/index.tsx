@@ -165,7 +165,7 @@ const Transactions = () => {
       {isConnected ? (
         <div className="mt-[4vh] w-full">
           {transactions.length === 0 ? (
-            <p className="text-left text-2xl">You currently have no transactions.</p>
+            <p className="mb-5 text-center text-2xl text-[#4D70C2]">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
               {/* Make the table horizontally scrollable on small screens */}
@@ -231,7 +231,7 @@ const Transactions = () => {
       ) : (
         <div className="flex items-center justify-center">
           <div className="mt-[2vh] space-y-4 text-center">
-            <p className="my-[4vh] text-2xl text-carmesi">Connect a wallet to see your transactions</p>
+            <p className="my-[4vh] text-center text-2xl text-[#DF7153]">Connect a wallet to see your transactions</p>
           </div>
         </div>
       )}
