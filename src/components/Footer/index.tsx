@@ -1,19 +1,16 @@
 import React from 'react'
 
-import Image from 'next/image'
-
-// import Logo from '@/components/common/Icons/Logo'
-
 const index = () => {
   return (
-    <footer className="| mx-[0.5vw] hidden h-[20vh] items-center justify-evenly rounded-lg bg-darkness md:flex">
-      <div className="flex items-center justify-center space-x-2 text-greySmoke">
+    <footer className="hidden h-fit grid-cols-3 items-center rounded-lg bg-smoke px-10 py-10 md:grid">
+      <div className="col-span-1 flex items-center justify-start space-x-2 text-greySmoke">
         <p>LinkedIn</p>
         <p>|</p>
         <p>Github</p>
       </div>
-      <Image src="/bearLogo2.png" width={200} height={100} alt="Picture of the author" />
-      <p className="text-greySmoke">Smoothcoin @ 2024. All Rights Reserved</p>
+      <p className="col-span-1 text-center text-2xl font-bold text-carmesi">BEAR PROTOCOL</p>
+
+      <p className="col-span-1 text-right text-greySmoke">Smoothcoin @ 2024. All Rights Reserved</p>
     </footer>
   )
 }
