@@ -13,16 +13,16 @@ import ChartsContainer from '@/components/ChartsContainer/Index'
 import CollateralsTable from '@/components/CollateralsTable'
 import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
+import VaultsInfo from '@/components/StrategyInfoTitle'
+import StrategyInfoTitle from '@/components/StrategyInfoTitle'
+import StrategyOptions from '@/components/StrategyOptions/Index'
 import Transactions from '@/components/Transactions'
-import VaultsInfo from '@/components/VaultsInfo'
 import { AlternateButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
 import Modal from '@/components/common/Modal'
-import ContractReads from '@/hooks/useContractReads'
 
 const Dashboard = () => {
-  const { InMaintenance } = ContractReads()
   const [open, setOpen] = useState<boolean>(false)
   const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
@@ -31,13 +31,6 @@ const Dashboard = () => {
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
 
-  let status = false
-
-  const data = InMaintenance().data as [boolean, number]
-  if (data) {
-    status = data[0] as boolean
-  }
-
   const toggleModal = (value: number) => {
     setOpen((prevOpen) => !prevOpen)
     setDefaultValue(value)
@@ -45,9 +38,10 @@ const Dashboard = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden grid-cols-11 gap-4 md:grid ${status ? 'mt-[16.5vh]' : 'mt-[11.5vh]'}`}>
-        <div className={`col-span-11`}>
-          <ChartOptions />
+      <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
+        <div className={`col-span-11 flex flex-col gap-4`}>
+          <StrategyInfoTitle />
+          <StrategyOptions />
         </div>
         <div className={`col-span-8 flex flex-col gap-4`} ref={parent1}>
           {values && dates ? (
@@ -57,7 +51,6 @@ const Dashboard = () => {
               <></>
             </Card>
           )}
-          <VaultsInfo />
           <Transactions />
         </div>
         <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>

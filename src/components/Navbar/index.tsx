@@ -7,8 +7,6 @@ import React from 'react'
 
 import Image from 'next/image'
 
-import MaintenanceBanner from '@/components/MaintenanceBanner'
-
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
@@ -19,7 +17,6 @@ const Sidebar = () => {
   return (
     <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
       {/* DESKTOP*/}
-      <MaintenanceBanner />
       <div className="hidden px-10 md:block">
         <div className="col-span-8 flex items-center justify-between pr-[.5vh]">
           <h1 className="font-bold text-carmesi">BEAR PROTOCOL</h1>
