@@ -12,7 +12,7 @@ library.add(fas)
 
 const NavbarItem = (item: NavigationItem) => {
   const pathname = usePathname()
-  const isActive = pathname.startsWith(item.link)
+  const isActive = pathname.endsWith(item.link)
 
   return (
     <div key={item.name}>

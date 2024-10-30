@@ -8,7 +8,6 @@ import React from 'react'
 import Image from 'next/image'
 
 import MaintenanceBanner from '@/components/MaintenanceBanner'
-import CustomConnectButton from '@/components/common/CustomConnectButton'
 
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
@@ -21,14 +20,11 @@ const Sidebar = () => {
     <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
       {/* DESKTOP*/}
       <MaintenanceBanner />
-      <div className="| hidden grid-cols-11 items-center space-x-[1vw] px-[1.5vw] md:grid">
+      <div className="hidden px-10 md:block">
         <div className="col-span-8 flex items-center justify-between pr-[.5vh]">
-          <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="pl-[2vw]" />
+          <h1 className="font-bold text-carmesi">BEAR PROTOCOL</h1>
           <div className="flex w-fit items-center justify-start">{navigationItems.map(NavbarItem)}</div>
           <ProToggle />
-        </div>
-        <div className="col-span-3 flex items-center justify-end">
-          <CustomConnectButton />
         </div>
       </div>
       {/* MOBILE */}
