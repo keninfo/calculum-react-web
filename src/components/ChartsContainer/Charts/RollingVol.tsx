@@ -110,7 +110,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     }
 
     const lineSeries = chartInstance.current?.addLineSeries({
-      color: '#29947A',
+      color: '#DCCD5B',
       priceScaleId: 'left',
       autoscaleInfoProvider: () => ({
         priceRange: {
