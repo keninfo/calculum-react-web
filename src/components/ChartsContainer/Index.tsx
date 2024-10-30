@@ -14,21 +14,23 @@ import RollingVol from './Charts/RollingVol'
 
 const Chart = () => {
   const [showSecondChart, setShowSecondChart] = useState<boolean>(true)
-  const { coin, setVolatility } = useContext(OptionsContext)
+  const { coin, setVolatility, strategy } = useContext(OptionsContext)
   const { pro } = useContext(ProContext)
   const { dates, values, coins } = useContext(CoinsContext)
   const [parent] = useAutoAnimate()
 
+  const coinStrategy = coin + " " + strategy
+
   useEffect(() => {
     let newVolatility = 0
 
-    if (coin === 'PEPE Smoothcoin') {
+    if (coinStrategy === 'PEPE Smoothcoin') {
       newVolatility = 0.6
-    } else if (coin === 'ETH Smoothcoin') {
+    } else if (coinStrategy === 'ETH Smoothcoin') {
       newVolatility = 0.3
-    } else if (coin === 'BTC Smoothcoin 3X') {
+    } else if (coinStrategy === 'BTC 3X Smoothcoin') {
       newVolatility = 0.6
-    } else if (coin === 'BTC Smoothcoin') {
+    } else if (coinStrategy === 'BTC Smoothcoin') {
       newVolatility = 0.2
     }
 
