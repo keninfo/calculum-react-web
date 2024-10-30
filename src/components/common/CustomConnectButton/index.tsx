@@ -1,4 +1,5 @@
-// Adjust import according to your project structure
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const CustomConnectButton = ({ className }: { className?: string }) => {
@@ -35,9 +36,11 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`flex w-full justify-center rounded-lg border-2 border-[#4D70C2] bg-transparent px-4 py-2 text-[#4D70C2] hover:scale-105 hover:text-white ${className}`}
+                  className={`flex w-full items-center justify-between rounded-lg border-2 border-[#4D70C2] bg-transparent px-4 py-2 text-[#4D70C2] hover:scale-105 hover:text-white ${className}`}
                 >
+                  <div className="h-4 w-4 bg-transparent"></div>
                   {account.displayName}
+                  <FontAwesomeIcon icon={['fas', 'arrow-right-from-bracket' as IconName]} className="h-4" />
                 </button>
               )
             })()}
