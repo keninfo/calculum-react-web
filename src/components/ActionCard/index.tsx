@@ -67,7 +67,7 @@ const ActionCard = ({ defaultValue = 0 }: { defaultValue?: number }) => {
 
   return (
     <Card className="h-fit max-h-full w-full">
-      <div className="mb-[4vh] flex justify-center space-x-[1vw]">
+      <div className="flex justify-center space-x-[1vw]">
         <p>Product: </p>
         <CoinSelect />
       </div>

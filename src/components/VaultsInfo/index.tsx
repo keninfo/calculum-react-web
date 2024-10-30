@@ -127,6 +127,7 @@ const VaultsInfo = () => {
 
   return (
     <>
+      {/* mobile */}
       <Card title="PRODUCT LIST" className="block w-full pb-2 md:hidden">
         <div className="block md:hidden">
           <div className="mb-4 p-4">
@@ -156,7 +157,8 @@ const VaultsInfo = () => {
           </div>
         </div>
       </Card>
-      <Card className="hidden h-fit w-full md:mt-[1vw] md:block" title="PRODUCT LIST">
+      {/* desktop */}
+      <Card className="hidden h-fit w-full md:block" title="PRODUCT LIST">
         <table className="mt-[4vh] w-full table-fixed">
           <thead className="text-[1vh] md:text-[1vw]">
             <tr>

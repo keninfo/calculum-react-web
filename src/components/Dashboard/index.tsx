@@ -21,7 +21,7 @@ import CustomConnectButton from '@/components/common/CustomConnectButton'
 import Modal from '@/components/common/Modal'
 import ContractReads from '@/hooks/useContractReads'
 
-const Home = () => {
+const Dashboard = () => {
   const { InMaintenance } = ContractReads()
   const [open, setOpen] = useState<boolean>(false)
   const [defaultValue, setDefaultValue] = useState<number>(0)
@@ -45,22 +45,24 @@ const Home = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden grid-cols-11 md:grid ${status ? 'mt-[15.5vh]' : 'mt-[10.5vh]'}`}>
-        <div className={`col-span-8 flex flex-col p-[.5vw]`} ref={parent1}>
+      <div className={`hidden grid-cols-11 gap-4 md:grid ${status ? 'mt-[16.5vh]' : 'mt-[11.5vh]'}`}>
+        <div className={`col-span-11`}>
+          <ChartOptions />
+        </div>
+        <div className={`col-span-8 flex flex-col gap-4`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
-            <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
+            <Card className="flex w-full justify-center" title="LOADING...">
               <></>
             </Card>
           )}
           <VaultsInfo />
           <Transactions />
         </div>
-        <div className="col-span-3 flex h-full flex-col p-[.5vw]" ref={parent2}>
+        <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>
           {values ? (
             <>
-              <ChartOptions />
               <ActionCard />
               <Positions />
             </>
@@ -124,4 +126,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Dashboard

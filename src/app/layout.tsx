@@ -24,7 +24,7 @@ const RootLayout = ({
         <Providers>
           <AppProviders>
             <Navbar />
-            <div className="bg-gradient-to-t from-darkness to-smoke pb-[.5vw] md:px-[1vw]">{children}</div>
+            <div className="bg-gradient-to-t from-darkness to-smoke pb-[.5vw] md:px-10">{children}</div>
           </AppProviders>
         </Providers>
       </body>
