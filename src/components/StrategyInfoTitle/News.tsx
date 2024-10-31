@@ -3,10 +3,10 @@ import React from 'react'
 import ContractReads from '@/hooks/useContractReads'
 
 const newsItems = [
-  '"LEAVING TESTNET DECEMBER 2024"',
-  '"BITCOIN HITS A NEW TIME HIGH OF 70K"',
-  '"NEWS NEWS NEWS"',
-  '"INTRODUCING NEW STRATEGY: MOMENTUM"',
+  '"Smoothcoin on testnet, now open for beta testing."',
+  '"Momentum is coming soon."',
+  '"Want to compound your earnings and catapult your returns? AlphaOne is your answer."',
+  '"Polo new CEO of Bear protocol"',
 ]
 
 const maintenanceMessage = [
@@ -33,7 +33,7 @@ const NewsTicker = () => {
         {!isMaintenance &&
           newsItems.map((item, index) => (
             <span key={index} className="mr-4 flex items-center justify-center">
-              <span>{item}</span>
+              <span>{item.toUpperCase()}</span>
               <span className="ml-4">-</span>
             </span>
           ))}
@@ -41,7 +41,7 @@ const NewsTicker = () => {
         {!isMaintenance &&
           newsItems.map((item, index) => (
             <span key={`${index}-duplicate`} className="mr-4 flex items-center justify-center">
-              <span>{item}</span>
+              <span>{item.toUpperCase()}</span>
               <span className="ml-4">-</span>
             </span>
           ))}
