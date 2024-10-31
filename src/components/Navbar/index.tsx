@@ -5,6 +5,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import React from 'react'
 
+import Image from 'next/image'
+
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
@@ -17,15 +19,15 @@ const Sidebar = () => {
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
-          <h1 className="font-bold text-carmesi">BEAR PROTOCOL</h1>
+          <Image src="/wordmark.svg" width={100} height={20} alt="Picture of the author" className="h-4 w-auto" />
           <div className="flex w-fit items-center justify-start">{navigationItems.map(NavbarItem)}</div>
           <ProToggle />
         </div>
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
-        <h1 className="font-bold text-carmesi">BEAR PROTOCOL</h1>
-        <div className="text-md flex w-fit items-center justify-end space-x-2 text-white">
+        <Image src="/wordmark.svg" width={100} height={20} alt="Picture of the author" className="h-3 w-auto" />
+        <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
           <p>TESTNET</p>
           <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
         </div>
