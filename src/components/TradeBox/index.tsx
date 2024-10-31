@@ -1,7 +1,7 @@
 import type { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { useAccount } from 'wagmi'
@@ -9,15 +9,23 @@ import { useAccount } from 'wagmi'
 import Card from '@/components/common/Card'
 import ContractReads from '@/hooks/useContractReads'
 
-import FaucetComponent from '../FaucetComponent'
 import CustomConnectButton from '../common/CustomConnectButton'
 import Approve from './Approve'
 import ClaimAssets from './ClaimAssets'
 import ClaimShares from './ClaimShares'
 import Deposit from './Deposit'
+import FaucetComponent from './FaucetComponent'
 import Withdraw from './Withdraw'
 
 type responseData = [number, bigint, bigint, bigint]
+interface AmountContextType {
+  amount: number
+  setAmount: React.Dispatch<React.SetStateAction<number>>
+}
+export const AmountContext = createContext<AmountContextType>({
+  amount: 0,
+  setAmount: () => {},
+})
 
 const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
   if (type == 0) {
@@ -59,9 +67,7 @@ const TradeBox = () => {
   const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
-
-  console.log(userWithdrawalsStatus)
-  console.log(userDepositStatus)
+  const [amount, setAmount] = useState<number>(0)
 
   useEffect(() => {
     if (userWithdrawalsStatus == 5) {
@@ -84,65 +90,67 @@ const TradeBox = () => {
   }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus])
 
   return (
-    <Card className="h-fit max-h-full w-full">
-      <CustomConnectButton />
-      {!isConnected && (
-        <ul className="mt-5 space-y-2">
-          <TradeBoxButton action="Mint" type={1} />
-          <TradeBoxButton action="Approve" type={1} />
-          <TradeBoxButton action="Deposit" type={1} />
-          <TradeBoxButton action="Claim Shares" type={1} />
-          <TradeBoxButton action="Withdraw" type={1} />
-          <TradeBoxButton action="Claim Assets" type={1} />
-        </ul>
-      )}
-      {isConnected && (
-        <ul className="mt-5">
-          {step == 1 ? (
-            <TradeBoxActionContainer>
-              <FaucetComponent />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Mint" type={0} />
-          )}
-          {step == 2 ? (
-            <TradeBoxActionContainer>
-              <Approve />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Approve" type={step < 2 ? 1 : 0} />
-          )}
-          {step == 3 ? (
-            <TradeBoxActionContainer>
-              <Deposit />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Deposit" type={step < 3 ? 1 : 0} />
-          )}
-          {step == 4 ? (
-            <TradeBoxActionContainer>
-              <ClaimShares />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Claim Shares" type={step < 4 ? 1 : 0} />
-          )}
-          {step == 5 ? (
-            <TradeBoxActionContainer>
-              <Withdraw />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Withdraw" type={step < 5 ? 1 : 0} />
-          )}
-          {step == 6 ? (
-            <TradeBoxActionContainer>
-              <ClaimAssets />
-            </TradeBoxActionContainer>
-          ) : (
-            <TradeBoxButton action="Claim Assets" type={step < 6 ? 1 : 0} />
-          )}
-        </ul>
-      )}
-    </Card>
+    <AmountContext.Provider value={{ amount, setAmount }}>
+      <Card className="h-fit max-h-full w-full">
+        <CustomConnectButton />
+        {!isConnected && (
+          <ul className="mt-5 space-y-2">
+            <TradeBoxButton action="Mint" type={1} />
+            <TradeBoxButton action="Approve" type={1} />
+            <TradeBoxButton action="Deposit" type={1} />
+            <TradeBoxButton action="Claim Shares" type={1} />
+            <TradeBoxButton action="Withdraw" type={1} />
+            <TradeBoxButton action="Claim Assets" type={1} />
+          </ul>
+        )}
+        {isConnected && (
+          <ul className="mt-5">
+            {step == 1 ? (
+              <TradeBoxActionContainer>
+                <FaucetComponent />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Mint" type={0} />
+            )}
+            {step == 2 ? (
+              <TradeBoxActionContainer>
+                <Approve />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Approve" type={step < 2 ? 1 : 0} />
+            )}
+            {step == 3 ? (
+              <TradeBoxActionContainer>
+                <Deposit />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Deposit" type={step < 3 ? 1 : 0} />
+            )}
+            {step == 4 ? (
+              <TradeBoxActionContainer>
+                <ClaimShares />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Claim Shares" type={step < 4 ? 1 : 0} />
+            )}
+            {step == 5 ? (
+              <TradeBoxActionContainer>
+                <Withdraw />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Withdraw" type={step < 5 ? 1 : 0} />
+            )}
+            {step == 6 ? (
+              <TradeBoxActionContainer>
+                <ClaimAssets />
+              </TradeBoxActionContainer>
+            ) : (
+              <TradeBoxButton action="Claim Assets" type={step < 6 ? 1 : 0} />
+            )}
+          </ul>
+        )}
+      </Card>
+    </AmountContext.Provider>
   )
 }
 

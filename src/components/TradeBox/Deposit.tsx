@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { type BaseError, useAccount } from 'wagmi'
 
@@ -9,12 +9,13 @@ import useDeposit from '@/hooks/useDeposit'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance } from '@/utils/formatters'
 
+import { AmountContext } from '.'
 import Disclaimer from '../Disclaimer'
 
 type DepositData = [number, bigint, bigint, bigint]
 
 const DepositAssets = () => {
-  const [amount, setAmount] = useState<number>(0)
+  const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
   const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
   const { Deposit, isPending, hash, error } = useDeposit()

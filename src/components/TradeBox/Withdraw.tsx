@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
 
@@ -9,8 +9,10 @@ import useWithdrawAssets from '@/hooks/useWithdrawAssets'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance, formatShares } from '@/utils/formatters'
 
+import { AmountContext } from '.'
+
 const WithdrawAsset = () => {
-  const [amount, setAmount] = useState<number>(10)
+  const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
   const { BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
   const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()

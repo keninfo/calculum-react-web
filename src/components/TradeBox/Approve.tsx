@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import Link from 'next/link'
 
@@ -9,12 +9,13 @@ import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
+import { AmountContext } from '.'
 import Input from '../common/Input'
 
 const Approve = () => {
   const { ApproveAssets, isPending, error, hash } = useApprove()
   const { SymbolAsset, BalanceAssets } = ContractReads()
-  const [amount, setAmount] = useState<number>(0)
+  const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
 
   const balanceAssets = BalanceAssets(address).data as bigint
