@@ -163,7 +163,7 @@ const Transactions = () => {
   return (
     <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">
       {isConnected ? (
-        <div className="mt-[4vh] w-full">
+        <div className="w-full md:mt-[4vh]">
           {transactions.length === 0 ? (
             <p className="mb-5 text-center text-2xl text-[#4D70C2]">You currently have no transactions.</p>
           ) : (
@@ -203,20 +203,20 @@ const Transactions = () => {
               {/* Mobile-friendly stacked layout */}
               <div className="block md:hidden">
                 {transactions.map((log, index) => (
-                  <div key={index} className="mb-4 border-b border-greySmoke px-4 py-2">
-                    <p className="text-sm">
+                  <div key={index} className="mb-4 rounded-lg border-2 border-[#535E73] px-4 py-4">
+                    <p className="text-center text-sm">
                       <span className="font-bold text-carmesi">Date:</span> {log.date}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-center text-sm">
                       <span className="font-bold text-carmesi">Type:</span> {log.type}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-center text-sm">
                       <span className="font-bold text-carmesi">USDC:</span> {log.usdc}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-center text-sm">
                       <span className="font-bold text-carmesi">Smoothcoins:</span> {log.smoothcoins}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-center text-sm">
                       <span className="font-bold text-carmesi">Transaction:</span>
                       <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                         {shortenAddress(log.transactionHash)}

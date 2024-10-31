@@ -2,40 +2,25 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 
-import { useAccount } from 'wagmi'
-
-import ActionCard from '@/components/ActionCard'
 import { CoinsContext, ProContext } from '@/components/AppProviders'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
-import CollateralsTable from '@/components/CollateralsTable'
 import Positions from '@/components/Positions'
 import RebalancingResults from '@/components/RebalancingResults'
-import VaultsInfo from '@/components/StrategyInfoTitle'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
 import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
-import { AlternateButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
-import CustomConnectButton from '@/components/common/CustomConnectButton'
-import Modal from '@/components/common/Modal'
 
 const Dashboard = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const [defaultValue, setDefaultValue] = useState<number>(0)
   const { pro } = useContext(ProContext)
   const { dates, values } = useContext(CoinsContext)
-  const { isConnected } = useAccount()
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
 
-  const toggleModal = (value: number) => {
-    setOpen((prevOpen) => !prevOpen)
-    setDefaultValue(value)
-  }
   return (
     <>
       {/* DESKTOP */}
@@ -74,51 +59,26 @@ const Dashboard = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen space-y-[1vh] overflow-x-hidden pb-[20vh] md:hidden">
+      <div className="block w-screen space-y-5 overflow-x-hidden px-5 md:hidden">
+        <StrategyInfoTitle />
+        <StrategyOptions />
         {values && dates ? (
           <>
-            <ChartOptions />
             <ChartsContainer />
+            <ChartOptions />
           </>
         ) : (
           <Card className="flex h-full w-full justify-center" title="LOADING...">
             <></>
           </Card>
         )}
-        {pro && values && <RebalancingResults />}
+        <TradeBox />
         <Positions />
         <Transactions />
-        <VaultsInfo />
-
-        <Card>
-          <CollateralsTable />
-        </Card>
-
         <div className="fixed bottom-0 left-0 z-50 w-screen">
-          <p className="w-full bg-carmesi p-6 text-center">
+          <p className="w-full bg-yellow-300 p-6 text-center text-smoke">
             For a better experience, please use your desktop browser to interact with our platform.
           </p>
-          <div className="flex justify-around space-x-1 bg-smoke p-[2vh]">
-            {!isConnected && <CustomConnectButton />}
-            {isConnected && (
-              <>
-                <AlternateButton handleClick={() => toggleModal(0)} className="bg-opacity-0">
-                  <p className="font-bold">DEPOSIT</p>
-                </AlternateButton>
-                <AlternateButton handleClick={() => toggleModal(1)} className="bg-opacity-0">
-                  <p className="font-bold">CLAIM</p>
-                </AlternateButton>
-                <AlternateButton handleClick={() => toggleModal(2)} className="bg-opacity-0">
-                  <p className="font-bold">WITHDRAW</p>
-                </AlternateButton>
-                {open && (
-                  <Modal onClose={() => toggleModal(0)}>
-                    <ActionCard defaultValue={defaultValue} />
-                  </Modal>
-                )}
-              </>
-            )}
-          </div>
         </div>
       </div>
     </>

@@ -195,7 +195,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     }
   }, [coin, dates, rollingWindow, seriesData, window, themeColors, studyCase])
 
-  return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
+  return <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }}></div>
 }
 
 export default RollingVol

@@ -5,8 +5,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import React from 'react'
 
-import Image from 'next/image'
-
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
@@ -26,8 +24,8 @@ const Sidebar = () => {
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
-        <Image src="/bearLogo2.png" width={200} height={80} alt="Picture of the author" className="h-auto w-[50%]" />
-        <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
+        <h1 className="font-bold text-carmesi">BEAR PROTOCOL</h1>
+        <div className="text-md flex w-fit items-center justify-end space-x-2 text-white">
           <p>TESTNET</p>
           <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
         </div>

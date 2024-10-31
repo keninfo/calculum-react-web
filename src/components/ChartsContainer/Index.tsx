@@ -9,6 +9,7 @@ import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProvid
 import Card from '@/components/common/Card'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
+import ChartOptions from '../ChartOptions/Index'
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'
 
@@ -58,19 +59,22 @@ const Chart = () => {
   return (
     <div ref={parent}>
       <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
+        <div className="absolute right-5 top-5 z-50 hidden md:block">
+          <ChartOptions />
+        </div>
         <p className="absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-white md:block">Return on Capital</p>
         {values && dates && (
           <RoC dates={dates ? dates : []} seriesData1={getCoinArray()} seriesData2={getCoinArray()} ohcl={getOHCL()} />
         )}
       </Card>
       {pro && (
-        <Card className={`| w-full !rounded-t-none !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
-          <div className={`| flex w-full items-center justify-between py-[3vh] md:pb-[4vh] md:pt-[3vh]`}>
-            <div className="| ml-[6vw] flex w-fit items-center space-x-2 md:ml-0">
+        <Card className={`w-full !rounded-t-none !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
+          <div className={`flex w-full items-center justify-between py-[3vh] md:pb-[4vh] md:pt-[3vh]`}>
+            <div className="ml-[6vw] flex w-fit items-center space-x-2 md:ml-0">
               <p className="text-2xl text-white">Rolling Volatility </p>
             </div>
             <button
-              className="| mr:ml-0 rounded-lg border px-[1vw] py-[.5vh] text-xs hover:scale-105"
+              className="mr:ml-0 rounded-lg border px-[1vw] py-[.5vh] text-xs hover:scale-105"
               onClick={toggleSecondChart}
             >
               {showSecondChart ? 'Hide' : 'Show'}
