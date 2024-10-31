@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 
-import Image from 'next/image'
-
 import { useAccount, type BaseError } from 'wagmi'
 
 import useClaimAssets from '@/hooks/useClaimAssets'
@@ -9,6 +7,7 @@ import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { PrimaryButton } from '../common/Buttons'
+import CryptoIcon from '../common/CryptoIcon'
 
 type responseData = [number, bigint, bigint, bigint]
 
@@ -33,7 +32,7 @@ const ClaimAssets = () => {
   return (
     <>
       <div className="my-5 flex items-center justify-center space-x-5">
-        <Image src="/bearLogo.png" width={50} height={50} alt="Picture of the author" />
+        <CryptoIcon coin="USDC" className="h-[50px]" />
         <div className="text-left">
           <p>{(Number(userWithdrawalsAssets) / 1000000000000000000).toLocaleString('US')}</p>
           <h4 className="text-[#DCCD5B]">USDC</h4>
