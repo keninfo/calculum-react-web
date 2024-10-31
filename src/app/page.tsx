@@ -6,7 +6,7 @@ import IntroQuestionnaire from '@/components/IntroQuestionnaire'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
-  title: 'Smoothcoin - Welcome!',
+  title: 'Bearprotocol - Welcome!',
 }
 
 const BearProtocolApp = () => {

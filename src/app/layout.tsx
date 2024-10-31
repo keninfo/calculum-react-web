@@ -9,7 +9,7 @@ import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
-  title: 'Smoothcoin',
+  title: 'Bearprotocol',
 }
 
 const RootLayout = ({
