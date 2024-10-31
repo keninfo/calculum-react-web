@@ -49,6 +49,8 @@ interface OptionsContextType {
   setShowCandle: React.Dispatch<React.SetStateAction<boolean>>
   studyCase: number
   setStudyCase: React.Dispatch<React.SetStateAction<number>>
+  transactionPending: boolean
+  setTransactionPending: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
@@ -66,6 +68,8 @@ export const OptionsContext = createContext<OptionsContextType>({
   setShowCandle: () => {},
   studyCase: 1,
   setStudyCase: () => {},
+  transactionPending: false,
+  setTransactionPending: () => {},
 })
 
 interface ProContextType {
@@ -110,6 +114,7 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const [dates, setDates] = useState<Date[] | null>(null)
   const [values, setValues] = useState<number[][] | null>(null)
   const [coins, setCoins] = useState<string[] | null>(null)
+  const [transactionPending, setTransactionPending] = useState<boolean>(false)
 
   const fetchDaily = async () => {
     const staticDataSrc = '/daily_prices_for_jesus.csv'
@@ -182,6 +187,8 @@ const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
           setShowCandle,
           studyCase,
           setStudyCase,
+          transactionPending,
+          setTransactionPending,
         }}
       >
         <ProContext.Provider value={{ pro, setPro }}>

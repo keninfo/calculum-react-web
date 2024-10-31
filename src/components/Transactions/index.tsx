@@ -10,16 +10,16 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 
 import { useAccount } from 'wagmi'
 
+import { OptionsContext, ProContext } from '@/components/AppProviders'
+import Card from '@/components/common/Card'
 import { calculumVaultContract } from '@/contracts/calculumVault'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
-
-import { ProContext } from '../AppProviders'
-import Card from '../common/Card'
 
 const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
   const { pro } = useContext(ProContext)
+  const { transactionPending, setTransactionPending } = useContext(OptionsContext)
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -158,7 +158,8 @@ const Transactions = () => {
     if (isConnected && address) {
       fetchLogs()
     }
-  }, [isConnected, address, pro])
+    setTransactionPending(false)
+  }, [isConnected, address, pro, transactionPending, setTransactionPending])
 
   return (
     <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">
@@ -168,7 +169,6 @@ const Transactions = () => {
             <p className="mb-5 text-center text-2xl text-[#4D70C2]">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
-              {/* Make the table horizontally scrollable on small screens */}
               <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[600px] border-collapse">
                   <thead>
@@ -200,7 +200,7 @@ const Transactions = () => {
                 </table>
               </div>
 
-              {/* Mobile-friendly stacked layout */}
+              {/* Mobile */}
               <div className="block md:hidden">
                 {transactions.map((log, index) => (
                   <div key={index} className="mb-4 rounded-lg border-2 border-[#535E73] px-4 py-4">

@@ -1,15 +1,16 @@
 import type { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { useAccount } from 'wagmi'
 
+import { OptionsContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
+import CustomConnectButton from '@/components/common/CustomConnectButton'
 import ContractReads from '@/hooks/useContractReads'
 
-import CustomConnectButton from '../common/CustomConnectButton'
 import Approve from './Approve'
 import ClaimAssets from './ClaimAssets'
 import ClaimShares from './ClaimShares'
@@ -62,23 +63,29 @@ const TradeBoxActionContainer = ({
 const TradeBox = () => {
   const [step, setStep] = useState<number>(0)
   const { address, isConnected } = useAccount()
-  const { BalanceAssets, Allowance, Deposits, Withdrawals } = ContractReads()
+  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares } = ContractReads()
   const balanceAssets = BalanceAssets(address).data as bigint
+  const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
   const [amount, setAmount] = useState<number>(0)
+  const { setTransactionPending } = useContext(OptionsContext)
 
   useEffect(() => {
-    if (userWithdrawalsStatus == 5) {
+    setTransactionPending(true)
+  }, [step, setTransactionPending])
+
+  useEffect(() => {
+    if (userWithdrawalsStatus == 2 && userDepositStatus == 3) {
       setStep(6)
-    } else if (userDepositStatus == 3) {
+    } else if (userDepositStatus == 3 && Number(balanceSharesResult) / 1000000000000000000 > 1) {
       setStep(5)
     } else if (userWithdrawalsStatus == 0 && userDepositStatus != 0) {
       setStep(4)
     } else if (userDepositStatus == 1) {
       setStep(4)
-    } else if (userDepositStatus == 0 && balanceAssets > 0 && allowance > 0) {
+    } else if ((userDepositStatus == 0 || userDepositStatus == 3) && balanceAssets > 0 && allowance > 0) {
       setStep(3)
     } else if (balanceAssets <= 0) {
       setStep(1)
@@ -87,7 +94,7 @@ const TradeBox = () => {
     } else {
       setStep(0)
     }
-  }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus])
+  }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult])
 
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
@@ -110,7 +117,7 @@ const TradeBox = () => {
                 <FaucetComponent />
               </TradeBoxActionContainer>
             ) : (
-              <TradeBoxButton action="Mint" type={0} />
+              <TradeBoxButton action="Mint" type={step < 1 ? 1 : 0} />
             )}
             {step == 2 ? (
               <TradeBoxActionContainer>
