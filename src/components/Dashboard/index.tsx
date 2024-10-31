@@ -76,7 +76,7 @@ const Dashboard = () => {
         <Positions />
         <Transactions />
         <div className="fixed bottom-0 left-0 z-50 w-screen">
-          <p className="w-full bg-yellow-300 p-6 text-center text-smoke">
+          <p className="w-full bg-yellow-300 p-6 text-center text-xs text-smoke">
             For a better experience, please use your desktop browser to interact with our platform.
           </p>
         </div>

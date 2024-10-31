@@ -53,10 +53,10 @@ const StrategyInfoTitle = () => {
     <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
       <Image src="/bearLogo.png" width={50} height={50} alt="Picture of the author" className="m-auto" />
       <div className="md:w-fit">
-        <h2 className="w-full text-nowrap text-center text-4xl font-bold italic md:text-left">
+        <h2 className="w-full text-nowrap text-center text-3xl font-bold md:text-left md:text-4xl">
           {strategy + ' ' + coin}
         </h2>
-        <p className="w-full text-nowrap text-center text-yellow-300">
+        <p className="w-full text-nowrap text-center text-xs text-yellow-300 md:text-left md:text-sm">
           $ {formatBalance(daySharePrice)} ({pricePercentageChange.toFixed(2)}%) - BTC: ${BTCSmooth.tokenValue} (
           {BTCSmooth.tokenChange}) - Last 24H
         </p>

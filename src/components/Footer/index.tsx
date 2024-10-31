@@ -10,13 +10,9 @@ const index = () => {
         <p>|</p>
         <p>Github</p>
       </div>
-      <Image
-        src="/wordmark.svg"
-        width={100}
-        height={20}
-        alt="Picture of the author"
-        className="col-span-1 h-4 w-auto"
-      />
+      <div className="col-span-1 my-5 flex h-full w-auto items-center justify-center px-20 md:my-0">
+        <Image src="/wordmark.svg" width={50} height={100} alt="Picture of the author" className="h-auto w-full" />
+      </div>
 
       <p className="col-span-1 text-center text-greySmoke md:text-right">Smoothcoin @ 2024. All Rights Reserved</p>
     </footer>
