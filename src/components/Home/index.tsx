@@ -10,7 +10,7 @@ import Card from '@/components/common/Card'
 const index = () => {
   return (
     <>
-      <div className="mx-auto md:w-[60%]">
+      <div className="mx-auto mb-20 md:w-[60%]">
         <h1 className="mb-5 text-center text-4xl">Welcome to</h1>
         <Image src="/wordmark.svg" width={50} height={100} alt="Picture of the author" className="h-auto w-full" />
       </div>
