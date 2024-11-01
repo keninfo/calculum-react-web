@@ -6,8 +6,7 @@ import CoinSelect from './CoinSelect'
 import NetworkSelect from './NetworkSelect'
 import StrategySelect from './StrategySelect'
 
-const StrategyOptions = ({ guide = false }: { guide?: boolean }) => {
-  console.log(guide)
+const StrategyOptions = () => {
   return (
     <div>
       {/* DESKTOP */}
