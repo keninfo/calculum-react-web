@@ -11,7 +11,7 @@ const StrategyOptions = ({ guide = false }: { guide?: boolean }) => {
   return (
     <div>
       {/* DESKTOP */}
-      <Card className="flex w-full items-center justify-between">
+      <Card className="hidden w-full items-center justify-between md:flex">
         <div className="flex w-full items-center justify-start space-x-10">
           <StrategySelect />
           <CoinSelect />
