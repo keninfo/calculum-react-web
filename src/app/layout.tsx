@@ -1,6 +1,8 @@
+'use client'
+
 import { type ReactNode } from 'react'
 
-import type { Metadata } from 'next'
+import { usePathname } from 'next/navigation'
 
 import AppProviders from '@/components/AppProviders'
 import Navbar from '@/components/Navbar'
@@ -8,22 +10,20 @@ import Watermark from '@/components/common/Watermark'
 import { Providers } from '@/store/provider'
 import '@/styles/globals.css'
 
-export const metadata: Metadata = {
-  title: 'Bearprotocol',
-}
-
 const RootLayout = ({
   children,
 }: Readonly<{
   children: ReactNode
 }>) => {
+  const pathname = usePathname()
+
   return (
     <html lang="en">
       <body className="classic overscroll-none">
         <Watermark />
         <Providers>
           <AppProviders>
-            <Navbar />
+            {pathname !== '/' && <Navbar />}
             <div className="bg-smoke md:px-20">{children}</div>
           </AppProviders>
         </Providers>

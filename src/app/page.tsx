@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Head from 'next/head'
 
 import Footer from '@/components/Footer'
-import IntroQuestionnaire from '@/components/IntroQuestionnaire'
+import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
@@ -16,10 +16,10 @@ const BearProtocolApp = () => {
         <MetaTags />
       </Head>
 
-      <main>
-        <IntroQuestionnaire />
-        <Footer />
+      <main className="p-10">
+        <Home />
       </main>
+      <Footer />
     </>
   )
 }
