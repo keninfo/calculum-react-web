@@ -1,9 +1,8 @@
-import type { Hash } from 'viem'
+import type { Address, Hash } from 'viem'
 import { parseUnits } from 'viem'
 
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 
-import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 
 const useApprove = () => {
@@ -12,12 +11,12 @@ const useApprove = () => {
     hash,
   })
 
-  const ApproveAssets = (amount: number) => {
+  const ApproveAssets = (amount: number, contractAddress: Address) => {
     writeContract({
       abi: usdcContract.abi,
       address: usdcContract.address as Hash,
       functionName: 'approve',
-      args: [calculumVaultContract.address, parseUnits(amount.toString(), 6)],
+      args: [contractAddress, parseUnits(amount.toString(), 6)],
     })
   }
 

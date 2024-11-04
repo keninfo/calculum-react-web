@@ -1,9 +1,14 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
+import type { Abi, Address } from 'viem'
 
 import { useAccount, type BaseError } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 import useWithdrawAssets from '@/hooks/useWithdrawAssets'
 import createTransactionAlert from '@/utils/createTransactionAlert'
@@ -12,9 +17,24 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 import { AmountContext } from '.'
 
 const WithdrawAsset = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
-  const { BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads()
+  const { BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads(contractAddress, contractAbi)
   const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
@@ -71,7 +91,11 @@ const WithdrawAsset = () => {
         <b className="text-greySmoke"> {(Number(amount) || 0).toLocaleString('US')} USDC</b>
       </div>
 
-      <PrimaryButton handleClick={() => withdrawAssets({ amount, address })} className="mt-5" disabled={isPending}>
+      <PrimaryButton
+        handleClick={() => withdrawAssets({ amount, address }, contractAddress, contractAbi)}
+        className="mt-5"
+        disabled={isPending}
+      >
         {isPending ? 'Withdrawing...' : 'Withdraw'}
       </PrimaryButton>
     </>

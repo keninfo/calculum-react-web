@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
 import Select from '@/components/common/Select'
+import { OptionsContext } from '@/contexts/OptionsContext'
 
-const strategies = ['Smoothcoin']
+const strategies = ['Smoothcoin', 'Momentum']
 
 const StrategySelect = () => {
   const { strategy, setStrategy } = useContext(OptionsContext)

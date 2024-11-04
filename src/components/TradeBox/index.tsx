@@ -4,11 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
+import type { Abi, Address } from 'viem'
+
 import { useAccount } from 'wagmi'
 
-import { OptionsContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 
 import Approve from './Approve'
@@ -61,9 +65,24 @@ const TradeBoxActionContainer = ({
 }
 
 const TradeBox = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
   const [step, setStep] = useState<number>(0)
   const { address, isConnected } = useAccount()
-  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares } = ContractReads()
+  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares } = ContractReads(contractAddress, contractAbi)
   const balanceAssets = BalanceAssets(address).data as bigint
   const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { ProContext } from '@/contexts/ProContext'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
 

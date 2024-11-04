@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { OptionsContext, ProContext, CoinsContext } from '@/components/AppProviders'
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { ProContext } from '@/contexts/ProContext'
 import { classicTheme, proTheme } from '@/styles/colors'
 import {
   calculateCumulativeReturns,

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { OptionsContext } from '@/contexts/OptionsContext'
 
 const SetRollingWindows = () => {
   const { rollingWindow, setRollingWindow } = useContext(OptionsContext)

@@ -1,16 +1,15 @@
-import type { Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { parseEther, parseUnits } from 'viem'
 
 import { useReadContract } from 'wagmi'
 
-import { calculumVaultContract } from '@/contracts/calculumVault'
 import { usdcContract } from '@/contracts/usdc'
 
-const useContractReads = () => {
+const useContractReads = (contractAddress: Address, contractAbi: Abi) => {
   const ContractGenesisEpoch = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'EPOCH_START',
     })
     return { data, isLoading, error }
@@ -18,8 +17,8 @@ const useContractReads = () => {
 
   const InMaintenance = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'isMaintenance',
     })
     return { data, isLoading, error }
@@ -27,8 +26,8 @@ const useContractReads = () => {
 
   const CurrentEpoch = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'CURRENT_EPOCH',
     })
     return { data, isLoading, error }
@@ -36,8 +35,8 @@ const useContractReads = () => {
 
   const MaxDeposit = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'MAX_DEPOSIT',
     })
     return { data, isLoading, error }
@@ -45,8 +44,8 @@ const useContractReads = () => {
 
   const TokenPriceAt = (epoch: number | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'VAULT_TOKEN_PRICE',
       args: [epoch],
     })
@@ -55,8 +54,8 @@ const useContractReads = () => {
 
   const CheckWhitelist = (address: string | undefined) => {
     const { isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'whitelist',
       args: [address],
     })
@@ -65,8 +64,8 @@ const useContractReads = () => {
 
   const HasDeposited = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'isDepositWallet',
       args: [address],
     })
@@ -78,7 +77,7 @@ const useContractReads = () => {
       abi: usdcContract.abi,
       address: usdcContract.address as Hash,
       functionName: 'allowance',
-      args: [address, calculumVaultContract.address],
+      args: [address, contractAddress],
       query: {
         refetchInterval: 100,
       },
@@ -97,8 +96,8 @@ const useContractReads = () => {
 
   const SymbolShares = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'symbol',
     })
     return { data, isLoading, error }
@@ -106,8 +105,8 @@ const useContractReads = () => {
 
   const BalanceShares = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'balanceOf',
       args: [address],
     })
@@ -126,8 +125,8 @@ const useContractReads = () => {
 
   const Withdrawals = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'WITHDRAWALS',
       args: [address],
     })
@@ -136,8 +135,8 @@ const useContractReads = () => {
 
   const Deposits = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'DEPOSITS',
       args: [address],
     })
@@ -146,8 +145,8 @@ const useContractReads = () => {
 
   const IsClaimerMint = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'isClaimerMint',
       args: [address],
     })
@@ -156,8 +155,8 @@ const useContractReads = () => {
 
   const IsClaimerWithdraw = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'isClaimerWithdraw',
       args: [address],
     })
@@ -169,8 +168,8 @@ const useContractReads = () => {
       amount = 0
     }
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'convertToShares',
       args: [parseUnits(amount.toString(), 6)],
     })
@@ -183,8 +182,8 @@ const useContractReads = () => {
       amount = 0
     }
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'convertToAssets',
       args: [parseEther(amount.toString())],
     })
@@ -194,8 +193,8 @@ const useContractReads = () => {
 
   const TotalAssets = () => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'totalAssets',
     })
     return { data, isLoading, error }
@@ -203,8 +202,8 @@ const useContractReads = () => {
 
   const EpochSharePrice = (epochNumber: number | undefined) => {
     const { data, isLoading, error } = useReadContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'VAULT_TOKEN_PRICE',
       args: [epochNumber],
     })

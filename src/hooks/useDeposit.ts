@@ -1,9 +1,7 @@
-import type { Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { parseUnits } from 'viem'
 
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-
-import { calculumVaultContract } from '@/contracts/calculumVault'
 
 interface DepositProps {
   amount: number
@@ -16,10 +14,10 @@ const useDeposit = () => {
     hash,
   })
 
-  const Deposit = ({ amount, address }: DepositProps) => {
+  const Deposit = ({ amount, address }: DepositProps, contractAddress: Address, contractAbi: Abi) => {
     writeContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'deposit',
       args: [parseUnits(amount.toString(), 6), address],
     })

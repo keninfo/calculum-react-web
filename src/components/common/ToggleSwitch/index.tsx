@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react'
 
-import { ProContext } from '../../AppProviders'
+import { ProContext } from '@/contexts/ProContext'
 
 const ToggleSwitch = () => {
   const { pro, setPro } = useContext(ProContext)

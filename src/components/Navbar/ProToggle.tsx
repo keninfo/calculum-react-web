@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 
-import { ProContext } from '../AppProviders'
-import { PrimaryButton } from '../common/Buttons'
-import BearAttack from '../common/Icons/BearAttack'
-import BearPassive from '../common/Icons/BearPassive'
-import ToggleSwitch from '../common/ToggleSwitch'
+import { PrimaryButton } from '@/components/common/Buttons'
+import BearAttack from '@/components/common/Icons/BearAttack'
+import BearPassive from '@/components/common/Icons/BearPassive'
+import ToggleSwitch from '@/components/common/ToggleSwitch'
+import { ProContext } from '@/contexts/ProContext'
 
 const ProToggle = () => {
   const { pro, setPro } = useContext(ProContext)

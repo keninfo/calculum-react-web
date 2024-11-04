@@ -1,8 +1,6 @@
-import type { Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
-
-import { calculumVaultContract } from '@/contracts/calculumVault'
 
 const useClaimAssets = () => {
   const { data: hash, isPending, writeContract, error } = useWriteContract()
@@ -10,10 +8,10 @@ const useClaimAssets = () => {
     hash,
   })
 
-  const ClaimAssets = (address: string | undefined) => {
+  const ClaimAssets = (address: string | undefined, contractAddress: Address, contractAbi: Abi) => {
     writeContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'claimAssets',
       args: [address, address],
     })

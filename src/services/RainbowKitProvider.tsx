@@ -12,7 +12,7 @@ import { createWalletClient, custom } from 'viem'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrumSepolia } from 'wagmi/chains'
 
-import { ProContext } from '@/components/AppProviders'
+import { ProContext } from '@/contexts/ProContext'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 

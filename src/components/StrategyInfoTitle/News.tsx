@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
+import type { Abi, Address } from 'viem'
+
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 
 const newsItems = [
@@ -17,7 +22,21 @@ const maintenanceMessage = [
 ]
 
 const NewsTicker = () => {
-  const { InMaintenance } = ContractReads()
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+  const { InMaintenance } = ContractReads(contractAddress, contractAbi)
 
   let isMaintenance = false
   const data = InMaintenance().data as [boolean, number]

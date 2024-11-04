@@ -1,18 +1,34 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-import Image from 'next/image'
+import type { Address, Abi } from 'viem'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance } from '@/utils/formatters'
 
-import { CoinsContext } from '../AppProviders'
 import News from './News'
 
 const StrategyInfoTitle = () => {
   const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
   const { values } = useContext(CoinsContext)
-  const { CurrentEpoch, EpochSharePrice } = ContractReads()
+  const { CurrentEpoch, EpochSharePrice } = ContractReads(contractAddress, contractAbi)
 
   const epochNumber = CurrentEpoch().data as bigint
 
@@ -51,7 +67,13 @@ const StrategyInfoTitle = () => {
 
   return (
     <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
-      <Image src="/bearLogo.png" width={50} height={50} alt="Picture of the author" className="m-auto" />
+      <img
+        src={`${strategy == 'Smoothcoin' ? '/bearLogo.png' : 'https://placehold.co/600x600/gold/black?text=M'}`}
+        width={50}
+        height={50}
+        alt="image"
+        className="m-auto rounded-full"
+      />
       <div className="md:w-fit">
         <h2 className="w-full text-nowrap text-center text-3xl font-bold md:text-left md:text-4xl">
           {strategy + ' ' + coin}

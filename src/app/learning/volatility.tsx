@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react'
 
 import Link from 'next/link'
 
-import { CoinsContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
+import { CoinsContext } from '@/contexts/CoinsContext'
 
 import GraphOne from './graphOne'
 import GraphThree from './graphThree'

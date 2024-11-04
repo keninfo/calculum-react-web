@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 
-import { CoinsContext, OptionsContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { OptionsContext } from '@/contexts/OptionsContext'
 import {
   pct_change,
   calculateScaledReturnsLeverage,

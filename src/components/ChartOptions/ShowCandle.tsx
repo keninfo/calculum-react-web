@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
+import { OptionsContext } from '@/contexts/OptionsContext'
 
 import { PrimaryButton } from '../common/Buttons'
 

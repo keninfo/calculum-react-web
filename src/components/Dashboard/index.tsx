@@ -4,7 +4,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext } from 'react'
 
-import { CoinsContext, ProContext } from '@/components/AppProviders'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
@@ -14,6 +13,8 @@ import StrategyOptions from '@/components/StrategyOptions/Index'
 import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { ProContext } from '@/contexts/ProContext'
 
 const Dashboard = () => {
   const { pro } = useContext(ProContext)

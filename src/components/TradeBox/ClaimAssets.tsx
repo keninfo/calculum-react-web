@@ -1,7 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
+import type { Abi, Address } from 'viem'
 
 import { useAccount, type BaseError } from 'wagmi'
 
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import useClaimAssets from '@/hooks/useClaimAssets'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
@@ -12,11 +17,24 @@ import CryptoIcon from '../common/CryptoIcon'
 type responseData = [number, bigint, bigint, bigint]
 
 const ClaimAssets = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
   const { address } = useAccount()
   const { ClaimAssets, hash, error } = useClaimAssets()
-  const { Withdrawals } = ContractReads()
+  const { Withdrawals, IsClaimerWithdraw } = ContractReads(contractAddress, contractAbi)
   const [, , userWithdrawalsAssets] = (Withdrawals(address).data || []) as responseData
-  const { IsClaimerWithdraw } = ContractReads()
 
   const claimerWithdraw = IsClaimerWithdraw(address).data as boolean
 
@@ -41,7 +59,9 @@ const ClaimAssets = () => {
 
       <div className="">
         {claimerWithdraw ? (
-          <PrimaryButton handleClick={() => ClaimAssets(address)}>Claim All Assets</PrimaryButton>
+          <PrimaryButton handleClick={() => ClaimAssets(address, contractAddress, contractAbi)}>
+            Claim All Assets
+          </PrimaryButton>
         ) : (
           <p className="w-full rounded-lg bg-[#535E73] px-4 py-2 text-center text-[#888E96]">{`Wait one epoch to be able to claim all assets`}</p>
         )}

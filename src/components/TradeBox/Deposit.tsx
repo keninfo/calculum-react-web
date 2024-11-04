@@ -1,23 +1,46 @@
 import React, { useContext, useEffect, useState } from 'react'
 
+import type { Abi, Address } from 'viem'
+
 import { type BaseError, useAccount } from 'wagmi'
 
+import Disclaimer from '@/components/Disclaimer'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance } from '@/utils/formatters'
 
 import { AmountContext } from '.'
-import Disclaimer from '../Disclaimer'
 
 type DepositData = [number, bigint, bigint, bigint]
 
 const DepositAssets = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
-  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads()
+  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads(
+    contractAddress,
+    contractAbi,
+  )
   const { Deposit, isPending, hash, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -67,13 +90,13 @@ const DepositAssets = () => {
   }
 
   const handleAccept = () => {
-    Deposit({ amount, address })
+    Deposit({ amount, address }, contractAddress, contractAbi)
     handleCloseModal()
   }
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
-    setIsAgreeChecked(false) // Reset agreement state when closing modal
+    setIsAgreeChecked(false)
   }
 
   const handleAgreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

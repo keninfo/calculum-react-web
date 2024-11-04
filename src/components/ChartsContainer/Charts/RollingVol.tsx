@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { OptionsContext, ProContext } from '@/components/AppProviders'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { ProContext } from '@/contexts/ProContext'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, hexToRGBA } from '@/utils/formatters'

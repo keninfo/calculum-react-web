@@ -5,8 +5,10 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useState, useEffect } from 'react'
 
-import { CoinsContext, OptionsContext, ProContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
+import { CoinsContext } from '@/contexts/CoinsContext'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { ProContext } from '@/contexts/ProContext'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 import ChartOptions from '../ChartOptions/Index'

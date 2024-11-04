@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-import type { Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { createPublicClient, parseAbiItem } from 'viem'
 import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { calculumVaultContract } from '@/contracts/calculumVault'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
@@ -22,9 +24,26 @@ type pendingDeposit = {
 }
 
 const Positions = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
   const { isConnected, address } = useAccount()
-  const { Withdrawals, Deposits, ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch } =
-    ContractReads()
+  const { Withdrawals, Deposits, ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch } = ContractReads(
+    contractAddress,
+    contractAbi,
+  )
   const [, withdrawnAssets, , withdrawalTotal] = (Withdrawals(address).data || []) as responseData
   const [, depositAssets, , depositTotal] = (Deposits(address).data || []) as responseData
   const [pendingDeposit, setPendingDeposit] = useState<pendingDeposit>()
@@ -45,7 +64,7 @@ const Positions = () => {
 
         const [getPendingDeposits] = await Promise.all([
           client.getLogs({
-            address: calculumVaultContract.address as Hash,
+            address: contractSmoothcoinBTC.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingDeposit,

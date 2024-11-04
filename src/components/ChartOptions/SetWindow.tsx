@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { OptionsContext } from '@/components/AppProviders'
 import Select from '@/components/common/Select'
+import { OptionsContext } from '@/contexts/OptionsContext'
 
 const dates = [365, 90, 60, 30]
 

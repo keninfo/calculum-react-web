@@ -1,23 +1,8 @@
-export const calculumVaultContract = {
+export const contractMomentumBTC = {
   chainId: '421614',
-  address: '0x9E09d335CAEdB4D76708854bFaCd5228946543E5',
+  address: '0x355C52AD0EBe757272253AAf54E7920Ead630b9C',
   abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
-    { inputs: [], name: 'AccessControlBadConfirmation', type: 'error' },
-    {
-      inputs: [
-        { internalType: 'address', name: 'account', type: 'address' },
-        { internalType: 'bytes32', name: 'neededRole', type: 'bytes32' },
-      ],
-      name: 'AccessControlUnauthorizedAccount',
-      type: 'error',
-    },
-    { inputs: [{ internalType: 'address', name: 'target', type: 'address' }], name: 'AddressEmptyCode', type: 'error' },
-    {
-      inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-      name: 'AddressInsufficientBalance',
-      type: 'error',
-    },
     { inputs: [], name: 'AddressIsNotContract', type: 'error' },
     {
       inputs: [{ internalType: 'address', name: '_caller', type: 'address' }],
@@ -73,73 +58,13 @@ export const calculumVaultContract = {
       name: 'DepositPendingClaim',
       type: 'error',
     },
-    {
-      inputs: [
-        { internalType: 'address', name: 'spender', type: 'address' },
-        { internalType: 'uint256', name: 'allowance', type: 'uint256' },
-        { internalType: 'uint256', name: 'needed', type: 'uint256' },
-      ],
-      name: 'ERC20InsufficientAllowance',
-      type: 'error',
-    },
-    {
-      inputs: [
-        { internalType: 'address', name: 'sender', type: 'address' },
-        { internalType: 'uint256', name: 'balance', type: 'uint256' },
-        { internalType: 'uint256', name: 'needed', type: 'uint256' },
-      ],
-      name: 'ERC20InsufficientBalance',
-      type: 'error',
-    },
-    {
-      inputs: [{ internalType: 'address', name: 'approver', type: 'address' }],
-      name: 'ERC20InvalidApprover',
-      type: 'error',
-    },
-    {
-      inputs: [{ internalType: 'address', name: 'receiver', type: 'address' }],
-      name: 'ERC20InvalidReceiver',
-      type: 'error',
-    },
-    {
-      inputs: [{ internalType: 'address', name: 'sender', type: 'address' }],
-      name: 'ERC20InvalidSender',
-      type: 'error',
-    },
-    {
-      inputs: [{ internalType: 'address', name: 'spender', type: 'address' }],
-      name: 'ERC20InvalidSpender',
-      type: 'error',
-    },
-    { inputs: [], name: 'EnforcedPause', type: 'error' },
-    { inputs: [], name: 'ExpectedPause', type: 'error' },
-    { inputs: [], name: 'FailedInnerCall', type: 'error' },
     { inputs: [], name: 'FirstEpochNoFeeTransfer', type: 'error' },
-    { inputs: [], name: 'InvalidInitialization', type: 'error' },
-    { inputs: [], name: 'MathOverflowedMulDiv', type: 'error' },
     {
       inputs: [
         { internalType: 'uint256', name: '_assests', type: 'uint256' },
         { internalType: 'uint256', name: '_amountMax', type: 'uint256' },
       ],
       name: 'NotEnoughBalance',
-      type: 'error',
-    },
-    { inputs: [], name: 'NotInitializing', type: 'error' },
-    {
-      inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
-      name: 'OwnableInvalidOwner',
-      type: 'error',
-    },
-    {
-      inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-      name: 'OwnableUnauthorizedAccount',
-      type: 'error',
-    },
-    { inputs: [], name: 'ReentrancyGuardReentrantCall', type: 'error' },
-    {
-      inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
-      name: 'SafeERC20FailedOperation',
       type: 'error',
     },
     { inputs: [], name: 'VaultInMaintenance', type: 'error' },
@@ -167,9 +92,9 @@ export const calculumVaultContract = {
     {
       anonymous: false,
       inputs: [
-        { indexed: true, internalType: 'address', name: 'caller', type: 'address' },
+        { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
         { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-        { indexed: false, internalType: 'uint256', name: 'totalAssets', type: 'uint256' },
+        { indexed: false, internalType: 'uint256', name: 'assets', type: 'uint256' },
         { indexed: false, internalType: 'uint256', name: 'shares', type: 'uint256' },
       ],
       name: 'Deposit',
@@ -193,7 +118,6 @@ export const calculumVaultContract = {
         { indexed: false, internalType: 'uint256', name: 'NewEpochStart', type: 'uint256' },
         { indexed: false, internalType: 'uint256', name: 'newMaintTimeBefore', type: 'uint256' },
         { indexed: false, internalType: 'uint256', name: 'newMaintTimeAfter', type: 'uint256' },
-        { indexed: false, internalType: 'uint256', name: '_floorWalletBalanceUSDC', type: 'uint256' },
       ],
       name: 'EpochChanged',
       type: 'event',
@@ -212,8 +136,14 @@ export const calculumVaultContract = {
     },
     {
       anonymous: false,
-      inputs: [{ indexed: false, internalType: 'uint64', name: 'version', type: 'uint64' }],
+      inputs: [{ indexed: false, internalType: 'uint8', name: 'version', type: 'uint8' }],
       name: 'Initialized',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [{ indexed: true, internalType: 'address', name: 'newAddress', type: 'address' }],
+      name: 'OPZWalletUpdated',
       type: 'event',
     },
     {
@@ -261,6 +191,15 @@ export const calculumVaultContract = {
         { indexed: false, internalType: 'uint256', name: 'amountEth', type: 'uint256' },
       ],
       name: 'Rescued',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        { indexed: true, internalType: 'uint256', name: 'epoch', type: 'uint256' },
+        { indexed: false, internalType: 'uint256', name: 'Amount', type: 'uint256' },
+      ],
+      name: 'ReserveGasTransfer',
       type: 'event',
     },
     {
@@ -333,7 +272,16 @@ export const calculumVaultContract = {
     {
       anonymous: false,
       inputs: [
-        { indexed: true, internalType: 'address', name: 'caller', type: 'address' },
+        { indexed: false, internalType: 'address', name: '_wallet', type: 'address' },
+        { indexed: false, internalType: 'bool', name: '_whitelisted', type: 'bool' },
+      ],
+      name: 'WhitelistedUpdated',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
         { indexed: true, internalType: 'address', name: 'receiver', type: 'address' },
         { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
         { indexed: false, internalType: 'uint256', name: 'assets', type: 'uint256' },
@@ -448,20 +396,6 @@ export const calculumVaultContract = {
     },
     {
       inputs: [],
-      name: 'MIN_WALLET_BALANCE_ETH_TRANSFER_BOT',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'MIN_WALLET_BALANCE_USDC_TRANSFER_BOT',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
       name: 'PERFORMANCE_FEE_PERCENTAGE',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
@@ -469,14 +403,21 @@ export const calculumVaultContract = {
     },
     {
       inputs: [],
-      name: 'TARGET_WALLET_BALANCE_USDC_TRANSFER_BOT',
+      name: 'TRANSFER_BOT_MIN_WALLET_BALANCE_ETH',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'TOTAL_VAULT_TOKEN_SUPPLY',
+      inputs: [],
+      name: 'TRANSFER_BOT_MIN_WALLET_BALANCE_USDC',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'TRANSFER_BOT_TARGET_WALLET_BALANCE_USDC',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
@@ -484,6 +425,13 @@ export const calculumVaultContract = {
     {
       inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       name: 'VAULT_TOKEN_PRICE',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      name: 'VAULT_TOKEN_SUPPLY',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
@@ -534,7 +482,7 @@ export const calculumVaultContract = {
     {
       inputs: [
         { internalType: 'address', name: 'spender', type: 'address' },
-        { internalType: 'uint256', name: 'value', type: 'uint256' },
+        { internalType: 'uint256', name: 'amount', type: 'uint256' },
       ],
       name: 'approve',
       outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -605,6 +553,16 @@ export const calculumVaultContract = {
     },
     {
       inputs: [
+        { internalType: 'address', name: 'spender', type: 'address' },
+        { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' },
+      ],
+      name: 'decreaseAllowance',
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
         { internalType: 'uint256', name: '_assets', type: 'uint256' },
         { internalType: 'address', name: '_receiver', type: 'address' },
       ],
@@ -661,6 +619,16 @@ export const calculumVaultContract = {
       name: 'hasRole',
       outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
       stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        { internalType: 'address', name: 'spender', type: 'address' },
+        { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
+      ],
+      name: 'increaseAllowance',
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+      stateMutability: 'nonpayable',
       type: 'function',
     },
     {
@@ -722,20 +690,17 @@ export const calculumVaultContract = {
       type: 'function',
     },
     {
-      inputs: [],
-      name: 'limit',
-      outputs: [
-        { internalType: 'uint8', name: 'percentage', type: 'uint8' },
-        { internalType: 'uint256', name: 'timestamp', type: 'uint256' },
-      ],
+      inputs: [{ internalType: 'address', name: '', type: 'address' }],
+      name: 'maxDeposit',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'maxDeposit',
+      name: 'maxMint',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
+      stateMutability: 'pure',
       type: 'function',
     },
     {
@@ -753,6 +718,16 @@ export const calculumVaultContract = {
       type: 'function',
     },
     {
+      inputs: [
+        { internalType: 'uint256', name: '_shares', type: 'uint256' },
+        { internalType: 'address', name: '_receiver', type: 'address' },
+      ],
+      name: 'mint',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
       inputs: [],
       name: 'name',
       outputs: [{ internalType: 'string', name: '', type: 'string' }],
@@ -761,7 +736,7 @@ export const calculumVaultContract = {
     },
     {
       inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'netTransfer',
+      name: 'netTransferBalance',
       outputs: [
         { internalType: 'bool', name: 'pending', type: 'bool' },
         { internalType: 'bool', name: 'direction', type: 'bool' },
@@ -815,6 +790,13 @@ export const calculumVaultContract = {
     },
     {
       inputs: [{ internalType: 'uint256', name: 'shares', type: 'uint256' }],
+      name: 'previewMint',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: 'shares', type: 'uint256' }],
       name: 'previewRedeem',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
@@ -843,7 +825,7 @@ export const calculumVaultContract = {
     {
       inputs: [
         { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-        { internalType: 'address', name: 'callerConfirmation', type: 'address' },
+        { internalType: 'address', name: 'account', type: 'address' },
       ],
       name: 'renounceRole',
       outputs: [],
@@ -887,7 +869,7 @@ export const calculumVaultContract = {
       type: 'function',
     },
     {
-      inputs: [{ internalType: 'address', name: '_treasuryWallet', type: 'address' }],
+      inputs: [{ internalType: 'address', name: '_opzWallet', type: 'address' }],
       name: 'setOPZWallet',
       outputs: [],
       stateMutability: 'nonpayable',
@@ -903,6 +885,16 @@ export const calculumVaultContract = {
     {
       inputs: [{ internalType: 'address', name: '_treasuryWallet', type: 'address' }],
       name: 'setTreasuryWallet',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        { internalType: 'address', name: '_wallet', type: 'address' },
+        { internalType: 'bool', name: '_whitelisted', type: 'bool' },
+      ],
+      name: 'setWhitelisted',
       outputs: [],
       stateMutability: 'nonpayable',
       type: 'function',
@@ -945,7 +937,7 @@ export const calculumVaultContract = {
     {
       inputs: [
         { internalType: 'address', name: 'to', type: 'address' },
-        { internalType: 'uint256', name: 'value', type: 'uint256' },
+        { internalType: 'uint256', name: 'amount', type: 'uint256' },
       ],
       name: 'transfer',
       outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -956,7 +948,7 @@ export const calculumVaultContract = {
       inputs: [
         { internalType: 'address', name: 'from', type: 'address' },
         { internalType: 'address', name: 'to', type: 'address' },
-        { internalType: 'uint256', name: 'value', type: 'uint256' },
+        { internalType: 'uint256', name: 'amount', type: 'uint256' },
       ],
       name: 'transferFrom',
       outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -978,6 +970,13 @@ export const calculumVaultContract = {
       type: 'function',
     },
     { inputs: [], name: 'unpause', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+    {
+      inputs: [{ internalType: 'address', name: '', type: 'address' }],
+      name: 'whitelistedWallets',
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
     {
       inputs: [
         { internalType: 'uint256', name: '_assets', type: 'uint256' },

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { OptionsContext } from '../AppProviders'
-import BearAttack from '../common/Icons/BearAttack'
-import BearPassive from '../common/Icons/BearPassive'
+import BearAttack from '@/components/common/Icons/BearAttack'
+import BearPassive from '@/components/common/Icons/BearPassive'
+import { OptionsContext } from '@/contexts/OptionsContext'
 
 const options = [
   ['1W', 7],

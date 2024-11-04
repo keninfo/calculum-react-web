@@ -1,9 +1,7 @@
-import type { Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { parseEther } from 'viem'
 
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
-
-import { calculumVaultContract } from '@/contracts/calculumVault'
 
 interface WithdrawProps {
   amount: number
@@ -15,10 +13,10 @@ const useRedeemAssets = () => {
     hash,
   })
 
-  const redeemAssets = ({ amount, address }: WithdrawProps) => {
+  const redeemAssets = ({ amount, address }: WithdrawProps, contractAddress: Address, contractAbi: Abi) => {
     writeContract({
-      abi: calculumVaultContract.abi,
-      address: calculumVaultContract.address as Hash,
+      abi: contractAbi,
+      address: contractAddress as Hash,
       functionName: 'redeem',
       args: [parseEther(amount.toString()), address, address],
     })

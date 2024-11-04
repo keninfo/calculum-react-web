@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
 import Modal from '@/components/common/Modal'
-
-import Input from '../common/Input'
 
 const Index = ({
   handleCloseModal,

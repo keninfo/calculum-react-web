@@ -10,9 +10,10 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 
 import { useAccount } from 'wagmi'
 
-import { OptionsContext, ProContext } from '@/components/AppProviders'
 import Card from '@/components/common/Card'
-import { calculumVaultContract } from '@/contracts/calculumVault'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { ProContext } from '@/contexts/ProContext'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 const Transactions = () => {
@@ -44,28 +45,28 @@ const Transactions = () => {
 
         const [getWithdraws, getPendingWithdraws, getDeposits, getPendingDeposits] = await Promise.all([
           client.getLogs({
-            address: calculumVaultContract.address as Hash,
+            address: contractSmoothcoinBTC.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiWithdraw,
             args: { caller: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as Hash,
+            address: contractSmoothcoinBTC.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingWithdraw,
             args: { receiver: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as Hash,
+            address: contractSmoothcoinBTC.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiDeposit,
             args: { caller: address },
           }),
           client.getLogs({
-            address: calculumVaultContract.address as Hash,
+            address: contractSmoothcoinBTC.address as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingDeposit,

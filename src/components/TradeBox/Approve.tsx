@@ -1,23 +1,42 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import Link from 'next/link'
+
+import type { Abi, Address } from 'viem'
 
 import { type BaseError, useAccount } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
+import { OptionsContext } from '@/contexts/OptionsContext'
+import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import useApprove from '@/hooks/useApprove'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { AmountContext } from '.'
-import Input from '../common/Input'
 
 const Approve = () => {
+  const { coin, strategy } = useContext(OptionsContext)
+  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
+  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+
+  useEffect(() => {
+    const coinStrategy = coin + ' ' + strategy
+    if (coinStrategy === 'BTC Momentum') {
+      setContractAddress(contractMomentumBTC.address as Address)
+      setContractAbi(contractMomentumBTC.abi as Abi)
+    } else if (coinStrategy === 'BTC Smoothcoin') {
+      setContractAddress(contractSmoothcoinBTC.address as Address)
+      setContractAbi(contractSmoothcoinBTC.abi as Abi)
+    }
+  }, [coin, strategy])
+
+  const { SymbolAsset, BalanceAssets } = ContractReads(contractAddress, contractAbi)
   const { ApproveAssets, isPending, error, hash } = useApprove()
-  const { SymbolAsset, BalanceAssets } = ContractReads()
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
-
   const balanceAssets = BalanceAssets(address).data as bigint
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +85,7 @@ const Approve = () => {
         <AlternateButton handleClick={setMax}>MAX</AlternateButton>
       </div>
 
-      <PrimaryButton handleClick={() => ApproveAssets(amount)} disabled={isPending} className="mt-5">
+      <PrimaryButton handleClick={() => ApproveAssets(amount, contractAddress)} disabled={isPending} className="mt-5">
         {isPending ? 'Approving...' : 'Approve'}
       </PrimaryButton>
     </>
