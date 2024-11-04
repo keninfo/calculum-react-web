@@ -61,7 +61,7 @@ const Chart = () => {
   return (
     <div ref={parent}>
       <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
-        <div className="absolute right-5 top-5 z-50 hidden md:block">
+        <div className="absolute right-5 top-5 z-20 hidden md:block">
           <ChartOptions />
         </div>
         <p className="absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-white md:block">Return on Capital</p>

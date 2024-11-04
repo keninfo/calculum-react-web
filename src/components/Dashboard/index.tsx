@@ -26,10 +26,15 @@ const Dashboard = () => {
     <>
       {/* DESKTOP */}
       <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
-        <div className={`col-span-11 flex flex-col gap-4`}>
+        <div className={`z-50 col-span-11 -my-[1rem] flex flex-col bg-smoke md:sticky md:top-0`}>
+          <div className="h-[1rem] w-full bg-smoke"></div>
           <StrategyOptions />
+          <div className="h-[1rem] w-full bg-smoke"></div>
+        </div>
+        <div className={`col-span-11 flex flex-col`}>
           <StrategyInfoTitle />
         </div>
+
         <div className={`col-span-8 flex flex-col gap-4`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />

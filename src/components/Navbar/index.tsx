@@ -15,7 +15,7 @@ library.add(fas)
 
 const Sidebar = () => {
   return (
-    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:fixed" id="Navbar">
+    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:absolute" id="Navbar">
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
