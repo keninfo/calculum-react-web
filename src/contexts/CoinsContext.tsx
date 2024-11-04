@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from 'react'
 
 import { parseData, parseStaticData } from '@/utils/fetchTokensData'
 
-import d3 from 'd3'
+import * as d3 from 'd3'
 
 interface CoinsContextType {
   dates: Date[] | null
@@ -30,7 +30,7 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchDaily = async () => {
     const staticDataSrc = '/daily_prices_for_jesus.csv'
-    const liveDataSrc = `/live`
+    const liveDataSrc = `/daily_prices_for_jesus.csv`
 
     try {
       let liveData = await d3.csv(liveDataSrc)
