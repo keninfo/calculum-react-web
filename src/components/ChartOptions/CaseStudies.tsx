@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Select from '@/components/common/Select'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 const cases = ['Select timeframe', 'Market turned bear', 'Market turned bull']
 
 const CaseStudies = () => {
-  const { studyCase, setStudyCase } = useContext(OptionsContext)
+  const { studyCase, setStudyCase } = useOptionsStore()
 
   const handleCaseChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import {
   pct_change,
   calculateScaledReturnsLeverage,
@@ -15,7 +15,7 @@ import {
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 const RebalancingResults = () => {
-  const { window, rollingWindow, coin, studyCase, volatility } = useContext(OptionsContext)
+  const { window, rollingWindow, coin, studyCase, volatility } = useOptionsStore()
   const { values, coins } = useContext(CoinsContext)
 
   let selectedWindow = window

@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import {
@@ -50,7 +50,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
   const chartContainerRef2 = useRef<HTMLDivElement>(null)
   const chartInstance2 = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, studyCase, setWindow, setVolatility } = useContext(OptionsContext)
+  const { coin, window, rollingWindow, volatility, studyCase, setWindow, setVolatility } = useOptionsStore()
 
   const { pro } = useProStore()
 

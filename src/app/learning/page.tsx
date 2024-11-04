@@ -1,21 +1,21 @@
 'use client'
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Head from 'next/head'
 
 import type { Abi, Address } from 'viem'
 
 import MetaTags from '@/components/common/MetaTags'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 import Volatility from './volatility'
 
 const Page = () => {
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

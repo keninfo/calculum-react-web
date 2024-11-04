@@ -7,7 +7,7 @@ import React, { useContext, useState, useEffect } from 'react'
 
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
@@ -17,7 +17,7 @@ import RollingVol from './Charts/RollingVol'
 
 const Chart = () => {
   const [showSecondChart, setShowSecondChart] = useState<boolean>(true)
-  const { coin, setVolatility, strategy } = useContext(OptionsContext)
+  const { coin, setVolatility, strategy } = useOptionsStore()
 
   const { pro } = useProStore()
   const { dates, values, coins } = useContext(CoinsContext)

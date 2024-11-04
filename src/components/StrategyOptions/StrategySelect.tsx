@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Select from '@/components/common/Select'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 const strategies = ['Smoothcoin', 'Momentum']
 
 const StrategySelect = () => {
-  const { strategy, setStrategy } = useContext(OptionsContext)
+  const { strategy, setStrategy } = useOptionsStore()
 
   return <Select handleChange={(e) => setStrategy(e.target.value)} value={strategy} options={strategies} />
 }

@@ -3,16 +3,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import type { Address, Abi } from 'viem'
 
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { formatBalance } from '@/utils/formatters'
 
 import News from './News'
 
 const StrategyInfoTitle = () => {
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

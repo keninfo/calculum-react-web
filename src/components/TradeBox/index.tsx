@@ -1,7 +1,7 @@
 import type { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import type { Abi, Address } from 'viem'
@@ -10,10 +10,10 @@ import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 import Approve from './Approve'
 import ClaimAssets from './ClaimAssets'
@@ -65,7 +65,7 @@ const TradeBoxActionContainer = ({
 }
 
 const TradeBox = () => {
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

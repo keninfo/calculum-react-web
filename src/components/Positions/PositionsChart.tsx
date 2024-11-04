@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
@@ -28,7 +28,7 @@ const PositionsChart = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { rollingWindow, volatility } = useContext(OptionsContext)
+  const { rollingWindow, volatility } = useOptionsStore()
 
   const { pro } = useProStore()
   const { dates } = useContext(CoinsContext)

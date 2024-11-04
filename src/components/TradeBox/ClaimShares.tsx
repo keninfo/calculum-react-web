@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import type { Abi, Address } from 'viem'
 
@@ -6,11 +6,11 @@ import { useAccount, type BaseError } from 'wagmi'
 
 import AddToken from '@/components/common/AddToken'
 import { PrimaryButton } from '@/components/common/Buttons'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import useClaimShares from '@/hooks/useClaimShares'
 import ContractReads from '@/hooks/useContractReads'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatShares } from '@/utils/formatters'
 
@@ -18,7 +18,7 @@ type responseData = [number, bigint, bigint, bigint]
 
 const ClaimMint = () => {
   const { address } = useAccount()
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

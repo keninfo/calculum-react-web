@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import type { Abi, Address, Hash } from 'viem'
 import { createPublicClient, parseAbiItem } from 'viem'
@@ -7,10 +7,10 @@ import { arbitrumSepolia } from 'viem/chains'
 import { http, useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
 type responseData = [number, bigint, bigint, bigint]
@@ -24,7 +24,7 @@ type pendingDeposit = {
 }
 
 const Positions = () => {
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

@@ -7,11 +7,11 @@ import { type BaseError, useAccount } from 'wagmi'
 import Disclaimer from '@/components/Disclaimer'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import ContractReads from '@/hooks/useContractReads'
 import useDeposit from '@/hooks/useDeposit'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatBalance } from '@/utils/formatters'
 
@@ -20,7 +20,7 @@ import { AmountContext } from '.'
 type DepositData = [number, bigint, bigint, bigint]
 
 const DepositAssets = () => {
-  const { coin, strategy } = useContext(OptionsContext)
+  const { coin, strategy } = useOptionsStore()
   const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
   const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
 

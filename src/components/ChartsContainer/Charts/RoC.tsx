@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '@/utils/chartComputations'
@@ -43,7 +43,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useContext(OptionsContext)
+  const { coin, window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
 
   const { pro } = useProStore()
 

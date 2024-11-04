@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 import { PrimaryButton } from '../common/Buttons'
 
 const ShowCandle = () => {
-  const { showCandle, setShowCandle } = useContext(OptionsContext)
+  const { showCandle, setShowCandle } = useOptionsStore()
 
   return (
     <PrimaryButton

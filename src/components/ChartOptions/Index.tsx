@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import BearAttack from '@/components/common/Icons/BearAttack'
 import BearPassive from '@/components/common/Icons/BearPassive'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 const options = [
   ['1W', 7],
@@ -38,8 +38,7 @@ const DaySelectionButton = ({
 }
 
 const ChartOptions = () => {
-  const { window, setWindow } = useContext(OptionsContext)
-  const { studyCase, setStudyCase } = useContext(OptionsContext)
+  const { window, setWindow, studyCase, setStudyCase } = useOptionsStore()
   const [selected, setSelected] = useState<number>(0)
 
   useEffect(() => {

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 const SetRollingWindows = () => {
-  const { rollingWindow, setRollingWindow } = useContext(OptionsContext)
+  const { rollingWindow, setRollingWindow } = useOptionsStore()
 
   const numberValidation = (e: string) => {
     if (e === '') {

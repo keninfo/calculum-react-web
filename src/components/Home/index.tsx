@@ -1,15 +1,15 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import Card from '@/components/common/Card'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 
 const Index = () => {
-  const { setStrategy } = useContext(OptionsContext)
+  const { setStrategy } = useOptionsStore()
   const router = useRouter()
 
   const goTo = (selected: number) => {

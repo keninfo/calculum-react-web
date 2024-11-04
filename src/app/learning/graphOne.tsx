@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { OptionsContext } from '@/contexts/OptionsContext'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateRolling, pct_change } from '@/utils/chartComputations'
@@ -40,7 +40,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
   const { dates, values } = useContext(CoinsContext)
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
-  const { coin, rollingWindow, window, setWindow } = useContext(OptionsContext)
+  const { coin, rollingWindow, window, setWindow } = useOptionsStore()
   const { pro } = useProStore()
   const [max, setMax] = useState<number>(100)
   const [min, setMin] = useState<number>(0)
