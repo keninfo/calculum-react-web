@@ -89,11 +89,6 @@ const TradeBox = () => {
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
   const [amount, setAmount] = useState<number>(0)
-  const { setTransactionPending } = useContext(OptionsContext)
-
-  useEffect(() => {
-    setTransactionPending(true)
-  }, [step, setTransactionPending])
 
   useEffect(() => {
     if (userWithdrawalsStatus == 2 && userDepositStatus == 3) {

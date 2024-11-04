@@ -11,7 +11,6 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { OptionsContext } from '@/contexts/OptionsContext'
 import { ProContext } from '@/contexts/ProContext'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
@@ -20,7 +19,6 @@ const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
   const { pro } = useContext(ProContext)
-  const { transactionPending, setTransactionPending } = useContext(OptionsContext)
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -159,8 +157,7 @@ const Transactions = () => {
     if (isConnected && address) {
       fetchLogs()
     }
-    setTransactionPending(false)
-  }, [isConnected, address, pro, transactionPending, setTransactionPending])
+  }, [isConnected, address, pro])
 
   return (
     <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">

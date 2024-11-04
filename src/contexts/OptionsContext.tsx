@@ -16,8 +16,6 @@ interface OptionsContextType {
   setShowCandle: React.Dispatch<React.SetStateAction<boolean>>
   studyCase: number
   setStudyCase: React.Dispatch<React.SetStateAction<number>>
-  transactionPending: boolean
-  setTransactionPending: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const OptionsContext = createContext<OptionsContextType>({
@@ -35,8 +33,6 @@ export const OptionsContext = createContext<OptionsContextType>({
   setShowCandle: () => {},
   studyCase: 1,
   setStudyCase: () => {},
-  transactionPending: false,
-  setTransactionPending: () => {},
 })
 
 export const OptionsProvider = ({ children }: { children: ReactNode }) => {
@@ -47,7 +43,6 @@ export const OptionsProvider = ({ children }: { children: ReactNode }) => {
   const [volatility, setVolatility] = useState<number>(0.2)
   const [showCandle, setShowCandle] = useState<boolean>(false)
   const [studyCase, setStudyCase] = useState<number>(1)
-  const [transactionPending, setTransactionPending] = useState<boolean>(false)
 
   return (
     <OptionsContext.Provider
@@ -66,8 +61,6 @@ export const OptionsProvider = ({ children }: { children: ReactNode }) => {
         setShowCandle,
         studyCase,
         setStudyCase,
-        transactionPending,
-        setTransactionPending,
       }}
     >
       {children}
