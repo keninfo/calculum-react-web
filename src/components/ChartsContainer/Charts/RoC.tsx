@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext } from '@/contexts/OptionsContext'
-import { ProContext } from '@/contexts/ProContext'
+import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
@@ -44,7 +44,8 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { coin, window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useContext(OptionsContext)
-  const { pro } = useContext(ProContext)
+
+  const { pro } = useProStore()
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
 

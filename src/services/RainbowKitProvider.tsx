@@ -3,7 +3,7 @@
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 
-import React, { useContext, useEffect, useState, type ReactNode } from 'react'
+import React, { useEffect, useState, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -12,7 +12,7 @@ import { createWalletClient, custom } from 'viem'
 import { type State, WagmiProvider } from 'wagmi'
 import { arbitrumSepolia } from 'wagmi/chains'
 
-import { ProContext } from '@/contexts/ProContext'
+import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 
@@ -47,7 +47,7 @@ if (typeof window !== 'undefined' && window.ethereum) {
 const queryClient = new QueryClient()
 
 export default function RainbowKit({ children, initialState }: { children: ReactNode; initialState?: State }) {
-  const { pro } = useContext(ProContext)
+  const { pro } = useProStore()
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
 

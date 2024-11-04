@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { arbitrumSepolia } from '@wagmi/core/chains'
 
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Link from 'next/link'
 
@@ -11,14 +11,15 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { ProContext } from '@/contexts/ProContext'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
+import { useProStore } from '@/store/useProStore'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
-  const { pro } = useContext(ProContext)
+
+  const { pro } = useProStore()
 
   useEffect(() => {
     const fetchLogs = async () => {

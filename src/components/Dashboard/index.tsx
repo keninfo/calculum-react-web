@@ -14,10 +14,10 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { ProContext } from '@/contexts/ProContext'
+import { useProStore } from '@/store/useProStore'
 
 const Dashboard = () => {
-  const { pro } = useContext(ProContext)
+  const { pro } = useProStore()
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
@@ -26,7 +26,7 @@ const Dashboard = () => {
     <>
       {/* DESKTOP */}
       <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
-        <div className={`z-50 col-span-11 -my-[1rem] flex flex-col bg-smoke md:sticky md:top-0`}>
+        <div className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-smoke md:sticky md:top-0`}>
           <div className="h-[1rem] w-full bg-smoke"></div>
           <StrategyOptions />
           <div className="h-[1rem] w-full bg-smoke"></div>

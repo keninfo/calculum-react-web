@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { OptionsContext } from '@/contexts/OptionsContext'
-import { ProContext } from '@/contexts/ProContext'
+import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, hexToRGBA } from '@/utils/formatters'
@@ -33,7 +33,8 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const { coin, rollingWindow, window, studyCase } = useContext(OptionsContext)
-  const { pro } = useContext(ProContext)
+
+  const { pro } = useProStore()
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
 
