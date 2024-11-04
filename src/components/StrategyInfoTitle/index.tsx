@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-
-import type { Address, Abi } from 'viem'
+import React, { useContext } from 'react'
 
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { contractMomentumBTC } from '@/contracts/momentumBTC'
-import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
+import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { formatBalance } from '@/utils/formatters'
@@ -13,19 +10,7 @@ import News from './News'
 
 const StrategyInfoTitle = () => {
   const { coin, strategy } = useOptionsStore()
-  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
-  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
-
-  useEffect(() => {
-    const coinStrategy = coin + ' ' + strategy
-    if (coinStrategy === 'BTC Momentum') {
-      setContractAddress(contractMomentumBTC.address as Address)
-      setContractAbi(contractMomentumBTC.abi as Abi)
-    } else if (coinStrategy === 'BTC Smoothcoin') {
-      setContractAddress(contractSmoothcoinBTC.address as Address)
-      setContractAbi(contractSmoothcoinBTC.abi as Abi)
-    }
-  }, [coin, strategy])
+  const { contractAddress, contractAbi } = useContract()
 
   const { values } = useContext(CoinsContext)
   const { CurrentEpoch, EpochSharePrice } = ContractReads(contractAddress, contractAbi)

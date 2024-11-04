@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
-
-import type { Abi, Address } from 'viem'
+import React, { useEffect } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
 
 import AddToken from '@/components/common/AddToken'
 import { PrimaryButton } from '@/components/common/Buttons'
-import { contractMomentumBTC } from '@/contracts/momentumBTC'
-import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import useClaimShares from '@/hooks/useClaimShares'
+import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import createTransactionAlert from '@/utils/createTransactionAlert'
@@ -17,21 +14,9 @@ import { formatShares } from '@/utils/formatters'
 type responseData = [number, bigint, bigint, bigint]
 
 const ClaimMint = () => {
+  const { strategy } = useOptionsStore()
   const { address } = useAccount()
-  const { coin, strategy } = useOptionsStore()
-  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
-  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
-
-  useEffect(() => {
-    const coinStrategy = coin + ' ' + strategy
-    if (coinStrategy === 'BTC Momentum') {
-      setContractAddress(contractMomentumBTC.address as Address)
-      setContractAbi(contractMomentumBTC.abi as Abi)
-    } else if (coinStrategy === 'BTC Smoothcoin') {
-      setContractAddress(contractSmoothcoinBTC.address as Address)
-      setContractAbi(contractSmoothcoinBTC.abi as Abi)
-    }
-  }, [coin, strategy])
+  const { contractAddress, contractAbi } = useContract()
   const { ClaimShares, hash, error } = useClaimShares()
   const { IsClaimerMint, Deposits, SymbolShares } = ContractReads(contractAddress, contractAbi)
   const [, , userDepositsShares] = (Deposits(address).data || []) as responseData

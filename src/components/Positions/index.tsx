@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import type { Abi, Address, Hash } from 'viem'
+import type { Hash } from 'viem'
 import { createPublicClient, parseAbiItem } from 'viem'
 import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { contractMomentumBTC } from '@/contracts/momentumBTC'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
+import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useOptionsStore } from '@/store/useOptionsStore'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
 type responseData = [number, bigint, bigint, bigint]
@@ -24,20 +23,7 @@ type pendingDeposit = {
 }
 
 const Positions = () => {
-  const { coin, strategy } = useOptionsStore()
-  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
-  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
-
-  useEffect(() => {
-    const coinStrategy = coin + ' ' + strategy
-    if (coinStrategy === 'BTC Momentum') {
-      setContractAddress(contractMomentumBTC.address as Address)
-      setContractAbi(contractMomentumBTC.abi as Abi)
-    } else if (coinStrategy === 'BTC Smoothcoin') {
-      setContractAddress(contractSmoothcoinBTC.address as Address)
-      setContractAbi(contractSmoothcoinBTC.abi as Abi)
-    }
-  }, [coin, strategy])
+  const { contractAddress, contractAbi } = useContract()
 
   const { isConnected, address } = useAccount()
   const { Withdrawals, Deposits, ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch } = ContractReads(

@@ -1,37 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import Link from 'next/link'
-
-import type { Abi, Address } from 'viem'
 
 import { type BaseError, useAccount } from 'wagmi'
 
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
-import { contractMomentumBTC } from '@/contracts/momentumBTC'
-import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
 import useApprove from '@/hooks/useApprove'
+import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useOptionsStore } from '@/store/useOptionsStore'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { AmountContext } from '.'
 
 const Approve = () => {
-  const { coin, strategy } = useOptionsStore()
-  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
-  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
-
-  useEffect(() => {
-    const coinStrategy = coin + ' ' + strategy
-    if (coinStrategy === 'BTC Momentum') {
-      setContractAddress(contractMomentumBTC.address as Address)
-      setContractAbi(contractMomentumBTC.abi as Abi)
-    } else if (coinStrategy === 'BTC Smoothcoin') {
-      setContractAddress(contractSmoothcoinBTC.address as Address)
-      setContractAbi(contractSmoothcoinBTC.abi as Abi)
-    }
-  }, [coin, strategy])
+  const { contractAddress, contractAbi } = useContract()
 
   const { SymbolAsset, BalanceAssets } = ContractReads(contractAddress, contractAbi)
   const { ApproveAssets, isPending, error, hash } = useApprove()
