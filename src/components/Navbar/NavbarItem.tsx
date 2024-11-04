@@ -1,14 +1,9 @@
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-
 import React from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import type { NavigationItem } from './config'
-
-library.add(fas)
 
 const NavbarItem = (item: NavigationItem) => {
   const pathname = usePathname()

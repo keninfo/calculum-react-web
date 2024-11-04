@@ -1,8 +1,5 @@
 'use client'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-
 import React from 'react'
 
 import Image from 'next/image'
@@ -10,8 +7,6 @@ import Image from 'next/image'
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
-
-library.add(fas)
 
 const Sidebar = () => {
   return (
