@@ -35,24 +35,24 @@ const Index = ({
 
   return (
     <Modal onClose={handleCloseModal}>
-      <h2 className="my-[2vh] text-2xl text-carmesi">Approve Contract</h2>
+      <h2 className="my-[2vh] text-2xl text-primary">Approve Contract</h2>
       <p>
-        <b className="font-bold text-carmesi">First Step: </b>Approve the amount the contract is allowed to access
+        <b className="font-bold text-primary">First Step: </b>Approve the amount the contract is allowed to access
       </p>
       <p className="mb-[2vh]">
-        <b className="font-bold text-carmesi">Second Step: </b>Confirm deposit amount
+        <b className="font-bold text-primary">Second Step: </b>Confirm deposit amount
       </p>
       <Link
         href={'https://www.ledger.com/academy/ethereum-token-approvals-explained'}
         target="_blank"
-        className="cursor-pointer text-carmesi"
+        className="cursor-pointer text-primary"
       >
         Learn More
       </Link>
       <div className="mx-auto mt-[4vh] w-fit">
         <PrimaryButton
           handleClick={() => setSelected(0)}
-          className={`my-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 0 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105'}`}
+          className={`my-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 0 ? 'border-4 border-primary' : 'opacity-80 hover:scale-105'}`}
         >
           <p>
             Approve Maximum Deposit Amount <br /> $200
@@ -60,7 +60,7 @@ const Index = ({
         </PrimaryButton>
         <PrimaryButton
           handleClick={() => setSelected(1)}
-          className={`mb-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 1 ? 'border-4 border-carmesi' : 'opacity-80 hover:scale-105'}`}
+          className={`mb-[4vh] w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 1 ? 'border-4 border-primary' : 'opacity-80 hover:scale-105'}`}
         >
           <p>
             Approve Previously Chosen Amount
@@ -69,7 +69,7 @@ const Index = ({
         </PrimaryButton>
         <PrimaryButton
           handleClick={() => setSelected(2)}
-          className={`!block w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 2 ? '!rounded-b-none border-4 border-carmesi' : 'mb-[4vh] opacity-80 hover:scale-105'}`}
+          className={`!block w-[100%] overflow-hidden !rounded-lg px-[4vw] py-[2vh] ${selected == 2 ? '!rounded-b-none border-4 border-primary' : 'mb-[4vh] opacity-80 hover:scale-105'}`}
         >
           <p>Approve New amount</p>
         </PrimaryButton>
@@ -79,7 +79,7 @@ const Index = ({
             type={'number'}
             value={confirmedAmount}
             handleChange={handleSearch}
-            className="mb-[4vh] rounded-t-none border-carmesi text-center"
+            className="mb-[4vh] rounded-t-none border-primary text-center"
           />
         )}
       </div>

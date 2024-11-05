@@ -46,7 +46,7 @@ const Approve = () => {
         <Link
           href={'https://revoke.cash/learn/approvals/what-are-token-approvals'}
           target="_blank"
-          className="cursor-pointer text-carmesi"
+          className="cursor-pointer text-primary"
         >
           Why do I have to approve?
         </Link>

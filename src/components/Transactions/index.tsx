@@ -189,7 +189,7 @@ const Transactions = () => {
                         <td className="border-b border-greySmoke px-4 py-2">{log.type}</td>
                         <td className="border-b border-greySmoke px-4 py-2 text-right">{log.usdc}</td>
                         <td className="border-b border-greySmoke px-4 py-2 text-right">{log.smoothcoins}</td>
-                        <td className="cursor-pointer border-b border-greySmoke px-4 py-2 text-right hover:text-carmesi">
+                        <td className="cursor-pointer border-b border-greySmoke px-4 py-2 text-right hover:text-primary">
                           <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                             {shortenAddress(log.transactionHash)}
                           </Link>
@@ -205,19 +205,19 @@ const Transactions = () => {
                 {transactions.map((log, index) => (
                   <div key={index} className="mb-4 rounded-lg border-2 border-[#535E73] px-4 py-4">
                     <p className="text-center text-sm">
-                      <span className="font-bold text-carmesi">Date:</span> {log.date}
+                      <span className="font-bold text-primary">Date:</span> {log.date}
                     </p>
                     <p className="text-center text-sm">
-                      <span className="font-bold text-carmesi">Type:</span> {log.type}
+                      <span className="font-bold text-primary">Type:</span> {log.type}
                     </p>
                     <p className="text-center text-sm">
-                      <span className="font-bold text-carmesi">USDC:</span> {log.usdc}
+                      <span className="font-bold text-primary">USDC:</span> {log.usdc}
                     </p>
                     <p className="text-center text-sm">
-                      <span className="font-bold text-carmesi">Smoothcoins:</span> {log.smoothcoins}
+                      <span className="font-bold text-primary">Smoothcoins:</span> {log.smoothcoins}
                     </p>
                     <p className="text-center text-sm">
-                      <span className="font-bold text-carmesi">Transaction:</span>
+                      <span className="font-bold text-primary">Transaction:</span>
                       <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                         {shortenAddress(log.transactionHash)}
                       </Link>

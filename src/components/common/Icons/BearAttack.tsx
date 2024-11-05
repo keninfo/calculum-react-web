@@ -8,7 +8,7 @@ const BearAttack = ({ className }: { className: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     style={{ fillRule: 'evenodd', clipRule: 'evenodd', strokeLinejoin: 'round', strokeMiterlimit: 2 }}
-    className={`fill-carmesi ${className}`}
+    className={`fill-primary ${className}`}
   >
     <path
       fill="current"

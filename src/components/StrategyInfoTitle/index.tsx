@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 
 import { CoinsContext } from '@/contexts/CoinsContext'
 import useContract from '@/hooks/useContract'
@@ -8,65 +8,73 @@ import { formatBalance } from '@/utils/formatters'
 
 import News from './News'
 
+const placeholder = {
+  label: 'BTC Smoothcoin',
+  symbol: 'smBTC',
+  value: '0',
+  change: '0%',
+  token: 'BTC',
+  tokenValue: '0',
+  tokenChange: '0%',
+  active: true,
+  icon: '/bearLogo.png',
+}
+
 const StrategyInfoTitle = () => {
   const { coin, strategy } = useStrategyStore()
-  const { contractAddress, contractAbi } = useContract()
-
+  const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
   const { values } = useContext(CoinsContext)
+
   const { CurrentEpoch, EpochSharePrice } = ContractReads(contractAddress, contractAbi)
+  const epochNumber = useMemo(() => CurrentEpoch().data as bigint, [CurrentEpoch])
 
-  const epochNumber = CurrentEpoch().data as bigint
+  const daySharePrice = useMemo(
+    () => EpochSharePrice(Number(epochNumber) - 1).data as bigint,
+    [epochNumber, EpochSharePrice],
+  )
+  const previousDaySharePrice = useMemo(
+    () => EpochSharePrice(Number(epochNumber) - 4).data as bigint,
+    [epochNumber, EpochSharePrice],
+  )
 
-  const daySharePrice = EpochSharePrice(Number(epochNumber) - 1).data as bigint
-  const previousDaySharePrice = EpochSharePrice(Number(epochNumber) - 4).data as bigint
+  const pricePercentageChange = useMemo(() => {
+    return ((Number(daySharePrice) - Number(previousDaySharePrice)) / Number(previousDaySharePrice)) * 100
+  }, [daySharePrice, previousDaySharePrice])
 
-  const pricePercentageChange =
-    ((Number(daySharePrice) - Number(previousDaySharePrice)) / Number(previousDaySharePrice)) * 100
+  const strategyInfo = useMemo(() => {
+    if (!values) return placeholder
 
-  let BTCSmooth = {
-    label: 'BTC Smoothcoin',
-    value: 0,
-    change: '0%',
-    token: 'BTC',
-    tokenValue: '0',
-    tokenChange: '0%',
-    active: true,
-  }
-
-  if (values) {
     const previousValue = values[1][values[1].length - 2]
     const currentValue = values[1][values[1].length - 1]
 
     const tokenChangePercentage = ((currentValue - previousValue) / previousValue) * 100
 
-    BTCSmooth = {
-      label: 'BTC Smoothcoin',
-      value: 0,
-      change: '0',
-      token: 'BTC',
+    return {
+      label: `${strategy} ${coin}`,
+      symbol,
+      value: formatBalance(daySharePrice) as string,
+      change: `${pricePercentageChange.toFixed(2)}%`,
+      token: coin,
       tokenValue: currentValue.toLocaleString('en-US'),
-      tokenChange: tokenChangePercentage.toLocaleString('en-US') + '%',
-      active: true,
+      tokenChange: `${tokenChangePercentage.toFixed(2)}%`,
+      active: isWorking,
+      icon,
     }
-  }
+  }, [values, strategy, coin, symbol, daySharePrice, pricePercentageChange, isWorking, icon])
 
   return (
     <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
-      <img
-        src={`${strategy == 'Smoothcoin' ? '/bearLogo.png' : 'https://placehold.co/600x600/gold/black?text=M'}`}
-        width={50}
-        height={50}
-        alt="image"
-        className="m-auto rounded-full"
-      />
+      <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" />
       <div className="md:w-fit">
         <h2 className="w-full text-nowrap text-center text-3xl font-bold md:text-left md:text-4xl">
-          {strategy + ' ' + coin}
+          {strategyInfo.label}
         </h2>
-        <p className="w-full text-nowrap text-center text-xs text-yellow-300 md:text-left md:text-sm">
-          $ {formatBalance(daySharePrice)} ({pricePercentageChange.toFixed(2)}%) - BTC: ${BTCSmooth.tokenValue} (
-          {BTCSmooth.tokenChange}) - Last 24H
-        </p>
+        {values && (
+          <p className="w-full text-nowrap text-center text-xs text-yellow-300 md:text-left md:text-sm">
+            {strategyInfo.symbol}: ${strategyInfo.value} ({strategyInfo.change}) - {strategyInfo.token}: $
+            {strategyInfo.tokenValue} ({strategyInfo.tokenChange}) - Last 24H
+          </p>
+        )}
       </div>
       <News />
     </div>

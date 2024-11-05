@@ -15,23 +15,35 @@ import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
+  const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
 
   useEffect(() => {
     const storedPro = localStorage.getItem('pro')
+    const storedStrategy = localStorage.getItem('strategy')
+    const storedCoin = localStorage.getItem('coin')
     if (storedPro !== null) {
       setPro(JSON.parse(storedPro))
     }
-  }, [setPro])
+    if (storedStrategy !== null) {
+      setStrategy(JSON.parse(storedStrategy))
+    }
+    if (storedCoin !== null) {
+      setCoin(JSON.parse(storedCoin))
+    }
+  }, [setCoin, setPro, setStrategy])
 
   useEffect(() => {
     localStorage.setItem('pro', JSON.stringify(pro))
-  }, [pro])
+    localStorage.setItem('strategy', JSON.stringify(strategy))
+    localStorage.setItem('coin', JSON.stringify(coin))
+  }, [coin, pro, strategy])
 
   return (
     <>

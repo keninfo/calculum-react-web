@@ -24,7 +24,7 @@ const Sidebar = () => {
         <Image src="/wordmark.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
         <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
           <p>TESTNET</p>
-          <div className="h-3 w-3 animate-pulse rounded-full bg-carmesi"></div>
+          <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
         </div>
       </div>
     </div>

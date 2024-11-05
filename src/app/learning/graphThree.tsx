@@ -31,7 +31,7 @@ interface PriceChartData {
 interface ThemeColorsType {
   darkness: string
   smoke: string
-  carmesi: string
+  primary: string
   white: string
   greySmoke: string
 }
@@ -67,7 +67,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       setThemeColors({
         darkness: classicTheme.darkness,
         smoke: classicTheme.smoke,
-        carmesi: classicTheme.carmesi,
+        primary: classicTheme.primary,
         white: classicTheme.white,
         greySmoke: classicTheme.greySmoke,
       })
@@ -75,7 +75,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       setThemeColors({
         darkness: proTheme.darkness,
         smoke: proTheme.smoke,
-        carmesi: proTheme.carmesi,
+        primary: proTheme.primary,
         white: proTheme.white,
         greySmoke: proTheme.greySmoke,
       })
@@ -186,7 +186,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
     setResults(dailyReturn)
 
     const lineSeries1 = chartInstance2.current?.addLineSeries({
-      color: themeColors?.carmesi as string,
+      color: themeColors?.primary as string,
       priceScaleId: 'left',
 
       lastValueVisible: false,
@@ -208,7 +208,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
     }))
 
     const lineSeries3 = chartInstance.current?.addLineSeries({
-      color: themeColors?.carmesi,
+      color: themeColors?.primary,
       priceScaleId: 'left',
     })
 
@@ -268,7 +268,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         if (rolling !== undefined) {
           toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
                 RoC Scaled: ${scaled?.toFixed(0)}%</p>    
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
                 RoC Raw: ${rolling?.toFixed(0)}%</p>
@@ -511,8 +511,8 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
 
               <div className="mt-[2vh] block w-full">
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-1 w-[2vw] bg-carmesi"></div>
-                  <span className="text-sm text-carmesi">90-Day Rolling Volatility</span>
+                  <div className="h-1 w-[2vw] bg-primary"></div>
+                  <span className="text-sm text-primary">90-Day Rolling Volatility</span>
                 </div>
               </div>
             </div>
@@ -526,8 +526,8 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   </span>
                 </div>
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-1 w-[2vw] bg-carmesi"></div>
-                  <p className="text-sm text-carmesi">
+                  <div className="h-1 w-[2vw] bg-primary"></div>
+                  <p className="text-sm text-primary">
                     {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Smoothcoin -
                     RoC %
                   </p>
@@ -535,7 +535,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
               </div>
               <div className="mt-[4vh] flex items-center justify-center space-x-10">
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(30)}
                 >
                   <p className="text-lg">
@@ -544,7 +544,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   <p className="ml-2 text-xs">30</p>
                 </button>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
+                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(1)}
                 >
                   <p>
@@ -554,7 +554,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
 
                 <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
+                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(1)}
                 >
                   <p>
@@ -562,7 +562,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   </p>
                 </button>
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(30)}
                 >
                   <p className="mr-2 text-xs">30</p>
@@ -577,12 +577,12 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           {rawOnly ? (
             <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-carmesi px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility”
+                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility”
                 is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking
                 at the last 14 days daily return.
               </p>
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-carmesi">2</b>Calculate the average
+                <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>Calculate the average
                 return of the first of these 14 days using Standard Deviation.
               </p>
               <div className="mx-auto mt-[4vh] flex items-center justify-start">
@@ -616,12 +616,12 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           ) : (
             <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-carmesi px-[1vw] py-[1vh] text-white">1</b>If volatility target =
+                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>If volatility target =
                 20%.
               </p>
               {results && (
                 <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-                  <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-carmesi">2</b>
+                  <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>
                   <div>
                     <p>
                       Actual volatility ={' '}
@@ -673,7 +673,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                     </p>
                     <p className="mt-[2vh]">
                       We get that we must invest{' '}
-                      <b className="text-carmesi">
+                      <b className="text-primary">
                         {(
                           (20 /
                             (calculateStd(results.slice(results.length - 15, results.length - 2)) *
@@ -684,7 +684,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                         %
                       </b>{' '}
                       BTC and{' '}
-                      <b className="text-carmesi">
+                      <b className="text-primary">
                         {(
                           100 -
                           (20 /
@@ -704,7 +704,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           )}
         </div>
       ) : (
-        <p className="text-md text-center text-carmesi">Loading ... </p>
+        <p className="text-md text-center text-primary">Loading ... </p>
       )}
     </>
   )

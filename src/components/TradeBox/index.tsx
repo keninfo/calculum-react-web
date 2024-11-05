@@ -37,7 +37,7 @@ const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
       >
         <div className="h-4 w-4 bg-transparent"></div>
         {action}
-        <FontAwesomeIcon icon={['fas', 'check' as IconName]} className="h-4 text-carmesi" />
+        <FontAwesomeIcon icon={['fas', 'check' as IconName]} className="h-4 text-primary" />
       </button>
     )
   } else if (type == 1) {

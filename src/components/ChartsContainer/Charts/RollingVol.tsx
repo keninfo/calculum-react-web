@@ -25,7 +25,7 @@ interface ChartProps {
 interface ThemeColorsType {
   darkness: string
   smoke: string
-  carmesi: string
+  primary: string
   white: string
   greySmoke: string
 }
@@ -45,7 +45,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       setThemeColors({
         darkness: classicTheme.darkness,
         smoke: classicTheme.smoke,
-        carmesi: classicTheme.carmesi,
+        primary: classicTheme.primary,
         white: classicTheme.white,
         greySmoke: classicTheme.greySmoke,
       })
@@ -53,7 +53,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       setThemeColors({
         darkness: proTheme.darkness,
         smoke: proTheme.smoke,
-        carmesi: proTheme.carmesi,
+        primary: proTheme.primary,
         white: proTheme.white,
         greySmoke: proTheme.greySmoke,
       })

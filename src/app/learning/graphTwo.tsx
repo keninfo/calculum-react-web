@@ -31,7 +31,7 @@ interface PriceChartData {
 interface ThemeColorsType {
   darkness: string
   smoke: string
-  carmesi: string
+  primary: string
   white: string
   greySmoke: string
 }
@@ -66,7 +66,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       setThemeColors({
         darkness: classicTheme.darkness,
         smoke: classicTheme.smoke,
-        carmesi: classicTheme.carmesi,
+        primary: classicTheme.primary,
         white: classicTheme.white,
         greySmoke: classicTheme.greySmoke,
       })
@@ -74,7 +74,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       setThemeColors({
         darkness: proTheme.darkness,
         smoke: proTheme.smoke,
-        carmesi: proTheme.carmesi,
+        primary: proTheme.primary,
         white: proTheme.white,
         greySmoke: proTheme.greySmoke,
       })
@@ -185,7 +185,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
     setResults(dailyReturn)
 
     const lineSeries1 = chartInstance2.current?.addLineSeries({
-      color: themeColors?.carmesi as string,
+      color: themeColors?.primary as string,
       priceScaleId: 'left',
 
       lastValueVisible: false,
@@ -304,7 +304,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         if (rolling !== undefined) {
           toolTip2.innerHTML = `<div style="color: var(--color-white)">BTC</div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
           </div>`
@@ -345,7 +345,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         {
           time: formatDate(dates[endDate - 1 - 3]),
           position: 'aboveBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'arrowDown',
           text: '[2]',
         },
@@ -357,85 +357,85 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         {
           time: formatDate(dates[endDate - 14 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 13 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 12 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 11 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 10 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 9 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 8 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 7 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 6 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 5 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 4 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 3 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 2 - 3]),
           position: 'inBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'circle',
         },
         {
           time: formatDate(dates[endDate - 1 - 3]),
           position: 'aboveBar',
-          color: themeColors?.carmesi as string,
+          color: themeColors?.primary as string,
           shape: 'arrowDown',
           text: '[1]',
         },
@@ -491,7 +491,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   </span>
                 </div>
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-carmesi"></div>
+                  <div className="h-2 w-2 rounded-full bg-primary"></div>
                   <span className="text-sm">Rolling Window of 14 Days</span>
                 </div>
               </div>
@@ -501,8 +501,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
 
               <div className="mt-[2vh] block w-full">
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-1 w-[2vw] bg-carmesi"></div>
-                  <span className="text-sm text-carmesi">90-Day Rolling Volatility</span>
+                  <div className="h-1 w-[2vw] bg-primary"></div>
+                  <span className="text-sm text-primary">90-Day Rolling Volatility</span>
                 </div>
                 <div className="flex items-center justify-center space-x-2">
                   <div className="h-2 w-2 bg-white"></div>
@@ -511,7 +511,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
               </div>
               <div className="mt-[4vh] flex items-center justify-center space-x-10">
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(30)}
                 >
                   <p className="text-lg">
@@ -520,7 +520,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   <p className="ml-2 text-xs">30</p>
                 </button>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
+                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(1)}
                 >
                   <p>
@@ -530,7 +530,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
 
                 <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-carmesi"
+                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(1)}
                 >
                   <p>
@@ -538,7 +538,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   </p>
                 </button>
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-carmesi"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(30)}
                 >
                   <p className="mr-2 text-xs">30</p>
@@ -551,58 +551,58 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           </div>
           <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
             <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-carmesi px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility” is
+              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility” is
               the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at
               the last 14 days daily return.
             </p>
             <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-carmesi">2</b>
+              <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>
               <div>
                 <p>Calculate the average return of the first of these 14 days using Standard Deviation.</p>
                 <div className="mx-auto mt-[4vh] flex items-center justify-start">
                   {results && (
                     <ul className="border-r pr-[2vw] text-sm">
                       <li className="text-left">
-                        Day 1: <b className="text-carmesi">{(results[results.length - 15] * 100).toFixed(2)}%</b>
+                        Day 1: <b className="text-primary">{(results[results.length - 15] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 2: <b className="text-carmesi">{(results[results.length - 14] * 100).toFixed(2)}%</b>
+                        Day 2: <b className="text-primary">{(results[results.length - 14] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 3: <b className="text-carmesi">{(results[results.length - 13] * 100).toFixed(2)}%</b>
+                        Day 3: <b className="text-primary">{(results[results.length - 13] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 4: <b className="text-carmesi">{(results[results.length - 12] * 100).toFixed(2)}%</b>
+                        Day 4: <b className="text-primary">{(results[results.length - 12] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 5: <b className="text-carmesi">{(results[results.length - 11] * 100).toFixed(2)}%</b>
+                        Day 5: <b className="text-primary">{(results[results.length - 11] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 6: <b className="text-carmesi">{(results[results.length - 10] * 100).toFixed(2)}%</b>
+                        Day 6: <b className="text-primary">{(results[results.length - 10] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 7: <b className="text-carmesi">{(results[results.length - 9] * 100).toFixed(2)}%</b>
+                        Day 7: <b className="text-primary">{(results[results.length - 9] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 8: <b className="text-carmesi">{(results[results.length - 8] * 100).toFixed(2)}%</b>
+                        Day 8: <b className="text-primary">{(results[results.length - 8] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 9: <b className="text-carmesi">{(results[results.length - 7] * 100).toFixed(2)}%</b>
+                        Day 9: <b className="text-primary">{(results[results.length - 7] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 10: <b className="text-carmesi">{(results[results.length - 6] * 100).toFixed(2)}%</b>
+                        Day 10: <b className="text-primary">{(results[results.length - 6] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 11: <b className="text-carmesi">{(results[results.length - 5] * 100).toFixed(2)}%</b>
+                        Day 11: <b className="text-primary">{(results[results.length - 5] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 12: <b className="text-carmesi">{(results[results.length - 4] * 100).toFixed(2)}%</b>
+                        Day 12: <b className="text-primary">{(results[results.length - 4] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 13: <b className="text-carmesi">{(results[results.length - 3] * 100).toFixed(2)}%</b>
+                        Day 13: <b className="text-primary">{(results[results.length - 3] * 100).toFixed(2)}%</b>
                       </li>
                       <li className="text-left">
-                        Day 14: <b className="text-carmesi">{(results[results.length - 2] * 100).toFixed(2)}%</b>
+                        Day 14: <b className="text-primary">{(results[results.length - 2] * 100).toFixed(2)}%</b>
                       </li>
                     </ul>
                   )}
@@ -620,7 +620,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   )}
                 </div>
                 <p className="mx-auto mt-[4vh] text-justify text-xs">
-                  <b className="text-carmesi">Why did we choose a 14 day window ?</b>
+                  <b className="text-primary">Why did we choose a 14 day window ?</b>
                   <br /> This parameter closely approximates the one that maximized the Sharpe Ratio over a four-year
                   period. It was chosen based on fundamental reasoning rather than being an arbitrary selection; for
                   instance, a two-week lookback period is more logical and justifiable compared to 10 or 11 days.
@@ -630,7 +630,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           </div>
         </div>
       ) : (
-        <p className="text-md text-center text-carmesi">Loading ... </p>
+        <p className="text-md text-center text-primary">Loading ... </p>
       )}
     </>
   )

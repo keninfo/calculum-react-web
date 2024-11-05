@@ -19,7 +19,7 @@ interface PriceChartData {
 interface ThemeColorsType {
   darkness: string
   smoke: string
-  carmesi: string
+  primary: string
   white: string
   greySmoke: string
 }
@@ -40,7 +40,7 @@ const PositionsChart = () => {
       setThemeColors({
         darkness: classicTheme.darkness,
         smoke: classicTheme.smoke,
-        carmesi: classicTheme.carmesi,
+        primary: classicTheme.primary,
         white: classicTheme.white,
         greySmoke: classicTheme.greySmoke,
       })
@@ -48,7 +48,7 @@ const PositionsChart = () => {
       setThemeColors({
         darkness: proTheme.darkness,
         smoke: proTheme.smoke,
-        carmesi: proTheme.carmesi,
+        primary: proTheme.primary,
         white: proTheme.white,
         greySmoke: proTheme.greySmoke,
       })
@@ -85,7 +85,7 @@ const PositionsChart = () => {
     const datesFiltered = dates.slice(-7)
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
-      color: themeColors?.carmesi,
+      color: themeColors?.primary,
       priceScaleId: 'left',
     })
 
@@ -141,7 +141,7 @@ const PositionsChart = () => {
         if (rocScaled !== undefined) {
           toolTip.innerHTML = `<div style="color: var(--color-white)">${'BTC Smoothcoin'}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-carmesi); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
             Vol Scaled: ${(rocScaled / 100)?.toFixed(2)}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">

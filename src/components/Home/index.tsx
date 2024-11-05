@@ -57,7 +57,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <button className="mt-5 w-full rounded-lg bg-carmesi px-5 py-2 md:mt-0 md:w-fit" onClick={() => goTo(0)}>
+            <button className="mt-5 w-full rounded-lg bg-primary px-5 py-2 md:mt-0 md:w-fit" onClick={() => goTo(0)}>
               <p className="text-white">Start Trading</p>
             </button>
           </div>
@@ -84,7 +84,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <button className="mt-5 w-full rounded-lg bg-carmesi px-5 py-2 md:mt-0 md:w-fit" onClick={() => goTo(1)}>
+            <button className="mt-5 w-full rounded-lg bg-primary px-5 py-2 md:mt-0 md:w-fit" onClick={() => goTo(1)}>
               <p className="text-white">Start Trading</p>
             </button>
           </div>

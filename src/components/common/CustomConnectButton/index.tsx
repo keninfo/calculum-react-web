@@ -27,7 +27,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                 return (
                   <button
                     onClick={openConnectModal}
-                    className={`flex w-full justify-center rounded-lg bg-carmesi py-4 text-white hover:scale-105 hover:text-smoke`}
+                    className={`flex w-full justify-center rounded-lg bg-primary py-4 text-white hover:scale-105 hover:text-smoke`}
                   >
                     <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
                   </button>

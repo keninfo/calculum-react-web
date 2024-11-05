@@ -21,7 +21,7 @@ export const projectId = WALLET_CONNECT_PROJECT_ID
 interface ThemeColorsType {
   darkness: string
   smoke: string
-  carmesi: string
+  primary: string
   white: string
   greySmoke: string
 }
@@ -56,7 +56,7 @@ export default function RainbowKit({ children, initialState }: { children: React
       setThemeColors({
         darkness: classicTheme.darkness,
         smoke: classicTheme.smoke,
-        carmesi: classicTheme.carmesi,
+        primary: classicTheme.primary,
         white: classicTheme.white,
         greySmoke: classicTheme.greySmoke,
       })
@@ -64,7 +64,7 @@ export default function RainbowKit({ children, initialState }: { children: React
       setThemeColors({
         darkness: proTheme.darkness,
         smoke: proTheme.smoke,
-        carmesi: proTheme.carmesi,
+        primary: proTheme.primary,
         white: proTheme.white,
         greySmoke: proTheme.greySmoke,
       })
@@ -97,7 +97,7 @@ export default function RainbowKit({ children, initialState }: { children: React
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           modalSize="compact"
-          theme={darkTheme({ accentColor: themeColors?.carmesi, borderRadius: 'none' })}
+          theme={darkTheme({ accentColor: themeColors?.primary, borderRadius: 'none' })}
           appInfo={{
             appName: 'BearProtocol',
           }}

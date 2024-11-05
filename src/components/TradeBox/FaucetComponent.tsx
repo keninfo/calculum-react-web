@@ -121,7 +121,7 @@ const FaucetComponent = () => {
       {!isSending ? (
         <>
           <div className="flex items-center justify-center">
-            <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-carmesi' : 'bg-red-500'}`} />
+            <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-primary' : 'bg-red-500'}`} />
             <p className="ml-2 text-white">
               {isEligibleForEth ? 'Eligible to receive ETH' : 'Not eligible to receive ETH'}
             </p>
@@ -129,7 +129,7 @@ const FaucetComponent = () => {
           <p className="mx-auto text-center text-xs text-greySmoke">Your ETH Balance: {ethBalance.toFixed(6)} ETH</p>
         </>
       ) : (
-        <p className="text-center text-carmesi">Sending Gas Eth...</p>
+        <p className="text-center text-primary">Sending Gas Eth...</p>
       )}
       <div className="mt-5">
         <div className="mx-5 flex items-center justify-center border-b-2 border-[#535E73] px-2 pb-2">

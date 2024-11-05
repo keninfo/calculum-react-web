@@ -7,7 +7,7 @@ const generateCSS = () => {
 .classic {
   --color-darkness: ${classicTheme.darkness};
   --color-smoke: ${classicTheme.smoke};
-  --color-carmesi: ${classicTheme.carmesi};
+  --color-primary: ${classicTheme.primary};
   --color-white: ${classicTheme.white};
   --color-greySmoke: ${classicTheme.greySmoke};
 }
@@ -15,7 +15,7 @@ const generateCSS = () => {
 .pro {
   --color-darkness: ${proTheme.darkness};
   --color-smoke: ${proTheme.smoke};
-  --color-carmesi: ${proTheme.carmesi};
+  --color-primary: ${proTheme.primary};
   --color-white: ${proTheme.white};
   --color-greySmoke: ${proTheme.greySmoke};
 }
@@ -23,7 +23,7 @@ const generateCSS = () => {
 .light {
   --color-darkness: ${lightTheme.darkness};
   --color-smoke: ${lightTheme.smoke};
-  --color-carmesi: ${lightTheme.carmesi};
+  --color-primary: ${lightTheme.primary};
   --color-white: ${lightTheme.white};
   --color-greySmoke: ${lightTheme.greySmoke};
 }

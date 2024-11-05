@@ -17,7 +17,7 @@ const Index = ({
   return (
     <Modal onClose={handleCloseModal}>
       <div className="relative p-4">
-        <h2 className="my-[4vh] text-center text-2xl text-carmesi">Disclaimer and User Responsibility</h2>
+        <h2 className="my-[4vh] text-center text-2xl text-primary">Disclaimer and User Responsibility</h2>
         <div className="pointer-events-none absolute bottom-[15vh] left-0 h-[15vh] w-full"></div>
         <div className="h-[50vh] overflow-y-scroll px-[10%] text-justify">
           <p className="text-white">
@@ -25,7 +25,7 @@ const Index = ({
             This Minimum Viable Product (MVP) is for testing purposes only and has not undergone a formal security
             audit. Therefore, vulnerabilities may exist that could lead to asset loss.
           </p>
-          <h3 className="my-4 text-xl text-carmesi">No Guarantees and Liability</h3>
+          <h3 className="my-4 text-xl text-primary">No Guarantees and Liability</h3>
           <p className="text-white">
             {`This smart contract is provided "as-is" and "as-available" without any warranties, express or implied,
             including but not limited to implied warranties of merchantability, fitness for a particular purpose,
@@ -33,19 +33,19 @@ const Index = ({
             contract. The developers and contributors are not liable for any damages, including loss of profits,
             data, or other intangible losses resulting from the use or inability to use this smart contract.`}
           </p>
-          <h3 className="my-4 text-xl text-carmesi">Regulatory Compliance</h3>
+          <h3 className="my-4 text-xl text-primary">Regulatory Compliance</h3>
           <p className="text-white">
             {`Using this smart contract does not ensure compliance with any legal or regulatory requirements. Users are responsible for ensuring their use complies with all applicable laws and regulations in their jurisdiction.`}
           </p>
-          <h3 className="my-4 text-xl text-carmesi">Impermanent Loss</h3>
+          <h3 className="my-4 text-xl text-primary">Impermanent Loss</h3>
           <p className="text-white">
             {`Users should be aware of the risk of impermanent loss, which can occur when providing liquidity to automated market makers or similar DeFi protocols. The value of your assets may fluctuate based on market conditions and the behavior of other users.`}
           </p>
-          <h3 className="my-4 text-xl text-carmesi">Non-Audit Notice</h3>
+          <h3 className="my-4 text-xl text-primary">Non-Audit Notice</h3>
           <p className="text-white">
             {`This smart contract has not been audited. Unknown vulnerabilities or bugs may exist, potentially leading to the loss of funds. Users are strongly advised to use this contract for testing purposes only and not to deposit significant amounts of assets.`}
           </p>
-          <h3 className="my-4 text-xl text-carmesi">Conclusion</h3>
+          <h3 className="my-4 text-xl text-primary">Conclusion</h3>
           <p className="text-white">
             {`By interacting with this smart contract, you acknowledge that you have read, understood, and agree to all the terms outlined in this disclaimer. You accept the inherent risks and agree not to hold the developers, contributors, or associated parties liable for any losses or damages incurred.`}
           </p>
@@ -55,7 +55,7 @@ const Index = ({
               id="agree"
               checked={isAgreeChecked}
               onChange={handleAgreeChange}
-              className={`mr-5 h-5 w-5 rounded-xl border ${isAgreeChecked ? 'bg-carmesi' : ''}`}
+              className={`mr-5 h-5 w-5 rounded-xl border ${isAgreeChecked ? 'bg-primary' : ''}`}
             />
             <label htmlFor="agree" className="text-lg font-bold text-white">
               I have read and agree with the terms

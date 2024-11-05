@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         darkness: 'var(--color-darkness)',
         smoke: 'var(--color-smoke)',
-        carmesi: 'var(--color-carmesi)',
+        primary: 'var(--color-primary)',
         white: 'var(--color-white)',
         greySmoke: 'var(--color-greySmoke)',
       },

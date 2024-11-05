@@ -2,7 +2,7 @@
 .classic {
   --color-darkness: #1a2534;
   --color-smoke: #181818;
-  --color-carmesi: #24ac96;
+  --color-primary: #24ac96;
   --color-white: #f8f8f8;
   --color-greySmoke: #a0a0a0;
 }
@@ -10,7 +10,7 @@
 .pro {
   --color-darkness: #1a2534;
   --color-smoke: #111111;
-  --color-carmesi: #24ac96;
+  --color-primary: #24ac96;
   --color-white: #f8f8f8;
   --color-greySmoke: #a0a0a0;
 }
@@ -18,7 +18,7 @@
 .light {
   --color-darkness: #f9faf8;
   --color-smoke: #e8ebed;
-  --color-carmesi: #ef233c;
+  --color-primary: #ef233c;
   --color-white: #353839;
   --color-greySmoke: #999999;
 }

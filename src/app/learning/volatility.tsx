@@ -30,10 +30,10 @@ const Volatility = () => {
   return (
     <>
       <Card className="w-full bg-transparent">
-        <p className="mx-auto w-fit text-3xl text-carmesi">Smoothcoin & Volatility Targeting</p>
+        <p className="mx-auto w-fit text-3xl text-primary">Smoothcoin & Volatility Targeting</p>
         <div className="mx-auto mt-[4vh] w-[60%] space-y-[2vh] text-lg">
           <p className="text-justify">
-            Our first product are what we call <b className="text-carmesi">Smoothcoins</b>
+            Our first product are what we call <b className="text-primary">Smoothcoins</b>
           </p>
           <p className="text-justify">
             {`The math behind "Smoothcoin" is called "Volatility Targeting". There is a significant amount of
@@ -41,7 +41,7 @@ const Volatility = () => {
             <Link
               href="https://quantpedia.com/an-introduction-to-volatility-targeting/"
               target="_blank"
-              className="text-carmesi underline"
+              className="text-primary underline"
             >
               learn more about it
             </Link>{' '}
@@ -54,7 +54,7 @@ const Volatility = () => {
         <ul className="my-[6vh] flex w-[100%] items-start justify-around text-left">
           <Link
             href="#stepOne"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 1 : <br />
@@ -63,7 +63,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepTwo"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 2 : <br />
@@ -72,7 +72,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepThree"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-carmesi"
+            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 3 : <br /> We rebalance between the asset and cash.

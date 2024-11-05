@@ -54,7 +54,7 @@ const AddToken = ({
 
   return (
     <div>
-      <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-xs text-carmesi ${classname}`}>
+      <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-xs text-primary ${classname}`}>
         Add Token to Wallet
       </button>
     </div>
