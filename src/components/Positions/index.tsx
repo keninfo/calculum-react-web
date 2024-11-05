@@ -23,7 +23,7 @@ type pendingDeposit = {
 }
 
 const Positions = () => {
-  const { contractAddress, contractAbi } = useContract()
+  const { contractAddress, contractAbi, symbol } = useContract()
 
   const { isConnected, address } = useAccount()
   const { Withdrawals, Deposits, ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch } = ContractReads(
@@ -116,7 +116,7 @@ const Positions = () => {
       {openPositions ? (
         <Card title="OPEN POSITIONS" className="min-h-0 w-full grow">
           <p className="flex justify-between">
-            <b>Size:</b> {openPositions.toLocaleString('US')} scUSDc
+            <b>Size:</b> {openPositions.toLocaleString('US')} {symbol}
           </p>
           <p className="flex justify-between">
             <b>Collateral:</b> {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
