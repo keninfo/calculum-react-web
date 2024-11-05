@@ -45,7 +45,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
-  const { coin } = useStrategyStore()
+  const { coin, strategy } = useStrategyStore()
 
   const { pro } = useProStore()
 
@@ -341,13 +341,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       <div className="| absolute right-[2vw] top-0 md:left-[4vw] md:w-full">
         <div className="| flex items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-sm">
-            {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
-          </span>
+          <span className="text-sm">{coin} Raw Price</span>
         </div>
         <div className="| flex w-fit items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-primary"></div>
-          <p className="text-sm text-primary">{coin}</p>
+          <p className="text-sm text-primary">{strategy + ' ' + coin}</p>
         </div>
       </div>
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
