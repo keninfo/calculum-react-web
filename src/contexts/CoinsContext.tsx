@@ -30,7 +30,7 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchDaily = async () => {
     const staticDataSrc = '/daily_prices_for_jesus.csv'
-    const liveDataSrc = `/daily_prices_for_jesus.csv`
+    const liveDataSrc = `/live`
 
     try {
       let liveData = await d3.csv(liveDataSrc)
