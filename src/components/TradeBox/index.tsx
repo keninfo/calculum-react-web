@@ -74,7 +74,7 @@ const TradeBox = () => {
   const [amount, setAmount] = useState<number>(0)
 
   useEffect(() => {
-    if (userWithdrawalsStatus == 2 && userDepositStatus == 3) {
+    if ((userWithdrawalsStatus == 2 || userWithdrawalsStatus == 5) && userDepositStatus == 3) {
       setStep(6)
     } else if (userDepositStatus == 3 && Number(balanceSharesResult) / 1000000000000000000 > 1) {
       setStep(5)
