@@ -27,7 +27,7 @@ const RootLayout = ({
         <Watermark />
         <AppProviders>
           {pathname !== '/' && <Navbar />}
-          <div className="bg-smoke md:px-20">{children}</div>
+          <div className="bg-eerie md:px-20">{children}</div>
         </AppProviders>
       </body>
     </html>

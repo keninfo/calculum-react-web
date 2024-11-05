@@ -28,7 +28,7 @@ const DaySelectionButton = ({
     <li>
       <button onClick={() => handleSelection(days)}>
         <p
-          className={`${selected === selection ? 'border-b-2 border-primary text-primary' : 'text-white'} h-5 cursor-pointer px-1 pb-2`}
+          className={`${selected === selection ? 'border-b-2 border-primary text-primary' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
         >
           {string}
         </p>

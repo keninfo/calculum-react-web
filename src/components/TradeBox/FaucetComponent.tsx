@@ -121,7 +121,7 @@ const FaucetComponent = () => {
       {!isSending ? (
         <>
           <div className="flex items-center justify-center">
-            <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-primary' : 'bg-red-500'}`} />
+            <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-primary' : 'bg-fire'}`} />
             <p className="ml-2 text-offWhite">
               {isEligibleForEth ? 'Eligible to receive ETH' : 'Not eligible to receive ETH'}
             </p>
