@@ -19,6 +19,7 @@ const useContract = () => {
     chainId: contractSmoothcoinBTC.chainId,
     symbol: 'smBTC',
     icon: '/bearLogo.png',
+    info: '',
   })
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const useContract = () => {
     chainId: contractData.chainId,
     symbol: contractData.symbol,
     icon: contractData.icon,
+    info: contractData.info,
   }
 }
 

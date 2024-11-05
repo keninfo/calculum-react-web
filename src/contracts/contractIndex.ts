@@ -12,6 +12,7 @@ export interface contractType {
   chainId: string
   symbol: string
   icon: string
+  info: string
 }
 
 export const contractIndex = [
@@ -24,6 +25,7 @@ export const contractIndex = [
     chainId: contractSmoothcoinBTC.chainId,
     symbol: 'smBTC',
     icon: '/bearLogo.png',
+    info: 'Live your life without having to constantly check on the market.',
   },
   {
     isWorking: true,
@@ -33,7 +35,8 @@ export const contractIndex = [
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
     symbol: 'moBTC',
-    icon: 'https://placehold.co/600x600/salmon/black?text=M',
+    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi Strategy',
   },
   {
     isWorking: false,
@@ -41,9 +44,10 @@ export const contractIndex = [
     coin: 'ETH',
     abi: null,
     address: null,
-    chainId: null,
+    chainId: '421614',
     symbol: 'smETH',
     icon: '/bearLogo.png',
+    info: '',
   },
   {
     isWorking: false,
@@ -51,9 +55,10 @@ export const contractIndex = [
     coin: 'PEPE',
     abi: null,
     address: null,
-    chainId: null,
+    chainId: '421614',
     symbol: 'smPEPE',
     icon: '/bearLogo.png',
+    info: '',
   },
   {
     isWorking: false,
@@ -61,9 +66,10 @@ export const contractIndex = [
     coin: 'ETH',
     abi: null,
     address: null,
-    chainId: null,
+    chainId: '421614',
     symbol: 'moETH',
-    icon: 'https://placehold.co/600x600/gold/eerie?text=M',
+    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    info: '',
   },
   {
     isWorking: false,
@@ -71,8 +77,9 @@ export const contractIndex = [
     coin: 'PEPE',
     abi: null,
     address: null,
-    chainId: null,
+    chainId: '421614',
     symbol: 'moPEPE',
-    icon: 'https://placehold.co/600x600/gold/eerie?text=M',
+    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    info: '',
   },
 ]
