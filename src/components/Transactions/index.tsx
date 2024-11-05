@@ -11,13 +11,14 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
+import useContract from '@/hooks/useContract'
 import { useProStore } from '@/store/useProStore'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
+  const { contractAddress } = useContract()
 
   const { pro } = useProStore()
 
@@ -44,28 +45,28 @@ const Transactions = () => {
 
         const [getWithdraws, getPendingWithdraws, getDeposits, getPendingDeposits] = await Promise.all([
           client.getLogs({
-            address: contractSmoothcoinBTC.address as Hash,
+            address: contractAddress as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiWithdraw,
             args: { caller: address },
           }),
           client.getLogs({
-            address: contractSmoothcoinBTC.address as Hash,
+            address: contractAddress as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingWithdraw,
             args: { receiver: address },
           }),
           client.getLogs({
-            address: contractSmoothcoinBTC.address as Hash,
+            address: contractAddress as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiDeposit,
             args: { caller: address },
           }),
           client.getLogs({
-            address: contractSmoothcoinBTC.address as Hash,
+            address: contractAddress as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
             event: eventAbiPendingDeposit,
@@ -158,7 +159,7 @@ const Transactions = () => {
     if (isConnected && address) {
       fetchLogs()
     }
-  }, [isConnected, address, pro])
+  }, [isConnected, address, pro, contractAddress])
 
   return (
     <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">

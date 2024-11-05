@@ -1,28 +1,40 @@
+// useContract.ts
 import { useEffect, useState } from 'react'
 
-import type { Address, Abi } from 'viem'
+import type { Abi, Hash } from 'viem'
 
-import { contractMomentumBTC } from '@/contracts/momentumBTC'
+import type { contractType } from '@/contracts/contractIndex'
+import { contractIndex } from '@/contracts/contractIndex'
 import { contractSmoothcoinBTC } from '@/contracts/smoothcoinBTC'
-import { useOptionsStore } from '@/store/useOptionsStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
 const useContract = () => {
-  const { coin, strategy } = useOptionsStore()
-  const [contractAddress, setContractAddress] = useState<Address>(contractSmoothcoinBTC.address as Address)
-  const [contractAbi, setContractAbi] = useState<Abi>(contractSmoothcoinBTC.abi as Abi)
+  const { coin, strategy } = useStrategyStore()
+  const [contractData, setContractData] = useState<contractType>({
+    isWorking: true,
+    strategy: 'Smoothcoin',
+    coin: 'BTC',
+    abi: contractSmoothcoinBTC.abi as Abi,
+    address: contractSmoothcoinBTC.address as Hash,
+    chainId: contractSmoothcoinBTC.chainId,
+    symbol: 'smBTC',
+    icon: '/bearLogo.png',
+  })
 
   useEffect(() => {
-    const coinStrategy = `${coin} ${strategy}`
-    if (coinStrategy === 'BTC Momentum') {
-      setContractAddress(contractMomentumBTC.address as Address)
-      setContractAbi(contractMomentumBTC.abi as Abi)
-    } else if (coinStrategy === 'BTC Smoothcoin') {
-      setContractAddress(contractSmoothcoinBTC.address as Address)
-      setContractAbi(contractSmoothcoinBTC.abi as Abi)
-    }
+    const matchingContract = contractIndex.find((contract) => contract.coin === coin && contract.strategy === strategy)
+
+    setContractData(matchingContract as contractType)
   }, [coin, strategy])
 
-  return { contractAddress, contractAbi }
+  return {
+    contractAddress: contractData.address,
+    contractAbi: contractData.abi,
+    isWorking: contractData.isWorking,
+    chainId: contractData.chainId,
+    symbol: contractData.symbol,
+    icon: contractData.icon,
+  }
 }
 
 export default useContract

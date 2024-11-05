@@ -7,14 +7,14 @@ import { PrimaryButton } from '@/components/common/Buttons'
 import useClaimShares from '@/hooks/useClaimShares'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useOptionsStore } from '@/store/useOptionsStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 import { formatShares } from '@/utils/formatters'
 
 type responseData = [number, bigint, bigint, bigint]
 
 const ClaimMint = () => {
-  const { strategy } = useOptionsStore()
+  const { strategy } = useStrategyStore()
   const { address } = useAccount()
   const { contractAddress, contractAbi } = useContract()
   const { ClaimShares, hash, error } = useClaimShares()

@@ -3,13 +3,13 @@ import React, { useContext } from 'react'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useOptionsStore } from '@/store/useOptionsStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance } from '@/utils/formatters'
 
 import News from './News'
 
 const StrategyInfoTitle = () => {
-  const { coin, strategy } = useOptionsStore()
+  const { coin, strategy } = useStrategyStore()
   const { contractAddress, contractAbi } = useContract()
 
   const { values } = useContext(CoinsContext)

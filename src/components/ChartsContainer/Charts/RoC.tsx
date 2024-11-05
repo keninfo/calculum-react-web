@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateCumulativeReturns, calculateScaledReturnsLeverage, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, hexToRGBA } from '@/utils/formatters'
@@ -43,7 +44,8 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
+  const { window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
+  const { coin } = useStrategyStore()
 
   const { pro } = useProStore()
 

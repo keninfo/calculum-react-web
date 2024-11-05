@@ -1,11 +1,11 @@
-import type { Abi, Address, Hash } from 'viem'
+import type { Abi, Hash } from 'viem'
 import { parseEther, parseUnits } from 'viem'
 
 import { useReadContract } from 'wagmi'
 
 import { usdcContract } from '@/contracts/usdc'
 
-const useContractReads = (contractAddress: Address, contractAbi: Abi) => {
+const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
   const ContractGenesisEpoch = () => {
     const { data, isLoading, error } = useReadContract({
       abi: contractAbi,

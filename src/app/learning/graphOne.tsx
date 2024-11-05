@@ -9,6 +9,7 @@ import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/compon
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, formatDateAmerican, formatDateAmericanSimple, hexToRGBA } from '@/utils/formatters'
@@ -40,7 +41,8 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
   const { dates, values } = useContext(CoinsContext)
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
-  const { coin, rollingWindow, window, setWindow } = useOptionsStore()
+  const { rollingWindow, window, setWindow } = useOptionsStore()
+  const { coin } = useStrategyStore()
   const { pro } = useProStore()
   const [max, setMax] = useState<number>(100)
   const [min, setMin] = useState<number>(0)

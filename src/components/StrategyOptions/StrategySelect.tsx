@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Select from '@/components/common/Select'
-import { useOptionsStore } from '@/store/useOptionsStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
 const strategies = ['Smoothcoin', 'Momentum']
 
 const StrategySelect = () => {
-  const { strategy, setStrategy } = useOptionsStore()
+  const { strategy, setStrategy } = useStrategyStore()
 
   return <Select handleChange={(e) => setStrategy(e.target.value)} value={strategy} options={strategies} />
 }

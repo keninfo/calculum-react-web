@@ -9,6 +9,7 @@ import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 import ChartOptions from '../ChartOptions/Index'
@@ -17,7 +18,8 @@ import RollingVol from './Charts/RollingVol'
 
 const Chart = () => {
   const [showSecondChart, setShowSecondChart] = useState<boolean>(true)
-  const { coin, setVolatility, strategy } = useOptionsStore()
+  const { coin, strategy } = useStrategyStore()
+  const { setVolatility } = useOptionsStore()
 
   const { pro } = useProStore()
   const { dates, values, coins } = useContext(CoinsContext)

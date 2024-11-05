@@ -9,6 +9,7 @@ import { lineChartConfig, tooltipConfig, toolTipWidth, zeroLine } from '@/compon
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import {
   calculateCumulativeReturns,
@@ -49,8 +50,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
   const chartContainerRef2 = useRef<HTMLDivElement>(null)
   const chartInstance2 = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, window, rollingWindow, volatility, studyCase, setWindow, setVolatility } = useOptionsStore()
-
+  const { window, rollingWindow, volatility, studyCase, setWindow, setVolatility } = useOptionsStore()
+  const { coin } = useStrategyStore()
   const { pro } = useProStore()
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)

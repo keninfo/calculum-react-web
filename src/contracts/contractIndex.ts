@@ -1,4 +1,4 @@
-import type { Abi, Address } from 'viem'
+import type { Abi, Hash } from 'viem'
 
 import { contractMomentumBTC } from './momentumBTC'
 import { contractSmoothcoinBTC } from './smoothcoinBTC'
@@ -7,9 +7,9 @@ export interface contractType {
   isWorking: boolean
   strategy: string
   coin: string
-  abi: Abi | null
-  address: Address | null
-  chainId: string | null
+  abi: Abi
+  address: Hash
+  chainId: string
   symbol: string
   icon: string
 }

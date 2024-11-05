@@ -1,10 +1,6 @@
 import { create } from 'zustand'
 
 interface OptionsStore {
-  coin: string
-  setCoin: (coin: string) => void
-  strategy: string
-  setStrategy: (strategy: string) => void
   rollingWindow: number
   setRollingWindow: (rollingWindow: number) => void
   window: number
@@ -18,10 +14,6 @@ interface OptionsStore {
 }
 
 export const useOptionsStore = create<OptionsStore>((set) => ({
-  coin: 'BTC',
-  setCoin: (coin) => set({ coin }),
-  strategy: 'Smoothcoin',
-  setStrategy: (strategy) => set({ strategy }),
   rollingWindow: 14,
   setRollingWindow: (rollingWindow) => set({ rollingWindow }),
   window: 365,

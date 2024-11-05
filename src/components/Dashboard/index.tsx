@@ -2,7 +2,7 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
@@ -17,10 +17,21 @@ import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 
 const Dashboard = () => {
-  const { pro } = useProStore()
+  const { pro, setPro } = useProStore()
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
+
+  useEffect(() => {
+    const storedPro = localStorage.getItem('pro')
+    if (storedPro !== null) {
+      setPro(JSON.parse(storedPro))
+    }
+  }, [setPro])
+
+  useEffect(() => {
+    localStorage.setItem('pro', JSON.stringify(pro))
+  }, [pro])
 
   return (
     <>

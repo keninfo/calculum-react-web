@@ -6,10 +6,10 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import Card from '@/components/common/Card'
-import { useOptionsStore } from '@/store/useOptionsStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
 const Index = () => {
-  const { setStrategy } = useOptionsStore()
+  const { setStrategy } = useStrategyStore()
   const router = useRouter()
 
   const goTo = (selected: number) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { calculateRolling, pct_change } from '@/utils/chartComputations'
 import { formatDate, hexToRGBA } from '@/utils/formatters'
@@ -32,7 +33,8 @@ interface ThemeColorsType {
 const RollingVol = ({ dates, seriesData }: ChartProps) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
-  const { coin, rollingWindow, window, studyCase } = useOptionsStore()
+  const { rollingWindow, window, studyCase } = useOptionsStore()
+  const { coin } = useStrategyStore()
 
   const { pro } = useProStore()
 
