@@ -3,7 +3,7 @@ import React from 'react'
 import Chevron from '@/components/common/Icons/Chevron'
 
 type SelectProps = {
-  handleChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void // now required
   value: string | number
   options: string[] | number[]
   className?: string

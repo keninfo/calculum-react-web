@@ -5,6 +5,8 @@ interface StrategyStore {
   setCoin: (coin: string) => void
   strategy: string
   setStrategy: (strategy: string) => void
+  network: string
+  setNetwork: (strategy: string) => void
 }
 
 export const useStrategyStore = create<StrategyStore>((set) => ({
@@ -12,4 +14,6 @@ export const useStrategyStore = create<StrategyStore>((set) => ({
   setCoin: (coin) => set({ coin }),
   strategy: 'Momentum',
   setStrategy: (strategy) => set({ strategy }),
+  network: 'Arb. Sepolia',
+  setNetwork: (strategy) => set({ strategy }),
 }))
