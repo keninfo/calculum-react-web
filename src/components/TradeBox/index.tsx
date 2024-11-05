@@ -32,7 +32,7 @@ const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
   if (type == 0) {
     return (
       <button
-        className="my-2 flex w-full items-center justify-between rounded-md bg-[#343D4F] px-4 py-2 text-center text-grey"
+        className="my-2 flex w-full items-center justify-between rounded-md bg-payne px-4 py-2 text-center text-grey"
         disabled
       >
         <div className="h-4 w-4 bg-transparent"></div>

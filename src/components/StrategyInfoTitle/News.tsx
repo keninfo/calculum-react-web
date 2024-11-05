@@ -50,7 +50,7 @@ const NewsTicker = () => {
         {isMaintenance &&
           maintenanceMessage.map((item, index) => (
             <span key={index} className="mr-4 flex items-center justify-center">
-              <span className="font-bold text-[#FF5555]">{item}</span>
+              <span className="font-bold text-fire">{item}</span>
               <span className="ml-4">-</span>
             </span>
           ))}
@@ -58,7 +58,7 @@ const NewsTicker = () => {
         {isMaintenance &&
           maintenanceMessage.map((item, index) => (
             <span key={`${index}-duplicate`} className="mr-4 flex items-center justify-center">
-              <span className="font-bold text-[#FF5555]">{item}</span>
+              <span className="font-bold text-fire">{item}</span>
               <span className="ml-4">-</span>
             </span>
           ))}

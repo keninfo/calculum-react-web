@@ -128,27 +128,25 @@ const RebalancingResults = () => {
       {values && (
         <Card className="h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
           <p>
-            Sharpe Ratio, Raw: <b className={`${rawSharpe < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawSharpe}</b>
+            Sharpe Ratio, Raw: <b className={`${rawSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{rawSharpe}</b>
           </p>
           <p>
-            Constant Volatility:{' '}
-            <b className={`${scaledSharpe < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledSharpe}</b>
+            Constant Volatility: <b className={`${scaledSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{scaledSharpe}</b>
           </p>
 
           <p className="mt-[2vh]">
-            CAGR, Raw: <b className={`${rawCAGR < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawCAGR}%</b>
+            CAGR, Raw: <b className={`${rawCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{rawCAGR}%</b>
           </p>
           <p>
-            Constant Volatility: <b className={`${scaledCAGR < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledCAGR}%</b>
+            Constant Volatility: <b className={`${scaledCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{scaledCAGR}%</b>
           </p>
 
           <p className="mt-[2vh]">
-            Largest Drawdown, Raw:{' '}
-            <b className={`${Number(rawDDMax) < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawDDMax}%</b>
+            Largest Drawdown, Raw: <b className={`${Number(rawDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{rawDDMax}%</b>
           </p>
           <p>
             Constant Volatility:{' '}
-            <b className={`${Number(scaledDDMax) < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledDDMax}%</b>
+            <b className={`${Number(scaledDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{scaledDDMax}%</b>
           </p>
           {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
         <div className="block space-y-1 w-fit">

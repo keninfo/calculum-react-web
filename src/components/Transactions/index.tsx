@@ -166,7 +166,7 @@ const Transactions = () => {
       {isConnected ? (
         <div className="w-full md:mt-[4vh]">
           {transactions.length === 0 ? (
-            <p className="mb-5 text-center text-2xl text-true">You currently have no transactions.</p>
+            <p className="mb-5 text-center text-2xl text-burnt">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
               <div className="hidden overflow-x-auto md:block">
@@ -229,7 +229,7 @@ const Transactions = () => {
       ) : (
         <div className="flex items-center justify-center">
           <div className="mt-[2vh] space-y-4 text-center">
-            <p className="my-[4vh] text-center text-2xl text-[#DF7153]">Connect a wallet to see your transactions</p>
+            <p className="my-[4vh] text-center text-2xl text-true">Connect a wallet to see your transactions</p>
           </div>
         </div>
       )}

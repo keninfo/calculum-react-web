@@ -41,7 +41,7 @@ const Modal = ({ children, closeMessage, onClose }: ModalProps) => {
         <div ref={modalRef} className="z-40 w-full rounded-xl bg-eerie drop-shadow-xl md:h-fit md:w-[50vw]">
           <button
             onClick={handleClose}
-            className="absolute -top-[8vh] left-1/2 z-50 -translate-x-1/2 translate-y-[4vh] font-bold text-[#ffffff]"
+            className="absolute -top-[8vh] left-1/2 z-50 -translate-x-1/2 translate-y-[4vh] font-bold text-offWhite"
           >
             {closeMessage ? closeMessage : 'CLOSE'}
           </button>
