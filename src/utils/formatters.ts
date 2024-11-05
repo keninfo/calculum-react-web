@@ -146,7 +146,7 @@ export function timeToWordDate(time: string): string {
 }
 
 export function hexToRGBA(hex: string, opacity: number) {
-  if (hex == undefined) return 'white'
+  if (hex == undefined) return 'offWhite'
   hex = hex.replace(/^#/, '')
 
   // Parse the r, g, b values

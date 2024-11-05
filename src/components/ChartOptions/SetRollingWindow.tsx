@@ -25,7 +25,7 @@ const SetRollingWindows = () => {
 
   return (
     <input
-      className="h-fit border border-white bg-smoke px-1 py-0.5 text-center text-sm text-white"
+      className="h-fit border border-offWhite bg-dark px-1 py-0.5 text-center text-sm text-offWhite"
       type="text"
       id="days"
       value={rollingWindow}

@@ -29,11 +29,11 @@ interface PriceChartData {
 }
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 interface GraphTwoProps {
@@ -64,19 +64,19 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])
@@ -104,7 +104,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         leftPriceScale: {
           ...lineChartConfig.leftPriceScale,
@@ -112,7 +112,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -140,11 +140,11 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -197,7 +197,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
     }))
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: themeColors?.white,
+      color: themeColors?.offWhite,
       priceScaleId: 'left',
     })
 
@@ -225,8 +225,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       ...tooltipConfig,
     })
 
-    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip.style.color = 'var(--color-white)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -248,9 +248,9 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           : undefined
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
         if (rolling !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+          toolTip.innerHTML = `<div style="color: var(--color-offWhite)">BTC</div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-eerie); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
                 Daily Return: ${rolling?.toFixed(0)}%</p>
               ${dateStr}
             </div>`
@@ -278,8 +278,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       ...tooltipConfig,
     })
 
-    toolTip2.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip2.style.color = 'var(--color-white)'
+    toolTip2.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip2.style.color = 'var(--color-offWhite)'
 
     chartContainerRef2.current?.appendChild(toolTip2)
 
@@ -302,8 +302,8 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rolling !== undefined) {
-          toolTip2.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          toolTip2.innerHTML = `<div style="color: var(--color-offWhite)">BTC</div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-eerie); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
@@ -339,7 +339,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       lineSeries1.createPriceLine({
         ...zeroLine,
         price: 0,
-        color: hexToRGBA(themeColors?.white as string, 0.25),
+        color: hexToRGBA(themeColors?.offWhite as string, 0.25),
       })
       lineSeries1.setMarkers([
         {
@@ -480,11 +480,11 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
       {values && dates ? (
         <div className="flex items-start justify-between">
           <div className="mt-[3vh]">
-            <div className="rounded-lg bg-smoke p-[5vh]">
+            <div className="rounded-lg bg-eerie p-[5vh]">
               <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
               <div className="mt-[2vh] block w-full">
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-1 w-[2vw] bg-white"></div>
+                  <div className="h-1 w-[2vw] bg-offWhite"></div>
                   <span className="text-sm">
                     {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - Daily Returns
                     %
@@ -496,7 +496,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                 </div>
               </div>
             </div>
-            <div className="rounded-lg bg-smoke p-[5vh]">
+            <div className="rounded-lg bg-eerie p-[5vh]">
               <div ref={chartContainerRef2} style={{ width: '100%', height: '100%', position: 'relative' }} />
 
               <div className="mt-[2vh] block w-full">
@@ -505,13 +505,13 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   <span className="text-sm text-primary">90-Day Rolling Volatility</span>
                 </div>
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-2 w-2 bg-white"></div>
-                  <p className="text-sm text-white">BTC “Actual vol”</p>
+                  <div className="h-2 w-2 bg-offWhite"></div>
+                  <p className="text-sm text-offWhite">BTC “Actual vol”</p>
                 </div>
               </div>
               <div className="mt-[4vh] flex items-center justify-center space-x-10">
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(30)}
                 >
                   <p className="text-lg">
@@ -520,7 +520,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   <p className="ml-2 text-xs">30</p>
                 </button>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                  className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(1)}
                 >
                   <p>
@@ -528,9 +528,9 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   </p>
                 </button>
 
-                <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
+                <p className="rounded-md text-sm text-grey">{getDates()}</p>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                  className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(1)}
                 >
                   <p>
@@ -538,7 +538,7 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
                   </p>
                 </button>
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(30)}
                 >
                   <p className="mr-2 text-xs">30</p>
@@ -551,12 +551,12 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           </div>
           <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
             <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility” is
-              the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at
+              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>The “Actual Volatility”
+              is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at
               the last 14 days daily return.
             </p>
             <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>
+              <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>
               <div>
                 <p>Calculate the average return of the first of these 14 days using Standard Deviation.</p>
                 <div className="mx-auto mt-[4vh] flex items-center justify-start">

@@ -32,7 +32,7 @@ const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
   if (type == 0) {
     return (
       <button
-        className="my-2 flex w-full items-center justify-between rounded-md bg-[#343D4F] px-4 py-2 text-center text-[#888E96]"
+        className="my-2 flex w-full items-center justify-between rounded-md bg-[#343D4F] px-4 py-2 text-center text-grey"
         disabled
       >
         <div className="h-4 w-4 bg-transparent"></div>
@@ -43,7 +43,7 @@ const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
   } else if (type == 1) {
     return (
       <button
-        className="my-2 flex w-full items-center justify-center rounded-md bg-[#535E73] px-4 py-2 text-center text-[#888E96]"
+        className="my-2 flex w-full items-center justify-center rounded-md bg-payne px-4 py-2 text-center text-grey"
         disabled
       >
         {action}
@@ -57,7 +57,7 @@ const TradeBoxActionContainer = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
-  return <div className="my-5 h-fit w-full rounded-lg border-2 border-[#535E73] p-5">{children}</div>
+  return <div className="my-5 h-fit w-full rounded-lg border-2 border-payne p-5">{children}</div>
 }
 
 const TradeBox = () => {

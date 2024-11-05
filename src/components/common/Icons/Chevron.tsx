@@ -14,7 +14,7 @@ const Chevron: React.FC<ChevronIconProps> = () => {
       stroke="current"
       width="14"
       height="14"
-      className="fill-none stroke-white"
+      className="fill-none stroke-offWhite"
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
     </svg>

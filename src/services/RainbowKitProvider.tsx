@@ -19,11 +19,11 @@ import { WALLET_CONNECT_PROJECT_ID } from '@/utils/constants'
 export const projectId = WALLET_CONNECT_PROJECT_ID
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 if (!projectId) throw new Error('Project ID is not defined')
@@ -54,19 +54,19 @@ export default function RainbowKit({ children, initialState }: { children: React
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])

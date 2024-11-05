@@ -74,12 +74,12 @@ export const tooltipConfig = {
   left: '12px',
   pointerEvents: 'none',
   fontFamily: '-apple-system, BlinkMacSystemFont, Montserrat, Roboto, Ubuntu, sans-serif',
-  color: 'white',
+  color: 'offWhite',
 }
 
 export const zeroLine = {
   price: 100,
-  color: 'white',
+  color: 'offWhite',
   lineWidth: 2 as LineWidth,
   lineStyle: 0,
   axisLabelVisible: false,

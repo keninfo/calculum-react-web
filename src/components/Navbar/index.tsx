@@ -10,7 +10,7 @@ import { navigationItems } from './config'
 
 const Sidebar = () => {
   return (
-    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-smoke md:absolute" id="Navbar">
+    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-eerie md:absolute" id="Navbar">
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
@@ -22,7 +22,7 @@ const Sidebar = () => {
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
         <Image src="/wordmark.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
-        <div className="text-md flex w-full items-center justify-end space-x-2 text-white">
+        <div className="text-md flex w-full items-center justify-end space-x-2 text-offWhite">
           <p>TESTNET</p>
           <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
         </div>

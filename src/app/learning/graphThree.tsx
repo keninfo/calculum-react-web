@@ -29,11 +29,11 @@ interface PriceChartData {
 }
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 interface GraphThreeProps {
@@ -65,19 +65,19 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])
@@ -105,7 +105,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         leftPriceScale: {
           ...lineChartConfig.leftPriceScale,
@@ -113,7 +113,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -141,11 +141,11 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -198,7 +198,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
     }))
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: themeColors?.white,
+      color: themeColors?.offWhite,
       priceScaleId: 'left',
     })
 
@@ -239,8 +239,8 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       ...tooltipConfig,
     })
 
-    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip.style.color = 'var(--color-white)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -266,11 +266,11 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         const scaled = data2?.value !== undefined ? data2.value : data2?.close
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
         if (rolling !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          toolTip.innerHTML = `<div style="color: var(--color-offWhite)">BTC</div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-eerie); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
                 RoC Scaled: ${scaled?.toFixed(0)}%</p>    
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
                 RoC Raw: ${rolling?.toFixed(0)}%</p>
                 
               ${dateStr}
@@ -299,8 +299,8 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       ...tooltipConfig,
     })
 
-    toolTip2.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip2.style.color = 'var(--color-white)'
+    toolTip2.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip2.style.color = 'var(--color-offWhite)'
 
     chartContainerRef2.current?.appendChild(toolTip2)
 
@@ -323,8 +323,8 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rolling !== undefined) {
-          toolTip2.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          toolTip2.innerHTML = `<div style="color: var(--color-offWhite)">BTC</div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-eerie); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             <p style="font-size: 10px; margin: 4px 0px; color: SteelBlue; font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
@@ -360,13 +360,13 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       lineSeries1.createPriceLine({
         ...zeroLine,
         price: 0,
-        color: hexToRGBA(themeColors?.white as string, 0.25),
+        color: hexToRGBA(themeColors?.offWhite as string, 0.25),
       })
       lineSeries1.setMarkers([
         {
           time: formatDate(dates[endDate - 1 - 1]),
           position: 'aboveBar',
-          color: 'white',
+          color: 'offWhite',
           shape: 'arrowDown',
           text: '[2]',
         },
@@ -464,7 +464,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
     }
 
     if (lineSeries3 && !rawOnly) {
-      lineSeries3.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
+      lineSeries3.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.offWhite as string, 0.25) })
     }
 
     return () => {
@@ -506,7 +506,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
       {values && dates ? (
         <div className="flex items-start justify-between">
           <div className="mt-[3vh]">
-            <div className="rounded-lg bg-smoke p-[5vh]">
+            <div className="rounded-lg bg-eerie p-[5vh]">
               <div ref={chartContainerRef2} style={{ width: '100%', height: '100%', position: 'relative' }} />
 
               <div className="mt-[2vh] block w-full">
@@ -516,11 +516,11 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                 </div>
               </div>
             </div>
-            <div className="rounded-lg bg-smoke p-[5vh]">
+            <div className="rounded-lg bg-eerie p-[5vh]">
               <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
               <div className="mt-[2vh] block w-full">
                 <div className="flex items-center justify-center space-x-2">
-                  <div className="h-1 w-[2vw] bg-white"></div>
+                  <div className="h-1 w-[2vw] bg-offWhite"></div>
                   <span className="text-sm">
                     {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} - RoC %
                   </span>
@@ -535,7 +535,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
               </div>
               <div className="mt-[4vh] flex items-center justify-center space-x-10">
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(30)}
                 >
                   <p className="text-lg">
@@ -544,7 +544,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   <p className="ml-2 text-xs">30</p>
                 </button>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                  className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(1)}
                 >
                   <p>
@@ -552,9 +552,9 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   </p>
                 </button>
 
-                <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
+                <p className="rounded-md text-sm text-grey">{getDates()}</p>
                 <button
-                  className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                  className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(1)}
                 >
                   <p>
@@ -562,7 +562,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   </p>
                 </button>
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                  className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => incrementDate(30)}
                 >
                   <p className="mr-2 text-xs">30</p>
@@ -577,12 +577,12 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           {rawOnly ? (
             <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>The “Actual Volatility”
-                is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking
-                at the last 14 days daily return.
+                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>The “Actual
+                Volatility” is the standard deviation of the daily returns of BTC over a specific period. Its calculated
+                by looking at the last 14 days daily return.
               </p>
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>Calculate the average
+                <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>Calculate the average
                 return of the first of these 14 days using Standard Deviation.
               </p>
               <div className="mx-auto mt-[4vh] flex items-center justify-start">
@@ -616,12 +616,12 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           ) : (
             <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">1</b>If volatility target =
-                20%.
+                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>If volatility target
+                = 20%.
               </p>
               {results && (
                 <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-                  <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">2</b>
+                  <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>
                   <div>
                     <p>
                       Actual volatility ={' '}

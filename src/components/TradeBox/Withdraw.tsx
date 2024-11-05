@@ -13,7 +13,7 @@ import { formatBalance, formatShares } from '@/utils/formatters'
 import { AmountContext } from '.'
 
 const WithdrawAsset = () => {
-  const { contractAddress, contractAbi } = useContract()
+  const { contractAddress, contractAbi, symbol } = useContract()
 
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
@@ -45,13 +45,13 @@ const WithdrawAsset = () => {
 
   return (
     <>
-      <p className="my-5 text-center text-sm text-greySmoke">
+      <p className="my-5 text-center text-sm text-grey">
         YOU HAVE
-        <b className="mx-2 text-white">
-          {(Number(BalanceSharesResult) / 1000000000000000000).toLocaleString('US')} scUSDc
+        <b className="mx-2 text-offWhite">
+          {(Number(BalanceSharesResult) / 1000000000000000000).toLocaleString('US')} {symbol}
         </b>
       </p>
-      <div className="mx-5 flex items-center justify-center border-b-2 border-[#535E73] px-2 pb-2">
+      <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
           placeholder="Amount..."
           type="number"
@@ -63,15 +63,15 @@ const WithdrawAsset = () => {
         <AlternateButton handleClick={setMaxAssets}>MAX</AlternateButton>
       </div>
       <div className="flex w-full items-center justify-around px-2 pt-4 text-center text-xs">
-        <b className="text-[#DCCD5B]">
+        <b className="text-citron">
           {' '}
           {(Number(ConvertToShares(amount).data as bigint) / 1000000000000000000 || 0).toLocaleString('US')}
         </b>
-        <p>scUSDc</p>
+        <p>{symbol}</p>
       </div>
       <div className="mt-5 flex-row text-center text-xs">
-        <p className="text-greySmoke">YOU WILL RECEIVE</p>
-        <b className="text-greySmoke"> {(Number(amount) || 0).toLocaleString('US')} USDC</b>
+        <p className="text-grey">YOU WILL RECEIVE</p>
+        <b className="text-grey"> {(Number(amount) || 0).toLocaleString('US')} USDC</b>
       </div>
 
       <PrimaryButton

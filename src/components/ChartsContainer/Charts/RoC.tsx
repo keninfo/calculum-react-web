@@ -33,11 +33,11 @@ interface OHLCChartData {
 }
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
@@ -54,19 +54,19 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])
@@ -95,7 +95,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           layout: {
             ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
-            textColor: themeColors?.white,
+            textColor: themeColors?.offWhite,
           },
         })
       } else {
@@ -106,11 +106,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
           layout: {
             ...lineChartConfig.layout,
             background: { type: ColorType.Solid, color: 'transparent' },
-            textColor: themeColors?.white,
+            textColor: themeColors?.offWhite,
           },
           crosshair: {
             ...lineChartConfig.crosshair,
-            vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+            vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
           },
         })
       }
@@ -167,7 +167,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     lineSeries1?.setData(chartDataPrice1)
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: themeColors?.white,
+      color: themeColors?.offWhite,
       priceScaleId: 'left',
     })
 
@@ -211,8 +211,8 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
       ...tooltipConfig,
     })
 
-    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip.style.color = 'var(--color-white)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -240,25 +240,25 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
         if (!showCandle && rocCumulative !== undefined && rocScaled !== undefined) {
           if (rocScaled > rocCumulative) {
-            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
             Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
             Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
           } else {
-            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
           <div>
-            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-white); font-weight: bold;">
+            <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
             Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
             Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
           }
@@ -273,7 +273,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             : undefined
           if (candlestick) {
             const { open, high, low, close } = candlestick
-            toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
+            toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
             <div>
               <p style="font-size: 10px; margin: 4px 0px; color: lightblue; font-weight: bold;">
               O: ${open?.toFixed(4)}</p>
@@ -284,7 +284,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
               <p style="font-size: 10px; margin: 4px 0px; color: gold; font-weight: bold;">
               C: ${close?.toFixed(4)}</p>
             </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
               ${dateStr}
             </div>`
           }
@@ -304,11 +304,11 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     })
 
     if (lineSeries1) {
-      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
+      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.offWhite as string, 0.25) })
     }
 
     if (candlestickSeries) {
-      candlestickSeries.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.white as string, 0.25) })
+      candlestickSeries.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors?.offWhite as string, 0.25) })
     }
 
     return () => {
@@ -340,7 +340,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     <div className="relative">
       <div className="| absolute right-[2vw] top-0 md:left-[4vw] md:w-full">
         <div className="| flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-white"></div>
+          <div className="h-1 w-[2vw] bg-offWhite"></div>
           <span className="text-sm">
             {coin.substring(0, coin.indexOf(' ')) ? coin.substring(0, coin.indexOf(' ')) : coin} Raw Price
           </span>

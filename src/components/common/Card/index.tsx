@@ -15,7 +15,7 @@ type CardProps = {
 const Card = ({ title, subtitle, children, className }: CardProps) => {
   const [parent] = useAutoAnimate()
   return (
-    <div className={`h-fit w-fit rounded-lg bg-darkness p-5 transition ease-in-out md:p-6 ${className}`} ref={parent}>
+    <div className={`h-fit w-fit rounded-lg bg-dark p-5 transition ease-in-out md:p-6 ${className}`} ref={parent}>
       {(title || subtitle) && (
         <div className="mb-[2vh] flex h-fit items-center justify-between pb-2 font-bold">
           <h4 className="w-full text-center text-xl">{title}</h4>

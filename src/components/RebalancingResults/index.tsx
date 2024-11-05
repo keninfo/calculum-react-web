@@ -128,46 +128,45 @@ const RebalancingResults = () => {
       {values && (
         <Card className="h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
           <p>
-            Sharpe Ratio, Raw: <b className={`${rawSharpe < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{rawSharpe}</b>
+            Sharpe Ratio, Raw: <b className={`${rawSharpe < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawSharpe}</b>
           </p>
           <p>
             Constant Volatility:{' '}
-            <b className={`${scaledSharpe < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{scaledSharpe}</b>
+            <b className={`${scaledSharpe < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledSharpe}</b>
           </p>
 
           <p className="mt-[2vh]">
-            CAGR, Raw: <b className={`${rawCAGR < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{rawCAGR}%</b>
+            CAGR, Raw: <b className={`${rawCAGR < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawCAGR}%</b>
           </p>
           <p>
-            Constant Volatility:{' '}
-            <b className={`${scaledCAGR < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{scaledCAGR}%</b>
+            Constant Volatility: <b className={`${scaledCAGR < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledCAGR}%</b>
           </p>
 
           <p className="mt-[2vh]">
             Largest Drawdown, Raw:{' '}
-            <b className={`${Number(rawDDMax) < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{rawDDMax}%</b>
+            <b className={`${Number(rawDDMax) < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{rawDDMax}%</b>
           </p>
           <p>
             Constant Volatility:{' '}
-            <b className={`${Number(scaledDDMax) < 0 ? 'text-[#DF7153]' : 'text-[#4D70C2]'}`}>{scaledDDMax}%</b>
+            <b className={`${Number(scaledDDMax) < 0 ? 'text-[#DF7153]' : 'text-true'}`}>{scaledDDMax}%</b>
           </p>
           {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
         <div className="block space-y-1 w-fit">
-          <p className="text-greySmoke text-left text-sm">Asset:</p>
+          <p className="text-grey text-left text-sm">Asset:</p>
           <CoinSelect />
         </div>
         <div className="block space-y-1  w-fit">
-          <p className="text-greySmoke text-left text-sm">Case Studies:</p>
+          <p className="text-grey text-left text-sm">Case Studies:</p>
           <CaseStudies />
         </div>
         <div className="block space-y-1  w-fit">
-          <p className="text-greySmoke text-left text-sm">Days:</p>
+          <p className="text-grey text-left text-sm">Days:</p>
           {studyCase == 0 && <SetWindow />}
           {studyCase == 1 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-eerie text-grey text-left">04/01/2021</p>
           )}
           {studyCase == 2 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-eerie text-grey text-left">10/01/2023</p>
           )}
         </div>
       </div> */}

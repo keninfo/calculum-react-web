@@ -28,9 +28,9 @@ const NewsTicker = () => {
   }
 
   return (
-    <div className="relative flex h-12 w-full items-center overflow-hidden text-white">
-      <div className="absolute inset-y-0 left-0 z-10 w-[10vw] bg-gradient-to-r from-smoke to-transparent"></div>
-      <div className="absolute inset-y-0 right-0 z-10 w-[10vw] bg-gradient-to-l from-smoke to-transparent"></div>
+    <div className="relative flex h-12 w-full items-center overflow-hidden text-offWhite">
+      <div className="absolute inset-y-0 left-0 z-10 w-[10vw] bg-gradient-to-r from-eerie to-transparent"></div>
+      <div className="absolute inset-y-0 right-0 z-10 w-[10vw] bg-gradient-to-l from-eerie to-transparent"></div>
       <div className="animate-scroll flex whitespace-nowrap">
         {!isMaintenance &&
           newsItems.map((item, index) => (

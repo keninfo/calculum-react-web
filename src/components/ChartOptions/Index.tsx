@@ -64,10 +64,10 @@ const ChartOptions = () => {
   return (
     <ul className="flex items-center justify-center space-x-3 p-5 text-xs">
       <li onClick={() => setStudyCase(1)} className="cursor-pointer">
-        <BearAttack className={`${selected === 0 ? 'fill-primary' : 'fill-white'} h-5`} />
+        <BearAttack className={`${selected === 0 ? 'fill-primary' : 'fill-offWhite'} h-5`} />
       </li>
       <li onClick={() => setStudyCase(2)} className="cursor-pointer">
-        <BearPassive className={`${selected === 1 ? '!fill-primary' : '!fill-white'} mx-2 h-5`} />
+        <BearPassive className={`${selected === 1 ? '!fill-primary' : '!fill-offWhite'} mx-2 h-5`} />
       </li>
       {options.map((option, index) => {
         return (

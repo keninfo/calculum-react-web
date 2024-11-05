@@ -70,7 +70,7 @@ const StrategyInfoTitle = () => {
           {strategyInfo.label}
         </h2>
         {values && (
-          <p className="w-full text-nowrap text-center text-xs text-yellow-300 md:text-left md:text-sm">
+          <p className="w-full text-nowrap text-center text-xs text-citron md:text-left md:text-sm">
             {strategyInfo.symbol}: ${strategyInfo.value} ({strategyInfo.change}) - {strategyInfo.token}: $
             {strategyInfo.tokenValue} ({strategyInfo.tokenChange}) - Last 24H
           </p>

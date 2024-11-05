@@ -122,17 +122,17 @@ const FaucetComponent = () => {
         <>
           <div className="flex items-center justify-center">
             <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-primary' : 'bg-red-500'}`} />
-            <p className="ml-2 text-white">
+            <p className="ml-2 text-offWhite">
               {isEligibleForEth ? 'Eligible to receive ETH' : 'Not eligible to receive ETH'}
             </p>
           </div>{' '}
-          <p className="mx-auto text-center text-xs text-greySmoke">Your ETH Balance: {ethBalance.toFixed(6)} ETH</p>
+          <p className="mx-auto text-center text-xs text-grey">Your ETH Balance: {ethBalance.toFixed(6)} ETH</p>
         </>
       ) : (
         <p className="text-center text-primary">Sending Gas Eth...</p>
       )}
       <div className="mt-5">
-        <div className="mx-5 flex items-center justify-center border-b-2 border-[#535E73] px-2 pb-2">
+        <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
           <Input
             placeholder="Amount..."
             type="number"
@@ -142,7 +142,7 @@ const FaucetComponent = () => {
           />
           <AlternateButton handleClick={setMax}>MAX</AlternateButton>
         </div>
-        <p className="my-5 text-center text-xs text-greySmoke">
+        <p className="my-5 text-center text-xs text-grey">
           You will receive {amount.toLocaleString('US')} {coins[selectedCoin]}
         </p>
         <PrimaryButton handleClick={handleMint}>{isPending ? 'Minting...' : 'Mint Token'}</PrimaryButton>

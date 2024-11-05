@@ -7,10 +7,10 @@ import { usePathname } from 'next/navigation'
 const Index = () => {
   const pathname = usePathname()
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-smoke">
+    <div className="flex h-screen w-full items-center justify-center bg-eerie">
       <div>
-        <h1 className="text-center text-yellow-300">404 `{pathname.toUpperCase().slice(1)}` NOT FOUND</h1>
-        <p className="text-center text-white">Page doesn`t exist</p>
+        <h1 className="text-center text-citron">404 `{pathname.toUpperCase().slice(1)}` NOT FOUND</h1>
+        <p className="text-center text-offWhite">Page doesn`t exist</p>
       </div>
     </div>
   )

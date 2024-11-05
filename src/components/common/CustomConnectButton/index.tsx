@@ -27,7 +27,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
                 return (
                   <button
                     onClick={openConnectModal}
-                    className={`flex w-full justify-center rounded-lg bg-primary py-4 text-white hover:scale-105 hover:text-smoke`}
+                    className={`flex w-full justify-center rounded-lg bg-primary py-4 text-offWhite hover:scale-105 hover:text-eerie`}
                   >
                     <p className="text-[2vh] md:text-[1vw]">Connect Wallet</p>
                   </button>
@@ -36,7 +36,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`flex w-full items-center justify-between rounded-lg border-2 border-[#4D70C2] bg-transparent px-4 py-2 text-[#4D70C2] hover:scale-105 hover:text-white ${className}`}
+                  className={`flex w-full items-center justify-between rounded-lg border-2 border-true bg-transparent px-4 py-2 text-true hover:scale-105 hover:text-offWhite ${className}`}
                 >
                   <div className="h-4 w-4 bg-transparent"></div>
                   {account.displayName}

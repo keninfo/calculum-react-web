@@ -12,10 +12,10 @@ const ToggleSwitch = () => {
         className={`flex w-10 rounded-md border-2 ${pro ? 'justify-end border-primary' : 'justify-start'} duration-250 cursor-pointer transition-all`}
       >
         <div
-          className={`h-4 w-5 rounded-sm shadow-xl ${pro ? 'bg-primary' : 'bg-white'} duration-250 transition-all`}
+          className={`h-4 w-5 rounded-sm shadow-xl ${pro ? 'bg-primary' : 'bg-offWhite'} duration-250 transition-all`}
         ></div>
       </div>
-      <p className={`${pro ? 'text-primary' : 'text-white opacity-30'}`}>PRO</p>
+      <p className={`${pro ? 'text-primary' : 'text-offWhite opacity-30'}`}>PRO</p>
     </div>
   )
 }

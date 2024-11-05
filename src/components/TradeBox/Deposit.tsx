@@ -16,7 +16,7 @@ import { AmountContext } from '.'
 type DepositData = [number, bigint, bigint, bigint]
 
 const DepositAssets = () => {
-  const { contractAddress, contractAbi } = useContract()
+  const { contractAddress, contractAbi, symbol } = useContract()
 
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
@@ -98,16 +98,16 @@ const DepositAssets = () => {
   return (
     <>
       <div className="flex-row text-center text-xs">
-        <b className="text-greySmoke"> {(Number(allowance) / 1000000).toLocaleString('US')} USDC</b>
-        <p className="text-greySmoke">APPROVED TO DEPOSIT</p>
+        <b className="text-grey"> {(Number(allowance) / 1000000).toLocaleString('US')} USDC</b>
+        <p className="text-grey">APPROVED TO DEPOSIT</p>
       </div>
-      <p className="my-5 text-center text-sm text-greySmoke">
+      <p className="my-5 text-center text-sm text-grey">
         YOU HAVE
-        <b className="mx-2 text-white">
+        <b className="mx-2 text-offWhite">
           {(Number(balanceAssets) / 1000000).toLocaleString('US')} {SymbolAsset().data as string}
         </b>
       </p>
-      <div className="mx-5 flex items-center justify-center border-b-2 border-[#535E73] px-2 pb-2">
+      <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
           placeholder="Amount..."
           type="number"
@@ -118,10 +118,10 @@ const DepositAssets = () => {
         <AlternateButton handleClick={setMax}>MAX</AlternateButton>
       </div>
       <div className="mt-5 flex-row text-center text-xs">
-        <p className="text-white">YOU WILL RECEIVE</p>
-        <b className="text-[#DCCD5B]">
+        <p className="text-offWhite">YOU WILL RECEIVE</p>
+        <b className="text-citron">
           {' '}
-          {(Number(convertedShares) / 1000000000000000000 || 0).toLocaleString('US')} USDC
+          {(Number(convertedShares) / 1000000000000000000 || 0).toLocaleString('US')} {symbol}
         </b>
       </div>
       <PrimaryButton handleClick={() => handleDepositClick()} className="mt-5" disabled={isPending}>

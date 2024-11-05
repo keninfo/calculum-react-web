@@ -22,7 +22,7 @@ const ProToggle = () => {
   return (
     <PrimaryButton
       handleClick={() => setPro(!pro)}
-      className="| flex !w-fit items-center justify-end text-white hover:text-white md:bg-darkness md:py-[1vh] md:pl-[2vw]"
+      className="| flex !w-fit items-center justify-end text-offWhite hover:text-offWhite md:bg-dark md:py-[1vh] md:pl-[2vw]"
     >
       {!pro ? (
         <div className="flex items-center justify-between space-x-5">

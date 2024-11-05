@@ -36,7 +36,7 @@ const ClaimAssets = () => {
         <CryptoIcon coin="USDC" className="h-[50px]" />
         <div className="text-left">
           <p>{(Number(userWithdrawalsAssets) / 1000000000000000000).toLocaleString('US')}</p>
-          <h4 className="text-[#DCCD5B]">USDC</h4>
+          <h4 className="text-citron">USDC</h4>
         </div>
       </div>
 
@@ -46,7 +46,7 @@ const ClaimAssets = () => {
             Claim All Assets
           </PrimaryButton>
         ) : (
-          <p className="w-full rounded-lg bg-[#535E73] px-4 py-2 text-center text-[#888E96]">{`Wait one epoch to be able to claim all assets`}</p>
+          <p className="w-full rounded-lg bg-payne px-4 py-2 text-center text-grey">{`Wait one epoch to be able to claim all assets`}</p>
         )}
       </div>
     </>

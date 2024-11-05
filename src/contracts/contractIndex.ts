@@ -33,7 +33,7 @@ export const contractIndex = [
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
     symbol: 'moBTC',
-    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    icon: 'https://placehold.co/600x600/salmon/black?text=M',
   },
   {
     isWorking: false,
@@ -63,7 +63,7 @@ export const contractIndex = [
     address: null,
     chainId: null,
     symbol: 'moETH',
-    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    icon: 'https://placehold.co/600x600/gold/eerie?text=M',
   },
   {
     isWorking: false,
@@ -73,6 +73,6 @@ export const contractIndex = [
     address: null,
     chainId: null,
     symbol: 'moPEPE',
-    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    icon: 'https://placehold.co/600x600/gold/eerie?text=M',
   },
 ]

@@ -166,30 +166,28 @@ const Transactions = () => {
       {isConnected ? (
         <div className="w-full md:mt-[4vh]">
           {transactions.length === 0 ? (
-            <p className="mb-5 text-center text-2xl text-[#4D70C2]">You currently have no transactions.</p>
+            <p className="mb-5 text-center text-2xl text-true">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
               <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[600px] border-collapse">
                   <thead>
                     <tr>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-[#4D70C2]">Date</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-left text-[#4D70C2]">Type</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">USDc</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">scUSDc</th>
-                      <th className="border-b-2 border-greySmoke px-4 py-2 text-right text-[#4D70C2]">
-                        Transaction Details
-                      </th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left text-true">Date</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left text-true">Type</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">USDc</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">scUSDc</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">Transaction Details</th>
                     </tr>
                   </thead>
                   <tbody>
                     {transactions.map((log, index) => (
                       <tr key={index}>
-                        <td className="border-b border-greySmoke px-4 py-2">{log.date}</td>
-                        <td className="border-b border-greySmoke px-4 py-2">{log.type}</td>
-                        <td className="border-b border-greySmoke px-4 py-2 text-right">{log.usdc}</td>
-                        <td className="border-b border-greySmoke px-4 py-2 text-right">{log.smoothcoins}</td>
-                        <td className="cursor-pointer border-b border-greySmoke px-4 py-2 text-right hover:text-primary">
+                        <td className="border-b border-grey px-4 py-2">{log.date}</td>
+                        <td className="border-b border-grey px-4 py-2">{log.type}</td>
+                        <td className="border-b border-grey px-4 py-2 text-right">{log.usdc}</td>
+                        <td className="border-b border-grey px-4 py-2 text-right">{log.smoothcoins}</td>
+                        <td className="cursor-pointer border-b border-grey px-4 py-2 text-right hover:text-primary">
                           <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                             {shortenAddress(log.transactionHash)}
                           </Link>
@@ -203,7 +201,7 @@ const Transactions = () => {
               {/* Mobile */}
               <div className="block md:hidden">
                 {transactions.map((log, index) => (
-                  <div key={index} className="mb-4 rounded-lg border-2 border-[#535E73] px-4 py-4">
+                  <div key={index} className="mb-4 rounded-lg border-2 border-payne px-4 py-4">
                     <p className="text-center text-sm">
                       <span className="font-bold text-primary">Date:</span> {log.date}
                     </p>

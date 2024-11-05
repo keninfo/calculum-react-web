@@ -8,7 +8,7 @@ const SetVolatility = () => {
   const { volatility, setVolatility } = useOptionsStore()
   return (
     <select
-      className="h-fit w-fit border border-white bg-smoke px-10 py-0.5 text-left text-sm text-white"
+      className="h-fit w-fit border border-offWhite bg-dark px-10 py-0.5 text-left text-sm text-offWhite"
       id="cryptoCoin"
       onChange={(e) => setVolatility(parseFloat(e.target.value))}
       value={volatility}

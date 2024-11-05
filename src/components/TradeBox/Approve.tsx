@@ -51,13 +51,13 @@ const Approve = () => {
           Why do I have to approve?
         </Link>
       </p>
-      <p className="my-5 text-center text-sm text-greySmoke">
+      <p className="my-5 text-center text-sm text-grey">
         YOU HAVE
-        <b className="mx-2 text-white">
+        <b className="mx-2 text-offWhite">
           {(Number(balanceAssets) / 1000000).toLocaleString('US')} {SymbolAsset().data as string}
         </b>
       </p>
-      <div className="mx-5 flex items-center justify-center border-b-2 border-[#535E73] px-2 pb-2">
+      <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
           placeholder="Amount..."
           type="number"

@@ -23,11 +23,11 @@ interface PriceChartData {
 }
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 interface GraphOneProps {
@@ -56,19 +56,19 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])
@@ -99,11 +99,11 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -120,7 +120,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
     rolled = rolled.slice(1)
 
     const lineSeries = chartInstance.current?.addLineSeries({
-      color: themeColors?.white as string,
+      color: themeColors?.offWhite as string,
       priceScaleId: 'left',
       autoscaleInfoProvider: () => ({
         priceRange: {
@@ -152,8 +152,8 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
       ...tooltipConfig,
     })
 
-    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip.style.color = 'var(--color-white)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -174,8 +174,8 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
         const rolling = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rolling !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-white)">BTC</div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-smoke); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          toolTip.innerHTML = `<div style="color: var(--color-offWhite)">BTC</div>
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-eerie); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
               Volatility: ${rolling?.toFixed(0)}%</p>  
             ${dateStr}
@@ -228,7 +228,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
       lineSeries.createPriceLine({
         ...zeroLine,
         price: 0,
-        color: hexToRGBA(themeColors?.white as string, 0.25),
+        color: hexToRGBA(themeColors?.offWhite as string, 0.25),
       })
       lineSeries.createPriceLine(targetVol)
       if (maximunDate < minimumDate) {
@@ -236,14 +236,14 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           {
             time: maximunDate,
             position: 'aboveBar',
-            color: 'white',
+            color: 'offWhite',
             shape: 'arrowDown',
             text: `[1] Range top: ${maximumPrice.toFixed(0)}% volatility`,
           },
           {
             time: minimumDate,
             position: 'belowBar',
-            color: 'white',
+            color: 'offWhite',
             shape: 'arrowUp',
             text: `[1] Range bottom: ${minimumPrice.toFixed(0)}% volatility`,
           },
@@ -253,14 +253,14 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           {
             time: minimumDate,
             position: 'belowBar',
-            color: 'white',
+            color: 'offWhite',
             shape: 'arrowUp',
             text: `[1] Range bottom: ${minimumPrice.toFixed(0)}% volatility`,
           },
           {
             time: maximunDate,
             position: 'aboveBar',
-            color: 'white',
+            color: 'offWhite',
             shape: 'arrowDown',
             text: `[1] Range top: ${maximumPrice.toFixed(0)}% volatility`,
           },
@@ -289,12 +289,12 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
     <>
       {values && dates ? (
         <div className="flex items-center justify-between">
-          <div className="rounded-lg bg-smoke p-[5vh]">
+          <div className="rounded-lg bg-eerie p-[5vh]">
             <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', zIndex: 10 }} />
             <div className="mt-[2vh] block w-full">
               <div className="flex items-center justify-center space-x-2">
-                <div className="h-1 w-[2vw] bg-white"></div>
-                <span className="text-sm text-white">90-Day Rolling Volatility</span>
+                <div className="h-1 w-[2vw] bg-offWhite"></div>
+                <span className="text-sm text-offWhite">90-Day Rolling Volatility</span>
               </div>
               <div className="flex items-center justify-center space-x-2">
                 <div className="h-1 w-[2vw] bg-primary"></div>
@@ -303,7 +303,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
             </div>
             <div className="mt-[4vh] flex items-center justify-center space-x-10">
               <button
-                className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                 onClick={() => decreaseDate(30)}
               >
                 <p className="text-lg">
@@ -312,7 +312,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 <p className="ml-2 text-xs">30</p>
               </button>
               <button
-                className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                 onClick={() => decreaseDate(1)}
               >
                 <p>
@@ -320,9 +320,9 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
 
-              <p className="rounded-md text-sm text-greySmoke">{getDates()}</p>
+              <p className="rounded-md text-sm text-grey">{getDates()}</p>
               <button
-                className="cursor-pointer rounded-sm bg-darkness px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
+                className="cursor-pointer rounded-sm bg-dark px-[2vw] py-[.5vh] text-center text-xl hover:scale-105 hover:text-primary"
                 onClick={() => incrementDate(1)}
               >
                 <p>
@@ -330,7 +330,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 </p>
               </button>
               <button
-                className="flex cursor-pointer items-center justify-center rounded-md bg-darkness px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
+                className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                 onClick={() => incrementDate(30)}
               >
                 <p className="mr-2 text-xs">30</p>
@@ -342,14 +342,14 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           </div>
           <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
             <p className="flex items-center text-justify">
-              <b className="mr-[2vw] rounded-lg bg-white px-[1vw] py-[1vh] text-primary">1</b>The volatility of an asset
-              like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest to{' '}
-              {max.toFixed(0)}% at its highest
+              <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">1</b>The volatility of an
+              asset like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest
+              to {max.toFixed(0)}% at its highest
             </p>
             <p className="flex items-center text-justify">
-              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-white">2</b>To control volatility, we
-              can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will be
-              20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
+              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">2</b>To control volatility,
+              we can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will
+              be 20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
             </p>
           </div>
         </div>

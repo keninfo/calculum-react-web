@@ -54,7 +54,7 @@ const Volatility = () => {
         <ul className="my-[6vh] flex w-[100%] items-start justify-around text-left">
           <Link
             href="#stepOne"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
+            className="w-[25%] cursor-pointer rounded-lg border bg-dark px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 1 : <br />
@@ -63,7 +63,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepTwo"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
+            className="w-[25%] cursor-pointer rounded-lg border bg-dark px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 2 : <br />
@@ -72,7 +72,7 @@ const Volatility = () => {
           </Link>
           <Link
             href="#stepThree"
-            className="w-[25%] cursor-pointer rounded-lg border bg-darkness px-[1vw] py-[1vh] hover:border-primary"
+            className="w-[25%] cursor-pointer rounded-lg border bg-dark px-[1vw] py-[1vh] hover:border-primary"
           >
             <h3>
               Step 3 : <br /> We rebalance between the asset and cash.

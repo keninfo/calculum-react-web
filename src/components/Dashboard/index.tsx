@@ -49,10 +49,10 @@ const Dashboard = () => {
     <>
       {/* DESKTOP */}
       <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
-        <div className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-smoke md:sticky md:top-0`}>
-          <div className="h-[1rem] w-full bg-smoke"></div>
+        <div className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-eerie md:sticky md:top-0`}>
+          <div className="h-[1rem] w-full bg-eerie"></div>
           <StrategyOptions />
-          <div className="h-[1rem] w-full bg-smoke"></div>
+          <div className="h-[1rem] w-full bg-eerie"></div>
         </div>
         <div className={`col-span-11 flex flex-col`}>
           <StrategyInfoTitle />
@@ -105,7 +105,7 @@ const Dashboard = () => {
         <Positions />
         <Transactions />
         <div className="fixed bottom-0 left-0 z-50 w-screen">
-          <p className="w-full bg-yellow-300 p-6 text-center text-xs text-smoke">
+          <p className="w-full bg-citron p-6 text-center text-xs text-eerie">
             For a better experience, please use your desktop browser to interact with our platform.
           </p>
         </div>

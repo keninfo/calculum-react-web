@@ -23,11 +23,11 @@ interface ChartProps {
 }
 
 interface ThemeColorsType {
-  darkness: string
-  smoke: string
+  dark: string
+  eerie: string
   primary: string
-  white: string
-  greySmoke: string
+  offWhite: string
+  grey: string
 }
 
 const RollingVol = ({ dates, seriesData }: ChartProps) => {
@@ -43,19 +43,19 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
   useEffect(() => {
     if (!pro) {
       setThemeColors({
-        darkness: classicTheme.darkness,
-        smoke: classicTheme.smoke,
+        dark: classicTheme.dark,
+        eerie: classicTheme.eerie,
         primary: classicTheme.primary,
-        white: classicTheme.white,
-        greySmoke: classicTheme.greySmoke,
+        offWhite: classicTheme.offWhite,
+        grey: classicTheme.grey,
       })
     } else {
       setThemeColors({
-        darkness: proTheme.darkness,
-        smoke: proTheme.smoke,
+        dark: proTheme.dark,
+        eerie: proTheme.eerie,
         primary: proTheme.primary,
-        white: proTheme.white,
-        greySmoke: proTheme.greySmoke,
+        offWhite: proTheme.offWhite,
+        grey: proTheme.grey,
       })
     }
   }, [pro])
@@ -84,11 +84,11 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         layout: {
           ...lineChartConfig.layout,
           background: { type: ColorType.Solid, color: 'transparent' },
-          textColor: themeColors?.white,
+          textColor: themeColors?.offWhite,
         },
         crosshair: {
           ...lineChartConfig.crosshair,
-          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.white as string, 0.1) },
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
         },
       })
     }
@@ -141,8 +141,8 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
 
-    toolTip.style.background = hexToRGBA(themeColors?.white as string, 0.1)
-    toolTip.style.color = 'var(--color-white)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
 
     chartContainerRef.current?.appendChild(toolTip)
 
@@ -163,12 +163,12 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         const rollingVol = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rollingVol !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-white)">${coin}</div>
+          toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: #29947A; font-weight: bold;">
             Vol: <br/>${rollingVol?.toFixed(2)}%</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-darkness); color: var(--color-white); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>`
 
@@ -187,7 +187,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
     })
 
     if (lineSeries) {
-      lineSeries.createPriceLine({ ...zeroLine, price: 0, color: hexToRGBA(themeColors?.white as string, 0.25) })
+      lineSeries.createPriceLine({ ...zeroLine, price: 0, color: hexToRGBA(themeColors?.offWhite as string, 0.25) })
     }
 
     return () => {
