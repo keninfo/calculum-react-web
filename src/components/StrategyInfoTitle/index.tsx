@@ -25,21 +25,17 @@ const StrategyInfoTitle = () => {
   const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
   const { values } = useContext(CoinsContext)
 
-  const { CurrentEpoch, EpochSharePrice } = ContractReads(contractAddress, contractAbi)
-  const epochNumber = useMemo(() => CurrentEpoch().data as bigint, [CurrentEpoch])
-
-  const daySharePrice = useMemo(
-    () => EpochSharePrice(Number(epochNumber) - 1).data as bigint,
-    [epochNumber, EpochSharePrice],
-  )
-  const previousDaySharePrice = useMemo(
-    () => EpochSharePrice(Number(epochNumber) - 4).data as bigint,
-    [epochNumber, EpochSharePrice],
-  )
+  const currentEpochData = ContractReads(contractAddress, contractAbi).CurrentEpoch().data as bigint
+  const daySharePriceData = ContractReads(contractAddress, contractAbi).EpochSharePrice(Number(currentEpochData) - 1)
+    .data as bigint
+  const previousDaySharePriceData = ContractReads(contractAddress, contractAbi).EpochSharePrice(
+    Number(currentEpochData) - 4,
+  ).data as bigint
 
   const pricePercentageChange = useMemo(() => {
-    return ((Number(daySharePrice) - Number(previousDaySharePrice)) / Number(previousDaySharePrice)) * 100
-  }, [daySharePrice, previousDaySharePrice])
+    if (!daySharePriceData || !previousDaySharePriceData) return 0
+    return ((Number(daySharePriceData) - Number(previousDaySharePriceData)) / Number(previousDaySharePriceData)) * 100
+  }, [daySharePriceData, previousDaySharePriceData])
 
   const strategyInfo = useMemo(() => {
     if (!values) return placeholder
@@ -52,7 +48,7 @@ const StrategyInfoTitle = () => {
     return {
       label: `${strategy} ${coin}`,
       symbol,
-      value: formatBalance(daySharePrice) as string,
+      value: formatBalance(daySharePriceData) as string,
       change: `${pricePercentageChange.toFixed(2)}%`,
       token: coin,
       tokenValue: currentValue.toLocaleString('en-US'),
@@ -60,10 +56,10 @@ const StrategyInfoTitle = () => {
       active: isWorking,
       icon,
     }
-  }, [values, strategy, coin, symbol, daySharePrice, pricePercentageChange, isWorking, icon])
+  }, [values, strategy, coin, symbol, daySharePriceData, pricePercentageChange, isWorking, icon])
 
   return (
-    <div className="mt-5 items-center justify-between md:mt-0 md:flex md:space-x-5 md:py-5 md:pl-2">
+    <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
       <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" />
       <div className="md:w-fit">
         <h2 className="w-full text-nowrap text-center text-3xl font-bold md:text-left md:text-4xl">
