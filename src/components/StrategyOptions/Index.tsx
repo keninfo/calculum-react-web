@@ -8,7 +8,7 @@ import StrategySelect from './StrategySelect'
 
 const StrategyOptions = () => {
   return (
-    <div>
+    <>
       {/* DESKTOP */}
       <Card className="hidden w-full items-center justify-between md:flex">
         <div className="flex w-full items-center justify-start space-x-10">
@@ -17,7 +17,13 @@ const StrategyOptions = () => {
         </div>
         <NetworkSelect />
       </Card>
-    </div>
+      {/* MOBILE */}
+      <Card className="flex w-full flex-col items-center space-y-4 md:hidden">
+        <StrategySelect />
+        <CoinSelect />
+        <NetworkSelect />
+      </Card>
+    </>
   )
 }
 

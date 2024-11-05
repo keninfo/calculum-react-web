@@ -63,7 +63,7 @@ const StrategyInfoTitle = () => {
   }, [values, strategy, coin, symbol, daySharePrice, pricePercentageChange, isWorking, icon])
 
   return (
-    <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
+    <div className="mt-5 items-center justify-between md:mt-0 md:flex md:space-x-5 md:py-5 md:pl-2">
       <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" />
       <div className="md:w-fit">
         <h2 className="w-full text-nowrap text-center text-3xl font-bold md:text-left md:text-4xl">

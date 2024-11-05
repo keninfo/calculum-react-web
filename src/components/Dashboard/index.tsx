@@ -2,7 +2,7 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
@@ -23,6 +23,7 @@ const Dashboard = () => {
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
+  const [showing, setShowing] = useState<boolean>(true)
 
   useEffect(() => {
     const storedPro = localStorage.getItem('pro')
@@ -88,9 +89,8 @@ const Dashboard = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen space-y-5 overflow-x-hidden px-5 md:hidden">
+      <div className="block w-screen space-y-5 px-5 md:hidden">
         <StrategyInfoTitle />
-        <StrategyOptions />
         {values && dates ? (
           <>
             <ChartsContainer />
@@ -101,14 +101,21 @@ const Dashboard = () => {
             <></>
           </Card>
         )}
+
+        <StrategyOptions />
         <TradeBox />
         <Positions />
         <Transactions />
-        <div className="fixed bottom-0 left-0 z-50 w-screen">
-          <p className="w-full bg-citron p-6 text-center text-xs text-eerie">
-            For a better experience, please use your desktop browser to interact with our platform.
-          </p>
-        </div>
+        {showing && (
+          <div className="fixed bottom-0 left-0 z-50 w-screen space-y-5 bg-citron p-6">
+            <p className="w-full text-center text-xs text-eerie">
+              For a better experience, please use your desktop browser to interact with our platform.
+            </p>
+            <button className="w-full text-center font-bold" onClick={() => setShowing(false)}>
+              CLOSE
+            </button>
+          </div>
+        )}
       </div>
     </>
   )
