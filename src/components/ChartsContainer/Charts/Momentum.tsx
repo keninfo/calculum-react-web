@@ -91,6 +91,7 @@ const Momentum = () => {
     }
 
     chartInstance.current = createChart(chartContainerRef.current, {
+      autoSize: true,
       height: 400,
       ...lineChartConfig,
       layout: {

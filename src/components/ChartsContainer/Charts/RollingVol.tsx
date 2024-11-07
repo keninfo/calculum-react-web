@@ -69,6 +69,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
 
     if (chartContainerRef.current) {
       chartInstance.current = createChart(chartContainerRef.current, {
+        autoSize: true,
         height: 200,
         ...lineChartConfig,
         localization: {

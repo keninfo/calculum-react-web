@@ -81,6 +81,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     if (chartContainerRef.current) {
       if (showCandle) {
         chartInstance.current = createChart(chartContainerRef.current, {
+          autoSize: true,
           height: 400,
           ...lineChartConfig,
           localization: {
