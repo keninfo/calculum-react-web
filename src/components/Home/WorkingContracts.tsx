@@ -12,6 +12,7 @@ const WorkingContracts = () => {
 
   const goTo = (strategy: string) => {
     setStrategy(strategy)
+    localStorage.setItem('strategy', JSON.stringify(strategy))
     router.push('/dashboard')
   }
 
