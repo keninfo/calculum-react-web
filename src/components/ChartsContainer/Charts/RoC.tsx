@@ -243,9 +243,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
-            Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
+            Vol Scaled: <br/>${(rocScaled / 100)?.toLocaleString('US')}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
-            Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
+            Raw Price: <br/>${(rocCumulative / 100)?.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -254,9 +254,9 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
-            Raw Price: <br/>${(rocCumulative / 100)?.toFixed(2)}</p>
+            Raw Price: <br/>${(rocCumulative / 100)?.toLocaleString('US')}</p>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
-            Vol Scaled: <br/>${(rocScaled / 100)?.toFixed(2)}</p>
+            Vol Scaled: <br/>${(rocScaled / 100)?.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
