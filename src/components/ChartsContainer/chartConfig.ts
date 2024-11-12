@@ -1,3 +1,5 @@
+import { proTheme } from '@/styles/colors'
+
 import type { DeepPartial, LineWidth } from 'lightweight-charts'
 
 export const lineChartConfig = {
@@ -6,6 +8,7 @@ export const lineChartConfig = {
   },
   grid: {
     vertLines: {
+      color: proTheme.payne,
       visible: false,
     },
     horzLines: {
@@ -22,12 +25,20 @@ export const lineChartConfig = {
     borderVisible: false,
   },
   timeScale: {
+    uniformDistribution: false,
     visible: true,
     borderVisible: false,
-    fixLeftEdge: false, // set back to true
+    fixRightEdge: true,
+    fixLeftEdge: true, // set back to true
     tickMarkFormatter: (time: string | number | Date, locale: Intl.LocalesArgument) => {
+      // Check if `time` is a number (e.g., a timestamp)
+      if (typeof time === 'number') {
+        // If `time` is less than a certain threshold, assume it's in seconds, not milliseconds
+        if (time < 1e12) time *= 1000 // Convert seconds to milliseconds
+      }
+
       const date = new Date(time)
-      return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+      return date.toLocaleDateString(locale, { month: 'numeric', day: 'numeric', year: '2-digit' })
     },
   },
   crosshair: {
@@ -79,7 +90,7 @@ export const tooltipConfig = {
 
 export const zeroLine = {
   price: 100,
-  color: 'offWhite',
+  color: proTheme.offWhite,
   lineWidth: 2 as LineWidth,
   lineStyle: 0,
   axisLabelVisible: false,

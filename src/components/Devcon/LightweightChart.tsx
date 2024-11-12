@@ -129,6 +129,11 @@ const LightweightChart: React.FC<LightweightChartProps> = ({ csvPath }) => {
           return price.toLocaleString('US') // Append a string (e.g., currency symbol) to each value
         },
       },
+      timeScale: {
+        ...lineChartConfig.timeScale,
+        uniformDistribution: true,
+        visible: false,
+      },
     })
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
@@ -176,6 +181,9 @@ const LightweightChart: React.FC<LightweightChartProps> = ({ csvPath }) => {
     }
   }, [dates, themeColors, isSmallDevice, assetReturns, signalReturns])
 
+  const firstDate = dates.length > 0 ? dates[0].toLocaleDateString('en-US') : 'N/A'
+  const lastDate = dates.length > 0 ? dates[dates.length - 1].toLocaleDateString('en-US') : 'N/A'
+
   return (
     <div className="relative">
       {loading ? (
@@ -183,10 +191,12 @@ const LightweightChart: React.FC<LightweightChartProps> = ({ csvPath }) => {
       ) : error ? (
         <p className="mt-2 text-center"> {error}</p>
       ) : (
-        <div
-          ref={chartContainerRef}
-          style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
-        />
+        <>
+          <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
+          <div className="mt-4 flex items-center justify-between text-payne">
+            <p>{firstDate}</p> <p>{lastDate}</p>
+          </div>
+        </>
       )}
     </div>
   )
