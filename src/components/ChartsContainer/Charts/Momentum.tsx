@@ -1,3 +1,5 @@
+import { useMediaQuery } from '@uidotdev/usehooks'
+
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useProStore } from '@/store/useProStore'
@@ -35,6 +37,7 @@ const Momentum = () => {
   const [btc, setBtc] = useState<number[]>([])
   const [dates, setDates] = useState<Date[]>([])
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
 
   useEffect(() => {
     setThemeColors(
@@ -92,12 +95,16 @@ const Momentum = () => {
 
     chartInstance.current = createChart(chartContainerRef.current, {
       autoSize: true,
-      height: 400,
+      height: isSmallDevice ? 200 : 400,
       ...lineChartConfig,
       layout: {
         ...lineChartConfig.layout,
         background: { type: ColorType.Solid, color: 'transparent' },
         textColor: themeColors.offWhite,
+      },
+      leftPriceScale: {
+        ...lineChartConfig.leftPriceScale,
+        mode: 0,
       },
       crosshair: {
         ...lineChartConfig.crosshair,
@@ -153,7 +160,7 @@ const Momentum = () => {
 
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, {
-      height: '400px',
+      height: isSmallDevice ? '200px' : '400px',
       ...tooltipConfig,
     })
     toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
@@ -161,21 +168,30 @@ const Momentum = () => {
     chartContainerRef.current?.appendChild(toolTip)
 
     chartInstance.current?.subscribeCrosshairMove((param) => {
-      if (!param.point || !param.time || param.point.x < 0 || param.point.y < 0) {
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > (chartContainerRef.current?.clientWidth ?? 0) ||
+        param.point.y < 0 ||
+        param.point.y > (chartContainerRef.current?.clientHeight ?? 0)
+      ) {
         toolTip.style.display = 'none'
-        return
-      }
+      } else {
+        toolTip.style.display = 'block'
+        const dateStr = formatDateAmerican(param.time)
+        const data1 = lineSeries1
+          ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
+          : undefined
+        const btc = data1?.value !== undefined ? data1.value : data1?.close
+        const data2 = lineSeries2
+          ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
+          : undefined
+        const momentum = data2?.value !== undefined ? data2.value : data2?.close
 
-      toolTip.style.display = 'block'
-      const dateStr = formatDateAmerican(param.time)
-      const data1 = lineSeries1 ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number }) : undefined
-      const btc = data1?.value !== undefined ? data1.value : data1?.close
-      const data2 = lineSeries2 ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number }) : undefined
-      const momentum = data2?.value !== undefined ? data2.value : data2?.close
-
-      if (btc !== undefined && momentum !== undefined) {
-        if (btc > momentum) {
-          toolTip.innerHTML = `
+        if (btc !== undefined && momentum !== undefined) {
+          if (btc > momentum) {
+            toolTip.innerHTML = `
           <div style="color: ${themeColors?.offWhite}">${coin}</div>
           <div>
             <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC Raw: ${btc}</p>
@@ -185,8 +201,8 @@ const Momentum = () => {
             ${dateStr}
           </div>
         `
-        } else {
-          toolTip.innerHTML = `
+          } else {
+            toolTip.innerHTML = `
           <div style="color: ${themeColors?.offWhite}">${coin}</div>
           <div>
             <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: ${momentum.toLocaleString('US')}</p>
@@ -196,13 +212,20 @@ const Momentum = () => {
             ${dateStr}
           </div>
         `
+          }
         }
-      }
 
-      let left = param.point.x + (chartInstance.current?.priceScale('left').width() ?? 0) - toolTipWidth / 2
-      left = Math.max(left, 0)
-      toolTip.style.left = `${left}px`
-      toolTip.style.top = '0px'
+        let left = param.point.x as number
+        const timeScaleWidth = chartInstance.current?.timeScale().width() ?? 0
+        const priceScaleWidth = chartInstance.current?.priceScale('left').width() ?? 0
+        const halfTooltipWidth = toolTipWidth / 2
+        left += priceScaleWidth - halfTooltipWidth
+        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth)
+        left = Math.max(left, priceScaleWidth)
+
+        toolTip.style.left = left + 'px'
+        toolTip.style.top = '0px'
+      }
     })
 
     if (lineSeries1) {
@@ -210,27 +233,30 @@ const Momentum = () => {
     }
 
     return () => {
-      chartInstance.current?.remove()
-      toolTip.remove()
-      chartInstance.current = undefined
+      if (chartInstance.current) {
+        chartInstance.current.remove()
+        toolTip.style.display = 'none'
+        chartInstance.current = undefined
+      }
     }
-  }, [dates, themeColors, momentum, btc, coin])
-
-  console.log(dates)
+  }, [dates, themeColors, momentum, btc, coin, isSmallDevice])
 
   return (
     <div className="relative">
-      <div className="absolute right-[2vw] top-0 md:left-[8vw] md:w-full">
-        <div className="| flex items-center justify-end space-x-2 md:justify-start">
+      <div className="absolute -top-[4vh] right-[2vw] md:left-[8vw] md:top-0 md:w-full">
+        <div className="flex items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-sm">{coin} Raw Price</span>
+          <span className="text-xs md:text-sm">{coin} Raw Price</span>
         </div>
         <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-primary"></div>
-          <p className="text-sm text-primary">{strategy + ' ' + coin}</p>
+          <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</p>
         </div>
       </div>
-      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
+      <div
+        ref={chartContainerRef}
+        style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
+      />
     </div>
   )
 }

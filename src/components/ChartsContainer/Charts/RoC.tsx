@@ -1,3 +1,5 @@
+import { useMediaQuery } from '@uidotdev/usehooks'
+
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useOptionsStore } from '@/store/useOptionsStore'
@@ -46,6 +48,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
   const { coin, strategy } = useStrategyStore()
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
 
   const { pro } = useProStore()
 
@@ -79,42 +82,20 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     }
 
     if (chartContainerRef.current) {
-      if (showCandle) {
-        chartInstance.current = createChart(chartContainerRef.current, {
-          autoSize: true,
-          height: 400,
-          ...lineChartConfig,
-          localization: {
-            priceFormatter: (price: number) => {
-              return '$' + price
-            },
-          },
-          leftPriceScale: {
-            ...lineChartConfig.leftPriceScale,
-            mode: 2,
-          },
-          layout: {
-            ...lineChartConfig.layout,
-            background: { type: ColorType.Solid, color: 'transparent' },
-            textColor: themeColors?.offWhite,
-          },
-        })
-      } else {
-        chartInstance.current = createChart(chartContainerRef.current, {
-          height: 400,
-          ...lineChartConfig,
-          // timeScale: { visible: false },
-          layout: {
-            ...lineChartConfig.layout,
-            background: { type: ColorType.Solid, color: 'transparent' },
-            textColor: themeColors?.offWhite,
-          },
-          crosshair: {
-            ...lineChartConfig.crosshair,
-            vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
-          },
-        })
-      }
+      chartInstance.current = createChart(chartContainerRef.current, {
+        height: isSmallDevice ? 200 : 400,
+        ...lineChartConfig,
+        // timeScale: { visible: false },
+        layout: {
+          ...lineChartConfig.layout,
+          background: { type: ColorType.Solid, color: 'transparent' },
+          textColor: themeColors?.offWhite,
+        },
+        crosshair: {
+          ...lineChartConfig.crosshair,
+          vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors?.offWhite as string, 0.1) },
+        },
+      })
     }
 
     const periods = 365 // only for daily, have to change if hourly
@@ -208,7 +189,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     const toolTip = document.createElement('div')
 
     Object.assign(toolTip.style, {
-      height: '400px',
+      height: isSmallDevice ? '200px' : '400px',
       ...tooltipConfig,
     })
 
@@ -331,6 +312,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     volatility,
     window,
     themeColors,
+    isSmallDevice,
   ])
 
   if (coin == 'PEPE Smoothcoin' && studyCase == 1) {
@@ -339,17 +321,20 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
   return (
     <div className="relative">
-      <div className="| absolute right-[2vw] top-0 md:left-[4vw] md:w-full">
-        <div className="| flex items-center justify-end space-x-2 md:justify-start">
+      <div className="absolute -top-[4vh] right-[2vw] md:left-[4vw] md:top-0 md:w-full">
+        <div className="flex items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-sm">{coin} Raw Price</span>
+          <span className="text-xs md:text-sm">{coin} Raw Price</span>
         </div>
-        <div className="| flex w-fit items-center justify-end space-x-2 md:justify-start">
+        <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-primary"></div>
-          <p className="text-sm text-primary">{strategy + ' ' + coin}</p>
+          <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</p>
         </div>
       </div>
-      <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative', marginTop: '20px' }} />
+      <div
+        ref={chartContainerRef}
+        style={{ width: '100%', height: 'auto', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
+      />
     </div>
   )
 }
