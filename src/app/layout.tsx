@@ -26,7 +26,7 @@ const RootLayout = ({
       <body className="classic overscroll-none">
         <Watermark />
         <AppProviders>
-          {pathname !== '/' && <Navbar />}
+          {pathname !== '/' && pathname !== '/devcon' && <Navbar />}
           <div className="bg-eerie md:px-20">{children}</div>
         </AppProviders>
       </body>
