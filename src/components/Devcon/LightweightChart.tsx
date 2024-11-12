@@ -191,12 +191,20 @@ const LightweightChart: React.FC<LightweightChartProps> = ({ csvPath }) => {
       ) : error ? (
         <p className="mt-2 text-center"> {error}</p>
       ) : (
-        <>
+        <div className="mt-5">
+          <div className="flex w-full items-center justify-center space-x-2">
+            <div className="h-1 w-[2vw] bg-offWhite"></div>
+            <span className="text-xs md:text-sm">Raw Cumulative Returns</span>
+          </div>
+          <div className="flex w-full items-center justify-center space-x-2">
+            <div className="h-1 w-[2vw] bg-primary"></div>
+            <p className="text-xs text-primary md:text-sm">Momentum Cumulative Returns</p>
+          </div>
           <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
           <div className="mt-4 flex items-center justify-between text-payne">
             <p>{firstDate}</p> <p>{lastDate}</p>
           </div>
-        </>
+        </div>
       )}
     </div>
   )
