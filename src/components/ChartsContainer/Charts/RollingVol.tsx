@@ -164,7 +164,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
         const rollingVol = data1?.value !== undefined ? data1.value : data1?.close
 
         if (rollingVol !== undefined) {
-          toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
+          toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: #29947A; font-weight: bold;">
             Vol: <br/>${rollingVol?.toFixed(2)}%</p>

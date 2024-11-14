@@ -222,7 +222,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
         if (!showCandle && rocCumulative !== undefined && rocScaled !== undefined) {
           if (rocScaled > rocCumulative) {
-            toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
+            toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-primary); font-weight: bold;">
             Vol Scaled: <br/>${(rocScaled / 100)?.toLocaleString('US')}</p>
@@ -233,7 +233,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
             ${dateStr}
           </div>`
           } else {
-            toolTip.innerHTML = `<div style="color: var(--color-offWhite)">${coin}</div>
+            toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; margin: 4px 0px; color: var(--color-offWhite); font-weight: bold;">
             Raw Price: <br/>${(rocCumulative / 100)?.toLocaleString('US')}</p>

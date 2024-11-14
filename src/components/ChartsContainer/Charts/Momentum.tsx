@@ -192,7 +192,6 @@ const Momentum = () => {
         if (btc !== undefined && momentum !== undefined) {
           if (btc > momentum) {
             toolTip.innerHTML = `
-          <div style="color: ${themeColors?.offWhite}">${coin}</div>
           <div>
             <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC Raw: ${btc}</p>
             <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: ${momentum}</p>
@@ -203,7 +202,6 @@ const Momentum = () => {
         `
           } else {
             toolTip.innerHTML = `
-          <div style="color: ${themeColors?.offWhite}">${coin}</div>
           <div>
             <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: ${momentum.toLocaleString('US')}</p>
             <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC Raw: ${btc.toLocaleString('US')}</p>
