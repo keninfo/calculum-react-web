@@ -5,6 +5,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useState, useEffect } from 'react'
 
+import ChartOptions from '@/components/ChartOptions/Index'
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useOptionsStore } from '@/store/useOptionsStore'
@@ -12,7 +13,6 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
-import ChartOptions from '../ChartOptions/Index'
 import Momentum from './Charts/Momentum'
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'

@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import Card from '../common/Card'
+import Card from '@/components/common/Card'
+
 import LightweightChart from './LightweightChart.tsx'
 import { products } from './products.ts'
 import type { productType } from './products.ts'

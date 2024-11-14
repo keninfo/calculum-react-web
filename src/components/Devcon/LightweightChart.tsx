@@ -2,11 +2,10 @@ import { useMediaQuery } from '@uidotdev/usehooks'
 
 import { useEffect, useRef, useState } from 'react'
 
+import { lineChartConfig, zeroLine } from '@/components/ChartsContainer/chartConfig'
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
 import { hexToRGBA } from '@/utils/formatters'
-
-import { lineChartConfig, zeroLine } from '../ChartsContainer/chartConfig'
 
 import * as d3 from 'd3'
 import type { IChartApi, Time, UTCTimestamp } from 'lightweight-charts'

@@ -1,8 +1,7 @@
 import React from 'react'
 
+import { PrimaryButton } from '@/components/common/Buttons'
 import { useOptionsStore } from '@/store/useOptionsStore'
-
-import { PrimaryButton } from '../common/Buttons'
 
 const ShowCandle = () => {
   const { showCandle, setShowCandle } = useOptionsStore()
