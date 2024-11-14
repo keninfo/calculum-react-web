@@ -10,6 +10,7 @@ import useApprove from '@/hooks/useApprove'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
+import { formatBalance } from '@/utils/formatters'
 
 import { AmountContext } from '.'
 
@@ -28,7 +29,11 @@ const Approve = () => {
   }
 
   const setMax = () => {
-    setAmount(10000)
+    if (Number(balanceAssets) / 1000000 > 10000) {
+      setAmount(10000)
+      return
+    }
+    setAmount(parseFloat(formatBalance(balanceAssets)))
   }
 
   useEffect(() => {
