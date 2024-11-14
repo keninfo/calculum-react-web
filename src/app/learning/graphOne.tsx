@@ -236,14 +236,14 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           {
             time: maximunDate,
             position: 'aboveBar',
-            color: 'offWhite',
+            color: themeColors?.offWhite as string,
             shape: 'arrowDown',
             text: `[1] Range top: ${maximumPrice.toFixed(0)}% volatility`,
           },
           {
             time: minimumDate,
             position: 'belowBar',
-            color: 'offWhite',
+            color: themeColors?.offWhite as string,
             shape: 'arrowUp',
             text: `[1] Range bottom: ${minimumPrice.toFixed(0)}% volatility`,
           },
@@ -253,14 +253,14 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           {
             time: minimumDate,
             position: 'belowBar',
-            color: 'offWhite',
+            color: themeColors?.offWhite as string,
             shape: 'arrowUp',
             text: `[1] Range bottom: ${minimumPrice.toFixed(0)}% volatility`,
           },
           {
             time: maximunDate,
             position: 'aboveBar',
-            color: 'offWhite',
+            color: themeColors?.offWhite as string,
             shape: 'arrowDown',
             text: `[1] Range top: ${maximumPrice.toFixed(0)}% volatility`,
           },
@@ -301,7 +301,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
                 <p className="text-sm text-primary">20% Target Volatility</p>
               </div>
             </div>
-            <div className="mt-[4vh] flex items-center justify-center space-x-10">
+            <div className="mt-[4vh] flex items-center justify-center space-x-5">
               <button
                 className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                 onClick={() => decreaseDate(30)}
@@ -340,7 +340,7 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
               </button>
             </div>
           </div>
-          <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
+          <div className="mx-auto w-[45%] space-y-[2vh] px-[2vw] text-lg">
             <p className="flex items-center text-justify">
               <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">1</b>The volatility of an
               asset like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest

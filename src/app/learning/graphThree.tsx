@@ -516,7 +516,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                 </div>
               </div>
             </div>
-            <div className="rounded-lg bg-eerie p-[5vh]">
+            <div className="mt-5 rounded-lg bg-eerie p-[5vh]">
               <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
               <div className="mt-[2vh] block w-full">
                 <div className="flex items-center justify-center space-x-2">
@@ -533,7 +533,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
                   </p>
                 </div>
               </div>
-              <div className="mt-[4vh] flex items-center justify-center space-x-10">
+              <div className="mt-[4vh] flex items-center justify-center space-x-5">
                 <button
                   className="flex cursor-pointer items-center justify-center rounded-md bg-dark px-[2vw] py-[.5vh] text-center text-sm hover:scale-105 hover:text-primary"
                   onClick={() => decreaseDate(30)}
@@ -575,7 +575,7 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           </div>
 
           {rawOnly ? (
-            <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
+            <div className="mx-auto w-[45%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
                 <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>The “Actual
                 Volatility” is the standard deviation of the daily returns of BTC over a specific period. Its calculated
