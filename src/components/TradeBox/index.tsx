@@ -78,7 +78,10 @@ const TradeBox = () => {
       setStep(6)
     } else if (userDepositStatus == 3 && Number(balanceSharesResult) / 1000000000000000000 > 1) {
       setStep(5)
-    } else if (userWithdrawalsStatus == 0 && userDepositStatus != 0) {
+    } else if (
+      (userWithdrawalsStatus == 0 && userDepositStatus != 0) ||
+      (userWithdrawalsStatus == 3 && userDepositStatus != 3)
+    ) {
       setStep(4)
     } else if (userDepositStatus == 1) {
       setStep(4)
