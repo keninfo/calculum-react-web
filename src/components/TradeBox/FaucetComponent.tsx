@@ -10,6 +10,7 @@ import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount, useBalance } from 'wagmi'
 
+import AddUSDC from '@/components/common/AddToken/AddUSDC'
 import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useMint from '@/hooks/useMint'
@@ -142,10 +143,13 @@ const FaucetComponent = () => {
           />
           <AlternateButton handleClick={setMax}>MAX</AlternateButton>
         </div>
-        <p className="my-5 text-center text-xs text-grey">
+        <p className="mt-5 text-center text-xs text-grey">
           You will receive {amount.toLocaleString('US')} {coins[selectedCoin]}
         </p>
-        <PrimaryButton handleClick={handleMint}>{isPending ? 'Minting...' : 'Mint Token'}</PrimaryButton>
+        <AddUSDC />
+        <PrimaryButton handleClick={handleMint} className="mt-5">
+          {isPending ? 'Minting...' : 'Mint Token'}
+        </PrimaryButton>
       </div>
     </>
   )

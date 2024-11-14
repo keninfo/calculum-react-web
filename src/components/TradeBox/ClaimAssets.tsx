@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
 
+import AddUSDC from '@/components/common/AddToken/AddUSDC'
+import { PrimaryButton } from '@/components/common/Buttons'
+import CryptoIcon from '@/components/common/CryptoIcon'
 import useClaimAssets from '@/hooks/useClaimAssets'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import createTransactionAlert from '@/utils/createTransactionAlert'
-
-import { PrimaryButton } from '../common/Buttons'
-import CryptoIcon from '../common/CryptoIcon'
 
 type responseData = [number, bigint, bigint, bigint]
 
@@ -32,6 +32,7 @@ const ClaimAssets = () => {
 
   return (
     <>
+      <AddUSDC />
       <div className="my-5 flex items-center justify-center space-x-5">
         <CryptoIcon coin="USDC" className="h-[50px]" />
         <div className="text-left">

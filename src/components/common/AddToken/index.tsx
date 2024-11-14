@@ -2,22 +2,16 @@ import React from 'react'
 
 import { useAccount } from 'wagmi'
 
+import useContract from '@/hooks/useContract'
 import { walletClient } from '@/services/RainbowKitProvider'
 
 interface tokenInfo {
-  tokenAddress?: string
-  tokenSymbol?: string
-  tokenDecimals?: number
   classname?: string
 }
 
-const AddToken = ({
-  tokenAddress = '0x9E09d335CAEdB4D76708854bFaCd5228946543E5',
-  tokenSymbol = 'scUSDc',
-  tokenDecimals = 18,
-  classname,
-}: tokenInfo) => {
+const AddToken = ({ classname }: tokenInfo) => {
   const { chain } = useAccount()
+  const { contractAddress, symbol } = useContract()
 
   const watchAsset = async () => {
     if (chain?.id !== undefined && walletClient) {
@@ -29,9 +23,9 @@ const AddToken = ({
             params: {
               type: 'ERC20',
               options: {
-                address: tokenAddress,
-                symbol: tokenSymbol,
-                decimals: tokenDecimals,
+                address: contractAddress,
+                symbol: symbol,
+                decimals: 18,
               },
             },
           })
