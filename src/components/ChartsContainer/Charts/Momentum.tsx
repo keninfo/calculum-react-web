@@ -33,9 +33,13 @@ const Momentum = () => {
   const { coin, strategy } = useStrategyStore()
   const { pro } = useProStore()
 
-  const [momentum, setMomentum] = useState<number[]>([])
-  const [btc, setBtc] = useState<number[]>([])
+  // const [assetReturns, setAssetReturns] = useState<number[]>([])
+  // const [signalReturns, setSignalReturns] = useState<number[]>([])
+  const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
+  const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
+
   const [dates, setDates] = useState<Date[]>([])
+
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
   const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
 
@@ -60,24 +64,30 @@ const Momentum = () => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    const staticDataSrc = '/50.csv'
+    const staticDataSrc = '/momentum/btcUpdated.csv'
 
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
-        BTC: +d.BTC!,
-        momentum: +d.momentum!,
+        asset_return: +d.asset_return!,
+        signal_return: +d.signal_return!,
+        asset_cum_return: +d.asset_cum_return!,
+        signal_cum_return: +d.signal_cum_return!,
       }))
 
       const dates = staticData.map((d) => new Date(d.date))
-      const btcData = staticData.map((d) => d.BTC)
-      const momentumData = staticData.map((d) => d.momentum)
+      // const assetReturnsData = staticData.map((d) => d.asset_return)
+      // const signalReturnsData = staticData.map((d) => d.signal_return)
+      const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
+      const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
 
       setDates(dates)
-      setBtc(btcData)
-      setMomentum(momentumData)
+      // setAssetReturns(assetReturnsData)
+      // setSignalReturns(signalReturnsData)
+      setAssetCumReturns(assetCumReturnsData)
+      setSignalCumReturns(signalCumReturnsData)
     } catch (error) {
-      console.error('Error fetching momentum data:', error)
+      console.error('Error fetching signalCumReturns data:', error)
     }
   }
 
@@ -86,7 +96,13 @@ const Momentum = () => {
   }, [])
 
   useEffect(() => {
-    if (!chartContainerRef.current || !themeColors || dates.length === 0 || btc.length === 0 || momentum.length === 0)
+    if (
+      !chartContainerRef.current ||
+      !themeColors ||
+      dates.length === 0 ||
+      assetCumReturns.length === 0 ||
+      signalCumReturns.length === 0
+    )
       return
 
     if (chartInstance.current) {
@@ -123,16 +139,14 @@ const Momentum = () => {
       priceScaleId: 'left',
     })
 
-    const btcSliced = btc.slice(0, btc.length - 1)
+    const assetCumReturnsSliced = assetCumReturns.slice(0, assetCumReturns.length - 1)
 
-    const datesSliced = dates.slice(0, btc.length - 1)
+    const datesSliced = dates.slice(0, assetCumReturns.length - 1)
 
-    const chartDataPrice1: PriceChartData[] = btcSliced.map((data, index) => ({
+    const chartDataPrice1: PriceChartData[] = assetCumReturnsSliced.map((data, index) => ({
       time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
-
-    console.log(chartDataPrice1)
 
     lineSeries1?.setData(chartDataPrice1)
 
@@ -141,9 +155,9 @@ const Momentum = () => {
       priceScaleId: 'left',
     })
 
-    const momentumSliced = momentum.slice(0, momentum.length - 1)
+    const signalCumReturnsSliced = signalCumReturns.slice(0, signalCumReturns.length - 1)
 
-    const chartDataPrice2: PriceChartData[] = momentumSliced.map((data, index) => ({
+    const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
       time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
@@ -183,18 +197,18 @@ const Momentum = () => {
         const data1 = lineSeries1
           ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
           : undefined
-        const btc = data1?.value !== undefined ? data1.value : data1?.close
+        const assetCumReturns = data1?.value !== undefined ? data1.value : data1?.close
         const data2 = lineSeries2
           ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
           : undefined
-        const momentum = data2?.value !== undefined ? data2.value : data2?.close
+        const signalCumReturns = data2?.value !== undefined ? data2.value : data2?.close
 
-        if (btc !== undefined && momentum !== undefined) {
-          if (btc > momentum) {
+        if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
+          if (assetCumReturns > signalCumReturns) {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC Raw: ${btc}</p>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: ${momentum}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">assetCumReturns Raw: ${assetCumReturns}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">signalCumReturns: ${signalCumReturns}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -203,8 +217,8 @@ const Momentum = () => {
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: ${momentum.toLocaleString('US')}</p>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC Raw: ${btc.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">signalCumReturns: ${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">assetCumReturns Raw: ${assetCumReturns.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -237,7 +251,7 @@ const Momentum = () => {
         chartInstance.current = undefined
       }
     }
-  }, [dates, themeColors, momentum, btc, coin, isSmallDevice])
+  }, [dates, themeColors, signalCumReturns, assetCumReturns, coin, isSmallDevice])
 
   return (
     <div className="relative">
