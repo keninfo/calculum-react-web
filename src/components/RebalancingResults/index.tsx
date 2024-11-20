@@ -84,6 +84,8 @@ const RebalancingResults = () => {
   const leverageLimited = leverage.map((value) => (value ? Math.min(value, 1) : 0))
   const dFReturnsScaled = dFReturns.map((returnValue, index) => returnValue * leverageLimited[index])
 
+  console.log('dFReturn BTC:' + dFReturns)
+
   // SHARPE ---------------------------------------------------------------------------------------------------------
   const rawSharpe = safeRound((calculateMean(dFReturns) / calculateStd(dFReturns)) * Math.sqrt(periods), 2)
 
@@ -126,48 +128,29 @@ const RebalancingResults = () => {
   return (
     <>
       {values && (
-        <Card className="h-fit w-full !bg-transparent md:!p-0" title="REBALANCED RESULTS">
-          <p>
-            Sharpe Ratio, Raw: <b className={`${rawSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{rawSharpe}</b>
+        <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-center" title="PRODUCT METRICS">
+          <p className="font-bold text-grey">Sharpe Ratio</p>
+          <p className="text-xs text-white">
+            BTC: <b className={`text-lg ${rawSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{rawSharpe}</b>
           </p>
-          <p>
-            Constant Volatility: <b className={`${scaledSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{scaledSharpe}</b>
+          <p className="text-xs text-white">
+            Smoothcoin BTC: <b className={`text-lg ${scaledSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{scaledSharpe}</b>
           </p>
-
-          <p className="mt-[2vh]">
-            CAGR, Raw: <b className={`${rawCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{rawCAGR}%</b>
+          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-grey">CAGR</p>
+          <p className="text-xs text-white">
+            BTC: <b className={`text-lg ${rawCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{rawCAGR}%</b>
           </p>
-          <p>
-            Constant Volatility: <b className={`${scaledCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{scaledCAGR}%</b>
+          <p className="text-xs text-white">
+            Smoothcoin BTC: <b className={`text-lg ${scaledCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{scaledCAGR}%</b>
           </p>
-
-          <p className="mt-[2vh]">
-            Largest Drawdown, Raw: <b className={`${Number(rawDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{rawDDMax}%</b>
+          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-grey">Largest Drawdown</p>
+          <p className="text-xs text-white">
+            BTC: <b className={`text-lg ${Number(rawDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{rawDDMax}%</b>
           </p>
-          <p>
-            Constant Volatility:{' '}
-            <b className={`${Number(scaledDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{scaledDDMax}%</b>
+          <p className="text-xs text-white">
+            Smoothcoin BTC:{' '}
+            <b className={`text-lg ${Number(scaledDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{scaledDDMax}%</b>
           </p>
-          {/* <div className="w-full mt-[3vh]  space-y-[1vh]">
-        <div className="block space-y-1 w-fit">
-          <p className="text-grey text-left text-sm">Asset:</p>
-          <CoinSelect />
-        </div>
-        <div className="block space-y-1  w-fit">
-          <p className="text-grey text-left text-sm">Case Studies:</p>
-          <CaseStudies />
-        </div>
-        <div className="block space-y-1  w-fit">
-          <p className="text-grey text-left text-sm">Days:</p>
-          {studyCase == 0 && <SetWindow />}
-          {studyCase == 1 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-eerie text-grey text-left">04/01/2021</p>
-          )}
-          {studyCase == 2 && (
-            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-eerie text-grey text-left">10/01/2023</p>
-          )}
-        </div>
-      </div> */}
         </Card>
       )}
     </>
