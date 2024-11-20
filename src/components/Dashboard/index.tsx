@@ -17,6 +17,8 @@ import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
+import MomentumMetrics from '../RebalancingResults/MomentumMetrics'
+
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
@@ -75,7 +77,8 @@ const Dashboard = () => {
               <TradeBox />
               {pro && (
                 <Card className="w-full">
-                  <RebalancingResults />
+                  {strategy == 'Smoothcoin' && <RebalancingResults />}
+                  {strategy == 'Momentum' && <MomentumMetrics />}
                 </Card>
               )}
               <Positions />
