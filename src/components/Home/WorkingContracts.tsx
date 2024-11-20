@@ -40,9 +40,7 @@ const WorkingContracts = () => {
                 <p className="mt-5 text-center text-grey md:w-[50%] md:text-left md:text-2xl">{contract.info}</p>
 
                 <div className="mt-5 md:flex md:w-full md:justify-between">
-                  <div className="text-center">
-                    <p>{`<<- STATS PLACEHOLDER ->>`}</p>
-                  </div>
+                  <div></div>
                   <button
                     className="mt-5 w-full rounded-lg bg-primary px-5 py-2 md:mt-0 md:w-fit"
                     onClick={() => goTo(contract.strategy)}
