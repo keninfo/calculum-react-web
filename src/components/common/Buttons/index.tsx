@@ -11,7 +11,7 @@ type ButtonProps = {
 export const PrimaryButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}
-    className={`flex w-[100%] justify-center rounded-lg bg-primary py-2 text-offWhite hover:scale-110 hover:text-eerie ${border ? 'border-2' : ''} ${className}`}
+    className={`flex w-[100%] justify-center rounded-lg bg-primary py-2 text-eerie hover:scale-110 hover:text-eerie ${border ? 'border-2' : ''} ${className}`}
     disabled={disabled}
   >
     {children}

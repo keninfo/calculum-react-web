@@ -1,8 +1,8 @@
 /* DO NOT EDIT - Edit colors.ts instead and then npm run css-vars or yarn run css-vars */
 .classic {
-  --color-primary: #24ac96;
-  --color-dark: #1a2534;
-  --color-eerie: #181818;
+  --color-primary: #c1ea60;
+  --color-dark: #1d2326;
+  --color-eerie: #09110e;
   --color-payne: #535e73;
   --color-grey: #888e96;
   --color-anti: #e6e6e6;
@@ -11,15 +11,15 @@
   --color-atomic: #ff9655;
   --color-fire: #ff7777;
   --color-robin: #2dbec6;
-  --color-true: #4d70c2;
+  --color-true: #229b95;
   --color-burnt: #df7153;
   --color-citron: #dccd5b;
 }
 
 .pro {
-  --color-primary: #24ac96;
-  --color-dark: #181818;
-  --color-eerie: #1a2534;
+  --color-primary: #c1ea60;
+  --color-dark: #1d2326;
+  --color-eerie: #09110e;
   --color-payne: #535e73;
   --color-grey: #888e96;
   --color-anti: #e6e6e6;
@@ -28,7 +28,7 @@
   --color-atomic: #ff9655;
   --color-fire: #ff7777;
   --color-robin: #2dbec6;
-  --color-true: #4d70c2;
+  --color-true: #229b95;
   --color-burnt: #df7153;
   --color-citron: #dccd5b;
 }

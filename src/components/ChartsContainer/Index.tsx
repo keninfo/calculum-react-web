@@ -102,7 +102,7 @@ const Chart = () => {
       )}
       {strategy == `Momentum` && (
         <div ref={parent}>
-          <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
+          <Card className={`relative w-full !p-0 !px-2 !py-[2vh] ${pro ? '!rounded-b-none' : ''}`}>
             <Momentum />
           </Card>
         </div>

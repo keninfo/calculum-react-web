@@ -28,9 +28,7 @@ const NewsTicker = () => {
   }
 
   return (
-    <div className="relative flex h-12 w-full items-center overflow-hidden text-offWhite">
-      <div className="absolute inset-y-0 left-0 z-10 w-[10vw] bg-gradient-to-r from-eerie to-transparent"></div>
-      <div className="absolute inset-y-0 right-0 z-10 w-[10vw] bg-gradient-to-l from-eerie to-transparent"></div>
+    <div className="fade-mask relative flex h-12 w-full items-center overflow-hidden text-offWhite">
       <div className="animate-scroll flex whitespace-nowrap">
         {!isMaintenance &&
           newsItems.map((item, index) => (
@@ -50,7 +48,7 @@ const NewsTicker = () => {
         {isMaintenance &&
           maintenanceMessage.map((item, index) => (
             <span key={index} className="mr-4 flex items-center justify-center">
-              <span className="font-bold text-fire">{item}</span>
+              <span className="font-bold text-fire">{item.toUpperCase()}</span>
               <span className="ml-4">-</span>
             </span>
           ))}
@@ -58,7 +56,7 @@ const NewsTicker = () => {
         {isMaintenance &&
           maintenanceMessage.map((item, index) => (
             <span key={`${index}-duplicate`} className="mr-4 flex items-center justify-center">
-              <span className="font-bold text-fire">{item}</span>
+              <span className="font-bold text-fire">{item.toUpperCase()}</span>
               <span className="ml-4">-</span>
             </span>
           ))}

@@ -12,7 +12,7 @@ const Index = () => {
     <>
       <div className="mx-auto mb-20 md:w-[60%]">
         <h1 className="mb-5 text-center text-4xl">Welcome to</h1>
-        <Image src="/wordmark.svg" width={50} height={100} alt="image" className="h-auto w-full" />
+        <Image src="/BearProtocol-website-logo.png" width={50} height={100} alt="image" className="h-auto w-full" />
       </div>
       <div className="my-10 items-center justify-between text-center md:flex md:text-left">
         <h3 className="text-3xl">Meet Our Products</h3>

@@ -57,7 +57,7 @@ const TradeBoxActionContainer = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
-  return <div className="my-5 h-fit w-full rounded-lg border-2 border-payne p-5">{children}</div>
+  return <div className="my-2 h-fit w-full rounded-lg border-2 border-payne p-5">{children}</div>
 }
 
 const TradeBox = () => {
@@ -101,7 +101,7 @@ const TradeBox = () => {
       <Card className="h-fit max-h-full w-full">
         <CustomConnectButton />
         {!isConnected && (
-          <ul className="mt-5 space-y-2">
+          <ul className="mt-2 space-y-2">
             <TradeBoxButton action="Mint" type={1} />
             <TradeBoxButton action="Approve" type={1} />
             <TradeBoxButton action="Deposit" type={1} />
@@ -111,7 +111,7 @@ const TradeBox = () => {
           </ul>
         )}
         {isConnected && (
-          <ul className="mt-5">
+          <ul className="mt-2">
             {step == 1 ? (
               <TradeBoxActionContainer>
                 <FaucetComponent />

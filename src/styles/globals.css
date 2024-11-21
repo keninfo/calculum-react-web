@@ -3,20 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal, bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
-}
-
 :root {
   --scrollbar-width: calc(100vw - 100%);
 }
@@ -25,7 +11,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Montserrat';
+  font-family: 'Inter';
   background-color: var(--color-eerie);
   color: var(--color-offWhite);
 }
@@ -93,4 +79,13 @@ input[type='number'] {
 }
 .animate-scroll {
   animation: scroll 20s linear infinite;
+}
+
+.fade-mask {
+  mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
 }

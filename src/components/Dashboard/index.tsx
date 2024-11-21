@@ -52,10 +52,16 @@ const Dashboard = () => {
     <>
       {/* DESKTOP */}
       <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
-        <div className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-eerie md:sticky md:top-0`}>
-          <div className="h-[1rem] w-full bg-eerie"></div>
+        <div
+          className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
+        >
+          <div
+            className={`h-[1rem] w-full bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
+          ></div>
           <StrategyOptions />
-          <div className="h-[1rem] w-full bg-eerie"></div>
+          <div
+            className={`h-[1rem] w-full bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
+          ></div>
         </div>
         <div className={`col-span-11 flex flex-col`}>
           <StrategyInfoTitle />
