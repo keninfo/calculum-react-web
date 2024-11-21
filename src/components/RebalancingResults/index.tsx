@@ -94,6 +94,9 @@ const RebalancingResults = () => {
     2,
   )
 
+  const differenceSharpe = scaledSharpe - rawSharpe
+  const differenceSharpeString = `${differenceSharpe > 0 ? '+' : ''}${differenceSharpe.toLocaleString('US')}`
+
   // CAGR ---------------------------------------------------------------------------------------------------------
 
   const dFReturnsCumRet = cumprod(dFReturns)
@@ -101,6 +104,9 @@ const RebalancingResults = () => {
 
   const rawCAGR = safeRound((dFReturnsCumRet[dFReturnsCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
   const scaledCAGR = safeRound((dFReturnsScaledCumRet[dFReturnsScaledCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
+
+  const differenceCAGR = scaledCAGR - rawCAGR
+  const differenceCAGRString = `${differenceCAGR > 0 ? '+' : ''}${differenceCAGR.toLocaleString('US')}%`
 
   // DRAWDOWN ---------------------------------------------------------------------------------------------------------
   const cumMaxRaw = cummax(dFReturnsCumRet)
@@ -125,31 +131,48 @@ const RebalancingResults = () => {
   const rawDDMax = `-${(sortedRaw[0] * 100).toFixed(1)}`
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
+  const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
+  const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
+
   return (
     <>
       {values && (
         <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-center" title="PRODUCT METRICS">
-          <p className="font-bold text-grey">Sharpe Ratio</p>
-          <p className="text-xs text-white">
-            BTC: <b className={`text-lg ${rawSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{rawSharpe}</b>
+          <p className="font-bold text-offWhite">Sharpe Ratio</p>
+          <p className="mt-2 text-xs text-grey">
+            BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
           </p>
-          <p className="text-xs text-white">
-            Smoothcoin BTC: <b className={`text-lg ${scaledSharpe < 0 ? 'text-burnt' : 'text-true'}`}>{scaledSharpe}</b>
-          </p>
-          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-grey">CAGR</p>
-          <p className="text-xs text-white">
-            BTC: <b className={`text-lg ${rawCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{rawCAGR}%</b>
-          </p>
-          <p className="text-xs text-white">
-            Smoothcoin BTC: <b className={`text-lg ${scaledCAGR < 0 ? 'text-burnt' : 'text-true'}`}>{scaledCAGR}%</b>
-          </p>
-          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-grey">Largest Drawdown</p>
-          <p className="text-xs text-white">
-            BTC: <b className={`text-lg ${Number(rawDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{rawDDMax}%</b>
-          </p>
-          <p className="text-xs text-white">
+          <p className="text-xs text-grey">
             Smoothcoin BTC:{' '}
-            <b className={`text-lg ${Number(scaledDDMax) < 0 ? 'text-burnt' : 'text-true'}`}>{scaledDDMax}%</b>
+            <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+          </p>
+          <p className="text-xs text-white">
+            Difference:{' '}
+            <b className={`text-lg ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
+          </p>
+          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-offWhite">CAGR</p>
+          <p className="mt-2 text-xs text-grey">
+            BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
+          </p>
+          <p className="text-xs text-grey">
+            Smoothcoin BTC:{' '}
+            <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+          </p>
+          <p className="text-xs text-white">
+            Difference:{' '}
+            <b className={`text-lg ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
+          </p>
+          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-offWhite">Largest Drawdown</p>
+          <p className="mt-2 text-xs text-grey">
+            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+          </p>
+          <p className="text-xs text-grey">
+            Smoothcoin BTC:{' '}
+            <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
+          </p>
+          <p className="text-xs text-white">
+            Difference:{' '}
+            <b className={`text-lg ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
           </p>
         </Card>
       )}
