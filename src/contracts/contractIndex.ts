@@ -24,7 +24,7 @@ export const contractIndex = [
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
     symbol: 'moBTC',
-    icon: 'https://placehold.co/600x600/gold/black?text=M',
+    icon: 'https://placehold.co/600x600/white/black?text=M',
     info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi Strategy',
   },
   {
