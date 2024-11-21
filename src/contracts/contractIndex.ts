@@ -18,17 +18,6 @@ export interface contractType {
 export const contractIndex = [
   {
     isWorking: true,
-    strategy: 'Smoothcoin',
-    coin: 'BTC',
-    abi: contractSmoothcoinBTC.abi,
-    address: contractSmoothcoinBTC.address,
-    chainId: contractSmoothcoinBTC.chainId,
-    symbol: 'smBTC',
-    icon: '/bearLogo.png',
-    info: 'Live your life without having to constantly check on the market.',
-  },
-  {
-    isWorking: true,
     strategy: 'Momentum',
     coin: 'BTC',
     abi: contractMomentumBTC.abi,
@@ -38,6 +27,18 @@ export const contractIndex = [
     icon: 'https://placehold.co/600x600/gold/black?text=M',
     info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi Strategy',
   },
+  {
+    isWorking: true,
+    strategy: 'Smoothcoin',
+    coin: 'BTC',
+    abi: contractSmoothcoinBTC.abi,
+    address: contractSmoothcoinBTC.address,
+    chainId: contractSmoothcoinBTC.chainId,
+    symbol: 'smBTC',
+    icon: '/bearLogo.png',
+    info: 'Live your life without having to constantly check on the market.',
+  },
+
   {
     isWorking: false,
     strategy: 'Smoothcoin',
