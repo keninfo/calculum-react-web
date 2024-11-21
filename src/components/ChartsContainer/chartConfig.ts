@@ -84,7 +84,7 @@ export const tooltipConfig = {
   top: '12px',
   left: '12px',
   pointerEvents: 'none',
-  fontFamily: '-apple-system, BlinkMacSystemFont, Montserrat, Roboto, Ubuntu, sans-serif',
+  fontFamily: 'Inter, Roboto, Ubuntu, sans-serif',
   color: 'offWhite',
 }
 

@@ -132,7 +132,12 @@ const Momentum = () => {
       },
       leftPriceScale: {
         ...lineChartConfig.leftPriceScale,
-        mode: 0,
+        mode: 1,
+      },
+      rightPriceScale: {
+        ...lineChartConfig.rightPriceScale,
+        visible: true,
+        mode: 1,
       },
       crosshair: {
         ...lineChartConfig.crosshair,
@@ -140,18 +145,21 @@ const Momentum = () => {
       },
       localization: {
         dateFormat: "dd MMMM 'yy",
-        priceFormatter: (price: number) => {
-          return price.toLocaleString('US') // Append a string (e.g., currency symbol) to each value
-        },
       },
     })
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
       color: themeColors.offWhite,
       priceScaleId: 'left',
+      priceFormat: {
+        type: 'custom',
+        formatter: (price: number) => {
+          return `$${(price * 100).toFixed(0)}k`
+        },
+      },
     })
 
-    const BTCUSDTSliced = BTCUSDT.map((value) => Number(value) / 1000)
+    const BTCUSDTSliced = BTCUSDT.map((value) => Number(value) / 100000)
 
     const chartDataPrice1: PriceChartData[] = BTCUSDTSliced.map((data, index) => ({
       time: (dates[index].getTime() / 1000) as UTCTimestamp,
@@ -162,10 +170,16 @@ const Momentum = () => {
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
       color: themeColors.primary,
-      priceScaleId: 'left',
+      priceScaleId: 'right',
+      priceFormat: {
+        type: 'custom',
+        formatter: (price: number) => {
+          return `$${price.toLocaleString('US')}`
+        },
+      },
     })
 
-    const signalCumReturnsSliced = signalPrice.map((value) => Number(value) / 1000)
+    const signalCumReturnsSliced = signalPrice.map((value) => Number(value) / 100000)
 
     const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
       time: (dates[index].getTime() / 1000) as UTCTimestamp,
@@ -173,6 +187,16 @@ const Momentum = () => {
     }))
 
     lineSeries2?.setData(chartDataPrice2)
+
+    chartInstance.current?.priceScale('left').applyOptions({
+      scaleMargins: { top: 0.45, bottom: 0.1 }, // Adjust as needed
+      mode: 0, // Regular price scale
+    })
+
+    chartInstance.current?.priceScale('right').applyOptions({
+      scaleMargins: { top: 0.2, bottom: 0.1 }, // Match left scale's visual margin
+      mode: 0, // Regular price scale
+    })
 
     const visibleRange = {
       from: (dates[0].getTime() / 1000) as UTCTimestamp,
@@ -217,7 +241,7 @@ const Momentum = () => {
           if (assetCumReturns > signalCumReturns) {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> $${assetCumReturns.toLocaleString('US')}k</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> $${(assetCumReturns * 100).toLocaleString('US')}k</p>
             <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/> $${signalCumReturns.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
@@ -228,7 +252,7 @@ const Momentum = () => {
             toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  $${assetCumReturns.toFixed(0)}k</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  $${(assetCumReturns * 100).toFixed(0)}k</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -261,7 +285,7 @@ const Momentum = () => {
         chartInstance.current = undefined
       }
     }
-  }, [dates, themeColors, signalCumReturns, assetCumReturns, coin, isSmallDevice, BTCUSDT])
+  }, [dates, themeColors, signalCumReturns, assetCumReturns, coin, isSmallDevice, BTCUSDT, signalPrice])
 
   return (
     <div className="relative">
