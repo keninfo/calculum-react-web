@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import BearAttack from '@/components/common/Icons/BearAttack'
-import BearPassive from '@/components/common/Icons/BearPassive'
 import { useOptionsStore } from '@/store/useOptionsStore'
 
 const options = [
@@ -64,10 +62,18 @@ const ChartOptions = () => {
   return (
     <ul className="flex items-center justify-center space-x-3 p-5 text-xs">
       <li onClick={() => setStudyCase(1)} className="cursor-pointer">
-        <BearAttack className={`${selected === 0 ? '!fill-primary' : '!fill-offWhite'} h-5`} />
+        <p
+          className={`${selected === 0 ? 'border-b-2 border-primary text-primary' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
+        >
+          Bull
+        </p>
       </li>
       <li onClick={() => setStudyCase(2)} className="cursor-pointer">
-        <BearPassive className={`${selected === 1 ? '!fill-primary' : '!fill-offWhite'} mx-2 h-5`} />
+        <p
+          className={`${selected === 1 ? 'border-b-2 border-primary text-primary' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
+        >
+          Bear
+        </p>
       </li>
       {options.map((option, index) => {
         return (
