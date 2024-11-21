@@ -45,7 +45,7 @@ const WorkingContracts = () => {
                     className="mt-5 w-full rounded-lg bg-primary px-5 py-2 md:mt-0 md:w-fit"
                     onClick={() => goTo(contract.strategy)}
                   >
-                    <p className="text-offWhite">Start Trading</p>
+                    <p className="text-dark">Start Trading</p>
                   </button>
                 </div>
               </div>
