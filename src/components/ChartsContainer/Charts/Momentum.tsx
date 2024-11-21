@@ -33,10 +33,10 @@ const Momentum = () => {
   const { coin, strategy } = useStrategyStore()
   const { pro } = useProStore()
 
-  // const [assetReturns, setAssetReturns] = useState<number[]>([])
-  // const [signalReturns, setSignalReturns] = useState<number[]>([])
+  const [BTCUSDT, setBTCUSDT] = useState<string[]>([])
   const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
   const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
+  const [signalPrice, setSignalPrice] = useState<number[]>([])
 
   const [dates, setDates] = useState<Date[]>([])
 
@@ -69,6 +69,7 @@ const Momentum = () => {
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
+        BTCUSDT: d.BTCUSDT!,
         asset_return: +d.asset_return!,
         signal_return: +d.signal_return!,
         asset_cum_return: +d.asset_cum_return!,
@@ -76,13 +77,24 @@ const Momentum = () => {
       }))
 
       const dates = staticData.map((d) => new Date(d.date))
-      // const assetReturnsData = staticData.map((d) => d.asset_return)
+      const BTCUSDTData = staticData.map((d) => d.BTCUSDT)
       // const signalReturnsData = staticData.map((d) => d.signal_return)
       const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
       const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
 
+      const newSignalPrices = BTCUSDTData.map((price, index) => {
+        const assetPrice = Number(price) // Convert string to number
+        const assetReturn = assetCumReturnsData[index] || 0 // Handle missing values safely
+        const signalReturn = signalCumReturnsData[index] || 0
+
+        // Calculate signal price
+        return (assetPrice * (1 + signalReturn)) / (1 + assetReturn)
+      })
+
+      setSignalPrice(newSignalPrices)
+
       setDates(dates)
-      // setAssetReturns(assetReturnsData)
+      setBTCUSDT(BTCUSDTData)
       // setSignalReturns(signalReturnsData)
       setAssetCumReturns(assetCumReturnsData)
       setSignalCumReturns(signalCumReturnsData)
@@ -139,12 +151,10 @@ const Momentum = () => {
       priceScaleId: 'left',
     })
 
-    const assetCumReturnsSliced = assetCumReturns.slice(0, assetCumReturns.length - 1)
+    const BTCUSDTSliced = BTCUSDT.map((value) => Number(value) / 1000)
 
-    const datesSliced = dates.slice(0, assetCumReturns.length - 1)
-
-    const chartDataPrice1: PriceChartData[] = assetCumReturnsSliced.map((data, index) => ({
-      time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
+    const chartDataPrice1: PriceChartData[] = BTCUSDTSliced.map((data, index) => ({
+      time: (dates[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
 
@@ -155,18 +165,18 @@ const Momentum = () => {
       priceScaleId: 'left',
     })
 
-    const signalCumReturnsSliced = signalCumReturns.slice(0, signalCumReturns.length - 1)
+    const signalCumReturnsSliced = signalPrice.map((value) => Number(value) / 1000)
 
     const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
-      time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
+      time: (dates[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
 
     lineSeries2?.setData(chartDataPrice2)
 
     const visibleRange = {
-      from: (datesSliced[0].getTime() / 1000) as UTCTimestamp,
-      to: (datesSliced[datesSliced.length - 1].getTime() / 1000) as UTCTimestamp,
+      from: (dates[0].getTime() / 1000) as UTCTimestamp,
+      to: (dates[dates.length - 1].getTime() / 1000) as UTCTimestamp,
     }
 
     initialVisibleRange.current = visibleRange
@@ -207,8 +217,8 @@ const Momentum = () => {
           if (assetCumReturns > signalCumReturns) {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">assetCumReturns Raw: ${assetCumReturns}</p>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">signalCumReturns: ${signalCumReturns}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> $${assetCumReturns.toLocaleString('US')}k</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/> $${signalCumReturns.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -217,8 +227,8 @@ const Momentum = () => {
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">signalCumReturns: ${signalCumReturns.toLocaleString('US')}</p>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">assetCumReturns Raw: ${assetCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  $${assetCumReturns.toFixed(0)}k</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -251,7 +261,7 @@ const Momentum = () => {
         chartInstance.current = undefined
       }
     }
-  }, [dates, themeColors, signalCumReturns, assetCumReturns, coin, isSmallDevice])
+  }, [dates, themeColors, signalCumReturns, assetCumReturns, coin, isSmallDevice, BTCUSDT])
 
   return (
     <div className="relative">
