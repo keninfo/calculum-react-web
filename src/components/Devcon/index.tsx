@@ -29,7 +29,7 @@ const Index = () => {
   return (
     <>
       <div className="mb-10 md:w-[60%]">
-        <Image src="/BearProtocol-website-logo.png" width={50} height={100} alt="image" className="h-auto w-full" />
+        <Image src="/wordmark.svg" width={50} height={50} alt="image" className="h-auto w-full" />
         <h1 className="my-5 text-left text-4xl">at</h1>
         <img
           src="https://devcon.org/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2Foverlay-left-dc7.b828cce0.png&w=1920&q=75"
