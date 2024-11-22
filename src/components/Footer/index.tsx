@@ -14,7 +14,7 @@ const index = () => {
         <Image src="/wordmark.svg" width={50} height={100} alt="image" className="h-auto w-full" />
       </div>
 
-      <p className="col-span-1 text-center text-grey md:text-right">Smoothcoin @ 2024. All Rights Reserved</p>
+      <p className="col-span-1 text-center text-grey md:text-right">Bear Protocol @ 2024. All Rights Reserved</p>
     </footer>
   )
 }

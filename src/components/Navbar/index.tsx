@@ -4,6 +4,7 @@ import React from 'react'
 
 import Image from 'next/image'
 
+import ActionAlert from '../common/ActionAlert'
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
@@ -11,12 +12,15 @@ import { navigationItems } from './config'
 const Sidebar = () => {
   return (
     <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-none md:absolute" id="Navbar">
+      <ActionAlert alert="Thanks for visiting Bear Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon." />
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
-          <Image src="/wordmark.svg" width={100} height={50} alt="image" className="h-4 w-auto" />
-          <div className="flex w-fit items-center justify-start">{navigationItems.map(NavbarItem)}</div>
-          <ProToggle />
+          <Image src="/wordmark.svg" width={100} height={50} alt="image" className="flex h-4 w-fit justify-start" />
+          <div className="flex w-3/5 items-center justify-center">{navigationItems.map(NavbarItem)}</div>
+          <div className="flex w-1/5 justify-end">
+            <ProToggle />
+          </div>
         </div>
       </div>
       {/* MOBILE */}

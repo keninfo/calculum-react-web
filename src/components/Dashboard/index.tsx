@@ -51,7 +51,7 @@ const Dashboard = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`mt-[11.5vh] hidden grid-cols-11 gap-4 md:grid`}>
+      <div className={`mt-[15.5vh] hidden grid-cols-11 gap-4 md:grid`}>
         <div
           className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
         >

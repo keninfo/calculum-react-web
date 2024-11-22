@@ -47,7 +47,7 @@ const AddUSDC = ({ classname }: tokenInfo) => {
 
   return (
     <div>
-      <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-xs text-primary ${classname}`}>
+      <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-sm text-primary ${classname}`}>
         Add USDc to Wallet
       </button>
     </div>

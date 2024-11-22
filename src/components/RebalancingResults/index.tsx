@@ -137,42 +137,43 @@ const RebalancingResults = () => {
   return (
     <>
       {values && (
-        <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-center" title="PRODUCT METRICS">
-          <p className="font-bold text-offWhite">Sharpe Ratio</p>
+        <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
+          <p className="text-offWhite">Sharpe Ratio</p>
           <p className="mt-2 text-xs text-grey">
+            smBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+          </p>
+          <p className="text-xs text-grey">
             BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
           </p>
+
           <p className="text-xs text-grey">
-            Smoothcoin BTC:{' '}
-            <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
-          </p>
-          <p className="text-xs text-white">
             Difference:{' '}
-            <b className={`text-lg ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
+            <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
           </p>
-          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-offWhite">CAGR</p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">CAGR</p>
           <p className="mt-2 text-xs text-grey">
+            smBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+          </p>
+          <p className="text-xs text-grey">
             BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
           </p>
+
           <p className="text-xs text-grey">
-            Smoothcoin BTC:{' '}
-            <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
-          </p>
-          <p className="text-xs text-white">
             Difference:{' '}
-            <b className={`text-lg ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
+            <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
-          <p className="mt-4 border-t-2 border-t-payne pt-4 font-bold text-offWhite">Largest Drawdown</p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">Largest Drawdown</p>
           <p className="mt-2 text-xs text-grey">
-            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
-          </p>
-          <p className="text-xs text-grey">
-            Smoothcoin BTC:{' '}
+            smBTC:{' '}
             <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
           </p>
-          <p className="text-xs text-white">
+          <p className="text-xs text-grey">
+            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+          </p>
+
+          <p className="text-xs text-grey">
             Difference:{' '}
-            <b className={`text-lg ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
+            <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
           </p>
         </Card>
       )}

@@ -109,7 +109,7 @@ const Transactions = () => {
             ...getDeposits.map((log, index) => ({
               block: log.blockNumber.toString(),
               date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Claimed Smoothcoins',
+              type: 'Claimed Shares',
               usdc: formatBalance(log.args.totalAssets as bigint),
               smoothcoins: formatShares(log.args.shares as bigint),
               transactionHash: log.transactionHash,
@@ -162,22 +162,24 @@ const Transactions = () => {
   }, [isConnected, address, pro, contractAddress])
 
   return (
-    <Card className="min-h-0 w-full grow" title="TRANSACTION HISTORY">
+    <Card className="min-h-0 w-full grow" title="Transaction History">
       {isConnected ? (
-        <div className="w-full md:mt-[4vh]">
+        <div className="w-full">
           {transactions.length === 0 ? (
-            <p className="mb-5 text-center text-2xl text-burnt">You currently have no transactions.</p>
+            <p className="mb-5 text-left text-lg text-burnt">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
               <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[600px] border-collapse">
                   <thead>
                     <tr>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left text-true">Date</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left text-true">Type</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">USDc</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">scUSDc</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right text-true">Transaction Details</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">scUSDc</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
+                        Transaction Details
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -185,8 +187,15 @@ const Transactions = () => {
                       <tr key={index}>
                         <td className="border-b border-grey px-4 py-2">{log.date}</td>
                         <td className="border-b border-grey px-4 py-2">{log.type}</td>
-                        <td className="border-b border-grey px-4 py-2 text-right">{log.usdc}</td>
-                        <td className="border-b border-grey px-4 py-2 text-right">{log.smoothcoins}</td>
+                        <td className="border-b border-grey px-4 py-2 text-right">
+                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                          {log.usdc}
+                        </td>
+                        <td className="border-b border-grey px-4 py-2 text-right">
+                          {' '}
+                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                          {log.smoothcoins}
+                        </td>
                         <td className="cursor-pointer border-b border-grey px-4 py-2 text-right hover:text-primary">
                           <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
                             {shortenAddress(log.transactionHash)}
@@ -227,11 +236,7 @@ const Transactions = () => {
           )}
         </div>
       ) : (
-        <div className="flex items-center justify-center">
-          <div className="mt-[2vh] space-y-4 text-center">
-            <p className="my-[4vh] text-center text-2xl text-true">Connect a wallet to see your transactions</p>
-          </div>
-        </div>
+        <p className="text-left text-lg text-grey">Connect a wallet to see your transactions</p>
       )}
     </Card>
   )

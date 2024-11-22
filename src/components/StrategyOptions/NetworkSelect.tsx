@@ -3,7 +3,7 @@ import React from 'react'
 import Select from '@/components/common/Select'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-const networks = ['Arb. Sepolia']
+const networks = ['Arbitrum Sepolia']
 
 const NetworkSelect = () => {
   const { network, setNetwork } = useStrategyStore()

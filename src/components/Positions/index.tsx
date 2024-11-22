@@ -111,26 +111,32 @@ const Positions = () => {
   return (
     <>
       {openPositions ? (
-        <Card title="OPEN POSITIONS" className="min-h-0 w-full grow">
+        <Card title="Open Positions" className="min-h-0 w-full grow">
           <p className="flex justify-between">
-            <b>Size:</b> {openPositions.toLocaleString('US')} {symbol}
+            <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
           </p>
           <p className="flex justify-between">
-            <b>Collateral:</b> {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
+            <b className="font-normal text-grey">Collateral:</b>{' '}
+            {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
           </p>
           <p className="flex justify-between">
-            <b>Entry:</b> {formatBalance(entrySharePrice)} USDc
+            <b className="font-normal text-grey">Entry:</b> {formatBalance(entrySharePrice)} USDc
           </p>
           <p className="flex justify-between">
-            <b>Current:</b> {formatBalance(daySharePrice)} USDc
+            <b className="font-normal text-grey">Current:</b> {formatBalance(daySharePrice)} USDc
           </p>
           <p className="mb-10 flex justify-between">
-            <b>PNL:</b> {pnl}%
+            <b className="font-normal text-grey">PNL:</b>{' '}
+            <b
+              className={`${Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'} font-normal`}
+            >
+              {pnl}%
+            </b>
           </p>
         </Card>
       ) : (
-        <Card title="OPEN POSITIONS" className="min-h-0 w-full grow">
-          <h2 className="mb-[2vh] text-center text-lg text-burnt">You have no open positions</h2>
+        <Card title="Open Positions" className="min-h-0 w-full grow">
+          <h2 className="mb-[2vh] text-left text-lg text-burnt">You have no open positions</h2>
         </Card>
       )}
     </>

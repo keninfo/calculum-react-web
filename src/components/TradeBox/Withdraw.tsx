@@ -62,12 +62,9 @@ const WithdrawAsset = () => {
         <p></p>
         <AlternateButton handleClick={setMaxAssets}>MAX</AlternateButton>
       </div>
-      <div className="flex w-full items-center justify-around px-2 pt-4 text-center text-xs">
-        <b className="text-citron">
-          {' '}
-          {(Number(ConvertToShares(amount).data as bigint) / 1000000000000000000 || 0).toLocaleString('US')}
-        </b>
-        <p>{symbol}</p>
+      <div className="flex w-full items-center justify-center space-x-1 px-2 pt-4 text-center text-xs">
+        <b> {(Number(ConvertToShares(amount).data as bigint) / 1000000000000000000 || 0).toLocaleString('US')}</b>
+        <p className="text-citron">{symbol}</p>
       </div>
       <div className="mt-5 flex-row text-center text-xs">
         <p className="text-grey">YOU WILL RECEIVE</p>

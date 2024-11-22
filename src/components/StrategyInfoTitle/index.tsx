@@ -69,18 +69,22 @@ const StrategyInfoTitle = () => {
           <div className="flex w-full items-center justify-start text-nowrap text-center text-xs text-grey md:text-left md:text-sm">
             <p className="mr-1">{strategyInfo.token}:</p>
             <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>
+            <p>{`(`}</p>
             <p
-              className={`mr-1 ${strategyInfo.tokenChange > 0 ? 'text-spring' : strategyInfo.tokenChange < 0 ? 'text-fire' : 'text-grey'}`}
+              className={`${strategyInfo.tokenChange > 0 ? 'text-spring' : strategyInfo.tokenChange < 0 ? 'text-fire' : 'text-grey'}`}
             >
-              ({strategyInfo.tokenChange.toLocaleString('US')}%)
+              {strategyInfo.tokenChange.toLocaleString('US')}%
             </p>
+            <p className="mr-1">{`)`}</p>
             <p className="mr-1">- {strategyInfo.symbol}: </p>
             <p className="mr-1 text-offWhite">${strategyInfo.value}</p>
+            <p>{`(`}</p>
             <p
-              className={`mr-1 ${strategyInfo.change > 0 ? 'text-spring' : strategyInfo.change < 0 ? 'test-fire' : 'text-grey'}`}
+              className={`${strategyInfo.change > 0 ? 'text-spring' : strategyInfo.change < 0 ? 'text-fire' : 'text-grey'}`}
             >
-              ({strategyInfo.change.toLocaleString('US')}%)
+              {strategyInfo.change.toLocaleString('US')}%
             </p>
+            <p className="mr-1">{`)`}</p>
             <p>- Last 24H</p>
           </div>
         )}

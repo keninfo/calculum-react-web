@@ -19,7 +19,7 @@ const Input = ({
 }: InputProps) => {
   return (
     <input
-      className={`w-full border-b-2 border-payne bg-transparent py-1 text-offWhite ${className}`}
+      className={`w-full border-b-2 border-payne bg-transparent py-1 text-center text-offWhite ${className}`}
       placeholder={placeholder}
       type={type}
       value={value}

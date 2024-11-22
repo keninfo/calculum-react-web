@@ -322,13 +322,13 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   return (
     <div className="relative">
       <div className="absolute -top-[4vh] right-[2vw] md:left-[4vw] md:top-0 md:w-full">
-        <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-xs md:text-sm">{coin} Raw Price</span>
-        </div>
         <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-primary"></div>
           <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</p>
+        </div>
+        <div className="flex items-center justify-end space-x-2 md:justify-start">
+          <div className="h-1 w-[2vw] bg-offWhite"></div>
+          <span className="text-xs md:text-sm">{coin} Raw Price</span>
         </div>
       </div>
       <div
