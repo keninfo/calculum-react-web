@@ -36,7 +36,7 @@ const CustomConnectButton = ({ className }: { className?: string }) => {
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`flex w-full items-center justify-between rounded-lg border-2 border-true bg-transparent px-4 py-2 text-true hover:scale-105 hover:text-offWhite ${className}`}
+                  className={`flex w-full items-center justify-between rounded-lg border-2 border-true bg-transparent px-4 py-2 text-true hover:text-offWhite ${className}`}
                 >
                   <div className="h-4 w-4 bg-transparent"></div>
                   {account.displayName}
