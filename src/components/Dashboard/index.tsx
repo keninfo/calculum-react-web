@@ -2,7 +2,7 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
@@ -26,7 +26,6 @@ const Dashboard = () => {
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
-  const [showing, setShowing] = useState<boolean>(true)
   const { navbarHeight } = useNavbarStore()
 
   useEffect(() => {
@@ -117,16 +116,6 @@ const Dashboard = () => {
         <TradeBox />
         <Positions />
         <Transactions />
-        {showing && (
-          <div className="fixed bottom-0 left-0 z-50 w-screen space-y-5 bg-citron p-6">
-            <p className="w-full text-center text-xs text-eerie">
-              For a better experience, please use your desktop browser to interact with our platform.
-            </p>
-            <button className="w-full text-center font-bold" onClick={() => setShowing(false)}>
-              CLOSE
-            </button>
-          </div>
-        )}
       </div>
     </>
   )
