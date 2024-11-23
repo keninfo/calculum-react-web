@@ -1,8 +1,12 @@
 'use client'
 
-import React from 'react'
+import { useMeasure } from '@uidotdev/usehooks'
+
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
+
+import { useNavbarStore } from '@/store/useNavbarStore'
 
 import ActionAlert from '../common/ActionAlert'
 import NavbarItem from './NavbarItem'
@@ -10,9 +14,26 @@ import ProToggle from './ProToggle'
 import { navigationItems } from './config'
 
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true)
+  const [navbar, { height }] = useMeasure()
+  const { setNavbarHeight } = useNavbarStore()
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+  useEffect(() => {
+    setNavbarHeight(height || 136)
+  }, [height, setNavbarHeight])
+
   return (
-    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-none md:absolute" id="Navbar">
-      <ActionAlert alert="Thanks for visiting Bear Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon." />
+    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-none md:absolute" id="Navbar" ref={navbar}>
+      {isOpen && (
+        <ActionAlert
+          closeAction={handleClose}
+          alert="Thanks for visiting Bear Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon."
+        />
+      )}
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">

@@ -14,6 +14,7 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
+import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
@@ -26,6 +27,7 @@ const Dashboard = () => {
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
   const [showing, setShowing] = useState<boolean>(true)
+  const { navbarHeight } = useNavbarStore()
 
   useEffect(() => {
     const storedPro = localStorage.getItem('pro')
@@ -51,7 +53,7 @@ const Dashboard = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`mt-[15.5vh] hidden grid-cols-11 gap-4 md:grid`}>
+      <div className={`hidden grid-cols-11 gap-4 md:grid`} style={{ marginTop: navbarHeight + 'px' }}>
         <div
           className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
         >
