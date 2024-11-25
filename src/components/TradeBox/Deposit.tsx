@@ -1,3 +1,5 @@
+import { track } from '@vercel/analytics/react'
+
 import React, { useContext, useEffect, useState } from 'react'
 
 import { type BaseError, useAccount } from 'wagmi'
@@ -74,6 +76,7 @@ const DepositAssets = () => {
 
   const handleAccept = () => {
     Deposit({ amount, address }, contractAddress, contractAbi)
+    track('User Deposited')
     handleCloseModal()
   }
 

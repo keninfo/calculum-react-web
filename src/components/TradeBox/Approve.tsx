@@ -1,3 +1,5 @@
+import { track } from '@vercel/analytics/react'
+
 import React, { useContext, useEffect } from 'react'
 
 import Link from 'next/link'
@@ -39,6 +41,7 @@ const Approve = () => {
   useEffect(() => {
     if (hash) {
       createTransactionAlert('Transaction Approved!', true)
+      track('User Approved')
     }
     if (error) {
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)

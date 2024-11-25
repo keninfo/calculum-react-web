@@ -1,5 +1,7 @@
 'use client'
 
+import { track } from '@vercel/analytics/react'
+
 import React, { useContext, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
@@ -46,7 +48,6 @@ const FaucetComponent = () => {
   useEffect(() => {
     if (hash) {
       createTransactionAlert('Tokens Minted', true)
-      router.push('/dashboard')
     }
     if (error) {
       createTransactionAlert('Erro: Tokens Not Minted', false)
@@ -107,6 +108,7 @@ const FaucetComponent = () => {
   }
 
   const handleMint = async () => {
+    track('Mint Clicked')
     if (isEligibleForEth) {
       try {
         await handleSendTokens()
