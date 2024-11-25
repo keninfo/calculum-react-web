@@ -2,6 +2,7 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { Analytics } from '@vercel/analytics/react'
 
 import { type ReactNode } from 'react'
 
@@ -39,6 +40,7 @@ const RootLayout = ({
           <div className="md:px-20">{children}</div>
         </AppProviders>
       </body>
+      <Analytics />
     </html>
   )
 }
