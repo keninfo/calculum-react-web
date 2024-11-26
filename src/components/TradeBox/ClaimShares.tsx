@@ -35,7 +35,7 @@ const ClaimMint = () => {
       <div className="my-5 flex items-center justify-center space-x-5">
         <img src={`${icon}`} width={50} height={50} alt="image" className="rounded-full" />
         <div className="text-left">
-          <p>{formatShares(userDepositsShares)}</p>
+          <p>{Number(formatShares(userDepositsShares)).toLocaleString('US')}</p>
           <h4 className="text-citron">{symbol}</h4>
         </div>
       </div>

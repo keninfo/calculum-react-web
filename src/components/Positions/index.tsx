@@ -20,19 +20,27 @@ type pendingDeposit = {
   epoch: number
 }
 
+type responseData = [number, bigint, bigint, bigint]
+
 const Positions = () => {
   const { contractAddress, contractAbi, symbol } = useContract()
 
   const { isConnected, address } = useAccount()
-  const { ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch, BalanceShares } = ContractReads(
-    contractAddress,
-    contractAbi,
-  )
+  const { ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch, Deposits, BalanceShares } =
+    ContractReads(contractAddress, contractAbi)
   const [pendingDeposit, setPendingDeposit] = useState<pendingDeposit>()
   const genesisTimestamp = ContractGenesisEpoch().data as number
   const epochLengthInSeconds = 14400 // make it contract read
 
+  const [, , amountShares] = (Deposits(address).data || []) as responseData
+
   const balanceSharesResult = BalanceShares(address).data as bigint
+
+  let calculatedShares = amountShares
+
+  if (calculatedShares <= 0) {
+    calculatedShares = balanceSharesResult
+  }
 
   useEffect(() => {
     const fetchLastPendingDeposit = async () => {
@@ -93,9 +101,9 @@ const Positions = () => {
   const [openPositions, setOpenPositions] = useState<number>(0)
 
   useEffect(() => {
-    const finalAmount = parseFloat(formatShares(balanceSharesResult))
+    const finalAmount = parseFloat(formatShares(calculatedShares))
     setOpenPositions(finalAmount)
-  }, [balanceSharesResult])
+  }, [calculatedShares])
 
   const convertOpenPositions = ConvertToAssets(openPositions).data as bigint
 
