@@ -166,7 +166,7 @@ const Transactions = () => {
       {isConnected ? (
         <div className="w-full">
           {transactions.length === 0 ? (
-            <p className="mb-5 text-left text-lg text-burnt">You currently have no transactions.</p>
+            <p className="mb-5 text-center text-lg text-burnt md:text-left">You currently have no transactions.</p>
           ) : (
             <div className="md:my-4">
               <div className="hidden overflow-x-auto md:block">
@@ -236,7 +236,7 @@ const Transactions = () => {
           )}
         </div>
       ) : (
-        <p className="text-left text-lg text-grey">Connect a wallet to see your transactions</p>
+        <p className="text-center text-lg text-grey md:text-left">Connect a wallet to see your transactions</p>
       )}
     </Card>
   )

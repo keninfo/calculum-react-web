@@ -136,7 +136,7 @@ const Positions = () => {
         </Card>
       ) : (
         <Card title="Open Positions" className="min-h-0 w-full grow">
-          <h2 className="mb-[2vh] text-left text-lg text-burnt">You have no open positions</h2>
+          <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
         </Card>
       )}
     </>

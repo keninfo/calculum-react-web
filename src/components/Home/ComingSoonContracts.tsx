@@ -25,7 +25,7 @@ const ComingSoonContracts = () => {
                 width={50}
                 height={50}
                 alt={contract.symbol}
-                className="mx-auto rounded-full md:mx-0 md:mt-1"
+                className="mx-auto mt-4 rounded-full md:mx-0 md:mt-1"
               />
             </div>
           </Card>
