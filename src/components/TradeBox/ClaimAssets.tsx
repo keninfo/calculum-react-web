@@ -17,7 +17,7 @@ const ClaimAssets = () => {
   const { address } = useAccount()
   const { ClaimAssets, hash, error } = useClaimAssets()
   const { Withdrawals, IsClaimerWithdraw } = ContractReads(contractAddress, contractAbi)
-  const [, , userWithdrawalsAssets] = (Withdrawals(address).data || []) as responseData
+  const [, amountAssets] = (Withdrawals(address).data || []) as responseData
 
   const claimerWithdraw = IsClaimerWithdraw(address).data as boolean
 
@@ -36,7 +36,7 @@ const ClaimAssets = () => {
       <div className="my-5 flex items-center justify-center space-x-5">
         <CryptoIcon coin="USDC" className="h-[50px]" />
         <div className="text-left">
-          <p>{(Number(userWithdrawalsAssets) / 1000000000000000000).toLocaleString('US')}</p>
+          <p>{amountAssets ? (Number(amountAssets) / 1000000).toLocaleString('US') : 'Loading...'}</p>
           <h4 className="text-citron">USDC</h4>
         </div>
       </div>
