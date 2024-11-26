@@ -12,6 +12,24 @@ async function fetchAndConvertXlsx() {
     throw new Error('XLSX_FILE_URL is not defined in the environment variables.')
   }
 
+  // Check if the process was already run today
+  const timestampFilePath = path.join(process.cwd(), 'public', 'last_run_timestamp.txt')
+  let lastRunDate: string | null = null
+
+  // Try to read the timestamp file
+  try {
+    if (fs.existsSync(timestampFilePath)) {
+      lastRunDate = fs.readFileSync(timestampFilePath, 'utf-8')
+    }
+  } catch (error) {
+    console.error('Error reading timestamp file:', error)
+  }
+
+  const currentDate = new Date().toISOString().split('T')[0] // Format as yyyy-mm-dd
+  if (lastRunDate === currentDate) {
+    return { success: true, message: 'CSV files were already generated today.' }
+  }
+
   // Fetch the XLSX file
   const response = await fetch(url)
   if (!response.ok) {
@@ -44,6 +62,13 @@ async function fetchAndConvertXlsx() {
       }
     }
   })
+
+  // Store the current date in the timestamp file
+  try {
+    fs.writeFileSync(timestampFilePath, currentDate, 'utf-8')
+  } catch (error) {
+    console.error('Error writing timestamp file:', error)
+  }
 
   return { success: true, message: 'CSV files generated successfully.' }
 }
