@@ -120,7 +120,7 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
       autoscaleInfoProvider: () => ({
         priceRange: {
           minValue: 0,
-          maxValue: coin == 'PEPE Smoothcoin' ? 400 : 150,
+          maxValue: coin == '1000PEPE Smoothcoin' ? 400 : 150,
         },
       }),
     })

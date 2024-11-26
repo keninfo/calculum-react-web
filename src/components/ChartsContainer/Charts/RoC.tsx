@@ -101,10 +101,14 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     const periods = 365 // only for daily, have to change if hourly
     let selectedWindow = window
 
-    if (studyCase == 1) {
+    if (studyCase == 1 && coin != '1000PEPE') {
       selectedWindow = seriesData1.length - 573
-    } else if (studyCase == 2) {
+    } else if (studyCase == 2 && coin != '1000PEPE') {
       selectedWindow = seriesData1.length - 1486
+    }
+
+    if (coin == '1000PEPE' && studyCase == 1) {
+      setStudyCase(0)
     }
 
     const seriesData1Filtered = seriesData1.slice(-(selectedWindow + rollingWindow))
@@ -300,6 +304,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
         chartInstance.current = undefined
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     coin,
     dates,
@@ -314,10 +319,6 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     themeColors,
     isSmallDevice,
   ])
-
-  if (coin == 'PEPE Smoothcoin' && studyCase == 1) {
-    setStudyCase(0)
-  }
 
   return (
     <div className="relative">
