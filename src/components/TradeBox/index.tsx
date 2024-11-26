@@ -5,12 +5,16 @@ import React, { createContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { useAccount } from 'wagmi'
+import { arbitrumSepolia } from 'wagmi/chains'
 
 import Card from '@/components/common/Card'
 import CustomConnectButton from '@/components/common/CustomConnectButton'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
+import { walletClient } from '@/services/RainbowKitProvider'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
+import { PrimaryButton } from '../common/Buttons'
 import Approve from './Approve'
 import ClaimAssets from './ClaimAssets'
 import ClaimShares from './ClaimShares'
@@ -64,7 +68,7 @@ const TradeBox = () => {
   const { contractAddress, contractAbi } = useContract()
 
   const [step, setStep] = useState<number>(0)
-  const { address, isConnected } = useAccount()
+  const { address, isConnected, chainId } = useAccount()
   const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares } = ContractReads(contractAddress, contractAbi)
   const balanceAssets = BalanceAssets(address).data as bigint
   const balanceSharesResult = BalanceShares(address).data as bigint
@@ -72,6 +76,29 @@ const TradeBox = () => {
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
   const [amount, setAmount] = useState<number>(0)
+  const [wrongNetwork, setWrongNetwork] = useState<boolean>()
+  const { setNetwork } = useStrategyStore()
+
+  const switchNetwork = async () => {
+    if (walletClient) {
+      console.log('switching')
+      const targetChainId = arbitrumSepolia.id
+      try {
+        await walletClient.switchChain({ id: targetChainId })
+      } catch (error) {
+        console.error('Error switching chain:', error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (chainId != arbitrumSepolia.id) {
+      setWrongNetwork(true)
+    } else {
+      setWrongNetwork(false)
+      setNetwork('Arbitrum Sepolia')
+    }
+  }, [chainId, setNetwork])
 
   useEffect(() => {
     if ((userWithdrawalsStatus == 2 || userWithdrawalsStatus == 5) && userDepositStatus == 3) {
@@ -100,6 +127,15 @@ const TradeBox = () => {
     <AmountContext.Provider value={{ amount, setAmount }}>
       <Card className="h-fit max-h-full w-full">
         <CustomConnectButton />
+        {wrongNetwork && isConnected && (
+          <>
+            {' '}
+            <p className="mt-4 text-center text-fire">Your wallet is connected to an unsupported Network </p>
+            <PrimaryButton handleClick={() => switchNetwork()} className="mt-5">
+              Switch Network
+            </PrimaryButton>
+          </>
+        )}
         {!isConnected && (
           <ul className="mt-2 space-y-2">
             <TradeBoxButton action="Mint" type={1} />
@@ -110,7 +146,7 @@ const TradeBox = () => {
             <TradeBoxButton action="Claim Assets" type={1} />
           </ul>
         )}
-        {isConnected && (
+        {isConnected && !wrongNetwork && (
           <ul className="mt-2">
             {step == 1 ? (
               <TradeBoxActionContainer>
