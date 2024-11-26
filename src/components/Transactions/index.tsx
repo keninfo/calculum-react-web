@@ -13,12 +13,14 @@ import { useAccount } from 'wagmi'
 import Card from '@/components/common/Card'
 import useContract from '@/hooks/useContract'
 import { useProStore } from '@/store/useProStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
 const Transactions = () => {
   const { isConnected, address } = useAccount()
   const [transactions, setTransactions] = useState<any[]>([])
   const { contractAddress } = useContract()
+  const { coin } = useStrategyStore()
 
   const { pro } = useProStore()
 
@@ -161,85 +163,87 @@ const Transactions = () => {
     }
   }, [isConnected, address, pro, contractAddress])
 
-  return (
-    <Card className="min-h-0 w-full grow" title="Transaction History">
-      {isConnected ? (
-        <div className="w-full">
-          {transactions.length === 0 ? (
-            <p className="mb-5 text-center text-lg text-burnt md:text-left">You currently have no transactions.</p>
-          ) : (
-            <div className="md:my-4">
-              <div className="hidden overflow-x-auto md:block">
-                <table className="w-full min-w-[600px] border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">scUSDc</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
-                        Transaction Details
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {transactions.map((log, index) => (
-                      <tr key={index}>
-                        <td className="border-b border-grey px-4 py-2">{log.date}</td>
-                        <td className="border-b border-grey px-4 py-2">{log.type}</td>
-                        <td className="border-b border-grey px-4 py-2 text-right">
-                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
-                          {log.usdc}
-                        </td>
-                        <td className="border-b border-grey px-4 py-2 text-right">
-                          {' '}
-                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
-                          {log.smoothcoins}
-                        </td>
-                        <td className="cursor-pointer border-b border-grey px-4 py-2 text-right hover:text-primary">
-                          <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
-                            {shortenAddress(log.transactionHash)}
-                          </Link>
-                        </td>
+  if (coin == 'BTC') {
+    return (
+      <Card className="min-h-0 w-full grow" title="Transaction History">
+        {isConnected ? (
+          <div className="w-full">
+            {transactions.length === 0 ? (
+              <p className="mb-5 text-center text-lg text-burnt md:text-left">You currently have no transactions.</p>
+            ) : (
+              <div className="md:my-4">
+                <div className="hidden overflow-x-auto md:block">
+                  <table className="w-full min-w-[600px] border-collapse">
+                    <thead>
+                      <tr>
+                        <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
+                        <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
+                        <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
+                        <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">scUSDc</th>
+                        <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
+                          Transaction Details
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {transactions.map((log, index) => (
+                        <tr key={index}>
+                          <td className="border-b border-grey px-4 py-2">{log.date}</td>
+                          <td className="border-b border-grey px-4 py-2">{log.type}</td>
+                          <td className="border-b border-grey px-4 py-2 text-right">
+                            {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                            {log.usdc}
+                          </td>
+                          <td className="border-b border-grey px-4 py-2 text-right">
+                            {' '}
+                            {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                            {log.smoothcoins}
+                          </td>
+                          <td className="cursor-pointer border-b border-grey px-4 py-2 text-right hover:text-primary">
+                            <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                              {shortenAddress(log.transactionHash)}
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-              {/* Mobile */}
-              <div className="block md:hidden">
-                {transactions.map((log, index) => (
-                  <div key={index} className="mb-4 rounded-lg border-2 border-payne px-4 py-4">
-                    <p className="text-center text-sm">
-                      <span className="font-bold text-primary">Date:</span> {log.date}
-                    </p>
-                    <p className="text-center text-sm">
-                      <span className="font-bold text-primary">Type:</span> {log.type}
-                    </p>
-                    <p className="text-center text-sm">
-                      <span className="font-bold text-primary">USDC:</span> {log.usdc}
-                    </p>
-                    <p className="text-center text-sm">
-                      <span className="font-bold text-primary">Smoothcoins:</span> {log.smoothcoins}
-                    </p>
-                    <p className="text-center text-sm">
-                      <span className="font-bold text-primary">Transaction:</span>
-                      <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
-                        {shortenAddress(log.transactionHash)}
-                      </Link>
-                    </p>
-                  </div>
-                ))}
+                {/* Mobile */}
+                <div className="block md:hidden">
+                  {transactions.map((log, index) => (
+                    <div key={index} className="mb-4 rounded-lg border-2 border-payne px-4 py-4">
+                      <p className="text-center text-sm">
+                        <span className="font-bold text-primary">Date:</span> {log.date}
+                      </p>
+                      <p className="text-center text-sm">
+                        <span className="font-bold text-primary">Type:</span> {log.type}
+                      </p>
+                      <p className="text-center text-sm">
+                        <span className="font-bold text-primary">USDC:</span> {log.usdc}
+                      </p>
+                      <p className="text-center text-sm">
+                        <span className="font-bold text-primary">Smoothcoins:</span> {log.smoothcoins}
+                      </p>
+                      <p className="text-center text-sm">
+                        <span className="font-bold text-primary">Transaction:</span>
+                        <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                          {shortenAddress(log.transactionHash)}
+                        </Link>
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <p className="text-center text-lg text-grey md:text-left">Connect a wallet to see your transactions</p>
-      )}
-    </Card>
-  )
+            )}
+          </div>
+        ) : (
+          <p className="text-center text-lg text-grey md:text-left">Connect a wallet to see your transactions</p>
+        )}
+      </Card>
+    )
+  }
 }
 
 export default Transactions

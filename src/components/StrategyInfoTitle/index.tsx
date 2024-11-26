@@ -65,7 +65,7 @@ const StrategyInfoTitle = () => {
         <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
           {strategyInfo.label}
         </h2>
-        {values && (
+        {values && coin == 'BTC' && (
           <div className="flex w-full items-center justify-start text-nowrap text-center text-xs text-grey md:text-left md:text-sm">
             <p className="mr-1">{strategyInfo.token}:</p>
             <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>

@@ -9,6 +9,7 @@ import { http, useAccount } from 'wagmi'
 import Card from '@/components/common/Card'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
 type pendingDeposit = {
@@ -24,6 +25,7 @@ type responseData = [number, bigint, bigint, bigint]
 
 const Positions = () => {
   const { contractAddress, contractAbi, symbol } = useContract()
+  const { coin } = useStrategyStore()
 
   const { isConnected, address } = useAccount()
   const { ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch, Deposits, BalanceShares } =
@@ -116,39 +118,41 @@ const Positions = () => {
       ? (((Number(daySharePrice) - Number(entrySharePrice)) / Number(entrySharePrice)) * 100).toFixed(2)
       : '0.00'
 
-  return (
-    <>
-      {openPositions ? (
-        <Card title="Open Positions" className="min-h-0 w-full grow">
-          <p className="flex justify-between">
-            <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
-          </p>
-          <p className="flex justify-between">
-            <b className="font-normal text-grey">Collateral:</b>{' '}
-            {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
-          </p>
-          <p className="flex justify-between">
-            <b className="font-normal text-grey">Entry:</b> {formatBalance(entrySharePrice)} USDc
-          </p>
-          <p className="flex justify-between">
-            <b className="font-normal text-grey">Current:</b> {formatBalance(daySharePrice)} USDc
-          </p>
-          <p className="mb-10 flex justify-between">
-            <b className="font-normal text-grey">PNL:</b>{' '}
-            <b
-              className={`${Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'} font-normal`}
-            >
-              {pnl}%
-            </b>
-          </p>
-        </Card>
-      ) : (
-        <Card title="Open Positions" className="min-h-0 w-full grow">
-          <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
-        </Card>
-      )}
-    </>
-  )
+  if (coin == 'BTC') {
+    return (
+      <>
+        {openPositions ? (
+          <Card title="Open Positions" className="min-h-0 w-full grow">
+            <p className="flex justify-between">
+              <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
+            </p>
+            <p className="flex justify-between">
+              <b className="font-normal text-grey">Collateral:</b>{' '}
+              {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
+            </p>
+            <p className="flex justify-between">
+              <b className="font-normal text-grey">Entry:</b> {formatBalance(entrySharePrice)} USDc
+            </p>
+            <p className="flex justify-between">
+              <b className="font-normal text-grey">Current:</b> {formatBalance(daySharePrice)} USDc
+            </p>
+            <p className="mb-10 flex justify-between">
+              <b className="font-normal text-grey">PNL:</b>{' '}
+              <b
+                className={`${Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'} font-normal`}
+              >
+                {pnl}%
+              </b>
+            </p>
+          </Card>
+        ) : (
+          <Card title="Open Positions" className="min-h-0 w-full grow">
+            <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
+          </Card>
+        )}
+      </>
+    )
+  }
 }
 
 export default Positions
