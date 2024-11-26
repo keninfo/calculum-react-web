@@ -104,7 +104,7 @@ const Dashboard = () => {
         {values && dates ? (
           <>
             <ChartsContainer />
-            <ChartOptions />
+            {strategy !== 'Momentum' && <ChartOptions />}
           </>
         ) : (
           <Card className="flex h-full w-full justify-center" title="LOADING...">
