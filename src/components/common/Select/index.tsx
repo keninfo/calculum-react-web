@@ -14,7 +14,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
   return (
     <div className="relative w-fit">
       <select
-        className={`border-graySmoke h-fit w-full cursor-pointer border-b-2 border-grey bg-transparent py-1 pr-10 text-left text-sm text-offWhite md:w-max ${className}`}
+        className={`text-md h-fit w-full cursor-pointer bg-transparent py-1 text-left text-offWhite md:w-max ${disabled ? 'pr-0' : 'pr-8 text-primary'} ${className}`}
         id="cryptoCoin"
         onChange={handleChange}
         value={value}
@@ -26,9 +26,11 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
           </option>
         ))}
       </select>
-      <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-        <Chevron />
-      </div>
+      {!disabled && (
+        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
+          <Chevron />
+        </div>
+      )}
     </div>
   )
 }

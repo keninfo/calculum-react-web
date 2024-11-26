@@ -1,8 +1,9 @@
+import type { IconName } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useHover } from '@uidotdev/usehooks'
 import { track } from '@vercel/analytics/react'
 
 import React, { useContext, useEffect } from 'react'
-
-import Link from 'next/link'
 
 import { type BaseError, useAccount } from 'wagmi'
 
@@ -24,6 +25,8 @@ const Approve = () => {
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
   const balanceAssets = BalanceAssets(address).data as bigint
+
+  const [ref, hovering] = useHover()
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -50,14 +53,16 @@ const Approve = () => {
 
   return (
     <>
-      <p className="mt-[1vh] text-center text-xs">
-        <Link
-          href={'https://revoke.cash/learn/approvals/what-are-token-approvals'}
-          target="_blank"
-          className="cursor-pointer text-primary"
-        >
-          Why do I have to approve?
-        </Link>
+      <p className="relative mt-[1vh] text-center text-sm">
+        <p className="cursor-default text-primary" ref={ref}>
+          <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} /> Why do I have to approve?
+        </p>
+        {hovering && (
+          <p className="absolute left-1/2 top-6 w-[19.5vw] -translate-x-1/2 rounded-md bg-dark px-4 pb-6 pt-5">
+            Token approvals are used to give permission to a smart contract to spend your tokens on your behalf. This is
+            a common pattern used by decentralized exchanges, lending protocols, and other decentralized applications.
+          </p>
+        )}
       </p>
       <p className="my-5 text-center text-sm text-grey">
         YOU HAVE
