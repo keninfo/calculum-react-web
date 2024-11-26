@@ -14,6 +14,6 @@ export const useStrategyStore = create<StrategyStore>((set) => ({
   setCoin: (coin) => set({ coin }),
   strategy: 'Momentum',
   setStrategy: (strategy) => set({ strategy }),
-  network: 'Arb. Sepolia',
-  setNetwork: (strategy) => set({ strategy }),
+  network: 'Arbitrum Sepolia',
+  setNetwork: (network) => set({ network }),
 }))
