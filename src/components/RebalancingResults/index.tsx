@@ -84,8 +84,6 @@ const RebalancingResults = () => {
   const leverageLimited = leverage.map((value) => (value ? Math.min(value, 1) : 0))
   const dFReturnsScaled = dFReturns.map((returnValue, index) => returnValue * leverageLimited[index])
 
-  console.log('dFReturn BTC:' + dFReturns)
-
   // SHARPE ---------------------------------------------------------------------------------------------------------
   const rawSharpe = safeRound((calculateMean(dFReturns) / calculateStd(dFReturns)) * Math.sqrt(periods), 2)
 
