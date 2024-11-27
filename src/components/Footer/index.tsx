@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const index = () => {
   return (
-    <footer className="mb-24 h-fit items-center rounded-lg bg-dark px-10 py-10 md:mb-0 md:grid md:grid-cols-3">
+    <footer className="h-fit items-center rounded-lg bg-dark px-10 py-10 md:mb-0 md:grid md:grid-cols-3">
       <div className="col-span-1 flex items-center justify-center space-x-2 text-grey md:justify-start">
         <p>LinkedIn</p>
         <p>|</p>
