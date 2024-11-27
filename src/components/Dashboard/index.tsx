@@ -82,7 +82,7 @@ const Dashboard = () => {
           {values ? (
             <>
               <TradeBox />
-              {pro && (
+              {pro && coin == 'BTC' && (
                 <Card className="w-full">
                   {strategy == 'Smoothcoin' && <RebalancingResults />}
                   {strategy == 'Momentum' && <MomentumMetrics />}

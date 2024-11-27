@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import Card from '@/components/common/Card'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { cummax, safeRound, calculateMean, calculateStd, cumprod } from '@/utils/chartComputations'
 
 import * as d3 from 'd3'
@@ -9,6 +10,7 @@ const MomentumMetrics = () => {
   const [dates, setDates] = useState<Date[]>([])
   const [assetReturns, setAssetReturns] = useState<number[]>([])
   const [signalReturns, setSignalReturns] = useState<number[]>([])
+  const { coin } = useStrategyStore()
   // const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
   // const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
   const [loading, setLoading] = useState(true)
@@ -94,51 +96,55 @@ const MomentumMetrics = () => {
   const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
   const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
 
-  return (
-    <>
-      {!loading && (
-        <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
-          <p className="text-offWhite">Sharpe Ratio</p>
-          <p className="mt-2 text-xs text-grey">
-            moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
-          </p>
+  if (coin == 'BTC') {
+    return (
+      <>
+        {!loading && (
+          <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
+            <p className="text-offWhite">Sharpe Ratio</p>
+            <p className="mt-2 text-xs text-grey">
+              moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+            </p>
+            <p className="text-xs text-grey">
+              BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
+            </p>
 
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
-          </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">CAGR</p>
-          <p className="mt-2 text-xs text-grey">
-            moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
-          </p>
+            <p className="text-xs text-grey">
+              Difference:{' '}
+              <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>
+                {differenceSharpeString}
+              </b>
+            </p>
+            <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">CAGR</p>
+            <p className="mt-2 text-xs text-grey">
+              moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+            </p>
+            <p className="text-xs text-grey">
+              BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
+            </p>
 
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
-          </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">Largest Drawdown</p>
-          <p className="mt-2 text-xs text-grey">
-            moBTC:{' '}
-            <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
-          </p>
+            <p className="text-xs text-grey">
+              Difference:{' '}
+              <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
+            </p>
+            <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">Largest Drawdown</p>
+            <p className="mt-2 text-xs text-grey">
+              moBTC:{' '}
+              <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
+            </p>
+            <p className="text-xs text-grey">
+              BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+            </p>
 
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
-          </p>
-        </Card>
-      )}
-    </>
-  )
+            <p className="text-xs text-grey">
+              Difference:{' '}
+              <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
+            </p>
+          </Card>
+        )}
+      </>
+    )
+  }
 }
 
 export default MomentumMetrics
