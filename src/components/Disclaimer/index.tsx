@@ -69,7 +69,7 @@ const Index = ({
           </AlternateButton>
           <PrimaryButton
             handleClick={handleAccept}
-            className={`w-fit px-[2vw] py-[1vh] ${!isAgreeChecked ? 'cursor-not-allowed bg-gray-500' : ''}`}
+            className={`w-fit border-2 px-[2vw] py-[1vh] ${!isAgreeChecked ? 'cursor-not-allowed border-grey !bg-grey' : 'border-primary'}`}
             disabled={!isAgreeChecked}
           >
             Accept
