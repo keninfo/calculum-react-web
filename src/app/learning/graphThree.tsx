@@ -577,12 +577,12 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           {rawOnly ? (
             <div className="mx-auto w-[45%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>The “Actual
-                Volatility” is the standard deviation of the daily returns of BTC over a specific period. Its calculated
-                by looking at the last 14 days daily return.
+                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-eerie">1</b>The “Actual Volatility”
+                is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking
+                at the last 14 days daily return.
               </p>
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>Calculate the average
+                <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-eerie">2</b>Calculate the average
                 return of the first of these 14 days using Standard Deviation.
               </p>
               <div className="mx-auto mt-[4vh] flex items-center justify-start">
@@ -616,12 +616,16 @@ const GraphThree = ({ startDate, endDate, incrementDate, decreaseDate, rawOnly =
           ) : (
             <div className="mx-auto w-[40%] space-y-[2vh] px-[2vw] text-lg">
               <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-                <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>If volatility target
-                = 20%.
+                <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-primary px-[1vw] py-[1vh] text-eerie">
+                  1
+                </b>
+                If volatility target = 20%.
               </p>
               {results && (
                 <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-                  <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>
+                  <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-offWhite px-[1vw] py-[1vh] text-eerie">
+                    2
+                  </b>
                   <div>
                     <p>
                       Actual volatility ={' '}

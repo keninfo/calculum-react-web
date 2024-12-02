@@ -342,14 +342,19 @@ const GraphOne = ({ startDate, endDate, incrementDate, decreaseDate }: GraphOneP
           </div>
           <div className="mx-auto w-[45%] space-y-[2vh] px-[2vw] text-lg">
             <p className="flex items-center text-justify">
-              <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">1</b>The volatility of an
-              asset like BTC changes significantly. Over a 90 days period it ranged from {min.toFixed(0)}% at its lowest
-              to {max.toFixed(0)}% at its highest
+              <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-offWhite px-[1vw] py-[1vh] text-eerie">
+                1
+              </b>
+              The volatility of an asset like BTC changes significantly. Over a 90 days period it ranged from{' '}
+              {min.toFixed(0)}% at its lowest to {max.toFixed(0)}% at its highest
             </p>
             <p className="flex items-center text-justify">
-              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">2</b>To control volatility,
-              we can define a “Target Volatility 20%”. This means that the standard deviation of the daily returns will
-              be 20% over time, and not a random number between {min.toFixed(0)}% and {max.toFixed(0)}%
+              <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-primary px-[1vw] py-[1vh] text-eerie">
+                2
+              </b>
+              To control volatility, we can define a “Target Volatility 20%”. This means that the standard deviation of
+              the daily returns will be 20% over time, and not a random number between {min.toFixed(0)}% and{' '}
+              {max.toFixed(0)}%
             </p>
           </div>
         </div>

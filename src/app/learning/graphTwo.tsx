@@ -551,58 +551,104 @@ const GraphTwo = ({ startDate, endDate, incrementDate, decreaseDate }: GraphTwoP
           </div>
           <div className="mx-auto w-[45%] space-y-[2vh] px-[2vw] text-lg">
             <p className="mx-auto mt-[4vh] flex items-center text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-primary px-[1vw] py-[1vh] text-offWhite">1</b>The “Actual Volatility”
-              is the standard deviation of the daily returns of BTC over a specific period. Its calculated by looking at
-              the last 14 days daily return.
+              <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-primary px-[1vw] py-[1vh] text-eerie">
+                1
+              </b>
+              The “Actual Volatility” is the standard deviation of the daily returns of BTC over a specific period. Its
+              calculated by looking at the last 14 days daily return.
             </p>
             <div className="mx-auto mt-[4vh] flex items-start text-justify text-lg">
-              <b className="mr-[2vw] rounded-lg bg-offWhite px-[1vw] py-[1vh] text-primary">2</b>
+              <b className="mr-[2vw] flex w-10 items-center justify-center rounded-lg bg-offWhite px-[1vw] py-[1vh] text-eerie">
+                2
+              </b>
               <div>
                 <p>Calculate the average return of the first of these 14 days using Standard Deviation.</p>
                 <div className="mx-auto mt-[4vh] flex items-center justify-start">
                   {results && (
                     <ul className="border-r pr-[2vw] text-sm">
                       <li className="text-left">
-                        Day 1: <b className="text-primary">{(results[results.length - 15] * 100).toFixed(2)}%</b>
+                        Day 1:{' '}
+                        <b className={`${results[results.length - 15] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 15] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 2: <b className="text-primary">{(results[results.length - 14] * 100).toFixed(2)}%</b>
+                        Day 2:{' '}
+                        <b className={`${results[results.length - 14] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 14] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 3: <b className="text-primary">{(results[results.length - 13] * 100).toFixed(2)}%</b>
+                        Day 3:{' '}
+                        <b className={`${results[results.length - 13] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 13] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 4: <b className="text-primary">{(results[results.length - 12] * 100).toFixed(2)}%</b>
+                        Day 4:{' '}
+                        <b className={`${results[results.length - 12] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 12] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 5: <b className="text-primary">{(results[results.length - 11] * 100).toFixed(2)}%</b>
+                        Day 5:{' '}
+                        <b className={`${results[results.length - 11] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 11] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 6: <b className="text-primary">{(results[results.length - 10] * 100).toFixed(2)}%</b>
+                        Day 6:{' '}
+                        <b className={`${results[results.length - 10] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 10] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 7: <b className="text-primary">{(results[results.length - 9] * 100).toFixed(2)}%</b>
+                        Day 7:{' '}
+                        <b className={`${results[results.length - 9] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 9] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 8: <b className="text-primary">{(results[results.length - 8] * 100).toFixed(2)}%</b>
+                        Day 8:{' '}
+                        <b className={`${results[results.length - 8] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 8] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 9: <b className="text-primary">{(results[results.length - 7] * 100).toFixed(2)}%</b>
+                        Day 9:{' '}
+                        <b className={`${results[results.length - 7] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 7] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 10: <b className="text-primary">{(results[results.length - 6] * 100).toFixed(2)}%</b>
+                        Day 10:{' '}
+                        <b className={`${results[results.length - 6] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 6] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 11: <b className="text-primary">{(results[results.length - 5] * 100).toFixed(2)}%</b>
+                        Day 11:{' '}
+                        <b className={`${results[results.length - 5] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 5] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 12: <b className="text-primary">{(results[results.length - 4] * 100).toFixed(2)}%</b>
+                        Day 12:{' '}
+                        <b className={`${results[results.length - 4] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 4] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 13: <b className="text-primary">{(results[results.length - 3] * 100).toFixed(2)}%</b>
+                        Day 13:{' '}
+                        <b className={`${results[results.length - 3] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 3] * 100).toFixed(2)}%
+                        </b>
                       </li>
                       <li className="text-left">
-                        Day 14: <b className="text-primary">{(results[results.length - 2] * 100).toFixed(2)}%</b>
+                        Day 14:{' '}
+                        <b className={`${results[results.length - 2] < 0 ? 'text-fire' : 'text-spring'}`}>
+                          {(results[results.length - 2] * 100).toFixed(2)}%
+                        </b>
                       </li>
                     </ul>
                   )}
