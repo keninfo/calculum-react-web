@@ -27,7 +27,7 @@ const Sidebar = () => {
   }, [height, setNavbarHeight])
 
   return (
-    <div className="left-0 top-0 z-50 w-screen overflow-hidden bg-none md:absolute" id="Navbar" ref={navbar}>
+    <div className="relative z-50 w-screen overflow-hidden bg-none" id="Navbar" ref={navbar}>
       {isOpen && (
         <ActionAlert
           closeAction={handleClose}
