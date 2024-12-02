@@ -4,6 +4,8 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useEffect } from 'react'
 
+import { useAccount } from 'wagmi'
+
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
@@ -14,7 +16,6 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
-import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
@@ -26,7 +27,8 @@ const Dashboard = () => {
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
-  const { navbarHeight } = useNavbarStore()
+  const [parent3] = useAutoAnimate()
+  const { isConnected } = useAccount()
 
   useEffect(() => {
     const storedPro = localStorage.getItem('pro')
@@ -52,9 +54,9 @@ const Dashboard = () => {
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden grid-cols-11 gap-4 md:grid`} style={{ marginTop: navbarHeight + 'px' }}>
+      <div className={`hidden grid-cols-11 gap-4 md:grid`}>
         <div
-          className={`z-40 col-span-11 -my-[1rem] flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
+          className={`z-40 col-span-11 -my-4 flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
         >
           <div
             className={`h-[1rem] w-full bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
@@ -68,7 +70,7 @@ const Dashboard = () => {
           <StrategyInfoTitle />
         </div>
 
-        <div className={`col-span-8 flex flex-col gap-4`} ref={parent1}>
+        <div className={`col-span-8 flex flex-col`} ref={parent1}>
           {values && dates ? (
             <ChartsContainer />
           ) : (
@@ -76,19 +78,24 @@ const Dashboard = () => {
               <></>
             </Card>
           )}
-          <Transactions />
+          {pro && coin == 'BTC' && isConnected && (
+            <Card className="h-full w-full">
+              {strategy == 'Smoothcoin' && <RebalancingResults />}
+              {strategy == 'Momentum' && <MomentumMetrics />}
+            </Card>
+          )}
+          {!pro && (
+            <div className="h-full">
+              <Transactions />
+            </div>
+          )}
         </div>
         <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>
           {values ? (
             <>
               <TradeBox />
-              {pro && coin == 'BTC' && (
-                <Card className="w-full">
-                  {strategy == 'Smoothcoin' && <RebalancingResults />}
-                  {strategy == 'Momentum' && <MomentumMetrics />}
-                </Card>
-              )}
               <Positions />
+              {pro && <Transactions />}
             </>
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
@@ -96,10 +103,19 @@ const Dashboard = () => {
             </Card>
           )}
         </div>
+        <div className="col-span-11 flex h-full flex-col gap-4" ref={parent3}>
+          {pro && coin == 'BTC' && !isConnected && (
+            <Card className="h-full w-full">
+              {strategy == 'Smoothcoin' && <RebalancingResults />}
+              {strategy == 'Momentum' && <MomentumMetrics />}
+            </Card>
+          )}
+        </div>
       </div>
 
       {/* MOBILE */}
       <div className="block w-screen space-y-5 px-5 md:hidden">
+        <StrategyOptions />
         <StrategyInfoTitle />
         {values && dates ? (
           <>
@@ -112,7 +128,6 @@ const Dashboard = () => {
           </Card>
         )}
 
-        <StrategyOptions />
         <TradeBox />
         <Positions />
         <Transactions />
