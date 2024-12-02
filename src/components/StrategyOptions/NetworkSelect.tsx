@@ -11,11 +11,11 @@ const networks = ['Arbitrum Sepolia']
 
 const NetworkSelect = () => {
   const { network, setNetwork } = useStrategyStore()
-  const { chainId } = useAccount()
+  const { chainId, isConnected } = useAccount()
 
   return (
     <>
-      {chainId != arbitrumSepolia.id ? (
+      {isConnected && chainId != arbitrumSepolia.id ? (
         <Select
           value={'Unsupported Network'}
           options={['Unsupported Network']}

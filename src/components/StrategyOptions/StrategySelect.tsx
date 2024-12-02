@@ -8,7 +8,14 @@ const strategies = ['Smoothcoin', 'Momentum']
 const StrategySelect = () => {
   const { strategy, setStrategy } = useStrategyStore()
 
-  return <Select handleChange={(e) => setStrategy(e.target.value)} value={strategy} options={strategies} />
+  return (
+    <Select
+      handleChange={(e) => setStrategy(e.target.value)}
+      value={strategy}
+      options={strategies}
+      className="text-lg"
+    />
+  )
 }
 
 export default StrategySelect

@@ -10,14 +10,14 @@ const StrategyOptions = () => {
   return (
     <>
       {/* DESKTOP */}
-      <Card className="hidden w-full items-center justify-between md:flex">
+      <Card className="z-50 hidden w-full items-center justify-between md:flex">
         <div className="flex w-full items-center justify-start space-x-5">
-          <p className="text-grey">STRATEGY: </p>
+          <p className="text-xl text-grey">Strategy: </p>
           <StrategySelect />
           <CoinSelect />
         </div>
         <div className="flex w-fit items-center justify-start space-x-5">
-          <p className="text-grey">NETWORK: </p>
+          <p className="text-xl text-grey">Network: </p>
           <NetworkSelect />
         </div>
       </Card>
