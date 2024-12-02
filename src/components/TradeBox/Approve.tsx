@@ -55,7 +55,7 @@ const Approve = () => {
     <>
       <p className="relative mt-[1vh] text-center text-sm">
         <p className="cursor-default text-primary" ref={ref}>
-          <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} /> Why do I have to approve?
+          Why do I have to approve? <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} />
         </p>
         {hovering && (
           <p className="absolute left-1/2 top-6 w-[19.5vw] -translate-x-1/2 rounded-md bg-dark px-4 pb-6 pt-5">
