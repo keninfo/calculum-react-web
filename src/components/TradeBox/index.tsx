@@ -133,7 +133,7 @@ const TradeBox = () => {
 
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
-      <Card className="h-fit max-h-full w-full">
+      <Card className="h-full max-h-full w-full">
         <CustomConnectButton />
         {wrongNetwork && isConnected && (
           <>
