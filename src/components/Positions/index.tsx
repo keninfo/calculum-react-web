@@ -122,7 +122,7 @@ const Positions = () => {
     return (
       <>
         {openPositions ? (
-          <Card title="Open Positions" className="min-h-0 w-full grow">
+          <Card title="Open Positions" className="h-fit min-h-fit w-full">
             <p className="flex justify-between">
               <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
             </p>
@@ -136,7 +136,7 @@ const Positions = () => {
             <p className="flex justify-between">
               <b className="font-normal text-grey">Current:</b> {formatBalance(daySharePrice)} USDc
             </p>
-            <p className="mb-10 flex justify-between">
+            <p className="mb-5 flex justify-between">
               <b className="font-normal text-grey">PNL:</b>{' '}
               <b
                 className={`${Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'} font-normal`}
@@ -146,7 +146,7 @@ const Positions = () => {
             </p>
           </Card>
         ) : (
-          <Card title="Open Positions" className="min-h-0 w-full grow">
+          <Card title="Open Positions" className="h-fit min-h-fit w-full">
             <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
           </Card>
         )}
