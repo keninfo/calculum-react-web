@@ -76,7 +76,7 @@ export default function RainbowKit({ children, initialState }: { children: React
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           modalSize="compact"
-          theme={darkTheme({ accentColor: themeColors?.primary, borderRadius: 'none' })}
+          theme={darkTheme({ accentColor: themeColors?.primary, borderRadius: 'small' })}
           appInfo={{
             appName: 'BearProtocol',
           }}
