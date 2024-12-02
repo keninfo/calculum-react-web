@@ -66,8 +66,8 @@ const Chart = () => {
     <>
       {strategy == `Smoothcoin` && (
         <div ref={parent}>
-          <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw] ${pro ? '!rounded-b-none' : ''}`}>
-            <div className="absolute right-5 top-5 z-20 hidden md:block">
+          <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw]`}>
+            <div className="absolute right-5 top-5 z-50 hidden md:block">
               <ChartOptions />
             </div>
             <p className="absolute -left-[45px] top-1/2 hidden -rotate-90 text-sm text-offWhite md:block">
@@ -83,8 +83,8 @@ const Chart = () => {
             )}
           </Card>
           {pro && (
-            <Card className={`w-full !rounded-t-none !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
-              <div className={`flex w-full items-center justify-between py-[3vh] md:pb-[4vh] md:pt-[3vh]`}>
+            <Card className={`mt-4 w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
+              <div className={`flex w-full items-center justify-between py-[3vh]`}>
                 <div className="ml-[6vw] flex w-fit items-center space-x-2 md:ml-0">
                   <p className="text-2xl text-offWhite">Rolling Volatility </p>
                 </div>
@@ -103,6 +103,9 @@ const Chart = () => {
       {strategy == `Momentum` && (
         <div ref={parent}>
           <Card className={`relative w-full !p-0 !px-2 !py-[2vh]`}>
+            <div className="absolute right-20 top-5 z-50 hidden md:block">
+              <ChartOptions />
+            </div>
             <Momentum />
           </Card>
         </div>
