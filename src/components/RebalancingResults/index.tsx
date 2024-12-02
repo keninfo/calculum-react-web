@@ -15,9 +15,12 @@ import {
 } from '@/utils/chartComputations'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
+import Calendar from './Calendar'
+import Info from './Info'
+
 const RebalancingResults = () => {
   const { window, rollingWindow, studyCase, volatility } = useOptionsStore()
-  const { coin } = useStrategyStore()
+  const { coin, strategy } = useStrategyStore()
   const { values, coins } = useContext(CoinsContext)
 
   let selectedWindow = window
@@ -95,6 +98,8 @@ const RebalancingResults = () => {
   const differenceSharpe = scaledSharpe - rawSharpe
   const differenceSharpeString = `${differenceSharpe > 0 ? '+' : ''}${differenceSharpe.toLocaleString('US')}`
 
+  console.log(differenceSharpeString)
+
   // CAGR ---------------------------------------------------------------------------------------------------------
 
   const dFReturnsCumRet = cumprod(dFReturns)
@@ -105,6 +110,8 @@ const RebalancingResults = () => {
 
   const differenceCAGR = scaledCAGR - rawCAGR
   const differenceCAGRString = `${differenceCAGR > 0 ? '+' : ''}${differenceCAGR.toLocaleString('US')}%`
+
+  console.log(differenceCAGRString)
 
   // DRAWDOWN ---------------------------------------------------------------------------------------------------------
   const cumMaxRaw = cummax(dFReturnsCumRet)
@@ -132,47 +139,18 @@ const RebalancingResults = () => {
   const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
   const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
 
+  console.log(differenceDDMaxString)
+
   return (
     <>
       {values && (
-        <Card className="h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
-          <p className="text-offWhite">Sharpe Ratio</p>
-          <p className="mt-2 text-xs text-grey">
-            smBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
-          </p>
-
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
-          </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">CAGR</p>
-          <p className="mt-2 text-xs text-grey">
-            smBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
-          </p>
-
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
-          </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">Largest Drawdown</p>
-          <p className="mt-2 text-xs text-grey">
-            smBTC:{' '}
-            <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
-          </p>
-          <p className="text-xs text-grey">
-            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
-          </p>
-
-          <p className="text-xs text-grey">
-            Difference:{' '}
-            <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
-          </p>
+        <Card className="min-h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
+          <Calendar title={strategy + ' ' + coin} color="primary" />
+          <Calendar title={coin + ' Raw'} color="offWhite" />
+          <div className="mt-5 flex items-center justify-between">
+            <Info title={'Live Trading'} color="offWhite" />
+            <Info title={`In and Out Sample`} color="offWhite" />
+          </div>
         </Card>
       )}
     </>
