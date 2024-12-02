@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 const Watermark = () => {
   useEffect(() => {
-    const isStaging = window.location.hostname.includes('staging-app.smoothcoin.io')
+    const isStaging = window.location.hostname.includes('staging-app.bearprotocol.io')
     if (isStaging) {
       const watermarkDiv = document.createElement('div')
       watermarkDiv.textContent = 'STAGING'
