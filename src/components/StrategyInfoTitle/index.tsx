@@ -3,6 +3,7 @@ import React, { useContext, useMemo } from 'react'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
+import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance } from '@/utils/formatters'
 
@@ -24,17 +25,18 @@ const StrategyInfoTitle = () => {
   const { coin, strategy } = useStrategyStore()
   const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
   const { values } = useContext(CoinsContext)
+  const { pro } = useProStore()
 
   const currentEpochData = ContractReads(contractAddress, contractAbi).CurrentEpoch().data as bigint
   const daySharePriceData = ContractReads(contractAddress, contractAbi).EpochSharePrice(Number(currentEpochData) - 1)
     .data as bigint
   const previousDaySharePriceData = ContractReads(contractAddress, contractAbi).EpochSharePrice(
-    Number(currentEpochData) - 4,
+    Number(currentEpochData) - 6,
   ).data as bigint
 
   const pricePercentageChange = useMemo(() => {
     if (!daySharePriceData || !previousDaySharePriceData) return 0
-    return ((Number(daySharePriceData) - Number(previousDaySharePriceData)) / Number(previousDaySharePriceData)) * 100
+    return (Number(daySharePriceData) / Number(previousDaySharePriceData) - 1) * 100
   }, [daySharePriceData, previousDaySharePriceData])
 
   const strategyInfo = useMemo(() => {
@@ -43,7 +45,7 @@ const StrategyInfoTitle = () => {
     const previousValue = values[1][values[1].length - 2]
     const currentValue = values[1][values[1].length - 1]
 
-    const tokenChangePercentage = ((currentValue - previousValue) / previousValue) * 100
+    const tokenChangePercentage = (currentValue / previousValue - 1) * 100
 
     return {
       label: `${strategy} ${coin}`,
@@ -59,7 +61,9 @@ const StrategyInfoTitle = () => {
   }, [values, strategy, coin, symbol, daySharePriceData, pricePercentageChange, isWorking, icon])
 
   return (
-    <div className="items-center justify-between py-5 md:flex md:space-x-5 md:pl-2">
+    <div
+      className={`sticky left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:pl-2 ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
+    >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
       <div className="md:w-fit">
         <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
