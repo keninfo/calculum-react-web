@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 
-import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
@@ -15,12 +14,9 @@ import {
 } from '@/utils/chartComputations'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
-import Calendar from './Calendar'
-import Info from './Info'
-
-const RebalancingResults = () => {
+const Info = () => {
   const { window, rollingWindow, studyCase, volatility } = useOptionsStore()
-  const { coin, strategy } = useStrategyStore()
+  const { coin } = useStrategyStore()
   const { values, coins } = useContext(CoinsContext)
 
   let selectedWindow = window
@@ -65,7 +61,6 @@ const RebalancingResults = () => {
     if (coins) {
       index = coins.indexOf(cutCoinName)
     }
-
     return values && coin ? values[index].slice(-amount) : []
   }
 
@@ -98,8 +93,6 @@ const RebalancingResults = () => {
   const differenceSharpe = scaledSharpe - rawSharpe
   const differenceSharpeString = `${differenceSharpe > 0 ? '+' : ''}${differenceSharpe.toLocaleString('US')}`
 
-  console.log(differenceSharpeString)
-
   // CAGR ---------------------------------------------------------------------------------------------------------
 
   const dFReturnsCumRet = cumprod(dFReturns)
@@ -110,8 +103,6 @@ const RebalancingResults = () => {
 
   const differenceCAGR = scaledCAGR - rawCAGR
   const differenceCAGRString = `${differenceCAGR > 0 ? '+' : ''}${differenceCAGR.toLocaleString('US')}%`
-
-  console.log(differenceCAGRString)
 
   // DRAWDOWN ---------------------------------------------------------------------------------------------------------
   const cumMaxRaw = cummax(dFReturnsCumRet)
@@ -139,22 +130,54 @@ const RebalancingResults = () => {
   const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
   const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
 
-  console.log(differenceDDMaxString)
+  if (coin == 'BTC') {
+    return (
+      <div className="my-10 flex h-fit w-full items-center justify-between !bg-transparent px-4 pr-20 [&_p]:text-left">
+        <div>
+          <p className="text-offWhite">Sharpe Ratio</p>
+          <p className="text-md mt-2 text-grey">
+            moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+          </p>
+          <p className="text-md text-grey">
+            BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
+          </p>
+          <p className="text-md text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
+          </p>
+        </div>
+        <div>
+          <p className="text-offWhite">CAGR</p>
+          <p className="text-md mt-2 text-grey">
+            moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+          </p>
+          <p className="text-md text-grey">
+            BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
+          </p>
 
-  return (
-    <>
-      {values && (
-        <Card className="min-h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
-          <Calendar title={strategy + ' ' + coin} color="primary" />
-          <Calendar title={coin + ' Raw'} color="offWhite" />
-          <div className="mt-5 flex items-center justify-between">
-            <Info title={'Live Trading'} color="offWhite" />
-            <Info title={`In and Out Sample`} color="offWhite" />
-          </div>
-        </Card>
-      )}
-    </>
-  )
+          <p className="text-md text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
+          </p>
+        </div>
+        <div>
+          <p className="text-offWhite">Largest Drawdown</p>
+          <p className="text-md mt-2 text-grey">
+            moBTC:{' '}
+            <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
+          </p>
+          <p className="text-md text-grey">
+            BTC: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+          </p>
+
+          <p className="text-md text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
+          </p>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default RebalancingResults
+export default Info

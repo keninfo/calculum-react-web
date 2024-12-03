@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi'
 import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
-import RebalancingResults from '@/components/RebalancingResults'
+import ProductMetrics from '@/components/ProductMetrics'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
 import TradeBox from '@/components/TradeBox'
@@ -19,7 +19,7 @@ import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-import MomentumMetrics from '../RebalancingResults/MomentumMetrics'
+import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -79,13 +79,13 @@ const Dashboard = () => {
             </Card>
           )}
           {pro && coin == 'BTC' && isConnected && (
-            <Card className="h-full w-full">
-              {strategy == 'Smoothcoin' && <RebalancingResults />}
-              {strategy == 'Momentum' && <MomentumMetrics />}
+            <Card className="mt-4 h-full w-full">
+              {strategy == 'Smoothcoin' && <ProductMetrics small />}
+              {strategy == 'Momentum' && <MomentumMetrics small />}
             </Card>
           )}
-          {!pro && (
-            <div className="h-full">
+          {!pro && isConnected && (
+            <div className="mt-4 h-full">
               <Transactions />
             </div>
           )}
@@ -106,7 +106,7 @@ const Dashboard = () => {
         <div className="col-span-11 flex h-full flex-col gap-4" ref={parent3}>
           {pro && coin == 'BTC' && !isConnected && (
             <Card className="h-full w-full">
-              {strategy == 'Smoothcoin' && <RebalancingResults />}
+              {strategy == 'Smoothcoin' && <ProductMetrics />}
               {strategy == 'Momentum' && <MomentumMetrics />}
             </Card>
           )}

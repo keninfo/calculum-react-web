@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import Card from '@/components/common/Card'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { cummax, safeRound, calculateMean, calculateStd, cumprod } from '@/utils/chartComputations'
 
-import Calendar from './Calendar'
-import Info from './Info'
-
 import * as d3 from 'd3'
 
-const MomentumMetrics = () => {
+const InfoMomentum = () => {
   const [dates, setDates] = useState<Date[]>([])
   const [assetReturns, setAssetReturns] = useState<number[]>([])
   const [signalReturns, setSignalReturns] = useState<number[]>([])
-  const { coin, strategy } = useStrategyStore()
+  const { coin } = useStrategyStore()
   // const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
   // const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
   const [loading, setLoading] = useState(true)
@@ -62,8 +58,6 @@ const MomentumMetrics = () => {
   const differenceSharpe = scaledSharpe - rawSharpe
   const differenceSharpeString = `${differenceSharpe > 0 ? '+' : ''}${differenceSharpe.toLocaleString('US')}`
 
-  console.log(differenceSharpeString)
-
   // CAGR ---------------------------------------------------------------------------------------------------------
 
   const dFReturnsCumRet = cumprod(assetReturns)
@@ -74,8 +68,6 @@ const MomentumMetrics = () => {
 
   const differenceCAGR = scaledCAGR - rawCAGR
   const differenceCAGRString = `${differenceCAGR > 0 ? '+' : ''}${differenceCAGR.toLocaleString('US')}%`
-
-  console.log(differenceCAGRString)
 
   // DRAWDOWN ---------------------------------------------------------------------------------------------------------
   const cumMaxRaw = cummax(dFReturnsCumRet)
@@ -103,24 +95,66 @@ const MomentumMetrics = () => {
   const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
   const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
 
-  console.log(differenceDDMaxString)
-
   if (coin == 'BTC') {
     return (
       <>
-        {assetReturns && !loading && (
-          <Card className="min-h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
-            <Calendar title={strategy + ' ' + coin} color="primary" />
-            <Calendar title={coin + ' Raw'} color="offWhite" />
-            <div className="mt-5 flex items-center justify-between">
-              <Info title={'Live Trading'} color="offWhite" />
-              <Info title={`In and Out Sample`} color="offWhite" />
+        {!loading && (
+          <div className="my-10 flex h-fit w-full items-center justify-between !bg-transparent px-4 pr-20 [&_p]:text-left">
+            <div>
+              <p className="text-offWhite">Sharpe Ratio</p>
+              <p className="text-md mt-2 text-grey">
+                moBTC:{' '}
+                <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+              </p>
+              <p className="text-md text-grey">
+                BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
+              </p>
+              <p className="text-md text-grey">
+                Difference:{' '}
+                <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>
+                  {differenceSharpeString}
+                </b>
+              </p>
             </div>
-          </Card>
+            <div>
+              <p className="text-offWhite">CAGR</p>
+              <p className="text-md mt-2 text-grey">
+                moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+              </p>
+              <p className="text-md text-grey">
+                BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
+              </p>
+
+              <p className="text-md text-grey">
+                Difference:{' '}
+                <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
+              </p>
+            </div>
+            <div>
+              <p className="text-offWhite">Largest Drawdown</p>
+              <p className="text-md mt-2 text-grey">
+                moBTC:{' '}
+                <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>
+                  {scaledDDMax}%
+                </b>
+              </p>
+              <p className="text-md text-grey">
+                BTC:{' '}
+                <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+              </p>
+
+              <p className="text-md text-grey">
+                Difference:{' '}
+                <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>
+                  {differenceDDMaxString}
+                </b>
+              </p>
+            </div>
+          </div>
         )}
       </>
     )
   }
 }
 
-export default MomentumMetrics
+export default InfoMomentum
