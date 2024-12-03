@@ -1,3 +1,6 @@
+import { useFavicon } from '@uidotdev/usehooks'
+import { useDocumentTitle } from '@uidotdev/usehooks'
+
 import React, { useEffect } from 'react'
 
 import Image from 'next/image'
@@ -7,12 +10,17 @@ import { useStrategyStore } from '@/store/useStrategyStore'
 import Card from '../common/Card'
 import ChartsContainer from './ChartsContainer/Index'
 import CoinSelect from './CoinSelect'
+import Footer from './Footer'
 import Navbar from './Navbar'
 import ProductMetrics from './ProductMetrics'
 import StrategySelect from './StrategySelect'
 
 const Bearam = () => {
   const { setStrategy } = useStrategyStore()
+  const [favicon] = React.useState('/favicon.png')
+
+  useFavicon(favicon)
+  useDocumentTitle('Bearam | Dashboard')
 
   useEffect(() => {
     setStrategy('Alpha One')
@@ -49,6 +57,7 @@ const Bearam = () => {
           </Card>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
