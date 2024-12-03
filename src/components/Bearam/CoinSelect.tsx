@@ -14,7 +14,7 @@ const CoinSelect = () => {
       value={coin}
       options={coins}
       light
-      className="!text-[#63d9bd]"
+      className="!text-[#5622AA]"
     />
   )
 }

@@ -52,7 +52,8 @@ const RootLayout = ({
         <Analytics />
       </html>
     )
-  } else {
+  }
+  if (isBear) {
     return (
       <html lang="en">
         <body className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} }`}>

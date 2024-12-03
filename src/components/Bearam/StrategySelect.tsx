@@ -13,7 +13,7 @@ const StrategySelect = () => {
       handleChange={(e) => setStrategy(e.target.value)}
       value={strategy}
       options={strategies}
-      className="text-lg !text-[#63d9bd]"
+      className="text-lg !text-[#5622AA]"
       light
     />
   )
