@@ -10,6 +10,7 @@ import { Inter } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
 import AppProviders from '@/components/AppProviders'
+import Bearam from '@/components/Bearam'
 import Navbar from '@/components/Navbar'
 import Watermark from '@/components/common/Watermark'
 import { useProStore } from '@/store/useProStore'
@@ -26,23 +27,37 @@ const RootLayout = ({
 }>) => {
   const pathname = usePathname()
   const { pro } = useProStore()
+  const isBear = window.location.hostname.includes('bearam')
 
-  return (
-    <html lang="en">
-      <body
-        className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} ${
-          pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"
-        }`}
-      >
-        <Watermark />
-        <AppProviders>
-          {pathname !== '/' && pathname !== '/devcon' && <Navbar />}
-          <div className="md:px-20">{children}</div>
-        </AppProviders>
-      </body>
-      <Analytics />
-    </html>
-  )
+  if (!isBear) {
+    return (
+      <html lang="en">
+        <body
+          className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} ${
+            pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"
+          }`}
+        >
+          <Watermark />
+          <AppProviders>
+            {pathname !== '/' && pathname !== '/devcon' && <Navbar />}
+            <div className="md:px-20">{children}</div>
+          </AppProviders>
+        </body>
+        <Analytics />
+      </html>
+    )
+  } else {
+    return (
+      <html lang="en">
+        <body className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} }`}>
+          <AppProviders>
+            <Bearam />
+          </AppProviders>
+        </body>
+        <Analytics />
+      </html>
+    )
+  }
 }
 
 export default RootLayout

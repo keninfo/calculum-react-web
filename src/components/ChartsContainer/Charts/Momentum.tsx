@@ -378,6 +378,7 @@ const Momentum = () => {
     signalPrice,
     window,
     studyCase,
+    setStudyCase,
   ])
 
   return (
