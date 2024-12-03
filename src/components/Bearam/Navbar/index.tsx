@@ -4,7 +4,7 @@ import React from 'react'
 const Navbar = () => {
   return (
     <>
-      <div className={`bg-[#5622AA]} block w-screen md:hidden`}>
+      <div className={`block w-screen bg-[#5622AA] md:hidden`}>
         <NavbarMobile />
       </div>
       <div className={`hidden h-fit w-screen grid-cols-3 gap-4 bg-transparent px-16 md:grid`}>
