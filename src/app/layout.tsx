@@ -4,7 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { Analytics } from '@vercel/analytics/react'
 
-import { type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import { Inter } from 'next/font/google'
 import { usePathname } from 'next/navigation'
@@ -27,7 +27,13 @@ const RootLayout = ({
 }>) => {
   const pathname = usePathname()
   const { pro } = useProStore()
-  const isBear = window.location.hostname.includes('bearam')
+  const [isBear, setIsBear] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsBear(window.location.hostname.includes('bearam'))
+    }
+  }, [])
 
   if (!isBear) {
     return (
