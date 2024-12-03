@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Chevron from '@/components/common/Icons/Chevron'
+import { ChevronBlack, Chevron } from '@/components/common/Icons/Chevron'
 
 type SelectProps = {
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void // now required
@@ -8,9 +8,10 @@ type SelectProps = {
   options: string[] | number[]
   className?: string
   disabled?: boolean
+  light?: boolean
 }
 
-const Select = ({ handleChange, value, options, className = '', disabled = false }: SelectProps) => {
+const Select = ({ handleChange, value, options, className = '', disabled = false, light = false }: SelectProps) => {
   return (
     <div className="relative w-full md:w-fit">
       <select
@@ -28,7 +29,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
       </select>
       {!disabled && (
         <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-          <Chevron />
+          {light ? <ChevronBlack /> : <Chevron />}
         </div>
       )}
     </div>
