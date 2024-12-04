@@ -12,8 +12,23 @@ async function fetchAndConvertXlsx() {
     throw new Error('XLSX_FILE_URL is not defined in the environment variables.')
   }
 
-  // Check if the process was already run today
+  // Paths and directories
   const timestampFilePath = path.join(process.cwd(), 'public', 'last_run_timestamp.txt')
+  const outputDir = path.join(process.cwd(), 'public', 'csv')
+
+  // Check if CSV directory exists and contains files
+  let csvFilesExist = false
+  try {
+    if (fs.existsSync(outputDir)) {
+      const csvFiles = fs.readdirSync(outputDir).filter((file) => file.endsWith('.csv'))
+      csvFilesExist = csvFiles.length > 0
+    }
+  } catch (error) {
+    console.error('Error checking CSV files:', error)
+  }
+
+  // Check if the process was already run today
+  const currentDate = new Date().toISOString().split('T')[0] // Format as yyyy-mm-dd
   let lastRunDate: string | null = null
 
   // Try to read the timestamp file
@@ -25,8 +40,8 @@ async function fetchAndConvertXlsx() {
     console.error('Error reading timestamp file:', error)
   }
 
-  const currentDate = new Date().toISOString().split('T')[0] // Format as yyyy-mm-dd
-  if (lastRunDate === currentDate) {
+  // If CSV files already exist and last run was today, return early
+  if (csvFilesExist && lastRunDate === currentDate) {
     return { success: true, message: 'CSV files were already generated today.' }
   }
 
@@ -40,7 +55,6 @@ async function fetchAndConvertXlsx() {
 
   // Parse the XLSX file
   const workbook = xlsx.read(buffer, { type: 'buffer' })
-  const outputDir = path.join(process.cwd(), 'public', 'csv')
 
   // Ensure the output directory exists
   if (!fs.existsSync(outputDir)) {
