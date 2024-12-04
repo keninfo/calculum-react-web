@@ -13,7 +13,7 @@ async function fetchAndConvertXlsx() {
   }
 
   // Check if the process was already run today
-  const timestampFilePath = path.join(process.cwd(), 'last_run_timestamp.txt')
+  const timestampFilePath = path.join(process.cwd(), 'public', 'last_run_timestamp.txt')
   let lastRunDate: string | null = null
 
   // Try to read the timestamp file

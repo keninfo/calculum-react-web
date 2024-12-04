@@ -2,6 +2,7 @@ import { useMediaQuery } from '@uidotdev/usehooks'
 
 import React, { useEffect, useRef, useState } from 'react'
 
+import Card from '@/components/common/Card'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
@@ -35,6 +36,7 @@ const Momentum = () => {
   const { coin, strategy } = useStrategyStore()
   const { pro } = useProStore()
   const { studyCase, window, setStudyCase } = useOptionsStore()
+  const [loading, setLoading] = useState(true)
 
   const [closePrice, setClosePrice] = useState<string[]>([])
   const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
@@ -74,9 +76,20 @@ const Momentum = () => {
     const staticDataSrc = `csv/${coin}USDT.csv`
 
     try {
+      // Trigger the API call to Vercel's API route
+      const apiResponse = await fetch('/api/momentum')
+      const apiData = await apiResponse.json()
+
+      if (!apiResponse.ok || !apiData.success) {
+        throw new Error(apiData.message || 'Failed to fetch from API')
+      }
+
+      console.log('API Response:', apiData.message)
+
+      // If success is true, proceed with the rest of the logic
       const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
-        closePrice: d[`close_price_${coin}USDT`]!, // Use dynamic property keys
+        closePrice: d[`close_price_${coin}USDT`]!,
         asset_return: +d[`return_${coin}USDT`]!,
         signal_return: +d[`signal_return_${coin}USDT`]!,
         asset_cum_return: +d[`cum_return_${coin}USDT`]!,
@@ -86,10 +99,8 @@ const Momentum = () => {
 
       const dates = staticData.map((d) => new Date(d.date))
       const closePriceData = staticData.map((d) => d.closePrice)
-      // const signalReturnsData = staticData.map((d) => d.signal_return)
       const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
       const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
-      // const roc = staticData.map((d) => d.roc)
 
       const newSignalPrices = closePriceData.map((price, index) => {
         const assetPrice = Number(price) // Convert string to number
@@ -100,14 +111,13 @@ const Momentum = () => {
         return (assetPrice * (1 + signalReturn)) / (1 + assetReturn)
       })
 
+      // Update state with new data
       setSignalPrice(newSignalPrices)
-
       setDates(dates)
       setClosePrice(closePriceData)
-      // setSignalReturns(signalReturnsData)
       setAssetCumReturns(assetCumReturnsData)
       setSignalCumReturns(signalCumReturnsData)
-      // setROC(roc)
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching signalCumReturns data:', error)
     }
@@ -380,6 +390,14 @@ const Momentum = () => {
     studyCase,
     setStudyCase,
   ])
+
+  if (loading) {
+    return (
+      <Card className="flex w-full justify-center" title="LOADING...">
+        <></>
+      </Card>
+    )
+  }
 
   return (
     <div className="relative">
