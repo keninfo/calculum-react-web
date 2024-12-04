@@ -33,30 +33,12 @@ const Chart = () => {
 
   return (
     <>
-      {strategy == `Alpha One` && (
-        <div>
-          <div className="absolute right-20 top-5 z-50 hidden md:block">
-            <ChartOptions />
-          </div>
-          <AlphaOne />
+      <div>
+        <div className="absolute right-20 top-5 z-50 hidden md:block">
+          <ChartOptions />
         </div>
-      )}
-      {strategy == `Alpha Two` && (
-        <div>
-          <div className="absolute right-20 top-5 z-50 hidden md:block">
-            <ChartOptions />
-          </div>
-          <AlphaOne />
-        </div>
-      )}
-      {strategy == `Alpha Three` && (
-        <div>
-          <div className="absolute right-20 top-5 z-50 hidden md:block">
-            <ChartOptions />
-          </div>
-          <AlphaOne />
-        </div>
-      )}
+        <AlphaOne />
+      </div>
     </>
   )
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import Select from '@/components/common/Select'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-const strategies = ['Alpha One', 'Alpha Two', 'Alpha Three']
+const strategies = ['Momentum']
 
 const StrategySelect = () => {
   const { strategy, setStrategy } = useStrategyStore()

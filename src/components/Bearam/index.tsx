@@ -23,7 +23,7 @@ const Bearam = () => {
   useDocumentTitle('Bearam | Dashboard')
 
   useEffect(() => {
-    setStrategy('Alpha One')
+    setStrategy('Momentum')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

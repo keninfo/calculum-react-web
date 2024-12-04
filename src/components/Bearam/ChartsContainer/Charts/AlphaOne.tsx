@@ -69,16 +69,16 @@ const AlphaOne = () => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    const staticDataSrc = `csv/${coin}USDT.csv`
+    const staticDataSrc = `mom_basket.csv`
 
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
         closePrice: d[`close_price_${coin}USDT`]!, // Use dynamic property keys
         asset_return: +d[`return_${coin}USDT`]!,
-        signal_return: +d[`signal_return_${coin}USDT`]!,
-        asset_cum_return: +d[`cum_return_${coin}USDT`]!,
-        signal_cum_return: +d[`cum_signal_return_${coin}USDT`]!,
+        signal_return: +d[`signal_basket_return`]!,
+        asset_cum_return: +d[`cum_signal_return_BTCUSDT`]!,
+        signal_cum_return: +d[`cum_signal_basket_return`]!,
         roc: 1,
       }))
 
@@ -172,7 +172,7 @@ const AlphaOne = () => {
     const datesSliced = dates.slice(-selectedWindow)
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
-      color: themeColors.dark,
+      color: '#63d9bd',
       priceScaleId: 'left',
       priceFormat: {
         type: 'custom',
@@ -196,7 +196,7 @@ const AlphaOne = () => {
     lineSeries1?.setData(chartDataPrice1)
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: '#63d9bd',
+      color: '#5622AA',
       priceScaleId: 'right',
       priceFormat: {
         type: 'custom',
@@ -220,7 +220,7 @@ const AlphaOne = () => {
     lineSeries2?.setData(chartDataPrice2)
 
     // const lineSeries3 = chartInstance.current?.addLineSeries({
-    //   color: '#63d9bd',
+    //   color: '#5622AA',
     //   priceScaleId: 'right',
     //   priceFormat: {
     //     type: 'custom',
@@ -308,7 +308,7 @@ const AlphaOne = () => {
             toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; color: ${themeColors?.dark}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: #63d9bd; font-weight: bold;">Mom. BTC: <br/> $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: #5622AA; font-weight: bold;">Momentum: <br/> $${signalCumReturns.toLocaleString('US')}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-dark); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -317,7 +317,7 @@ const AlphaOne = () => {
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: #63d9bd; font-weight: bold;">Mom. BTC: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: #5622AA; font-weight: bold;">Momentum: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
             <p style="font-size: 10px; color: ${themeColors?.dark}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-dark); text-align: center; padding-top: 4px; padding-bottom: 8px;">
@@ -369,12 +369,12 @@ const AlphaOne = () => {
     <div className="relative">
       <div className="absolute -top-[4vh] right-[2vw] md:left-[6vw] md:top-0 md:w-full">
         <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-[#63d9bd]"></div>
-          <p className="text-xs text-[#63d9bd] md:text-sm">{strategy + ' ' + coin}</p>
+          <div className="h-1 w-[2vw] bg-[#5622AA]"></div>
+          <p className="text-xs text-[#5622AA] md:text-sm">{strategy + ' BTC-ETH-SOL'}</p>
         </div>
         <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-dark"></div>
-          <span className="text-xs text-dark md:text-sm">{coin} Raw Price</span>
+          <div className="h-1 w-[2vw] bg-[#63d9bd]"></div>
+          <span className="text-xs text-grey md:text-sm">{coin} Raw Price</span>
         </div>
       </div>
       <div

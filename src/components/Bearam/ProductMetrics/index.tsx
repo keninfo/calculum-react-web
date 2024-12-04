@@ -1,107 +1,67 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { CoinsContext } from '@/contexts/CoinsContext'
-import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
-import {
-  pct_change,
-  calculateScaledReturnsLeverage,
-  cummax,
-  safeRound,
-  calculateMean,
-  calculateStd,
-  cumprod,
-} from '@/utils/chartComputations'
-import { cutStringToFirstSpace } from '@/utils/formatters'
+import { cummax, safeRound, calculateMean, calculateStd, cumprod } from '@/utils/chartComputations'
 
-const ProductMetrics = () => {
-  const { window, rollingWindow, studyCase, volatility } = useOptionsStore()
-  const { coin, strategy } = useStrategyStore()
-  const { values, coins } = useContext(CoinsContext)
+import * as d3 from 'd3'
 
-  let selectedWindow = window
-  let years = 1
-
-  if (studyCase == 1) {
-    selectedWindow = 1171
-  } else if (studyCase == 2) {
-    selectedWindow = 258
-  }
-
-  if (selectedWindow == 30) {
-    years = 0.08219178
-  } else if (selectedWindow == 60) {
-    years = 0.16438356
-  } else if (selectedWindow == 90) {
-    years = 0.24657534
-  } else if (selectedWindow == 1171) {
-    years = 3.20821918
-  } else if (selectedWindow == 258) {
-    years = 0.70684932
-  }
-
-  const getCoinArray = (amount: number) => {
-    let index = 1
-
-    let cutCoinName = cutStringToFirstSpace(coin)
-
-    if (coin == 'PEPE Smoothcoin') {
-      cutCoinName = 'MPEPE'
-    }
-    if (coin == 'ETH Smoothcoin') {
-      cutCoinName = 'ETH'
-    }
-    if (coin == 'BTC Smoothcoin 3X') {
-      cutCoinName = 'BTC'
-    }
-    if (coin == 'BTC Smoothcoin') {
-      cutCoinName = 'BTC'
-    }
-
-    if (coins) {
-      index = coins.indexOf(cutCoinName)
-    }
-
-    if (coin == '1000PEPE') {
-      return []
-    }
-
-    return values && coin ? values[index].slice(-amount) : []
-  }
-
+const InfoMomentum = () => {
+  const [dates, setDates] = useState<Date[]>([])
+  const [assetReturns, setAssetReturns] = useState<number[]>([])
+  const [signalReturns, setSignalReturns] = useState<number[]>([])
+  const { coin } = useStrategyStore()
+  // const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
+  // const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
+  // const [loading, setLoading] = useState(true)
   const periods = 365 // only for daily, have to change if hourly
+  const years = dates.length / 365
 
-  const filteredPrices = getCoinArray(selectedWindow + 1)
+  const fetchMomentum = async () => {
+    const staticDataSrc = '/mom_basket.csv'
 
-  const dFReturns = pct_change(filteredPrices)
-  dFReturns[0] = 0
+    try {
+      const staticData = await d3.csv(staticDataSrc, (d) => ({
+        date: d.date!,
+        asset_return: +d.return_BTCUSDT!,
+        signal_return: +d.signal_basket_return!,
+        asset_cum_return: +d.signal_return_BTCUSDT!,
+        signal_cum_return: +d.cum_signal_basket_return!,
+      }))
 
-  const filteredPricesForScaled = getCoinArray(selectedWindow + rollingWindow + 1)
-  const dFReturnsForScaled = pct_change(filteredPricesForScaled)
-  dFReturnsForScaled[0] = 0
+      const dates = staticData.map((d) => new Date(d.date))
+      const assetReturnsData = staticData.map((d) => d.asset_return)
+      const signalReturnsData = staticData.map((d) => d.signal_return)
+      // const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
+      // const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
 
-  const leverage = calculateScaledReturnsLeverage(dFReturnsForScaled, rollingWindow, periods, volatility).slice(
-    14,
-    dFReturnsForScaled.length,
-  )
-  const leverageLimited = leverage.map((value) => (value ? Math.min(value, 1) : 0))
-  const dFReturnsScaled = dFReturns.map((returnValue, index) => returnValue * leverageLimited[index])
+      setDates(dates)
+      setAssetReturns(assetReturnsData)
+      setSignalReturns(signalReturnsData)
+      // setAssetCumReturns(assetCumReturnsData)
+      // setSignalCumReturns(signalCumReturnsData)
+
+      // setLoading(false)
+    } catch (error) {
+      console.error('Error fetching signalCumReturns data:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchMomentum()
+  }, [])
 
   // SHARPE ---------------------------------------------------------------------------------------------------------
-  const rawSharpe = safeRound((calculateMean(dFReturns) / calculateStd(dFReturns)) * Math.sqrt(periods), 2)
+  const rawSharpe = safeRound((calculateMean(assetReturns) / calculateStd(assetReturns)) * Math.sqrt(periods), 2)
 
-  const scaledSharpe = safeRound(
-    (calculateMean(dFReturnsScaled) / calculateStd(dFReturnsScaled)) * Math.sqrt(periods),
-    2,
-  )
+  const scaledSharpe = safeRound((calculateMean(signalReturns) / calculateStd(signalReturns)) * Math.sqrt(periods), 2)
 
   const differenceSharpe = scaledSharpe - rawSharpe
   const differenceSharpeString = `${differenceSharpe > 0 ? '+' : ''}${differenceSharpe.toLocaleString('US')}`
 
   // CAGR ---------------------------------------------------------------------------------------------------------
 
-  const dFReturnsCumRet = cumprod(dFReturns)
-  const dFReturnsScaledCumRet = cumprod(dFReturnsScaled)
+  const dFReturnsCumRet = cumprod(assetReturns)
+  const dFReturnsScaledCumRet = cumprod(signalReturns)
 
   const rawCAGR = safeRound((dFReturnsCumRet[dFReturnsCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
   const scaledCAGR = safeRound((dFReturnsScaledCumRet[dFReturnsScaledCumRet.length - 1] ** (1 / years) - 1) * 100, 2)
@@ -111,13 +71,13 @@ const ProductMetrics = () => {
 
   // DRAWDOWN ---------------------------------------------------------------------------------------------------------
   const cumMaxRaw = cummax(dFReturnsCumRet)
-  const cumMaxScaled = cummax(dFReturnsScaledCumRet)
+  const cumMasmcaled = cummax(dFReturnsScaledCumRet)
 
   const dividedRaw = dFReturnsCumRet.map((value: number, index: number) => {
     return value / cumMaxRaw[index]
   })
   const dividedScaled = dFReturnsScaledCumRet.map((value: number, index: number) => {
-    return value / cumMaxScaled[index]
+    return value / cumMasmcaled[index]
   })
 
   const subtractedRaw = dividedRaw.map((value: number) => value - 1)
@@ -133,59 +93,54 @@ const ProductMetrics = () => {
   const scaledDDMax = `-${(sortedScaled[0] * 100).toFixed(1)}`
 
   const differenceDDMax = Number(scaledDDMax) - Number(rawDDMax)
-  const differenceDDMaxString = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
+  const differenceDDMasmtring = `${differenceDDMax > 0 ? '+' : ''}${differenceDDMax.toLocaleString('US')}%`
 
   return (
     <>
-      {values && (
-        <div className="flex h-full w-full items-center justify-center !bg-transparent md:!p-0 [&_p]:text-center">
-          <div>
-            <p className="text-dark">Sharpe Ratio</p>
-            <p className="mt-2 text-xs text-grey">
-              {strategy + ' ' + coin}:{' '}
-              <b className={`text-md ${scaledSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{scaledSharpe}</b>
-            </p>
-            <p className="text-xs text-grey">
-              {coin}: <b className={`text-md ${rawSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{rawSharpe}</b>
-            </p>
+      <div className="flex h-full w-full items-center justify-center !bg-transparent md:!p-0 [&_p]:text-center">
+        <div>
+          <p className="text-dark">Sharpe Ratio</p>
+          <p className="mt-2 text-sm text-grey">
+            Momentum: <b className={`text-md ${scaledSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{scaledSharpe}</b>
+          </p>
+          <p className="text-sm text-grey">
+            {coin}: <b className={`text-md ${rawSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{rawSharpe}</b>
+          </p>
 
-            <p className="text-xs text-grey">
-              Difference:{' '}
-              <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>
-                {differenceSharpeString}
-              </b>
-            </p>
-            <p className="mt-4 border-t border-t-grey pt-4 text-dark">CAGR</p>
-            <p className="mt-2 text-xs text-grey">
-              {strategy + ' ' + coin}:{' '}
-              <b className={`text-md ${scaledCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{scaledCAGR}%</b>
-            </p>
-            <p className="text-xs text-grey">
-              {coin}: <b className={`text-md ${rawCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{rawCAGR}%</b>
-            </p>
+          <p className="text-sm text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceSharpe > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>
+              {differenceSharpeString}
+            </b>
+          </p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-dark">CAGR</p>
+          <p className="mt-2 text-sm text-grey">
+            Momentum: <b className={`text-md ${scaledCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{scaledCAGR}%</b>
+          </p>
+          <p className="text-sm text-grey">
+            {coin}: <b className={`text-md ${rawCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{rawCAGR}%</b>
+          </p>
 
-            <p className="text-xs text-grey">
-              Difference:{' '}
-              <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
-            </p>
-            <p className="mt-4 border-t border-t-grey pt-4 text-dark">Largest Drawdown</p>
-            <p className="mt-2 text-xs text-grey">
-              {strategy + ' ' + coin}:{' '}
-              <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{scaledDDMax}%</b>
-            </p>
-            <p className="text-xs text-grey">
-              {coin}: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{rawDDMax}%</b>
-            </p>
+          <p className="text-sm text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceCAGR > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>{differenceCAGRString}</b>
+          </p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-dark">Largest Drawdown</p>
+          <p className="mt-2 text-sm text-grey">
+            Momentum: <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{scaledDDMax}%</b>
+          </p>
+          <p className="text-sm text-grey">
+            {coin}: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{rawDDMax}%</b>
+          </p>
 
-            <p className="text-xs text-grey">
-              Difference:{' '}
-              <b className={`text-md ${differenceDDMax > 0 ? 'text-spring' : 'text-fire'}`}>{differenceDDMaxString}</b>
-            </p>
-          </div>
+          <p className="text-sm text-grey">
+            Difference:{' '}
+            <b className={`text-md ${differenceDDMax > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>{differenceDDMasmtring}</b>
+          </p>
         </div>
-      )}
+      </div>
     </>
   )
 }
 
-export default ProductMetrics
+export default InfoMomentum
