@@ -7,6 +7,7 @@ const options = [
   ['1M', 30],
   ['3M', 90],
   ['6M', 180],
+  ['ALL', 0],
 ]
 
 const DaySelectionButton = ({

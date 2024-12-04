@@ -12,7 +12,7 @@ const InfoMomentum = () => {
   const { coin } = useStrategyStore()
   // const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
   // const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
-  // const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState([#51d7b8])
   const periods = 365 // only for daily, have to change if hourly
   const years = dates.length / 365
 
@@ -97,7 +97,7 @@ const InfoMomentum = () => {
 
   return (
     <>
-      <div className="flex h-full w-full items-center justify-center !bg-transparent md:!p-0 [&_p]:text-center">
+      <div className="flex h-full w-full items-center justify-center !bg-transparent md:!p-0 [&_p]:text-left">
         <div>
           <p className="text-dark">Sharpe Ratio</p>
           <p className="mt-2 text-sm text-grey">
@@ -109,7 +109,7 @@ const InfoMomentum = () => {
 
           <p className="text-sm text-grey">
             Difference:{' '}
-            <b className={`text-md ${differenceSharpe > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>
+            <b className={`text-md ${differenceSharpe > 0 ? 'text-[#51d780]' : 'text-fire'}`}>
               {differenceSharpeString}
             </b>
           </p>
@@ -123,7 +123,7 @@ const InfoMomentum = () => {
 
           <p className="text-sm text-grey">
             Difference:{' '}
-            <b className={`text-md ${differenceCAGR > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>{differenceCAGRString}</b>
+            <b className={`text-md ${differenceCAGR > 0 ? 'text-[#51d780]' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
           <p className="mt-4 border-t border-t-grey pt-4 text-dark">Largest Drawdown</p>
           <p className="mt-2 text-sm text-grey">
@@ -135,7 +135,7 @@ const InfoMomentum = () => {
 
           <p className="text-sm text-grey">
             Difference:{' '}
-            <b className={`text-md ${differenceDDMax > 0 ? 'text-[#5622AA]' : 'text-fire'}`}>{differenceDDMasmtring}</b>
+            <b className={`text-md ${differenceDDMax > 0 ? 'text-[#51d780]' : 'text-fire'}`}>{differenceDDMasmtring}</b>
           </p>
         </div>
       </div>

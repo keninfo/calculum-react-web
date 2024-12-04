@@ -172,7 +172,7 @@ const AlphaOne = () => {
     const datesSliced = dates.slice(-selectedWindow)
 
     const lineSeries1 = chartInstance.current?.addLineSeries({
-      color: '#63d9bd',
+      color: themeColors.grey,
       priceScaleId: 'left',
       priceFormat: {
         type: 'custom',
@@ -373,7 +373,7 @@ const AlphaOne = () => {
           <p className="text-xs text-[#5622AA] md:text-sm">{strategy + ' BTC-ETH-SOL'}</p>
         </div>
         <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-[#63d9bd]"></div>
+          <div className="h-1 w-[2vw] bg-grey"></div>
           <span className="text-xs text-grey md:text-sm">{coin} Raw Price</span>
         </div>
       </div>

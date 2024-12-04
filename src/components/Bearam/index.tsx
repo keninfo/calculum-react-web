@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 
 import Image from 'next/image'
 
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import Card from '../common/Card'
@@ -17,6 +18,7 @@ import StrategySelect from './StrategySelect'
 
 const Bearam = () => {
   const { setStrategy } = useStrategyStore()
+  const { setWindow, setStudyCase } = useOptionsStore()
   const [favicon] = React.useState('/favicon.png')
 
   useFavicon(favicon)
@@ -24,6 +26,8 @@ const Bearam = () => {
 
   useEffect(() => {
     setStrategy('Momentum')
+    setWindow(0)
+    setStudyCase(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
