@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
 
-import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
@@ -60,7 +60,7 @@ const WithdrawAsset = () => {
           className="border-none text-2xl"
         />
         <p></p>
-        <AlternateButton handleClick={setMaxAssets}>MAX</AlternateButton>
+        <MaxButton handleClick={setMaxAssets}>MAX</MaxButton>
       </div>
       <div className="flex w-full items-center justify-center space-x-1 px-2 pt-4 text-center text-xs">
         <b> {(Number(ConvertToShares(amount).data as bigint) / 1000000000000000000 || 0).toLocaleString('US')}</b>

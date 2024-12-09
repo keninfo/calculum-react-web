@@ -28,6 +28,16 @@ export const SecondaryButton = ({ handleClick, children, disabled, border, class
   </button>
 )
 
+export const MaxButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
+  <button
+    onClick={handleClick}
+    className={`flex items-center justify-center rounded-lg bg-anti px-2 py-1 text-xs text-eerie hover:bg-white ${border ? 'border-2' : ''} ${className}`}
+    disabled={disabled}
+  >
+    {children}
+  </button>
+)
+
 export const AlternateButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}

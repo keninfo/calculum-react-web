@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from 'react'
 
 import { type BaseError, useAccount } from 'wagmi'
 
-import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useApprove from '@/hooks/useApprove'
 import useContract from '@/hooks/useContract'
@@ -78,7 +78,7 @@ const Approve = () => {
           handleChange={handleAmountChange}
           className="border-none text-2xl"
         />
-        <AlternateButton handleClick={setMax}>MAX</AlternateButton>
+        <MaxButton handleClick={setMax}>MAX</MaxButton>
       </div>
 
       <PrimaryButton handleClick={() => ApproveAssets(amount, contractAddress)} disabled={isPending} className="mt-5">

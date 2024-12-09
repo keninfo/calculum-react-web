@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { type BaseError, useAccount } from 'wagmi'
 
 import Disclaimer from '@/components/Disclaimer'
-import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
@@ -118,7 +118,7 @@ const DepositAssets = () => {
           handleChange={handleAmountChange}
           className="border-none text-2xl"
         />
-        <AlternateButton handleClick={setMax}>MAX</AlternateButton>
+        <MaxButton handleClick={setMax}>MAX</MaxButton>
       </div>
       <div className="mt-5 flex-row text-center text-xs">
         <p className="text-offWhite">YOU WILL RECEIVE</p>

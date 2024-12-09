@@ -13,7 +13,7 @@ import { arbitrumSepolia } from 'viem/chains'
 import { http, useAccount, useBalance } from 'wagmi'
 
 import AddUSDC from '@/components/common/AddToken/AddUSDC'
-import { AlternateButton, PrimaryButton } from '@/components/common/Buttons'
+import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useMint from '@/hooks/useMint'
 import { PRIVATE_KEY } from '@/utils/constants'
@@ -143,7 +143,7 @@ const FaucetComponent = () => {
             handleChange={handleSearch}
             className="border-none text-2xl"
           />
-          <AlternateButton handleClick={setMax}>MAX</AlternateButton>
+          <MaxButton handleClick={setMax}>MAX</MaxButton>
         </div>
         <p className="mt-5 text-center text-xs text-grey">
           You will receive {amount.toLocaleString('US')} {coins[selectedCoin]}
