@@ -20,6 +20,7 @@
 .DS_Store
 *.pem
 csv
+last_run_timestamp.txt
 
 # debug
 npm-debug.log*
