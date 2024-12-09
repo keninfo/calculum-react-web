@@ -27,7 +27,6 @@ const Dashboard = () => {
   const { dates, values } = useContext(CoinsContext)
   const [parent1] = useAutoAnimate()
   const [parent2] = useAutoAnimate()
-  const [parent3] = useAutoAnimate()
   const { isConnected } = useAccount()
 
   useEffect(() => {
@@ -78,7 +77,7 @@ const Dashboard = () => {
               <></>
             </Card>
           )}
-          {pro && coin == 'BTC' && isConnected && (
+          {pro && coin == 'BTC' && (
             <Card className="mt-4 h-full w-full">
               {strategy == 'Smoothcoin' && <ProductMetrics small />}
               {strategy == 'Momentum' && <MomentumMetrics small />}
@@ -100,14 +99,6 @@ const Dashboard = () => {
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
               <></>
-            </Card>
-          )}
-        </div>
-        <div className="col-span-11 flex h-full flex-col gap-4" ref={parent3}>
-          {pro && coin == 'BTC' && !isConnected && (
-            <Card className="h-full w-full">
-              {strategy == 'Smoothcoin' && <ProductMetrics />}
-              {strategy == 'Momentum' && <MomentumMetrics />}
             </Card>
           )}
         </div>
