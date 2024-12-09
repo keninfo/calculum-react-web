@@ -89,14 +89,7 @@ const AlphaOne = () => {
       const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
       // const roc = staticData.map((d) => d.roc)
 
-      const newSignalPrices = closePriceData.map((price, index) => {
-        const assetPrice = Number(price) // Convert string to number
-        const assetReturn = assetCumReturnsData[index] || 0 // Handle missing values safely
-        const signalReturn = signalCumReturnsData[index] || 0
-
-        // Calculate signal price
-        return (assetPrice * (1 + signalReturn)) / (1 + assetReturn)
-      })
+      const newSignalPrices = signalCumReturnsData.map((cumReturn) => 1 * (1 + cumReturn))
 
       setSignalPrice(newSignalPrices)
 
@@ -206,11 +199,11 @@ const AlphaOne = () => {
       },
     })
 
-    let signalCumReturnsSliced = signalPrice.map((value) =>
+    let signalCumReturnsSliced = signalCumReturns.map((value) =>
       coin == '1000PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
     )
 
-    signalCumReturnsSliced = signalCumReturnsSliced.slice(-selectedWindow)
+    signalCumReturnsSliced = signalPrice.slice(-selectedWindow)
 
     const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
       time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
