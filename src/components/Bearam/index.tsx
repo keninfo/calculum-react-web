@@ -45,7 +45,7 @@ const Bearam = () => {
         <Navbar />
       </div>
       <div className={`z-20 h-full space-y-4 px-20 py-32`}>
-        <Card className="h-20 w-full !bg-[#e7eced]">
+        <Card className="h-20 w-full !bg-dark">
           <div className="flex w-full items-center justify-start space-x-5">
             <p className="text-xl text-grey">Strategy: </p>
             <StrategySelect />
@@ -53,10 +53,10 @@ const Bearam = () => {
           </div>
         </Card>
         <div className="grid h-4/5 grid-cols-12 gap-4">
-          <Card className="col-span-10 h-full w-full !bg-[#e7eced]">
+          <Card className="col-span-10 h-full w-full !bg-dark">
             <ChartsContainer />
           </Card>
-          <Card className="col-span-2 h-full w-full !bg-[#e7eced]">
+          <Card className="col-span-2 h-full w-full !bg-dark">
             <ProductMetrics />
           </Card>
         </div>

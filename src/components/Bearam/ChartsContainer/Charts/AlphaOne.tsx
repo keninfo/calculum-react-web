@@ -20,10 +20,9 @@ interface PriceChartData {
 }
 
 interface ThemeColorsType {
-  dark: string
+  offWhite: string
   eerie: string
   primary: string
-  offWhite: string
   grey: string
   robin: string
 }
@@ -50,18 +49,16 @@ const AlphaOne = () => {
     setThemeColors(
       pro
         ? {
-            dark: proTheme.dark,
+            offWhite: proTheme.offWhite,
             eerie: proTheme.eerie,
             primary: proTheme.primary,
-            offWhite: proTheme.offWhite,
             grey: proTheme.grey,
             robin: proTheme.robin,
           }
         : {
-            dark: classicTheme.dark,
+            offWhite: classicTheme.offWhite,
             eerie: classicTheme.eerie,
             primary: classicTheme.primary,
-            offWhite: classicTheme.offWhite,
             grey: classicTheme.grey,
             robin: proTheme.robin,
           },
@@ -130,27 +127,27 @@ const AlphaOne = () => {
       layout: {
         ...lineChartConfig.layout,
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: themeColors.dark,
+        textColor: themeColors.offWhite,
       },
       leftPriceScale: {
         ...lineChartConfig.leftPriceScale,
-        mode: 1,
+        mode: 0,
       },
       rightPriceScale: {
         ...lineChartConfig.rightPriceScale,
         visible: true,
-        mode: 1,
+        mode: 0,
       },
       crosshair: {
         ...lineChartConfig.crosshair,
-        vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors.dark, 0.1) },
+        vertLine: { ...lineChartConfig.crosshair.vertLine, color: hexToRGBA(themeColors.offWhite, 0.1) },
       },
       localization: {
         dateFormat: "dd MMMM 'yy",
       },
     })
 
-    let selectedWindow = window
+    let selectedWindow = 0
 
     if (studyCase == 1 && coin != '1000PEPE') {
       selectedWindow = closePrice.length - 573
@@ -189,7 +186,7 @@ const AlphaOne = () => {
     lineSeries1?.setData(chartDataPrice1)
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: '#5622AA',
+      color: '#09d3ac',
       priceScaleId: 'right',
       priceFormat: {
         type: 'custom',
@@ -213,7 +210,7 @@ const AlphaOne = () => {
     lineSeries2?.setData(chartDataPrice2)
 
     // const lineSeries3 = chartInstance.current?.addLineSeries({
-    //   color: '#5622AA',
+    //   color: '#09d3ac',
     //   priceScaleId: 'right',
     //   priceFormat: {
     //     type: 'custom',
@@ -270,8 +267,8 @@ const AlphaOne = () => {
       height: isSmallDevice ? '200px' : '400px',
       ...tooltipConfig,
     })
-    toolTip.style.background = hexToRGBA(themeColors?.dark as string, 0.1)
-    toolTip.style.color = 'var(--color-dark)'
+    toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
+    toolTip.style.color = 'var(--color-offWhite)'
     chartContainerRef.current?.appendChild(toolTip)
 
     chartInstance.current?.subscribeCrosshairMove((param) => {
@@ -300,20 +297,20 @@ const AlphaOne = () => {
           if (assetCumReturns > signalCumReturns) {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.dark}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: #5622AA; font-weight: bold;">Momentum: <br/> $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: #09d3ac; font-weight: bold;">Momentum: <br/> $${signalCumReturns.toLocaleString('US')}</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-dark); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>
         `
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: #5622AA; font-weight: bold;">Momentum: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
-            <p style="font-size: 10px; color: ${themeColors?.dark}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: #09d3ac; font-weight: bold;">Momentum: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
           </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-dark); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #e7eced; color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
           </div>
         `
@@ -334,7 +331,7 @@ const AlphaOne = () => {
     })
 
     if (lineSeries1) {
-      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors.dark, 0.25) })
+      lineSeries1.createPriceLine({ ...zeroLine, color: hexToRGBA(themeColors.offWhite, 0.25) })
     }
 
     return () => {
@@ -362,8 +359,8 @@ const AlphaOne = () => {
     <div className="relative">
       <div className="absolute -top-[4vh] right-[2vw] md:left-[6vw] md:top-0 md:w-full">
         <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-[#5622AA]"></div>
-          <p className="text-xs text-[#5622AA] md:text-sm">{strategy + ' BTC-ETH-SOL'}</p>
+          <div className="h-1 w-[2vw] bg-[#09d3ac]"></div>
+          <p className="text-xs text-[#09d3ac] md:text-sm">{strategy + ' BTC-ETH-SOL'}</p>
         </div>
         <div className="flex items-center justify-end space-x-2 md:justify-start">
           <div className="h-1 w-[2vw] bg-grey"></div>

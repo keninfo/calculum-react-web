@@ -27,7 +27,7 @@ const DaySelectionButton = ({
     <li>
       <button onClick={() => handleSelection(days)}>
         <p
-          className={`${selected === selection ? 'border-b-2 border-[#5622AA] text-[#5622AA]' : 'text-dark'} h-5 cursor-pointer px-1 pb-2`}
+          className={`${selected === selection ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
         >
           {string}
         </p>
@@ -64,14 +64,14 @@ const ChartOptions = () => {
     <ul className="flex items-center justify-center space-x-3 p-5 text-xs">
       <li onClick={() => setStudyCase(1)} className="cursor-pointer">
         <p
-          className={`${selected === 0 ? 'border-b-2 border-[#5622AA] text-[#5622AA]' : 'text-dark'} h-5 cursor-pointer px-1 pb-2`}
+          className={`${selected === 0 ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
         >
           Bull
         </p>
       </li>
       <li onClick={() => setStudyCase(2)} className="cursor-pointer">
         <p
-          className={`${selected === 1 ? 'border-b-2 border-[#5622AA] text-[#5622AA]' : 'text-dark'} h-5 cursor-pointer px-1 pb-2`}
+          className={`${selected === 1 ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
         >
           Bear
         </p>

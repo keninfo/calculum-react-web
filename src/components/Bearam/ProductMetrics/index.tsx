@@ -99,12 +99,13 @@ const InfoMomentum = () => {
     <>
       <div className="flex h-full w-full items-center justify-center !bg-transparent md:!p-0 [&_p]:text-left">
         <div>
-          <p className="text-dark">Sharpe Ratio</p>
+          <p className="text-offWhite">Sharpe Ratio</p>
           <p className="mt-2 text-sm text-grey">
-            Momentum: <b className={`text-md ${scaledSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{scaledSharpe}</b>
+            Momentum:{' '}
+            <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${rawSharpe < 0 ? 'text-dark' : 'text-dark'}`}>{rawSharpe}</b>
+            {coin}: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
           </p>
 
           <p className="text-sm text-grey">
@@ -113,24 +114,25 @@ const InfoMomentum = () => {
               {differenceSharpeString}
             </b>
           </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-dark">CAGR</p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">CAGR</p>
           <p className="mt-2 text-sm text-grey">
-            Momentum: <b className={`text-md ${scaledCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{scaledCAGR}%</b>
+            Momentum: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${rawCAGR < 0 ? 'text-dark' : 'text-dark'}`}>{rawCAGR}%</b>
+            {coin}: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
           </p>
 
           <p className="text-sm text-grey">
             Difference:{' '}
             <b className={`text-md ${differenceCAGR > 0 ? 'text-[#51d780]' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
-          <p className="mt-4 border-t border-t-grey pt-4 text-dark">Largest Drawdown</p>
+          <p className="mt-4 border-t border-t-grey pt-4 text-offWhite">Largest Drawdown</p>
           <p className="mt-2 text-sm text-grey">
-            Momentum: <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{scaledDDMax}%</b>
+            Momentum:{' '}
+            <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-dark' : 'text-dark'}`}>{rawDDMax}%</b>
+            {coin}: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
           </p>
 
           <p className="text-sm text-grey">

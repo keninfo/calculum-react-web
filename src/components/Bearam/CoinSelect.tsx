@@ -9,13 +9,7 @@ const CoinSelect = () => {
   const { coin, setCoin } = useStrategyStore()
 
   return (
-    <Select
-      handleChange={(e) => setCoin(e.target.value)}
-      value={coin}
-      options={coins}
-      light
-      className="!text-[#5622AA]"
-    />
+    <Select handleChange={(e) => setCoin(e.target.value)} value={coin} options={coins} className="!text-[#09d3ac]" />
   )
 }
 
