@@ -132,8 +132,8 @@ const Info = () => {
 
   if (coin == 'BTC') {
     return (
-      <div className="my-10 flex h-fit w-full items-center justify-between !bg-transparent px-4 pr-20 [&_p]:text-left">
-        <div>
+      <div className="my-10 flex h-fit w-full items-center justify-start !bg-transparent px-4 pr-20 [&_p]:text-left">
+        <div className="border-r pr-10">
           <p className="text-offWhite">Sharpe Ratio</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
@@ -146,7 +146,7 @@ const Info = () => {
             <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
           </p>
         </div>
-        <div>
+        <div className="border-r px-10">
           <p className="text-offWhite">CAGR</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -160,7 +160,7 @@ const Info = () => {
             <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
         </div>
-        <div>
+        <div className="px-10">
           <p className="text-offWhite">Largest Drawdown</p>
           <p className="text-md mt-2 text-grey">
             moBTC:{' '}
