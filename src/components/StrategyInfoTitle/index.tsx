@@ -89,7 +89,7 @@ const StrategyInfoTitle = () => {
               {strategyInfo.change.toLocaleString('US')}%
             </p>
             <p className="mr-1">{`)`}</p>
-            <p>- Last 24H</p>
+            <p>- Last Day</p>
           </div>
         )}
       </div>
