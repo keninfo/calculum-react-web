@@ -40,7 +40,7 @@ const AlphaOne = ({ BTCRaw, ETHRaw, SOLRaw }: Props) => {
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { coin } = useStrategyStore()
   const { pro } = useProStore()
-  const { window } = useOptionsStore()
+  const { window, volatility } = useOptionsStore()
 
   const [dates, setDates] = useState<Date[]>([])
   const [closePrices, setClosePrices] = useState<number[][] | undefined>()
@@ -77,7 +77,11 @@ const AlphaOne = ({ BTCRaw, ETHRaw, SOLRaw }: Props) => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    const staticDataSrc = `mom_basket60.csv`
+    let staticDataSrc = `mom_basket.csv`
+    if (volatility == 0.6) {
+      staticDataSrc = `mom_basket60.csv`
+    }
+
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
@@ -109,7 +113,7 @@ const AlphaOne = ({ BTCRaw, ETHRaw, SOLRaw }: Props) => {
   useEffect(() => {
     fetchMomentum()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coin, window])
+  }, [coin, window, volatility])
 
   useEffect(() => {
     if (

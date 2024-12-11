@@ -16,6 +16,7 @@ import Footer from './Footer'
 import Navbar from './Navbar'
 import ProductMetrics from './ProductMetrics'
 import StrategySelect from './StrategySelect'
+import VolSelect from './VolSelect'
 
 const Bearam = () => {
   const { setStrategy } = useStrategyStore()
@@ -54,6 +55,8 @@ const Bearam = () => {
             <p className="text-xl text-grey">Strategy: </p>
             <StrategySelect />
             <CoinSelect />
+            <p className="pl-6 text-xl text-grey">Volatility: </p>
+            <VolSelect />
           </div>
           <ChartOptions />
 

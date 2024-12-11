@@ -15,7 +15,7 @@ const InfoMomentum = () => {
   const years = dates.length / 365
 
   const fetchMomentum = async () => {
-    const staticDataSrc = '/mom_basket.csv'
+    const staticDataSrc = '/mom_basket60.csv'
 
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({
