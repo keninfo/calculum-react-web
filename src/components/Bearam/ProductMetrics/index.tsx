@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useStrategyStore } from '@/store/useStrategyStore'
+import { useOptionsStore } from '@/store/useOptionsStore'
 import { cummax, safeRound, calculateMean, calculateStd, cumprod } from '@/utils/chartComputations'
 
 import * as d3 from 'd3'
@@ -9,10 +9,8 @@ const InfoMomentum = () => {
   const [dates, setDates] = useState<Date[]>([])
   const [assetReturns, setAssetReturns] = useState<number[]>([])
   const [signalReturns, setSignalReturns] = useState<number[]>([])
-  const { coin } = useStrategyStore()
-  // const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
-  // const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
-  // const [loading, setLoading] = useState([#51d7b8])
+  const { window } = useOptionsStore()
+
   const periods = 365 // only for daily, have to change if hourly
   const years = dates.length / 365
 
@@ -31,16 +29,10 @@ const InfoMomentum = () => {
       const dates = staticData.map((d) => new Date(d.date))
       const assetReturnsData = staticData.map((d) => d.asset_return)
       const signalReturnsData = staticData.map((d) => d.signal_return)
-      // const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
-      // const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
 
-      setDates(dates)
-      setAssetReturns(assetReturnsData)
-      setSignalReturns(signalReturnsData)
-      // setAssetCumReturns(assetCumReturnsData)
-      // setSignalCumReturns(signalCumReturnsData)
-
-      // setLoading(false)
+      setDates(dates.slice(-window))
+      setAssetReturns(assetReturnsData.slice(-window))
+      setSignalReturns(signalReturnsData.slice(-window))
     } catch (error) {
       console.error('Error fetching signalCumReturns data:', error)
     }
@@ -48,7 +40,8 @@ const InfoMomentum = () => {
 
   useEffect(() => {
     fetchMomentum()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window])
 
   // SHARPE ---------------------------------------------------------------------------------------------------------
   const rawSharpe = safeRound((calculateMean(assetReturns) / calculateStd(assetReturns)) * Math.sqrt(periods), 2)
@@ -105,7 +98,7 @@ const InfoMomentum = () => {
             <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
+            BTC raw: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
           </p>
 
           <p className="text-sm text-grey">
@@ -119,7 +112,7 @@ const InfoMomentum = () => {
             Momentum: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
+            BTC raw: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
           </p>
 
           <p className="text-sm text-grey">
@@ -132,7 +125,8 @@ const InfoMomentum = () => {
             <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
           </p>
           <p className="text-sm text-grey">
-            {coin}: <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
+            BTC raw:{' '}
+            <b className={`text-md ${Number(rawDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawDDMax}%</b>
           </p>
 
           <p className="text-sm text-grey">

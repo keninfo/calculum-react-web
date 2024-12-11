@@ -1,7 +1,7 @@
 import { useFavicon } from '@uidotdev/usehooks'
 import { useDocumentTitle } from '@uidotdev/usehooks'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -9,6 +9,7 @@ import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import Card from '../common/Card'
+import ChartOptions from './ChartOptions/Index'
 import ChartsContainer from './ChartsContainer/Index'
 import CoinSelect from './CoinSelect'
 import Footer from './Footer'
@@ -19,7 +20,10 @@ import StrategySelect from './StrategySelect'
 const Bearam = () => {
   const { setStrategy } = useStrategyStore()
   const { setWindow, setStudyCase } = useOptionsStore()
-  const [favicon] = React.useState('/favicon.png')
+  const [favicon] = useState('/favicon.png')
+  const [BTCRaw] = useState(true)
+  const [ETHRaw] = useState(false)
+  const [SOLRaw] = useState(false)
 
   useFavicon(favicon)
   useDocumentTitle('Bearam | Dashboard')
@@ -32,7 +36,7 @@ const Bearam = () => {
   }, [])
 
   return (
-    <div className="h-screen w-screen bg-[#5622AA]">
+    <div className="h-full w-screen bg-[#5622AA]">
       <Image
         src="/bearambg.png"
         alt=""
@@ -45,16 +49,53 @@ const Bearam = () => {
         <Navbar />
       </div>
       <div className={`z-20 h-full space-y-4 px-20 py-32`}>
-        <Card className="h-20 w-full !bg-dark">
+        <Card className="flex h-20 w-full justify-between !bg-dark">
           <div className="flex w-full items-center justify-start space-x-5">
             <p className="text-xl text-grey">Strategy: </p>
             <StrategySelect />
             <CoinSelect />
           </div>
+          <ChartOptions />
+
+          {/* <div className="flex w-full items-center justify-end space-x-5 [&_p]:text-xs">
+            <label className="flex items-center space-x-2">
+              <input type="checkbox" checked={BTCRaw} onChange={() => toggleState(setBTCRaw)} className="hidden" />
+              <div
+                className={`flex h-5 w-5 items-center justify-center rounded-md border-2 ${BTCRaw ? 'border-[#f7931a] bg-[#f7931a]' : 'border-gray-400'
+                  } cursor-pointer transition-colors duration-300 hover:border-offWhite`}
+              >
+                {BTCRaw && <div className="h-2.5 w-2.5 rounded bg-white" />}
+              </div>
+              <span className="text-gray-200">BTC raw</span>
+              <div className="h-1 w-[2vw] bg-[#f7931a]"></div>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input type="checkbox" checked={ETHRaw} onChange={() => toggleState(setETHRaw)} className="hidden" />
+              <div
+                className={`flex h-5 w-5 items-center justify-center rounded-md border-2 ${ETHRaw ? 'border-[#215CAF] bg-[#215CAF]' : 'border-gray-400'
+                  } cursor-pointer transition-colors duration-300 hover:border-offWhite`}
+              >
+                {ETHRaw && <div className="h-2.5 w-2.5 rounded bg-white" />}
+              </div>
+              <span className="text-gray-200">ETH raw</span>
+              <div className="h-1 w-[2vw] bg-[#215CAF]"></div>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input type="checkbox" checked={SOLRaw} onChange={() => toggleState(setSOLRaw)} className="hidden" />
+              <div
+                className={`flex h-5 w-5 items-center justify-center rounded-md border-2 ${SOLRaw ? 'border-[#14F195] bg-[#14F195]' : 'border-gray-400'
+                  } cursor-pointer transition-colors duration-300 hover:border-offWhite`}
+              >
+                {SOLRaw && <div className="h-2.5 w-2.5 rounded bg-white" />}
+              </div>
+              <span className="text-gray-200">SOL raw</span>
+              <div className="h-1 w-[2vw] bg-[#14F195]"></div>
+            </label>
+          </div> */}
         </Card>
         <div className="grid h-4/5 grid-cols-12 gap-4">
           <Card className="col-span-10 h-full w-full !bg-dark">
-            <ChartsContainer />
+            <ChartsContainer BTCRaw={BTCRaw} ETHRaw={ETHRaw} SOLRaw={SOLRaw} />
           </Card>
           <Card className="col-span-2 h-full w-full !bg-dark">
             <ProductMetrics />

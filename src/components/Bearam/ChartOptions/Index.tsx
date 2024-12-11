@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useOptionsStore } from '@/store/useOptionsStore'
 
 const options = [
-  ['1W', 7],
-  ['1M', 30],
-  ['3M', 90],
-  ['6M', 180],
+  ['6M', 30 * 6],
+  ['12M', 30 * 12],
+  ['18M', 30 * 18],
+  ['24M', 30 * 24],
   ['ALL', 0],
 ]
 
@@ -27,7 +27,7 @@ const DaySelectionButton = ({
     <li>
       <button onClick={() => handleSelection(days)}>
         <p
-          className={`${selected === selection ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
+          className={`${selected === selection ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-8 cursor-pointer px-1 pb-2`}
         >
           {string}
         </p>
@@ -37,45 +37,20 @@ const DaySelectionButton = ({
 }
 
 const ChartOptions = () => {
-  const { window, setWindow, studyCase, setStudyCase } = useOptionsStore()
+  const { window, setWindow } = useOptionsStore()
   const [selected, setSelected] = useState<number>(0)
 
   useEffect(() => {
     const windowMap = Object.fromEntries(options.map(([, days], index) => [days, index + 2]))
-
-    switch (studyCase) {
-      case 1:
-        setSelected(0)
-        break
-      case 2:
-        setSelected(1)
-        break
-      default:
-        setSelected(windowMap[window] ?? -1)
-    }
-  }, [studyCase, window])
+    setSelected(windowMap[window] ?? -1)
+  }, [window])
 
   const handleWindowChange = (days: number) => {
     setWindow(days)
-    setStudyCase(0)
   }
 
   return (
-    <ul className="flex items-center justify-center space-x-3 p-5 text-xs">
-      <li onClick={() => setStudyCase(1)} className="cursor-pointer">
-        <p
-          className={`${selected === 0 ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
-        >
-          Bull
-        </p>
-      </li>
-      <li onClick={() => setStudyCase(2)} className="cursor-pointer">
-        <p
-          className={`${selected === 1 ? 'border-b-2 border-[#09d3ac] text-[#09d3ac]' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
-        >
-          Bear
-        </p>
-      </li>
+    <ul className="text-md flex items-center justify-center space-x-3">
       {options.map((option, index) => {
         return (
           <DaySelectionButton

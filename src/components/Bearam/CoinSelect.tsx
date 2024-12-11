@@ -3,7 +3,7 @@ import React from 'react'
 import Select from '@/components/common/Select'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-const coins = ['BTC-ETH-SOL']
+const coins = ['BTC', 'BTC + ETH', 'BTC + ETH + SOL']
 
 const CoinSelect = () => {
   const { coin, setCoin } = useStrategyStore()
