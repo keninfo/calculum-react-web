@@ -2,6 +2,16 @@
 
 import { useEffect } from 'react'
 
+/**
+ * A component that adds a "STAGING" watermark to the page when the app is in the staging environment.
+ *
+ * @remarks
+ * This component checks if the application is running in the staging environment by looking
+ * at the hostname and, if true, adds a watermark text to the center of the screen.
+ * The watermark is a non-interactive text overlay.
+ *
+ * @returns `null` - This component does not render anything in the React tree.
+ */
 const Watermark = () => {
   useEffect(() => {
     const isStaging = window.location.hostname.includes('staging-app.bearprotocol.io')
@@ -20,7 +30,7 @@ const Watermark = () => {
     }
   }, [])
 
-  return null // This component doesn't render anything visually in React
+  return null
 }
 
 export default Watermark

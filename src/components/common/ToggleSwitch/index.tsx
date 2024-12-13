@@ -4,8 +4,10 @@ import React from 'react'
 
 import { useProStore } from '@/store/useProStore'
 
+/** * Toggle switch component for switching between PRO and CLASSIC states. */
 const ToggleSwitch = () => {
   const { pro } = useProStore()
+
   return (
     <div className={`flex items-center justify-center space-x-[10px] font-bold`}>
       <div

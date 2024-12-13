@@ -1,12 +1,29 @@
 import type { ReactNode } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 
+/** * Properties for the `Modal` component. */
 type ModalProps = {
+  /** * The content to be displayed inside the modal. */
   children: ReactNode
+
+  /** * Optional close message for the button. */
   closeMessage?: string
+
+  /** * Callback function to handle closing the modal. */
   onClose: () => void
 }
 
+/**
+ * A modal component that displays content in a pop-up overlay.
+ *
+ * @remarks
+ * The modal can be closed by clicking outside or pressing the close button.
+ *
+ * @param children - The content to be displayed inside the modal.
+ * @param closeMessage - Optional custom message for the close button (defaults to "CLOSE").
+ * @param onClose - Callback function to execute when the modal is closed.
+ * @returns The modal component with overlay and content.
+ */
 const Modal = ({ children, closeMessage, onClose }: ModalProps) => {
   const [open, setOpen] = useState(true)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -37,13 +54,13 @@ const Modal = ({ children, closeMessage, onClose }: ModalProps) => {
 
   if (open) {
     return (
-      <div className="| bg-eerie/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-end justify-center md:items-center">
+      <div className="bg-eerie/80 fixed left-0 top-0 z-50 flex h-screen w-screen items-end justify-center md:items-center">
         <div ref={modalRef} className="z-40 w-full rounded-xl bg-eerie drop-shadow-xl md:h-fit md:w-[50vw]">
           <button
             onClick={handleClose}
             className="absolute -top-[8vh] left-1/2 z-50 -translate-x-1/2 translate-y-[4vh] font-bold text-offWhite"
           >
-            {closeMessage ? closeMessage : 'CLOSE'}
+            {closeMessage || 'CLOSE'}
           </button>
           {children}
         </div>

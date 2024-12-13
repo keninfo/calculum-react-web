@@ -4,16 +4,28 @@ import { useAccount } from 'wagmi'
 
 import useContract from '@/hooks/useContract'
 import { walletClient } from '@/services/RainbowKitProvider'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 
-interface tokenInfo {
+/** Properties for the `AddToken` component. */
+interface TokenInfo {
+  /** Optional CSS class to style the button. */
   classname?: string
 }
 
-const AddToken = ({ classname }: tokenInfo) => {
+/**
+ * A button that allows the user to add an ERC20 token to their wallet.
+ *
+ * @remarks The component interacts with the Ethereum provider to trigger the `wallet_watchAsset`
+ * method, which adds the token to the wallet.
+ *
+ * @param classname - Optional CSS class to customize the button styling.
+ * @returns The `AddToken` button component.
+ */
+const AddToken: React.FC<TokenInfo> = ({ classname }) => {
   const { chain } = useAccount()
   const { contractAddress, symbol } = useContract()
 
-  const watchAsset = async () => {
+  const watchAsset = async (): Promise<void> => {
     if (chain?.id !== undefined && walletClient) {
       await walletClient.switchChain({ id: chain.id })
       if (typeof window.ethereum !== 'undefined') {
@@ -31,9 +43,7 @@ const AddToken = ({ classname }: tokenInfo) => {
           })
 
           if (wasAdded) {
-            console.log('Thanks for your interest!')
-          } else {
-            console.log('Your loss!')
+            createTransactionAlert('Token Added', true)
           }
         } catch (error) {
           console.log(error)

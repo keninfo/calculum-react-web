@@ -5,13 +5,30 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import type { ReactNode } from 'react'
 import React from 'react'
 
+/** * Properties for the `Card` component. */
 type CardProps = {
+  /** * Optional title of the card. */
   title?: string
+  /** * Optional subtitle of the card. */
   subtitle?: string
+  /** * The content inside the card. */
   children: ReactNode
+  /** * Optional additional CSS classes for styling. */
   className?: string
 }
 
+/**
+ * A card component that displays a title, subtitle, and children content with optional styles.
+ *
+ * @remarks
+ * The card is flexible and can display a title and subtitle, as well as customizable content.
+ *
+ * @param title - Optional title for the card.
+ * @param subtitle - Optional subtitle for the card.
+ * @param children - The content displayed inside the card.
+ * @param className - Optional CSS class for custom styling.
+ * @returns The `Card` component with customizable content.
+ */
 const Card = ({ title, subtitle, children, className }: CardProps) => {
   const [parent] = useAutoAnimate()
   return (

@@ -4,12 +4,24 @@ import { useAccount } from 'wagmi'
 
 import { usdcContract } from '@/contracts/usdc'
 import { walletClient } from '@/services/RainbowKitProvider'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 
-interface tokenInfo {
+/** * Properties for the `AddUSDC` component. */
+interface TokenInfo {
+  /** * Optional CSS class to style the button. */
   classname?: string
 }
 
-const AddUSDC = ({ classname }: tokenInfo) => {
+/**
+ * A button that allows the user to add USDC to their wallet.
+ *
+ * @remarks The component interacts with the Ethereum provider to trigger the `wallet_watchAsset`
+ * method, which adds the USDC token to the wallet. This one will only be used during testnet.
+ *
+ * @param classname - Optional CSS class to customize the button styling.
+ * @returns The `AddUSDC` button component.
+ */
+const AddUSDC: React.FC<TokenInfo> = ({ classname }) => {
   const { chain } = useAccount()
 
   const watchAsset = async () => {
@@ -30,9 +42,7 @@ const AddUSDC = ({ classname }: tokenInfo) => {
           })
 
           if (wasAdded) {
-            console.log('Thanks for your interest!')
-          } else {
-            console.log('Your loss!')
+            createTransactionAlert('Token Added', true)
           }
         } catch (error) {
           console.log(error)
@@ -48,7 +58,7 @@ const AddUSDC = ({ classname }: tokenInfo) => {
   return (
     <div>
       <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-sm text-primary ${classname}`}>
-        Add USDc to Wallet
+        Add USDC to Wallet
       </button>
     </div>
   )
