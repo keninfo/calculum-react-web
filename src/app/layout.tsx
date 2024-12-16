@@ -40,9 +40,8 @@ const RootLayout = ({
     return (
       <html lang="en">
         <body
-          className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} ${
-            pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"
-          }`}
+          className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"
+            }`}
         >
           <Watermark />
           <AppProviders>
