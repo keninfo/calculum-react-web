@@ -37,11 +37,11 @@ const Bearam = () => {
   }, [])
 
   return (
-    <div className="h-full w-screen bg-[#5622AA]">
+    <div className="h-full w-screen bg-[#190b31]">
       <Image
         src="/bearambg.png"
         alt=""
-        className="pointer-events-none fixed -top-1 right-0 z-0 w-screen bg-cover mix-blend-multiply"
+        className="pointer-events-none fixed -top-1 right-0 z-0 w-screen bg-cover opacity-20"
         style={{ height: `calc(100vh + ${4}px)` }}
         width="1000"
         height="1000"
