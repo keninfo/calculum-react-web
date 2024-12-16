@@ -7,8 +7,6 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance } from '@/utils/formatters'
 
-import News from './News'
-
 const placeholder = {
   label: 'BTC Smoothcoin',
   symbol: 'smBTC',
@@ -62,16 +60,18 @@ const StrategyInfoTitle = () => {
 
   return (
     <div
-      className={`sticky left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:pl-2 ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
+      className={`sticky left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:px-2 ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
-      <div className="md:w-fit">
+      <div className="flex items-center justify-between md:w-full">
         <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
           {strategyInfo.label}
         </h2>
         {values && coin == 'BTC' && (
-          <div className="flex w-full items-center justify-start text-nowrap text-center text-xs text-grey md:text-left md:text-sm">
-            <p className="mr-1">{strategyInfo.token}:</p>
+          <div className="text-md flex w-fit items-center justify-start text-nowrap text-grey">
+            <p>{`Yesterday's closing price - `}</p>
+
+            <p className="mx-1">{strategyInfo.token}:</p>
             <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>
             <p>{`(`}</p>
             <p
@@ -89,11 +89,10 @@ const StrategyInfoTitle = () => {
               {strategyInfo.change.toLocaleString('US')}%
             </p>
             <p className="mr-1">{`)`}</p>
-            <p>- Last Day</p>
           </div>
         )}
       </div>
-      <News />
+      {/* <News /> */}
     </div>
   )
 }
