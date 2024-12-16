@@ -64,7 +64,7 @@ const RootLayout = ({
           </AppProviders>
         </body>
         <Analytics />
-        <GoogleAnalytics gaId="G-ZJQN25MV06" />
+        <GoogleAnalytics gaId="G-DQ0RGE2MYE" />
       </html>
     )
   }
