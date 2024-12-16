@@ -19,7 +19,7 @@
 # misc
 .DS_Store
 *.pem
-csv
+# csv
 last_run_timestamp.txt
 
 # debug
