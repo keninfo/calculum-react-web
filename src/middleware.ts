@@ -33,6 +33,14 @@ export function middleware(req: NextRequest) {
             window.location.reload(); // Reload the page to allow access
           }
         </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=${process.env.MEASUREMENT_ID}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.MEASUREMENT_ID}');
+        </script>
       </body>
       </html>
     `
