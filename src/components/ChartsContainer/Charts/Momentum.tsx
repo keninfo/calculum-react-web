@@ -32,7 +32,7 @@ const Momentum = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
-  const { coin, strategy } = useStrategyStore()
+  const { coin } = useStrategyStore()
   const { pro } = useProStore()
   const { studyCase, window, setStudyCase } = useOptionsStore()
 
@@ -256,27 +256,60 @@ const Momentum = () => {
           : undefined
         const signalCumReturns = data2?.value !== undefined ? data2.value : data2?.close
 
-        if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
-          if (assetCumReturns > signalCumReturns) {
-            toolTip.innerHTML = `
-          <div>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/> $${signalCumReturns.toLocaleString('US')}</p>
-          </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            ${dateStr}
-          </div>
-        `
-          } else {
-            toolTip.innerHTML = `
-          <div>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-          </div>
-          <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-            ${dateStr}
-          </div>
-        `
+        const data3 = lineSeries3
+          ? (param.seriesData.get(lineSeries3) as { value?: number; close?: number })
+          : undefined
+        const momActual = data3?.value !== undefined ? data3.value : data3?.close
+
+        if (momActual !== undefined) {
+          if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
+            if (assetCumReturns > signalCumReturns) {
+              toolTip.innerHTML = `
+            <div>
+              <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${(momActual * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+              ${dateStr}
+            </div>
+          `
+            } else {
+              toolTip.innerHTML = `
+            <div>
+              <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${(momActual * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+              ${dateStr}
+            </div>
+          `
+            }
+          }
+        } else {
+          if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
+            if (assetCumReturns > signalCumReturns) {
+              toolTip.innerHTML = `
+            <div>
+              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+              ${dateStr}
+            </div>
+          `
+            } else {
+              toolTip.innerHTML = `
+            <div>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
+              ${dateStr}
+            </div>
+          `
+            }
           }
         }
 
@@ -320,20 +353,6 @@ const Momentum = () => {
 
   return (
     <div className="relative">
-      <div className="absolute -top-[4vh] right-[2vw] md:left-[6vw] md:top-0 md:w-full">
-        <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-primary"></div>
-          <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin} Actual Price</p>
-        </div>
-        <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-robin"></div>
-          <span className="text-xs text-robin md:text-sm">{strategy + ' ' + coin} Simulated Price</span>
-        </div>
-        <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-xs md:text-sm">{coin} Raw Price</span>
-        </div>
-      </div>
       <div
         ref={chartContainerRef}
         style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}

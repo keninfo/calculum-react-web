@@ -47,7 +47,7 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
   const chartInstance = useRef<IChartApi | undefined>()
   const initialVisibleRange = useRef<{ from: Time; to: Time } | undefined>(undefined)
   const { window, rollingWindow, volatility, showCandle, studyCase, setStudyCase } = useOptionsStore()
-  const { coin, strategy } = useStrategyStore()
+  const { coin } = useStrategyStore()
   const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
 
   const { pro } = useProStore()
@@ -322,16 +322,6 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute -top-[4vh] right-[2vw] md:left-[4vw] md:top-0 md:w-full">
-        <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-primary"></div>
-          <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</p>
-        </div>
-        <div className="flex items-center justify-end space-x-2 md:justify-start">
-          <div className="h-1 w-[2vw] bg-offWhite"></div>
-          <span className="text-xs md:text-sm">{coin} Raw Price</span>
-        </div>
-      </div>
       <div
         ref={chartContainerRef}
         style={{ width: '100%', height: 'auto', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
