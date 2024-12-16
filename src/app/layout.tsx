@@ -2,6 +2,7 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Analytics } from '@vercel/analytics/react'
 
 import { useEffect, useState, type ReactNode } from 'react'
@@ -50,6 +51,7 @@ const RootLayout = ({
           </AppProviders>
         </body>
         <Analytics />
+        <GoogleAnalytics gaId="G-ZJQN25MV06" />
       </html>
     )
   }
@@ -62,6 +64,7 @@ const RootLayout = ({
           </AppProviders>
         </body>
         <Analytics />
+        <GoogleAnalytics gaId="G-ZJQN25MV06" />
       </html>
     )
   }
