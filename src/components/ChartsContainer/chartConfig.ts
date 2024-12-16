@@ -62,11 +62,11 @@ export const lineChartConfig = {
   },
   handleScroll: {
     mouseWheel: false,
-    horzTouchDrag: false,
-    vertTouchDrag: false,
+    horzTouchDrag: true,
+    vertTouchDrag: true,
   },
   handleScale: {
-    mouseWheel: false,
+    mouseWheel: true,
   },
 }
 

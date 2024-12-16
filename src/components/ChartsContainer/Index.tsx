@@ -103,9 +103,6 @@ const Chart = () => {
       {strategy == `Momentum` && (
         <div ref={parent}>
           <Card className={`relative w-full !p-0 !px-2 !py-[2vh]`}>
-            <div className="absolute right-20 top-5 z-50 hidden md:block">
-              <ChartOptions />
-            </div>
             <Momentum />
           </Card>
         </div>
