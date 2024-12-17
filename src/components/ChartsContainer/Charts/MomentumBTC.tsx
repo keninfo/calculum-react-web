@@ -115,7 +115,7 @@ const MomentumBTC = () => {
 
     chartInstance.current = createChart(chartContainerRef.current, {
       autoSize: true,
-      height: isSmallDevice ? 200 : 400,
+      height: 200,
       ...lineChartConfig,
       layout: {
         ...lineChartConfig.layout,
@@ -128,7 +128,7 @@ const MomentumBTC = () => {
       },
       rightPriceScale: {
         ...lineChartConfig.rightPriceScale,
-        visible: false,
+        visible: true,
         mode: 1,
       },
       crosshair: {
@@ -151,26 +151,8 @@ const MomentumBTC = () => {
       },
     })
 
-    const chartDataPrice1: PriceChartData[] = closePrice.map((data, index) => ({
-      time: (dates[index].getTime() / 1000) as UTCTimestamp,
-      value: coin == '1000PEPE' || coin == 'DOGE' ? Number(data) : Number(data) / 100000,
-    }))
-
-    lineSeries1?.setData(chartDataPrice1)
-
-    const lineSeries2 = chartInstance.current?.addLineSeries({
-      color: themeColors.robin,
-      priceScaleId: 'left',
-      priceFormat: {
-        type: 'custom',
-        formatter: (price: number) => {
-          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(2)}k`
-        },
-      },
-    })
-
-    const chartDataPrice2: PriceChartData[] = calculatedPrice.reduce((acc, data, index) => {
-      if (data === 0) return acc
+    const chartDataPrice1: PriceChartData[] = closePrice.reduce((acc, data, index) => {
+      if (calculatedMom[index] === 0) return acc
 
       acc.push({
         time: (dates[index].getTime() / 1000) as UTCTimestamp,
@@ -180,7 +162,7 @@ const MomentumBTC = () => {
       return acc
     }, [] as PriceChartData[])
 
-    lineSeries2?.setData(chartDataPrice2)
+    lineSeries1?.setData(chartDataPrice1)
 
     const chartDataPrice3: PriceChartData[] = calculatedMom.reduce((acc, data, index) => {
       if (data === 0) return acc
@@ -193,23 +175,27 @@ const MomentumBTC = () => {
       return acc
     }, [] as PriceChartData[])
 
-    // Add the new series to the chart
     const lineSeries3 = chartInstance.current?.addLineSeries({
-      color: themeColors.primary,
-      priceScaleId: 'left',
+      color: themeColors.robin,
+      priceScaleId: 'right',
       priceFormat: {
         type: 'custom',
         formatter: (price: number) => {
-          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(2)}k`
+          return `$${price.toLocaleString('US')}`
         },
       },
     })
 
     lineSeries3?.setData(chartDataPrice3)
 
+    chartInstance.current?.priceScale('left').applyOptions({
+      scaleMargins: { top: 0.45, bottom: 0.1 }, // Adjust as needed
+      mode: 0, // Regular price scale
+    })
+
     chartInstance.current?.priceScale('right').applyOptions({
       scaleMargins: { top: 0.2, bottom: 0.1 }, // Match left scale's visual margin
-      mode: 1, // Regular price scale
+      mode: 0, // Regular price scale
     })
 
     const visibleRange = {
@@ -222,7 +208,7 @@ const MomentumBTC = () => {
 
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, {
-      height: isSmallDevice ? '200px' : '400px',
+      height: '200px',
       ...tooltipConfig,
     })
     toolTip.style.background = hexToRGBA(themeColors?.offWhite as string, 0.1)
@@ -246,66 +232,21 @@ const MomentumBTC = () => {
           ? (param.seriesData.get(lineSeries1) as { value?: number; close?: number })
           : undefined
         const assetCumReturns = data1?.value !== undefined ? data1.value : data1?.close
-        const data2 = lineSeries2
-          ? (param.seriesData.get(lineSeries2) as { value?: number; close?: number })
-          : undefined
-        const signalCumReturns = data2?.value !== undefined ? data2.value : data2?.close
-
         const data3 = lineSeries3
           ? (param.seriesData.get(lineSeries3) as { value?: number; close?: number })
           : undefined
         const momActual = data3?.value !== undefined ? data3.value : data3?.close
 
-        if (momActual !== undefined) {
-          if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
-            if (assetCumReturns > signalCumReturns) {
-              toolTip.innerHTML = `
+        if (assetCumReturns !== undefined && momActual !== undefined) {
+          toolTip.innerHTML = `
             <div>
-              <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${(momActual * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${momActual.toLocaleString('US')}`}</p>
               <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
             </div>
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
               ${dateStr}
             </div>
           `
-            } else {
-              toolTip.innerHTML = `
-            <div>
-              <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${(momActual * 100).toFixed(0)}k`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-              ${dateStr}
-            </div>
-          `
-            }
-          }
-        } else {
-          if (assetCumReturns !== undefined && signalCumReturns !== undefined) {
-            if (assetCumReturns > signalCumReturns) {
-              toolTip.innerHTML = `
-            <div>
-              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
-            </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-              ${dateStr}
-            </div>
-          `
-            } else {
-              toolTip.innerHTML = `
-            <div>
-              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Simulated: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
-              ${dateStr}
-            </div>
-          `
-            }
-          }
         }
 
         let left = param.point.x as number

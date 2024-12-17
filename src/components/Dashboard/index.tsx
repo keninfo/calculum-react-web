@@ -79,8 +79,8 @@ const Dashboard = () => {
           )}
           {pro && coin == 'BTC' && (
             <Card className="mt-4 h-full w-full">
-              {strategy == 'Smoothcoin' && <ProductMetrics />}
-              {strategy == 'Momentum' && <MomentumMetrics />}
+              {strategy == 'Smoothcoin' && <ProductMetrics small={false} />}
+              {strategy == 'Momentum' && <MomentumMetrics small={false} />}
             </Card>
           )}
           {!pro && isConnected && (
@@ -95,6 +95,12 @@ const Dashboard = () => {
               <TradeBox />
               <Positions />
               {pro && <Transactions />}
+              {/* {pro && coin == 'BTC' && !isConnected && (
+                <div className='h-full'>
+                  {strategy == 'Smoothcoin' && <ProductMetrics small />}
+                  {strategy == 'Momentum' && <MomentumMetrics small />}
+                </div>
+              )} */}
             </>
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">

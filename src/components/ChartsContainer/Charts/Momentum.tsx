@@ -104,10 +104,8 @@ const Momentum = () => {
 
       setDates(dates)
       setClosePrice(closePriceData)
-      // setSignalReturns(signalReturnsData)
       setAssetCumReturns(assetCumReturnsData)
       setSignalCumReturns(signalCumReturnsData)
-      // setROC(roc)
     } catch (error) {
       console.error('Error fetching signalCumReturns data:', error)
     }
@@ -117,20 +115,6 @@ const Momentum = () => {
     fetchMomentum()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coin])
-
-  // const filterSignalToDeploy = (data: number[], selectedDate: string): number[] => {
-  //   const today = new Date()
-  //   const targetDate = new Date(selectedDate)
-  //   const daysDifference = Math.ceil((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
-
-  //   return data.map((value, index) => {
-  //     if (index < data.length - Math.abs(daysDifference)) {
-  //       return 1
-  //     }
-
-  //     return value
-  //   })
-  // }
 
   useEffect(() => {
     if (
@@ -173,20 +157,6 @@ const Momentum = () => {
       },
     })
 
-    let selectedWindow = window
-
-    if (studyCase == 1 && coin != '1000PEPE') {
-      selectedWindow = closePrice.length - 573
-    } else if (studyCase == 2 && coin != '1000PEPE') {
-      selectedWindow = closePrice.length - 1486
-    }
-
-    if (coin == '1000PEPE') {
-      setStudyCase(0)
-    }
-
-    const datesSliced = dates.slice(-selectedWindow)
-
     const lineSeries1 = chartInstance.current?.addLineSeries({
       color: themeColors.offWhite,
       priceScaleId: 'left',
@@ -198,14 +168,12 @@ const Momentum = () => {
       },
     })
 
-    let closePriceSliced = closePrice.map((value) =>
+    const closePriceSliced = closePrice.map((value) =>
       coin == '1000PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
     )
 
-    closePriceSliced = closePriceSliced.slice(-selectedWindow)
-
     const chartDataPrice1: PriceChartData[] = closePriceSliced.map((data, index) => ({
-      time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
+      time: (dates[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
 
@@ -222,14 +190,12 @@ const Momentum = () => {
       },
     })
 
-    let signalCumReturnsSliced = signalPrice.map((value) =>
+    const signalCumReturnsSliced = signalPrice.map((value) =>
       coin == '1000PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
     )
 
-    signalCumReturnsSliced = signalCumReturnsSliced.slice(-selectedWindow)
-
     const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
-      time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
+      time: (dates[index].getTime() / 1000) as UTCTimestamp,
       value: data,
     }))
 
@@ -264,7 +230,7 @@ const Momentum = () => {
 
     // const chartDataPrice3: PriceChartData[] = rocSliced
     //   .map((data, index) => ({
-    //     time: (datesSliced[index].getTime() / 1000) as UTCTimestamp,
+    //     time: (dates[index].getTime() / 1000) as UTCTimestamp,
     //     value: data,
     //   }))
 
@@ -281,8 +247,8 @@ const Momentum = () => {
     })
 
     const visibleRange = {
-      from: (datesSliced[0].getTime() / 1000) as UTCTimestamp,
-      to: (datesSliced[datesSliced.length - 1].getTime() / 1000) as UTCTimestamp,
+      from: (dates[0].getTime() / 1000) as UTCTimestamp,
+      to: (dates[dates.length - 1].getTime() / 1000) as UTCTimestamp,
     }
 
     initialVisibleRange.current = visibleRange

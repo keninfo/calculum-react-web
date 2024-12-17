@@ -14,7 +14,7 @@ import {
 } from '@/utils/chartComputations'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
-const Info = () => {
+const Info = ({ small = false }: { small?: boolean }) => {
   const { window, rollingWindow, studyCase, volatility } = useOptionsStore()
   const { coin } = useStrategyStore()
   const { values, coins } = useContext(CoinsContext)
@@ -132,8 +132,10 @@ const Info = () => {
 
   if (coin == 'BTC') {
     return (
-      <div className="my-10 flex h-fit w-full items-center justify-around !bg-transparent px-4 [&_p]:text-left">
-        <div className="border-r pr-10">
+      <div
+        className={`${!small ? 'my-10 flex items-center justify-around' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
+      >
+        <div className="">
           <p className="text-offWhite">Sharpe Ratio</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
@@ -146,7 +148,7 @@ const Info = () => {
             <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
           </p>
         </div>
-        <div className="border-r px-10">
+        <div className="">
           <p className="text-offWhite">CAGR</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -160,7 +162,7 @@ const Info = () => {
             <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
         </div>
-        <div className="px-10">
+        <div className="">
           <p className="text-offWhite">Largest Drawdown</p>
           <p className="text-md mt-2 text-grey">
             moBTC:{' '}

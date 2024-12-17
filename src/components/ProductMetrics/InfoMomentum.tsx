@@ -5,7 +5,7 @@ import { cummax, safeRound, calculateMean, calculateStd, cumprod } from '@/utils
 
 import * as d3 from 'd3'
 
-const InfoMomentum = () => {
+const InfoMomentum = ({ small = false }: { small?: boolean }) => {
   const [dates, setDates] = useState<Date[]>([])
   const [assetReturns, setAssetReturns] = useState<number[]>([])
   const [signalReturns, setSignalReturns] = useState<number[]>([])
@@ -99,8 +99,10 @@ const InfoMomentum = () => {
     return (
       <>
         {!loading && (
-          <div className="my-10 flex h-fit w-full items-center justify-around !bg-transparent px-4 [&_p]:text-left">
-            <div className="border-r pr-10">
+          <div
+            className={`${!small ? 'my-10 flex items-center justify-around' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
+          >
+            <div className="">
               <p className="text-offWhite">Sharpe Ratio</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}
@@ -116,7 +118,7 @@ const InfoMomentum = () => {
                 </b>
               </p>
             </div>
-            <div className="border-r px-10">
+            <div className="">
               <p className="text-offWhite">CAGR</p>
               <p className="text-md mt-2 text-grey">
                 moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -130,7 +132,7 @@ const InfoMomentum = () => {
                 <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
               </p>
             </div>
-            <div className="px-10">
+            <div className="">
               <p className="text-offWhite">Largest Drawdown</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}

@@ -5,13 +5,13 @@ import { useStrategyStore } from '@/store/useStrategyStore'
 
 import InfoMomentum from './InfoMomentum'
 
-const MomentumMetrics = () => {
+const MomentumMetrics = ({ small = false }: { small?: boolean }) => {
   const { coin } = useStrategyStore()
 
   if (coin == 'BTC') {
     return (
-      <Card className="min-h-fit w-full !bg-transparent md:!p-0 [&_p]:text-left" title="Product Metrics">
-        <InfoMomentum />
+      <Card className="h-full w-full [&_p]:text-left" title="Product Metrics">
+        <InfoMomentum small={small} />
         {/* <div className={`${!small && 'flex justify-center'}`}>
           <CalendarMomentum title={strategy + ' ' + coin} color="primary" />
           <Calendar title={coin + ' Raw'} color="offWhite" />

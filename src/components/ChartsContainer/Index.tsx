@@ -14,7 +14,6 @@ import { useStrategyStore } from '@/store/useStrategyStore'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 import Momentum from './Charts/Momentum'
-import MomentumBTC from './Charts/MomentumBTC'
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'
 
@@ -114,32 +113,32 @@ const Chart = () => {
       {strategy == `Momentum` && (
         <div ref={parent}>
           <Card className={`relative w-full !p-0 !py-[2vh]`}>
-            {coin == 'BTC' ? <MomentumBTC /> : <Momentum />}
+            <Momentum />
             <div className="mb-5 mt-10 w-full items-center justify-center md:flex md:space-x-10">
               <div className="flex items-center justify-center space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-offWhite"></div>
                 <span className="text-xs md:text-sm">{coin} Raw Price</span>
               </div>
-              {coin !== 'BTC' && (
-                <div className="flex items-center justify-center space-x-2 md:justify-start">
-                  <div className="h-1 w-[2vw] bg-primary"></div>
-                  <span className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</span>
-                </div>
-              )}
-              {coin == 'BTC' && (
-                <div className="flex items-center justify-center space-x-2 md:justify-start">
-                  <div className="h-1 w-[2vw] bg-robin"></div>
-                  <span className="text-xs text-robin md:text-sm">{strategy + ' ' + coin} Simulated Price</span>
-                </div>
-              )}
-              {coin == 'BTC' && (
-                <div className="flex items-center justify-center space-x-2 md:justify-start">
-                  <div className="h-1 w-[2vw] bg-primary"></div>
-                  <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin} Actual Price</p>
-                </div>
-              )}
+              <div className="flex items-center justify-center space-x-2 md:justify-start">
+                <div className="h-1 w-[2vw] bg-primary"></div>
+                <span className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</span>
+              </div>
             </div>
           </Card>
+          {/* {pro && <Card className={`mt-4 w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[2vw]`}>
+            <div className={`flex w-full items-center justify-between py-[3vh]`}>
+              <div className="ml-[6vw] flex w-fit items-center space-x-2 md:ml-0">
+                <p className="text-2xl text-offWhite">Actual Contract Value </p>
+              </div>
+              <button
+                className="mr:ml-0 rounded-lg border px-[1vw] py-[.5vh] text-xs hover:scale-105"
+                onClick={toggleSecondChart}
+              >
+                {showSecondChart ? 'Hide' : 'Show'}
+              </button>
+            </div>
+            {showSecondChart && <MomentumBTC />}
+          </Card>} */}
         </div>
       )}
     </>
