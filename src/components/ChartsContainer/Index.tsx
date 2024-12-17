@@ -14,6 +14,7 @@ import { useStrategyStore } from '@/store/useStrategyStore'
 import { cutStringToFirstSpace } from '@/utils/formatters'
 
 import Momentum from './Charts/Momentum'
+import MomentumBTC from './Charts/MomentumBTC'
 import RoC from './Charts/RoC'
 import RollingVol from './Charts/RollingVol'
 
@@ -116,20 +117,30 @@ const Chart = () => {
             <ChartOptions />
           </div>
           <Card className={`relative w-full !p-0 !py-[2vh]`}>
-            <Momentum />
+            {coin == 'BTC' ? <MomentumBTC /> : <Momentum />}
             <div className="mb-5 mt-10 w-full items-center justify-center md:flex md:space-x-10">
               <div className="flex items-center justify-center space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-offWhite"></div>
                 <span className="text-xs md:text-sm">{coin} Raw Price</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 md:justify-start">
-                <div className="h-1 w-[2vw] bg-robin"></div>
-                <span className="text-xs text-robin md:text-sm">{strategy + ' ' + coin} Simulated Price</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 md:justify-start">
-                <div className="h-1 w-[2vw] bg-primary"></div>
-                <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin} Actual Price</p>
-              </div>
+              {coin !== 'BTC' && (
+                <div className="flex items-center justify-center space-x-2 md:justify-start">
+                  <div className="h-1 w-[2vw] bg-primary"></div>
+                  <span className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</span>
+                </div>
+              )}
+              {coin == 'BTC' && (
+                <div className="flex items-center justify-center space-x-2 md:justify-start">
+                  <div className="h-1 w-[2vw] bg-robin"></div>
+                  <span className="text-xs text-robin md:text-sm">{strategy + ' ' + coin} Simulated Price</span>
+                </div>
+              )}
+              {coin == 'BTC' && (
+                <div className="flex items-center justify-center space-x-2 md:justify-start">
+                  <div className="h-1 w-[2vw] bg-primary"></div>
+                  <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin} Actual Price</p>
+                </div>
+              )}
             </div>
           </Card>
         </div>
