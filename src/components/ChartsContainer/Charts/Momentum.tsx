@@ -71,10 +71,7 @@ const Momentum = () => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    const apiResponse = await fetch('/api/momentum')
     const staticDataSrc = `csv/${coin}USDT.csv`
-
-    console.log(apiResponse)
 
     try {
       const staticData = await d3.csv(staticDataSrc, (d) => ({

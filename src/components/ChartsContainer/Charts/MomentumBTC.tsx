@@ -38,7 +38,6 @@ const MomentumBTC = () => {
 
   const [closePrice, setClosePrice] = useState<string[]>([])
   const [signalReturn, setSignalReturn] = useState<number[]>([])
-  const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
 
   const [calculatedPrice, setCalculatedPrice] = useState<number[]>([])
   const [calculatedMom, setCalculatedMom] = useState<number[]>([])
@@ -47,8 +46,6 @@ const MomentumBTC = () => {
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
   const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
-
-  console.log(signalCumReturns)
 
   useEffect(() => {
     setThemeColors(
@@ -90,14 +87,12 @@ const MomentumBTC = () => {
       const dates = staticData.map((d) => new Date(d.date))
       const closePriceData = staticData.map((d) => d.closePrice)
       const signalReturnsData = staticData.map((d) => d.signal_return)
-      const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
       const calculatedPriceData = staticData.map((d) => d.calculated_price)
       const calculatedMomData = staticData.map((d) => d.calculated_mom)
 
       setDates(dates)
       setClosePrice(closePriceData)
       setSignalReturn(signalReturnsData)
-      setSignalCumReturns(signalCumReturnsData)
       setCalculatedPrice(calculatedPriceData)
       setCalculatedMom(calculatedMomData)
     } catch (error) {

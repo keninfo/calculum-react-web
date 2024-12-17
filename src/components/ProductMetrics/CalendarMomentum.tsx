@@ -8,12 +8,12 @@ const CalendarMomentum = ({ title, color }: { title: string; color: string }) =>
         <table className="w-full table-fixed border-collapse text-left">
           <thead>
             <tr className="text-sm text-grey">
-              <th className="px-2 py-2 text-citron">YEAR</th>
+              <th className="px-2 py-2 text-payne">YEAR</th>
               <th className="px-2 py-2">Q1</th>
               <th className="px-2 py-2">Q2</th>
               <th className="px-2 py-2">Q3</th>
               <th className="px-2 py-2">Q4</th>
-              <th className="px-2 py-2 text-citron">YTD</th>
+              <th className="px-2 py-2 text-payne">YTD</th>
             </tr>
           </thead>
           <tbody>

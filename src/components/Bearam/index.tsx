@@ -8,6 +8,8 @@ import Image from 'next/image'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
+import Calendar from '../ProductMetrics/Calendar'
+import CalendarMomentum from '../ProductMetrics/CalendarMomentum'
 import Card from '../common/Card'
 import ChartOptions from './ChartOptions/Index'
 import ChartsContainer from './ChartsContainer/Index'
@@ -104,6 +106,10 @@ const Bearam = () => {
             <ProductMetrics />
           </Card>
         </div>
+        <Card className="flex items-center justify-center">
+          <CalendarMomentum title={`Momentum BTC`} color={'[#09d3ac]'} />
+          <Calendar title={'BTC Raw'} color={'offWhite'} />
+        </Card>
       </div>
       <Footer />
     </div>

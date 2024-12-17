@@ -44,15 +44,12 @@ const AlphaOne = ({ BTCRaw, ETHRaw, SOLRaw }: Props) => {
 
   const [dates, setDates] = useState<Date[]>([])
   const [closePrices, setClosePrices] = useState<number[][] | undefined>()
-  const [returns, setReturns] = useState<number[][] | undefined>()
   const [signalReturns, setSignalReturns] = useState<number[][] | undefined>()
   const [basketSignal, setBasketSignal] = useState<string[]>()
   const [cumSignal, setCumSignal] = useState<string[]>()
 
   const [themeColors, setThemeColors] = useState<ThemeColorsType | null>(null)
   const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)')
-
-  console.log(returns)
 
   useEffect(() => {
     setThemeColors(
@@ -94,14 +91,12 @@ const AlphaOne = ({ BTCRaw, ETHRaw, SOLRaw }: Props) => {
 
       const dates = staticData.map((d) => new Date(d.date))
       const closePriceData = staticData.map((d) => d.closePrices)
-      const returnsData = staticData.map((d) => d.returns)
       const signalReturnsData = staticData.map((d) => d.signalReturns)
       const basketSignalData = staticData.map((d) => d.basketSignal)
       const cumSignalData = staticData.map((d) => d.cumSignal)
 
       setDates(dates.slice(-window))
       setClosePrices(closePriceData.slice(-window))
-      setReturns(returnsData.slice(-window))
       setSignalReturns(signalReturnsData.slice(-window))
       setBasketSignal(basketSignalData.slice(-window))
       setCumSignal(cumSignalData.slice(-window))

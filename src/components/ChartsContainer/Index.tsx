@@ -113,9 +113,6 @@ const Chart = () => {
       )}
       {strategy == `Momentum` && (
         <div ref={parent}>
-          <div className="absolute right-5 top-5 z-20 hidden md:block">
-            <ChartOptions />
-          </div>
           <Card className={`relative w-full !p-0 !py-[2vh]`}>
             {coin == 'BTC' ? <MomentumBTC /> : <Momentum />}
             <div className="mb-5 mt-10 w-full items-center justify-center md:flex md:space-x-10">
