@@ -99,7 +99,7 @@ const InfoMomentum = () => {
     return (
       <>
         {!loading && (
-          <div className="my-10 flex h-fit w-full items-center justify-start !bg-transparent px-4 pr-20 [&_p]:text-left">
+          <div className="my-10 flex h-fit w-full items-center justify-around !bg-transparent px-4 [&_p]:text-left">
             <div className="border-r pr-10">
               <p className="text-offWhite">Sharpe Ratio</p>
               <p className="text-md mt-2 text-grey">

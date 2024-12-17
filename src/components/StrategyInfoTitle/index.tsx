@@ -63,33 +63,61 @@ const StrategyInfoTitle = () => {
       className={`sticky left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:px-2 ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
-      <div className="flex items-center justify-between md:w-full">
+      <div className="items-center justify-between md:flex md:w-full">
         <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
           {strategyInfo.label}
         </h2>
         {values && coin == 'BTC' && (
-          <div className="text-md flex w-fit items-center justify-start text-nowrap text-grey">
-            <p>{`Yesterday's closing price - `}</p>
+          <>
+            <div className="text-md hidden w-fit items-center justify-start text-nowrap text-grey md:flex">
+              <p>{`Yesterday's closing price - `}</p>
 
-            <p className="mx-1">{strategyInfo.token}:</p>
-            <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>
-            <p>{`(`}</p>
-            <p
-              className={`${strategyInfo.tokenChange > 0 ? 'text-spring' : strategyInfo.tokenChange < 0 ? 'text-fire' : 'text-grey'}`}
-            >
-              {strategyInfo.tokenChange.toLocaleString('US')}%
-            </p>
-            <p className="mr-1">{`)`}</p>
-            <p className="mr-1">- {strategyInfo.symbol}: </p>
-            <p className="mr-1 text-offWhite">${strategyInfo.value}</p>
-            <p>{`(`}</p>
-            <p
-              className={`${strategyInfo.change > 0 ? 'text-spring' : strategyInfo.change < 0 ? 'text-fire' : 'text-grey'}`}
-            >
-              {strategyInfo.change.toLocaleString('US')}%
-            </p>
-            <p className="mr-1">{`)`}</p>
-          </div>
+              <p className="mx-1">{strategyInfo.token}:</p>
+              <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>
+              <p>{`(`}</p>
+              <p
+                className={`${strategyInfo.tokenChange > 0 ? 'text-spring' : strategyInfo.tokenChange < 0 ? 'text-fire' : 'text-grey'}`}
+              >
+                {strategyInfo.tokenChange.toLocaleString('US')}%
+              </p>
+              <p className="mr-1">{`)`}</p>
+              <p className="mr-1">- {strategyInfo.symbol}: </p>
+              <p className="mr-1 text-offWhite">${strategyInfo.value}</p>
+              <p>{`(`}</p>
+              <p
+                className={`${strategyInfo.change > 0 ? 'text-spring' : strategyInfo.change < 0 ? 'text-fire' : 'text-grey'}`}
+              >
+                {strategyInfo.change.toLocaleString('US')}%
+              </p>
+              <p className="mr-1">{`)`}</p>
+            </div>
+            {/* mobile */}
+            <div className="text-md mt-4 w-full text-nowrap text-grey md:hidden">
+              <p className="text-center">{`Yesterday's closing price`}</p>
+              <div className="flex items-center justify-center">
+                <p className="mx-1">{strategyInfo.token}:</p>
+                <p className="mr-1 text-offWhite">${strategyInfo.tokenValue}</p>
+                <p>{`(`}</p>
+                <p
+                  className={`${strategyInfo.tokenChange > 0 ? 'text-spring' : strategyInfo.tokenChange < 0 ? 'text-fire' : 'text-grey'}`}
+                >
+                  {strategyInfo.tokenChange.toLocaleString('US')}%
+                </p>
+                <p className="mr-1">{`)`}</p>
+              </div>
+              <div className="flex items-center justify-center">
+                <p className="mr-1">{strategyInfo.symbol}: </p>
+                <p className="mr-1 text-offWhite">${strategyInfo.value}</p>
+                <p>{`(`}</p>
+                <p
+                  className={`${strategyInfo.change > 0 ? 'text-spring' : strategyInfo.change < 0 ? 'text-fire' : 'text-grey'}`}
+                >
+                  {strategyInfo.change.toLocaleString('US')}%
+                </p>
+                <p className="mr-1">{`)`}</p>
+              </div>
+            </div>
+          </>
         )}
       </div>
       {/* <News /> */}

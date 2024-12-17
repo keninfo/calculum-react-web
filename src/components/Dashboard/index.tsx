@@ -78,7 +78,7 @@ const Dashboard = () => {
             </Card>
           )}
           {pro && coin == 'BTC' && (
-            <Card className="mt-4 h-fit w-full">
+            <Card className="mt-4 h-full w-full">
               {strategy == 'Smoothcoin' && <ProductMetrics />}
               {strategy == 'Momentum' && <MomentumMetrics />}
             </Card>

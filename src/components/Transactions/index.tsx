@@ -174,7 +174,7 @@ const Transactions = () => {
             <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
           ) : (
             <div className="fade-mask-down">
-              <div className="block h-full max-h-[80vh] overflow-y-scroll pb-20">
+              <div className="block h-full max-h-[40vh] overflow-y-scroll pb-20">
                 {transactions.map((log, index) => (
                   <div key={index} className={`${index != 0 ? 'border-t-2 border-payne py-4' : 'pb-4'}`}>
                     <p className="text-left text-sm">
@@ -217,53 +217,103 @@ const Transactions = () => {
 
   if (coin == 'BTC' && isConnected && !pro) {
     return (
-      <Card className="h-full min-h-fit w-full grow" title="Transaction History">
-        <div className="w-full">
-          {transactions.length === 0 ? (
-            <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
-          ) : (
-            <div className="block overflow-x-auto">
-              <table className="w-full min-w-[600px] border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
-                    <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
-                    <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Shares</th>
-                    <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
-                    <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
-                      Transaction Details
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+      <>
+        <Card className="hidden h-full min-h-fit w-full grow md:block" title="Transaction History">
+          <div className="w-full">
+            {transactions.length === 0 ? (
+              <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
+            ) : (
+              <div className="block overflow-x-auto">
+                <table className="w-full min-w-[600px] border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Shares</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
+                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
+                        Transaction Details
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactions.map((log, index) => (
+                      <tr key={index}>
+                        <td className="border-b border-grey px-4 py-2">{log.date}</td>
+                        <td className="border-b border-grey px-4 py-2">{log.type}</td>
+                        <td
+                          className={`border-b border-grey px-4 py-2 text-right ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
+                        >
+                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                          {log.smoothcoins}
+                        </td>
+                        <td className="border-b border-grey px-4 py-2 text-right">
+                          {' '}
+                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                          {log.usdc}
+                        </td>
+                        <td className="cursor-pointer border-b border-grey px-4 py-2 text-right text-robin underline">
+                          <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                            {shortenAddress(log.transactionHash)}
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </Card>
+        {/* mobile */}
+        <Card
+          className={`w-full grow md:hidden ${transactions.length === 0 ? 'max-h-full' : 'max-h-full'}`}
+          title="Transaction History"
+        >
+          <div className="w-full">
+            {transactions.length === 0 ? (
+              <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
+            ) : (
+              <div className="fade-mask-down">
+                <div className="block h-full max-h-[40vh] overflow-y-scroll pb-20">
                   {transactions.map((log, index) => (
-                    <tr key={index}>
-                      <td className="border-b border-grey px-4 py-2">{log.date}</td>
-                      <td className="border-b border-grey px-4 py-2">{log.type}</td>
-                      <td
-                        className={`border-b border-grey px-4 py-2 text-right ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
+                    <div key={index} className={`${index != 0 ? 'border-t-2 border-payne py-4' : 'pb-4'}`}>
+                      <p className="text-left text-sm">
+                        <span className="font-bold text-grey">Date:</span> {log.date}
+                      </p>
+                      <p className="text-left text-sm">
+                        <span className="font-bold text-grey">Type:</span> {log.type}
+                      </p>
+                      <p
+                        className={`text-left text-sm ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
                       >
-                        {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                        <span className="font-bold text-grey">Shares:</span>{' '}
+                        {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
                         {log.smoothcoins}
-                      </td>
-                      <td className="border-b border-grey px-4 py-2 text-right">
-                        {' '}
-                        {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
+                      </p>
+                      <p className={`text-left text-sm`}>
+                        <span className="font-bold text-grey">USDC:</span>{' '}
+                        {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
                         {log.usdc}
-                      </td>
-                      <td className="cursor-pointer border-b border-grey px-4 py-2 text-right text-robin underline">
-                        <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                      </p>
+                      <p className="text-left text-sm">
+                        <span className="font-bold text-grey">Transaction: </span>
+                        <Link
+                          href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`}
+                          target="_blank"
+                          className="text-robin underline"
+                        >
                           {shortenAddress(log.transactionHash)}
                         </Link>
-                      </td>
-                    </tr>
+                      </p>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </Card>
+                </div>
+              </div>
+            )}
+          </div>
+        </Card>
+      </>
     )
   }
 }

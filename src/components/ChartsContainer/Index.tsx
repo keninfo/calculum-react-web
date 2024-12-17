@@ -81,7 +81,7 @@ const Chart = () => {
                 ohcl={getOHCL()}
               />
             )}
-            <div className="mt-10 flex w-full items-center justify-center space-x-10">
+            <div className="mb-5 mt-10 flex w-full items-center justify-center space-x-10">
               <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-primary"></div>
                 <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin}</p>
@@ -112,21 +112,21 @@ const Chart = () => {
       )}
       {strategy == `Momentum` && (
         <div ref={parent}>
-          <div className="absolute right-5 top-5 z-50 hidden md:block">
+          <div className="absolute right-5 top-5 z-20 hidden md:block">
             <ChartOptions />
           </div>
-          <Card className={`relative w-full !p-0 !px-2 !py-[2vh]`}>
+          <Card className={`relative w-full !p-0 !py-[2vh]`}>
             <Momentum />
-            <div className="mt-4 flex w-full items-center justify-center space-x-10">
-              <div className="flex items-center justify-end space-x-2 md:justify-start">
+            <div className="mb-5 mt-10 w-full items-center justify-center md:flex md:space-x-10">
+              <div className="flex items-center justify-center space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-offWhite"></div>
                 <span className="text-xs md:text-sm">{coin} Raw Price</span>
               </div>
-              <div className="flex items-center justify-end space-x-2 md:justify-start">
+              <div className="flex items-center justify-center space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-robin"></div>
                 <span className="text-xs text-robin md:text-sm">{strategy + ' ' + coin} Simulated Price</span>
               </div>
-              <div className="flex w-fit items-center justify-end space-x-2 md:justify-start">
+              <div className="flex items-center justify-center space-x-2 md:justify-start">
                 <div className="h-1 w-[2vw] bg-primary"></div>
                 <p className="text-xs text-primary md:text-sm">{strategy + ' ' + coin} Actual Price</p>
               </div>

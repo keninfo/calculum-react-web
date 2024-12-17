@@ -133,7 +133,7 @@ const Momentum = () => {
       },
       rightPriceScale: {
         ...lineChartConfig.rightPriceScale,
-        visible: true,
+        visible: false,
         mode: 1,
       },
       crosshair: {
@@ -352,7 +352,7 @@ const Momentum = () => {
   ])
 
   return (
-    <div className="relative">
+    <div className="relative !pl-[1vw] !pr-[3vw]">
       <div
         ref={chartContainerRef}
         style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
