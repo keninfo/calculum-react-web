@@ -133,9 +133,9 @@ const Info = ({ small = false }: { small?: boolean }) => {
   if (coin == 'BTC') {
     return (
       <div
-        className={`${!small ? 'my-10 flex items-center justify-around' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
+        className={`${!small ? 'flex items-center justify-start' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
       >
-        <div className="">
+        <div className="w-1/3">
           <p className="text-offWhite">Sharpe Ratio</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
@@ -148,7 +148,7 @@ const Info = ({ small = false }: { small?: boolean }) => {
             <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
           </p>
         </div>
-        <div className="">
+        <div className="w-1/3">
           <p className="text-offWhite">CAGR</p>
           <p className="text-md mt-2 text-grey">
             moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -162,7 +162,7 @@ const Info = ({ small = false }: { small?: boolean }) => {
             <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
         </div>
-        <div className="">
+        <div className="w-1/3">
           <p className="text-offWhite">Largest Drawdown</p>
           <p className="text-md mt-2 text-grey">
             moBTC:{' '}
