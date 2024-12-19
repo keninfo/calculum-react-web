@@ -28,7 +28,7 @@ interface ThemeColorsType {
 
 if (!projectId) throw new Error('Project ID is not defined')
 
-const config = getDefaultConfig({
+export const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
   chains: [arbitrumSepolia],
