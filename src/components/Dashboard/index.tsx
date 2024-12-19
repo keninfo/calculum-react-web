@@ -4,6 +4,8 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useEffect } from 'react'
 
+import Link from 'next/link'
+
 import { useAccount } from 'wagmi'
 
 import ChartOptions from '@/components/ChartOptions/Index'
@@ -112,6 +114,12 @@ const Dashboard = () => {
 
       {/* MOBILE */}
       <div className="block w-screen space-y-5 px-5 md:hidden">
+        <div className="flex w-full justify-around border-b border-primary pb-4">
+          <Link href={'/'}>Home</Link>
+          <Link href={'https://docs.smoothcoin.io'}>Docs</Link>
+          <Link href={'/learning'}>Learning</Link>
+          <Link href={'/quests'}>Quests</Link>
+        </div>
         <StrategyOptions />
         <StrategyInfoTitle />
         {values && dates ? (
