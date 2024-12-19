@@ -4,8 +4,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useEffect } from 'react'
 
-import Link from 'next/link'
-
 import { useAccount } from 'wagmi'
 
 import ChartOptions from '@/components/ChartOptions/Index'
