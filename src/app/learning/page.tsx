@@ -16,18 +16,16 @@ const Page = () => {
         <title key="default-title">Smoothcoin - Learning</title>
         <MetaTags />
       </Head>
-
-      <main className={`m-0 h-screen px-5 text-offWhite md:grid md:grid-cols-11 md:space-x-[1vw] md:p-[0.5vw] md:px-0`}>
-        <div className="mb-6 flex w-full justify-around border-b border-primary pb-4 text-offWhite md:hidden">
-          <Link href={'/'}>Home</Link>
-          <Link href={'/dashboard'}>Dashboard</Link>
-          <Link href={'https://docs.smoothcoin.io'}>Docs</Link>
-          <Link href={'/quests'}>Quests</Link>
-        </div>
-        <p className="text-center md:hidden">
-          Learning page coming soon to mobile, please use a desktop browser to view this section
+      <div className="relative h-screen w-full flex-col justify-center md:hidden">
+        <p className="absolute bottom-1/2 left-1/2 w-3/4 -translate-x-1/2 -translate-y-full px-5 text-center">
+          Our Learning Center is not yet available on mobile, please visit us on desktop to view it !
         </p>
-        <div className="col-span-11 mt-10 hidden md:block">
+        <button className="absolute bottom-1/2 left-1/2 w-max -translate-x-1/2 rounded-md bg-primary px-4 py-2 text-dark">
+          <Link href={'/dashboard'}>Go Back to Dashboard</Link>
+        </button>
+      </div>
+      <main className={`m-0 mt-10 hidden h-screen grid-cols-11 space-x-[1vw] p-[0.5vw] text-offWhite md:grid`}>
+        <div className="col-span-11">
           <Volatility />
         </div>
       </main>

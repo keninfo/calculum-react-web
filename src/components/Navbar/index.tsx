@@ -1,5 +1,8 @@
 'use client'
 
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMeasure } from '@uidotdev/usehooks'
 
 import React, { useEffect, useState } from 'react'
@@ -9,17 +12,24 @@ import Image from 'next/image'
 import { useNavbarStore } from '@/store/useNavbarStore'
 
 import ActionAlert from '../common/ActionAlert'
+import Card from '../common/Card'
 import NavbarItem from './NavbarItem'
 import ProToggle from './ProToggle'
 import { navigationItems } from './config'
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
+  const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
   const [navbar, { height }] = useMeasure()
   const { setNavbarHeight } = useNavbarStore()
+  const [parent] = useAutoAnimate()
 
   const handleClose = () => {
     setIsOpen(false)
+  }
+
+  const handleNavbarToggle = () => {
+    setIsNavbarOpen((prev) => !prev)
   }
 
   useEffect(() => {
@@ -47,10 +57,19 @@ const Sidebar = () => {
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
         <Image src="/wordmark.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
-        <div className="text-md flex w-full items-center justify-end space-x-2 text-offWhite">
-          <p>TESTNET</p>
-          <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
-        </div>
+        <p className="flex w-full justify-end text-lg" onClick={handleNavbarToggle}>
+          {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}
+          {isNavbarOpen && <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />}
+        </p>
+      </div>
+      <div className="px-5" ref={parent}>
+        {isNavbarOpen && (
+          <Card className="mb-4 w-full text-offWhite md:hidden">
+            <ul className="[&_li]:py-2 [&_li]:text-center">
+              <div className="">{navigationItems.map(NavbarItem)}</div>
+            </ul>
+          </Card>
+        )}
       </div>
     </div>
   )

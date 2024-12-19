@@ -113,13 +113,7 @@ const Dashboard = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block w-screen space-y-5 px-5 md:hidden">
-        <div className="flex w-full justify-around border-b border-primary pb-4">
-          <Link href={'/'}>Home</Link>
-          <Link href={'https://docs.smoothcoin.io'}>Docs</Link>
-          <Link href={'/learning'}>Learning</Link>
-          <Link href={'/quests'}>Quests</Link>
-        </div>
+      <div className="-mt-5 block w-screen space-y-5 px-5 md:hidden">
         <StrategyOptions />
         <StrategyInfoTitle />
         {values && dates ? (

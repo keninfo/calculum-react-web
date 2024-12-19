@@ -67,6 +67,10 @@ const StrategyInfoTitle = () => {
         <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
           {strategyInfo.label}
         </h2>
+        <div className="text-md flex w-full items-center justify-center space-x-2 text-offWhite md:hidden">
+          <p>TESTNET</p>
+          <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
+        </div>
         {values && coin == 'BTC' && (
           <>
             <div className="text-md hidden w-fit items-center justify-start text-nowrap text-grey md:flex">
