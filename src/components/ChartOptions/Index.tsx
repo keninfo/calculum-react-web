@@ -60,7 +60,7 @@ const ChartOptions = () => {
   }
 
   return (
-    <ul className="flex items-center justify-center space-x-3 p-5 text-xs">
+    <ul className="z-10 flex items-center justify-center space-x-3 p-5 text-xs">
       <li onClick={() => setStudyCase(1)} className="cursor-pointer">
         <p
           className={`${selected === 0 ? 'border-b-2 border-primary text-primary' : 'text-offWhite'} h-5 cursor-pointer px-1 pb-2`}
