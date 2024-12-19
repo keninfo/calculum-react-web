@@ -153,7 +153,7 @@ const LeaderboardPage = () => {
                       rocketHeight = user?.xp + 5
                     }
 
-                    if (user?.rank !== 0 && isConnected) {
+                    if ((user?.rank !== 0 || user?.rank == null) && isConnected) {
                       return (
                         <div className="relative mt-4 h-full">
                           <p className="text-center">
