@@ -4,7 +4,6 @@ import type { LeaderboardRenderArgsType, RenderArgsType } from '@bandit-network/
 import { BanditContextProvider, Campaign, Leaderboard } from '@bandit-network/react'
 
 import Head from 'next/head'
-import Link from 'next/link'
 
 import { useAccount } from 'wagmi'
 
@@ -27,12 +26,6 @@ const LeaderboardPage = () => {
 
       <main className="px-5 md:px-0">
         <BanditContextProvider apiKey="1228fb10ed7e478ca4c89dd51d8f5772">
-          <div className="mb-6 flex w-full justify-around border-b border-primary pb-4 font-semibold text-offWhite md:hidden">
-            <Link href={'/'}>Home</Link>
-            <Link href={'/dashboard'}>Dashboard</Link>
-            <Link href={'https://docs.smoothcoin.io'}>Docs</Link>
-            <Link href={'/learning'}>Learning</Link>
-          </div>
           <div className="h-[50vh] md:hidden">
             <Card className="h-full w-full overflow-y-hidden text-offWhite">
               <CustomConnectButton />
