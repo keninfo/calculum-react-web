@@ -74,7 +74,6 @@ const InfoMomentum = () => {
     const assetReturns = returns?.map((value) => {
       return value[0]
     })
-    console.log(assetReturns)
     // SHARPE ---------------------------------------------------------------------------------------------------------
     const rawSharpe = safeRound((calculateMean(assetReturns) / calculateStd(assetReturns)) * Math.sqrt(periods), 2)
 
