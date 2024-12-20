@@ -4,4 +4,4 @@ export const PRIVATE_KEY = process.env.NEXT_PRIVATE_KEY
 
 export const STAGING_PASSWORD = process.env.NEXT_STAGING_PASSWORD
 
-export const BANDIT_KEY = process.env.NEXT_BANDIT_KEY
+export const BANDIT_KEY = process.env.NEXT_PUBLIC_BANDIT_KEY

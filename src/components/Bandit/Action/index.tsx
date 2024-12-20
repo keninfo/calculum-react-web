@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Action = ({ action, openApp }: { action: ActionType; openApp: any }) => {
-  const { status, claimablePoints, name, description, id, app } = action
+  const { status, claimablePoints, name, id, app } = action
   return (
     <div
       className={`${!status?.isCompleted ? 'cursor-pointer border-offWhite hover:scale-105' : 'border-grey'} rounded-xl border px-5 py-2`}
