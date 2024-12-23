@@ -11,7 +11,7 @@ const Quests = () => {
   return (
     <>
       <Head>
-        <title>Bearprotocol - Quests</title>
+        <title>HODL Protocol - Quests</title>
         <MetaTags />
       </Head>
 

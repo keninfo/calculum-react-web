@@ -41,13 +41,13 @@ const Sidebar = () => {
       {isOpen && (
         <ActionAlert
           closeAction={handleClose}
-          alert="Thanks for visiting Bear Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon."
+          alert="Thanks for visiting HODL Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon."
         />
       )}
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
-          <Image src="/wordmark.svg" width={100} height={50} alt="image" className="flex h-4 w-fit justify-start" />
+          <Image src="/hodllogo.svg" width={100} height={100} alt="image" className="flex h-6 w-fit justify-start" />
           <div className="flex w-3/5 items-center justify-center">{navigationItems.map(NavbarItem)}</div>
           <div className="flex w-1/5 justify-end">
             <ProToggle />
@@ -56,7 +56,7 @@ const Sidebar = () => {
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
-        <Image src="/wordmark.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
+        <Image src="/hodllogo.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
         <p className="flex w-full justify-end text-lg" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}
           {isNavbarOpen && <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />}

@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
-  title: 'Bearprotocol - Dashboard',
+  title: 'HODL Protocol - Dashboard',
 }
 
 const DashboardPage = () => {

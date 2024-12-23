@@ -7,7 +7,7 @@ const newsItems = [
   '"Smoothcoin on testnet, now open for beta testing."',
   '"Momentum is coming soon."',
   '"Want to compound your earnings and catapult your returns? AlphaOne is your answer."',
-  '"Polo new CEO of Bear protocol"',
+  '"Polo new CEO of HODL protocol"',
 ]
 
 const maintenanceMessage = [

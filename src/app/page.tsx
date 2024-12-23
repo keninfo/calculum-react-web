@@ -6,10 +6,10 @@ import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
-  title: 'Bearprotocol - Welcome!',
+  title: 'HODL Protocol - Welcome!',
 }
 
-const BearProtocolApp = () => {
+const HODLProtocolApp = () => {
   return (
     <>
       <Head>
@@ -24,4 +24,4 @@ const BearProtocolApp = () => {
   )
 }
 
-export default BearProtocolApp
+export default HODLProtocolApp

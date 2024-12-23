@@ -78,7 +78,7 @@ export default function RainbowKit({ children, initialState }: { children: React
           modalSize="compact"
           theme={darkTheme({ accentColor: themeColors?.primary, borderRadius: 'small' })}
           appInfo={{
-            appName: 'BearProtocol',
+            appName: 'HODL Protocol',
           }}
         >
           {children}

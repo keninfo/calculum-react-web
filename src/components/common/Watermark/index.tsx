@@ -14,7 +14,7 @@ import { useEffect } from 'react'
  */
 const Watermark = () => {
   useEffect(() => {
-    const isStaging = window.location.hostname.includes('staging-app.bearprotocol.io')
+    const isStaging = window.location.hostname.includes('staging-app.hodlProtocol.io')
     if (isStaging) {
       const watermarkDiv = document.createElement('div')
       watermarkDiv.textContent = 'STAGING'

@@ -7,7 +7,7 @@ const PASSWORD = STAGING_PASSWORD
 
 export function middleware(req: NextRequest) {
   const hostname = req.headers.get('host')
-  const isStaging = hostname?.includes('staging-app.smoothcoin.io') || hostname?.includes('staging-app.bearprotocol.io')
+  const isStaging = hostname?.includes('staging-app.smoothcoin.io') || hostname?.includes('staging-app.hodlProtocol.io')
 
   if (isStaging) {
     const cookie = req.cookies.get('password')?.value
@@ -27,19 +27,11 @@ export function middleware(req: NextRequest) {
       <body>
         <script>
           if (prompt('Enter the password:') !== '${PASSWORD}') {
-            window.location.href = 'https://app.bearprotocol.io'; // Redirect if wrong password
+            window.location.href = 'https://app.hodlProtocol.io'; // Redirect if wrong password
           } else {
             document.cookie = 'password=${PASSWORD}; path=/'; // Set a cookie if correct
             window.location.reload(); // Reload the page to allow access
           }
-        </script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=${process.env.MEASUREMENT_ID}"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${process.env.MEASUREMENT_ID}');
         </script>
       </body>
       </html>
