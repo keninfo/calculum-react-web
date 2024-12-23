@@ -7,21 +7,19 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import type { ReactNode } from 'react'
 import React from 'react'
 
-import { BANDIT_KEY } from '@/utils/constants'
+import { useAccount } from 'wagmi'
 
 import { config } from './RainbowKitProvider'
 
-const password = BANDIT_KEY
-
-console.log(password)
-
 export const BanditProvider = ({ children }: { children: ReactNode }) => {
   const { openConnectModal } = useConnectModal()
+  const { address } = useAccount()
 
   return (
     <BanditContextProvider
-      apiKey={process.env.NEXT_PUBLIC_BANDIT_KEY as string}
-      cluster={'devnet' as ClusterBanditType}
+      apiKey="1228fb10ed7e478ca4c89dd51d8f5772"
+      cluster={'mainnet' as ClusterBanditType}
+      connectedAddress={address}
       walletSettings={{
         enabledChains: [SupportedChains.Evm],
         evm: {
@@ -29,6 +27,7 @@ export const BanditProvider = ({ children }: { children: ReactNode }) => {
           openConnectModal: openConnectModal as () => void,
         },
       }}
+      appearance="dark"
     >
       {children}
     </BanditContextProvider>
