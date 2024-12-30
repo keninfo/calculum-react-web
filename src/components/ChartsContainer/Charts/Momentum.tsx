@@ -141,7 +141,7 @@ const Momentum = () => {
       },
       leftPriceScale: {
         ...lineChartConfig.leftPriceScale,
-        mode: 1,
+        mode: 0,
       },
       rightPriceScale: {
         ...lineChartConfig.rightPriceScale,
@@ -181,11 +181,11 @@ const Momentum = () => {
 
     const lineSeries2 = chartInstance.current?.addLineSeries({
       color: themeColors.primary,
-      priceScaleId: 'right',
+      priceScaleId: 'left',
       priceFormat: {
         type: 'custom',
         formatter: (price: number) => {
-          return `$${price.toLocaleString('US')}`
+          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(0)}k`
         },
       },
     })
@@ -236,16 +236,6 @@ const Momentum = () => {
 
     // lineSeries3?.setData(chartDataPrice3)
 
-    chartInstance.current?.priceScale('left').applyOptions({
-      scaleMargins: { top: 0.45, bottom: 0.1 }, // Adjust as needed
-      mode: 0, // Regular price scale
-    })
-
-    chartInstance.current?.priceScale('right').applyOptions({
-      scaleMargins: { top: 0.2, bottom: 0.1 }, // Match left scale's visual margin
-      mode: 0, // Regular price scale
-    })
-
     const visibleRange = {
       from: (dates[0].getTime() / 1000) as UTCTimestamp,
       to: (dates[dates.length - 1].getTime() / 1000) as UTCTimestamp,
@@ -290,7 +280,7 @@ const Momentum = () => {
             toolTip.innerHTML = `
           <div>
             <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/> $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -299,7 +289,7 @@ const Momentum = () => {
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  $${signalCumReturns.toLocaleString('US')}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
             <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
@@ -348,7 +338,7 @@ const Momentum = () => {
   ])
 
   return (
-    <div className="relative !pl-[1vw] !pr-[3vw]">
+    <div className="relative !pl-[1vw]">
       <div
         ref={chartContainerRef}
         style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
