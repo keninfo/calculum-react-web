@@ -20,6 +20,7 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
+import TVAttribution from '../common/TVAttribution'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -71,7 +72,10 @@ const Dashboard = () => {
 
         <div className={`col-span-8 flex flex-col`} ref={parent1}>
           {values && dates ? (
-            <ChartsContainer />
+            <>
+              <ChartsContainer />
+              <TVAttribution />
+            </>
           ) : (
             <Card className="flex w-full justify-center" title="LOADING...">
               <></>
@@ -95,12 +99,6 @@ const Dashboard = () => {
               <TradeBox />
               <Positions />
               {pro && <Transactions />}
-              {/* {pro && coin == 'BTC' && !isConnected && (
-                <div className='h-full'>
-                  {strategy == 'Smoothcoin' && <ProductMetrics small />}
-                  {strategy == 'Momentum' && <MomentumMetrics small />}
-                </div>
-              )} */}
             </>
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">

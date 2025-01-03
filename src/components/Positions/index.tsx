@@ -122,7 +122,7 @@ const Positions = () => {
     return (
       <>
         {openPositions ? (
-          <Card title="Open Positions" className="h-fit min-h-fit w-full">
+          <Card title="Open Positions" className="h-full min-h-fit w-full">
             <p className="flex justify-between">
               <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
             </p>
@@ -146,7 +146,7 @@ const Positions = () => {
             </p>
           </Card>
         ) : (
-          <Card title="Open Positions" className="h-fit min-h-fit w-full">
+          <Card title="Open Positions" className="h-full min-h-fit w-full">
             <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
           </Card>
         )}
