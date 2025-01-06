@@ -13,8 +13,20 @@
     "@typescript-eslint/consistent-type-imports": "error",
     "tsdoc/syntax": "warn"
   },
-  "ignorePatterns": ["node_modules/", ".next/", ".github/", "postcss.config.js", "tailwind.config.js"],
-  "plugins": ["unused-imports", "@typescript-eslint", "eslint-plugin-tsdoc"],
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    ".github/",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "charting_library/",
+    "datafeeds/"
+  ],
+  "plugins": [
+    "unused-imports",
+    "@typescript-eslint",
+    "eslint-plugin-tsdoc"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
