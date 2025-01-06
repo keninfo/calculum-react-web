@@ -122,7 +122,7 @@ const Positions = () => {
     return (
       <>
         {openPositions ? (
-          <Card title="Open Positions" className="h-full min-h-fit w-full">
+          <Card title="Open Position" className="h-full min-h-fit w-full">
             <p className="flex justify-between">
               <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
             </p>
