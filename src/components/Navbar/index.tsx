@@ -14,7 +14,6 @@ import { useNavbarStore } from '@/store/useNavbarStore'
 import ActionAlert from '../common/ActionAlert'
 import Card from '../common/Card'
 import NavbarItem from './NavbarItem'
-import ProToggle from './ProToggle'
 import { navigationItems } from './config'
 
 const Sidebar = () => {
@@ -49,9 +48,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-between pl-2">
           <Image src="/hodllogo.svg" width={100} height={100} alt="image" className="flex h-6 w-fit justify-start" />
           <div className="flex w-3/5 items-center justify-center">{navigationItems.map(NavbarItem)}</div>
-          <div className="flex w-1/5 justify-end">
-            <ProToggle />
-          </div>
+          <div className="flex w-1/5 justify-end">{/* <ProToggle /> */}</div>
         </div>
       </div>
       {/* MOBILE */}
