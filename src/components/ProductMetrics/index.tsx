@@ -10,7 +10,7 @@ const ProductMetrics = ({ small = false }: { small?: boolean }) => {
 
   if (coin == 'BTC') {
     return (
-      <Card className="h-full w-full [&_p]:text-left" title="Product Metrics">
+      <Card className="h-full w-full !p-0 [&_p]:text-left" title="Product Metrics">
         <Info small={small} />
         {/* <div className={`${!small && 'flex justify-center'}`}>
           <CalendarMomentum title={strategy + ' ' + coin} color="primary" />

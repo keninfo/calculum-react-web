@@ -100,9 +100,9 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
       <>
         {!loading && (
           <div
-            className={`${!small ? 'flex items-center justify-start' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
+            className={`${!small ? 'flex items-center justify-start' : 'flex flex-col justify-between space-y-4'} h-fit w-full [&_p]:text-left`}
           >
-            <div className="w-1/3">
+            <div className="">
               <p className="text-offWhite">Sharpe Ratio</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}
@@ -118,7 +118,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
                 </b>
               </p>
             </div>
-            <div className="w-1/3">
+            <div className="">
               <p className="text-offWhite">CAGR</p>
               <p className="text-md mt-2 text-grey">
                 moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -132,7 +132,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
                 <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
               </p>
             </div>
-            <div className="w-1/3">
+            <div className="">
               <p className="text-offWhite">Largest Drawdown</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}

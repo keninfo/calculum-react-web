@@ -133,12 +133,12 @@ const Info = ({ small = false }: { small?: boolean }) => {
   if (coin == 'BTC') {
     return (
       <div
-        className={`${!small ? 'flex items-center justify-start' : 'flex flex-col justify-between space-y-4'} h-fit w-full px-4 [&_p]:text-left`}
+        className={`${!small ? 'flex items-center justify-start' : 'flex flex-col justify-between space-y-4'} h-fit w-full [&_p]:text-left`}
       >
-        <div className="w-1/3">
+        <div className="">
           <p className="text-offWhite">Sharpe Ratio</p>
           <p className="text-md mt-2 text-grey">
-            moBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
+            smBTC: <b className={`text-md ${scaledSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledSharpe}</b>
           </p>
           <p className="text-md text-grey">
             BTC: <b className={`text-md ${rawSharpe < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawSharpe}</b>
@@ -148,10 +148,10 @@ const Info = ({ small = false }: { small?: boolean }) => {
             <b className={`text-md ${differenceSharpe > 0 ? 'text-spring' : 'text-fire'}`}>{differenceSharpeString}</b>
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="">
           <p className="text-offWhite">CAGR</p>
           <p className="text-md mt-2 text-grey">
-            moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
+            smBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
           </p>
           <p className="text-md text-grey">
             BTC: <b className={`text-md ${rawCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{rawCAGR}%</b>
@@ -162,10 +162,10 @@ const Info = ({ small = false }: { small?: boolean }) => {
             <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="">
           <p className="text-offWhite">Largest Drawdown</p>
           <p className="text-md mt-2 text-grey">
-            moBTC:{' '}
+            smBTC:{' '}
             <b className={`text-md ${Number(scaledDDMax) < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledDDMax}%</b>
           </p>
           <p className="text-md text-grey">

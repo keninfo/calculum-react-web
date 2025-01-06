@@ -163,59 +163,7 @@ const Transactions = () => {
     }
   }, [isConnected, address, pro, contractAddress])
 
-  if (coin == 'BTC' && isConnected && pro) {
-    return (
-      <Card
-        className={`w-full grow ${transactions.length === 0 ? 'max-h-full' : 'max-h-full'}`}
-        title="Transaction History"
-      >
-        <div className="w-full">
-          {transactions.length === 0 ? (
-            <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
-          ) : (
-            <div className="fade-mask-down">
-              <div className="block h-full max-h-[40vh] overflow-y-scroll pb-20">
-                {transactions.map((log, index) => (
-                  <div key={index} className={`${index != 0 ? 'border-t-2 border-payne py-4' : 'pb-4'}`}>
-                    <p className="text-left text-sm">
-                      <span className="font-bold text-grey">Date:</span> {log.date}
-                    </p>
-                    <p className="text-left text-sm">
-                      <span className="font-bold text-grey">Type:</span> {log.type}
-                    </p>
-                    <p
-                      className={`text-left text-sm ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
-                    >
-                      <span className="font-bold text-grey">Shares:</span>{' '}
-                      {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
-                      {log.smoothcoins}
-                    </p>
-                    <p className={`text-left text-sm`}>
-                      <span className="font-bold text-grey">USDC:</span>{' '}
-                      {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
-                      {log.usdc}
-                    </p>
-                    <p className="text-left text-sm">
-                      <span className="font-bold text-grey">Transaction: </span>
-                      <Link
-                        href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`}
-                        target="_blank"
-                        className="text-robin underline"
-                      >
-                        {shortenAddress(log.transactionHash)}
-                      </Link>
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </Card>
-    )
-  }
-
-  if (coin == 'BTC' && isConnected && !pro) {
+  if (coin == 'BTC' && isConnected) {
     return (
       <>
         <Card className="hidden h-full min-h-fit w-full grow md:block" title="Transaction History">

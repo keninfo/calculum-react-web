@@ -20,6 +20,8 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
+import TVNews from '../TVNews'
+import TVTicker from '../TVTicker'
 import TVAttribution from '../common/TVAttribution'
 
 const Dashboard = () => {
@@ -31,12 +33,9 @@ const Dashboard = () => {
   const { isConnected } = useAccount()
 
   useEffect(() => {
-    const storedPro = localStorage.getItem('pro')
     const storedStrategy = localStorage.getItem('strategy')
     const storedCoin = localStorage.getItem('coin')
-    if (storedPro !== null) {
-      setPro(JSON.parse(storedPro))
-    }
+    setPro(true)
     if (storedStrategy !== null) {
       setStrategy(JSON.parse(storedStrategy))
     }
@@ -46,7 +45,6 @@ const Dashboard = () => {
   }, [setCoin, setPro, setStrategy])
 
   useEffect(() => {
-    localStorage.setItem('pro', JSON.stringify(pro))
     localStorage.setItem('strategy', JSON.stringify(strategy))
     localStorage.setItem('coin', JSON.stringify(coin))
   }, [coin, pro, strategy])
@@ -81,13 +79,7 @@ const Dashboard = () => {
               <></>
             </Card>
           )}
-          {pro && coin == 'BTC' && (
-            <Card className="mt-4 h-full w-full">
-              {strategy == 'Smoothcoin' && <ProductMetrics small={false} />}
-              {strategy == 'Momentum' && <MomentumMetrics small={false} />}
-            </Card>
-          )}
-          {!pro && isConnected && (
+          {isConnected && (
             <div className="mt-4 h-full">
               <Transactions />
             </div>
@@ -98,13 +90,29 @@ const Dashboard = () => {
             <>
               <TradeBox />
               <Positions />
-              {pro && <Transactions />}
+              {pro && coin == 'BTC' && (
+                <Card className="h-full w-full">
+                  {strategy == 'Smoothcoin' && <ProductMetrics small={true} />}
+                  {strategy == 'Momentum' && <MomentumMetrics small={true} />}
+                </Card>
+              )}
             </>
           ) : (
             <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
               <></>
             </Card>
           )}
+        </div>
+        <div className="col-span-11 my-4 border-t border-dashed border-grey"></div>
+        <div className="col-span-11 flex h-full flex-col">
+          <Card className="w-full">
+            <TVTicker />
+          </Card>
+        </div>
+        <div className="col-span-11 flex h-[50vh] flex-col">
+          <Card className="h-full w-full">
+            <TVNews />
+          </Card>
         </div>
       </div>
 
@@ -126,6 +134,17 @@ const Dashboard = () => {
         <TradeBox />
         <Positions />
         <Transactions />
+        <div className="my-4 w-full border-t border-dashed border-grey"></div>
+        <div className="w-full">
+          <Card className="w-full">
+            <TVTicker />
+          </Card>
+        </div>
+        <div className="col-span-11 flex h-[50vh] flex-col">
+          <Card className="h-full w-full">
+            <TVNews />
+          </Card>
+        </div>
       </div>
     </>
   )
