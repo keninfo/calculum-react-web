@@ -84,6 +84,11 @@ const Dashboard = () => {
               <Transactions />
             </div>
           )}
+          {!isConnected && coin == 'BTC' && (
+            <Card className="mt-4 h-full w-full" title="OPEN POSITION & TRANSACTIONS">
+              <p className="text-burnt">Connect a wallet to view positions and transactions</p>
+            </Card>
+          )}
         </div>
         <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>
           {values ? (
