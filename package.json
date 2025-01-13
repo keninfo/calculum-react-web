@@ -54,6 +54,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
+    "react-hotjar": "^6.3.1",
     "react-plotly.js": "^2.6.0",
     "react-redux": "^9.1.2",
     "redux-state-sync": "^3.1.4",

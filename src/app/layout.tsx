@@ -17,6 +17,8 @@ import Watermark from '@/components/common/Watermark'
 import { useProStore } from '@/store/useProStore'
 import '@/styles/globals.css'
 
+import { hotjar } from 'react-hotjar'
+
 const inter = Inter({ subsets: ['latin'] })
 
 library.add(fas)
@@ -29,6 +31,10 @@ const RootLayout = ({
   const pathname = usePathname()
   const { pro } = useProStore()
   const [isBear, setIsBear] = useState(false)
+
+  useEffect(() => {
+    hotjar.initialize({ id: 5265506, sv: 6 })
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -63,8 +69,6 @@ const RootLayout = ({
             <Bearam />
           </AppProviders>
         </body>
-        <Analytics />
-        <GoogleAnalytics gaId="G-DQ0RGE2MYE" />
       </html>
     )
   }
