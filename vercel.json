@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/delete-csv",
-      "schedule": "32 * * * *"
+      "schedule": "10 0 * * *"
     },
     {
       "path": "/api/write-csv",
-      "schedule": "30 * * * *"
+      "schedule": "5 0 * * *"
     }
   ]
 }
