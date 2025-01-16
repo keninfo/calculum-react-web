@@ -71,10 +71,26 @@ const Momentum = () => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    const staticDataSrc = `csv/${coin}USDT.csv`
+    if (!coin) throw new Error('Coin is not defined.')
+
+    const response = await fetch(`/api/fetch-csv?token=${coin}`)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch CSV URL: ${response.statusText}`)
+    }
+
+    const metadataArray = await response.json()
+    if (!Array.isArray(metadataArray) || metadataArray.length === 0) {
+      throw new Error('Invalid response: No metadata found.')
+    }
+
+    const { url: staticDataSrc } = metadataArray[0]
+    if (!staticDataSrc) {
+      throw new Error('CSV URL not provided in API response.')
+    }
 
     try {
-      const staticData = await d3.csv(staticDataSrc, (d) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const staticData = await d3.csv(staticDataSrc, (d: any) => ({
         date: d.date!,
         closePrice: d[`close_price_${coin}USDT`]!, // Use dynamic property keys
         asset_return: +d[`return_${coin}USDT`]!,
