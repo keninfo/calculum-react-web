@@ -1,12 +1,14 @@
 {
   "crons": [
     {
-      "path": "/api/delete-csv",
-      "schedule": "36 * * * *"
+      "path": "/api/write-csv",
+      "schedule": "50 * * * *",
+      "method": "POST"
     },
     {
-      "path": "/api/write-csv",
-      "schedule": "35 * * * *"
+      "path": "/api/delete-csv",
+      "schedule": "51 * * * *",
+      "method": "DELETE"
     }
   ]
 }
