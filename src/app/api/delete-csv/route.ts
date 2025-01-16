@@ -12,9 +12,12 @@ type Blob = {
 export async function GET(req: Request) {
   const allowedToken = process.env.INTERNAL_API_TOKEN
   const incomingToken = req.headers.get('x-internal-api-token')
+  const vercelIpHeader = req.headers.get('x-vercel-ip-country')
 
-  if (allowedToken !== incomingToken) {
-    return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 })
+  if (!allowedToken || incomingToken !== allowedToken) {
+    if (!vercelIpHeader) {
+      return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 })
+    }
   }
 
   return await handleDeleteCsv()
