@@ -1,5 +1,7 @@
 import { list } from '@vercel/blob'
 
+export const dynamic = 'force-dynamic' // Force the API route to be dynamic
+
 export async function GET(request: Request) {
   try {
     // Get the token from the query string
