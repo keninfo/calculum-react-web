@@ -9,22 +9,12 @@ type Blob = {
   // Add other properties as needed
 }
 
-export async function DELETE(req: Request) {
+export async function GET(req: Request) {
   const allowedToken = process.env.INTERNAL_API_TOKEN
   const incomingToken = req.headers.get('x-internal-api-token')
 
   if (allowedToken !== incomingToken) {
     return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 })
-  }
-
-  return await handleDeleteCsv()
-}
-
-export async function GET(req: Request) {
-  // For Vercel cron job compatibility, use GET instead of DELETE
-  const cronHeader = req.headers.get('x-vercel-cron') // Vercel-specific header
-  if (!cronHeader) {
-    return NextResponse.json({ success: false, error: 'Method Not Allowed' }, { status: 405 })
   }
 
   return await handleDeleteCsv()
