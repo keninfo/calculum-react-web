@@ -13,37 +13,7 @@ async function fetchAndConvertXlsx() {
   }
 
   // Paths and directories
-  const timestampFilePath = path.join(process.cwd(), 'public', 'last_run_timestamp.txt')
   const outputDir = path.join(process.cwd(), 'public', 'csv')
-
-  // Check if CSV directory exists and contains files
-  let csvFilesExist = false
-  try {
-    if (fs.existsSync(outputDir)) {
-      const csvFiles = fs.readdirSync(outputDir).filter((file) => file.endsWith('.csv'))
-      csvFilesExist = csvFiles.length > 0
-    }
-  } catch (error) {
-    console.error('Error checking CSV files:', error)
-  }
-
-  // Check if the process was already run today
-  const currentDate = new Date().toISOString().split('T')[0] // Format as yyyy-mm-dd
-  let lastRunDate: string | null = null
-
-  // Try to read the timestamp file
-  try {
-    if (fs.existsSync(timestampFilePath)) {
-      lastRunDate = fs.readFileSync(timestampFilePath, 'utf-8')
-    }
-  } catch (error) {
-    console.error('Error reading timestamp file:', error)
-  }
-
-  // If CSV files already exist and last run was today, return early
-  if (csvFilesExist && lastRunDate === currentDate) {
-    return { success: true, message: 'CSV files were already generated today.' }
-  }
 
   // Fetch the XLSX file
   const response = await fetch(url)
@@ -77,19 +47,25 @@ async function fetchAndConvertXlsx() {
     }
   })
 
-  // Store the current date in the timestamp file
-  try {
-    fs.writeFileSync(timestampFilePath, currentDate, 'utf-8')
-  } catch (error) {
-    console.error('Error writing timestamp file:', error)
-  }
-
   return { success: true, message: 'CSV files generated successfully.' }
 }
 
 // API handler
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    // Restrict access based on environment variable or Vercel IP
+    const allowedToken = process.env.INTERNAL_API_TOKEN // Set a token in the environment variables
+    const incomingToken = req.headers.get('x-internal-api-token')
+    const vercelIpHeader = req.headers.get('x-vercel-ip-country') // Vercel-specific header
+
+    // Check if the token matches or the request is coming from Vercel
+    if (!allowedToken || incomingToken !== allowedToken) {
+      if (!vercelIpHeader) {
+        return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 })
+      }
+    }
+
+    // Process the XLSX file
     const result = await fetchAndConvertXlsx()
     return NextResponse.json(result, {
       headers: {
@@ -108,7 +84,6 @@ export async function GET() {
         },
       )
     }
-    // Fallback for unknown error types
     return NextResponse.json(
       { success: false, error: 'An unknown error occurred' },
       {

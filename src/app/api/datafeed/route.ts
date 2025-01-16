@@ -1,19 +1,42 @@
+import { NextResponse } from 'next/server'
+
+import * as d3 from 'd3'
 import fs from 'fs'
 import path from 'path'
 
-export async function GET() {
+export async function GET(req: Request) {
+  // Get the token from the query string (e.g., ?token=BTC)
+  const { searchParams } = new URL(req.url)
+  const token = searchParams.get('token')
+
+  if (!token) {
+    return NextResponse.json({ error: 'Token parameter is required' }, { status: 400 })
+  }
+
+  // Build the file path dynamically based on the token
+  const filePath = path.resolve(
+    './public/csv', // Adjust based on where your CSV files are stored
+    `${token}USDT.csv`,
+  )
+
   try {
-    // Define the path to your CSV file in the 'public' folder
-    const filePath = path.resolve(process.cwd(), 'public', 'data.csv')
+    // Check if the file exists
+    if (!fs.existsSync(filePath)) {
+      return NextResponse.json({ error: `File for token ${token} not found` }, { status: 404 })
+    }
 
-    // Read the file from the public folder
-    const file = fs.readFileSync(filePath, 'utf-8')
+    // Read the CSV file
+    const fileContent = fs.readFileSync(filePath, 'utf-8')
 
-    // Just a placeholder to show the file content for now
-    return new Response(file, {
-      headers: { 'Content-Type': 'text/plain' },
-    })
+    // Parse the CSV content using D3
+    const parsedData = d3.csvParse(fileContent)
+
+    // Return the parsed data as JSON
+    return NextResponse.json(parsedData)
   } catch (error) {
-    return new Response('Error processing file', { status: 500 })
+    if (error instanceof Error) {
+      return NextResponse.json({ error: `Error reading or parsing file: ${error.message}` }, { status: 500 })
+    }
+    return NextResponse.json({ error: 'An unknown error occurred while reading or parsing the file' }, { status: 500 })
   }
 }
