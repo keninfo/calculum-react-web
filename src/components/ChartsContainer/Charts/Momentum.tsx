@@ -28,16 +28,6 @@ interface ThemeColorsType {
   robin: string
 }
 
-interface MomentumData {
-  date: string
-  closePrice: number
-  asset_return: number
-  signal_return: number
-  asset_cum_return: number
-  signal_cum_return: number
-  roc: number
-}
-
 const Momentum = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<IChartApi | undefined>()
@@ -46,7 +36,7 @@ const Momentum = () => {
   const { pro } = useProStore()
   const { studyCase, window, setStudyCase } = useOptionsStore()
 
-  const [closePrice, setClosePrice] = useState<number[]>([])
+  const [closePrice, setClosePrice] = useState<string[]>([])
   const [assetCumReturns, setAssetCumReturns] = useState<number[]>([])
   const [signalCumReturns, setSignalCumReturns] = useState<number[]>([])
   const [signalPrice, setSignalPrice] = useState<number[]>([])
@@ -81,28 +71,12 @@ const Momentum = () => {
   }, [pro])
 
   const fetchMomentum = async () => {
-    if (!coin) throw new Error('Coin is not defined.')
+    const staticDataSrc = `csv/${coin}USDT.csv`
 
     try {
-      const response = await fetch(`/api/fetch-csv?token=${coin}`)
-      if (!response.ok) {
-        throw new Error(`Failed to fetch CSV URL: ${response.statusText}`)
-      }
-
-      const metadataArray: { url: string }[] = await response.json()
-      if (!Array.isArray(metadataArray) || metadataArray.length === 0) {
-        throw new Error('Invalid response: No metadata found.')
-      }
-
-      const { url: staticDataSrc } = metadataArray[0]
-      if (!staticDataSrc) {
-        throw new Error('CSV URL not provided in API response.')
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const staticData: MomentumData[] = await d3.csv(staticDataSrc, (d: any) => ({
+      const staticData = await d3.csv(staticDataSrc, (d) => ({
         date: d.date!,
-        closePrice: +d[`close_price_${coin}USDT`]!, // Use dynamic property keys
+        closePrice: d[`close_price_${coin}USDT`]!, // Use dynamic property keys
         asset_return: +d[`return_${coin}USDT`]!,
         signal_return: +d[`signal_return_${coin}USDT`]!,
         asset_cum_return: +d[`cum_return_${coin}USDT`]!,
@@ -110,14 +84,12 @@ const Momentum = () => {
         roc: 1,
       }))
 
-      if (!staticData || staticData.length === 0) {
-        throw new Error('No data found in CSV file.')
-      }
-
       const dates = staticData.map((d) => new Date(d.date))
       const closePriceData = staticData.map((d) => d.closePrice)
+      // const signalReturnsData = staticData.map((d) => d.signal_return)
       const assetCumReturnsData = staticData.map((d) => d.asset_cum_return)
       const signalCumReturnsData = staticData.map((d) => d.signal_cum_return)
+      // const roc = staticData.map((d) => d.roc)
 
       const newSignalPrices = closePriceData.map((price, index) => {
         const assetPrice = Number(price) // Convert string to number
@@ -129,12 +101,13 @@ const Momentum = () => {
       })
 
       setSignalPrice(newSignalPrices)
+
       setDates(dates)
       setClosePrice(closePriceData)
       setAssetCumReturns(assetCumReturnsData)
       setSignalCumReturns(signalCumReturnsData)
     } catch (error) {
-      console.error('Error fetching momentum data:', error)
+      console.error('Error fetching signalCumReturns data:', error)
     }
   }
 
