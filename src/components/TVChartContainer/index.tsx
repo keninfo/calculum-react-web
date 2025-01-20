@@ -1,5 +1,7 @@
+// TVChartContainer.tsx
 import { useEffect, useRef } from 'react'
 
+import { CustomUDFDatafeed } from '@/app/chart-test/CustomDatafeed'
 import { widget } from '@/public/charting_library'
 import type { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString } from '@/public/charting_library'
 import { proTheme } from '@/styles/colors'
@@ -9,17 +11,18 @@ export const TVChartContainer = (props: Partial<ChartingLibraryWidgetOptions>) =
 
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: props.symbol,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed('https://demo_feed.tradingview.com', undefined, {
-        maxResponseLength: 1000,
-        expectedOrder: 'latestFirst',
-      }),
-      interval: props.interval as ResolutionString,
+      symbol: props.symbol || 'moBTC', // Default symbol if not passed
+      datafeed: new CustomUDFDatafeed(),
+      interval: '1D' as ResolutionString,
       container: chartContainerRef.current,
       library_path: props.library_path,
       locale: props.locale as LanguageCode,
-      disabled_features: ['use_localstorage_for_settings', 'header_resolutions'],
+      disabled_features: [
+        'use_localstorage_for_settings',
+        'header_resolutions', // Remove header resolution options
+        'left_toolbar', // Remove the left toolbar (draw tools)
+        'header_chart_type',
+      ],
       enabled_features: [],
       charts_storage_url: props.charts_storage_url,
       charts_storage_api_version: props.charts_storage_api_version,
@@ -28,40 +31,16 @@ export const TVChartContainer = (props: Partial<ChartingLibraryWidgetOptions>) =
       fullscreen: props.fullscreen,
       autosize: props.autosize,
       overrides: {
-        'paneProperties.background': proTheme.dark, // Custom background color
-        'paneProperties.vertGridProperties.color': proTheme.payne, // Vertical grid color
-        'paneProperties.horzGridProperties.color': proTheme.payne, // Horizontal grid color
-        'scalesProperties.textColor': proTheme.offWhite, // Text color for scales
+        'mainSeriesProperties.style': 2, // 2 represents the line chart style
+        'paneProperties.background': proTheme.dark,
+        'paneProperties.vertGridProperties.color': proTheme.payne,
+        'paneProperties.horzGridProperties.color': proTheme.payne,
+        'scalesProperties.textColor': proTheme.offWhite,
+        'tradingProperties.background': proTheme.payne,
       },
-
-      // debug: true,
     }
 
     const tvWidget = new widget(widgetOptions)
-
-    tvWidget.onChartReady(() => {
-      tvWidget.headerReady().then(() => {
-        const button = tvWidget.createButton()
-        button.setAttribute('title', 'Click to show a notification popup')
-        button.classList.add('apply-common-tooltip')
-        button.addEventListener('click', () =>
-          tvWidget.showNoticeDialog({
-            title: 'Notification',
-            body: 'TradingView Charting Library API works correctly',
-            callback: () => {
-              console.log('Noticed!')
-            },
-          }),
-        )
-        button.innerHTML = 'Check API'
-      })
-
-      tvWidget.setCSSCustomProperty('--tv-color-pane-background', proTheme.dark)
-      tvWidget.setCSSCustomProperty('--tv-color-platform-background', proTheme.dark)
-
-      tvWidget.setCSSCustomProperty('--tv-color-toolbar-button-text', proTheme.offWhite)
-      tvWidget.setCSSCustomProperty('--tv-color-toolbar-button-text-hover', proTheme.robin)
-    })
 
     return () => {
       tvWidget.remove()
