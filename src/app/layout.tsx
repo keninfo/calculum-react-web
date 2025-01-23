@@ -8,7 +8,6 @@ import { Analytics } from '@vercel/analytics/react'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { Inter } from 'next/font/google'
-import { usePathname } from 'next/navigation'
 
 import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
@@ -28,7 +27,6 @@ const RootLayout = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
-  const pathname = usePathname()
   const { pro } = useProStore()
   const [isBear, setIsBear] = useState(false)
 
@@ -52,7 +50,7 @@ const RootLayout = ({
         >
           <Watermark />
           <AppProviders>
-            {pathname !== '/' && pathname !== '/devcon' && <Navbar />}
+            <Navbar />
             <div className="md:px-20">{children}</div>
           </AppProviders>
         </body>

@@ -11,21 +11,15 @@ import Image from 'next/image'
 
 import { useNavbarStore } from '@/store/useNavbarStore'
 
-import ActionAlert from '../common/ActionAlert'
 import Card from '../common/Card'
 import NavbarItem from './NavbarItem'
 import { navigationItems } from './config'
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true)
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
   const [navbar, { height }] = useMeasure()
   const { setNavbarHeight } = useNavbarStore()
   const [parent] = useAutoAnimate()
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
 
   const handleNavbarToggle = () => {
     setIsNavbarOpen((prev) => !prev)
@@ -37,12 +31,6 @@ const Sidebar = () => {
 
   return (
     <div className="relative z-50 w-screen overflow-hidden bg-none" id="Navbar" ref={navbar}>
-      {isOpen && (
-        <ActionAlert
-          closeAction={handleClose}
-          alert="Thanks for visiting HODL Protocol. This app is currently on Beta, and best viewed on desktop. Mobile version will follow soon."
-        />
-      )}
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
@@ -53,7 +41,7 @@ const Sidebar = () => {
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
-        <Image src="/hodllogo.svg" width={100} height={20} alt="image" className="h-3 w-auto" />
+        <Image src="/hodllogo.svg" width={100} height={20} alt="image" className="h-5 w-auto" />
         <p className="flex w-full justify-end text-lg" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}
           {isNavbarOpen && <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />}

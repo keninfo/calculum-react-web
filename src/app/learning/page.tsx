@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 
 import Head from 'next/head'
@@ -13,7 +11,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title key="default-title">Smoothcoin - Learning</title>
+        <title key="default-title">HODL Protocol - Learning</title>
         <MetaTags />
       </Head>
       <div className="relative h-screen w-full flex-col justify-center md:hidden">
