@@ -341,7 +341,12 @@ const Momentum = () => {
     <div className="relative !pl-[1vw]">
       <div
         ref={chartContainerRef}
-        style={{ width: '100%', height: '100%', position: 'relative', marginTop: isSmallDevice ? '40px' : '20px' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          marginTop: isSmallDevice ? '40px' : '20px',
+        }}
       />
     </div>
   )
