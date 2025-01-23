@@ -40,5 +40,6 @@ next-env.d.ts
 
 .vscode
 
-**/datafeeds
-**/charting_library
+src/charting_library
+public/charting_library
+public/datafeeds

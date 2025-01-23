@@ -19,8 +19,9 @@
     ".github/",
     "postcss.config.js",
     "tailwind.config.js",
-    "**/datafeeds",
-    "**/charting_library"
+    "src/charting_library",
+    "public/charting_library",
+    "public/datafeeds"
   ],
   "plugins": ["unused-imports", "@typescript-eslint", "eslint-plugin-tsdoc"],
   "parser": "@typescript-eslint/parser",
