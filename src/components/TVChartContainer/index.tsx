@@ -1,7 +1,7 @@
 // TVChartContainer.tsx
 import { useEffect, useRef } from 'react'
 
-import { CustomUDFDatafeed } from '@/app/chart-test/CustomDatafeed'
+import { CustomUDFDatafeed } from '@/lib/CustomDatafeed'
 import { widget } from '@/public/charting_library'
 import type { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString } from '@/public/charting_library'
 import { proTheme } from '@/styles/colors'

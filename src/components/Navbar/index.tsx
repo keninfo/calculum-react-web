@@ -9,9 +9,9 @@ import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
+import Card from '@/components/common/Card'
 import { useNavbarStore } from '@/store/useNavbarStore'
 
-import Card from '../common/Card'
 import NavbarItem from './NavbarItem'
 import { navigationItems } from './config'
 

@@ -10,19 +10,18 @@ import ChartOptions from '@/components/ChartOptions/Index'
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
 import ProductMetrics from '@/components/ProductMetrics'
+import MomentumMetrics from '@/components/ProductMetrics/MomentumMetrics'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
+import TVNews from '@/components/TVNews'
+import TVTicker from '@/components/TVTicker'
 import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
+import TVAttribution from '@/components/common/TVAttribution'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
-
-import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
-import TVNews from '../TVNews'
-import TVTicker from '../TVTicker'
-import TVAttribution from '../common/TVAttribution'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
