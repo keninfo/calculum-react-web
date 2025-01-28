@@ -17,12 +17,19 @@ interface SearchResult {
 interface TokenData {
   date: string
   close_price: string
+  return: string | null
+  signal: string | null
+  position: string | null
+  signal_return: string | null
+  cum_return: string | null
+  cum_signal_return: string | null
 }
 
 export class CustomUDFDatafeed {
   private baseUrl: string
-  private cachedData: Map<string, TokenData[]> = new Map()
-  private availableSymbols: string[] = ['moBTC', 'moETH']
+  private cachedData: Map<string, { raw: TokenData[]; mo: TokenData[] }> = new Map()
+  private availableSymbols: string[] = ['BTC', 'ETH', '1000PEPE']
+  private customPrefix = 'mo'
 
   constructor() {
     this.baseUrl = '/api'
@@ -30,14 +37,23 @@ export class CustomUDFDatafeed {
 
   searchSymbols(symbol: string, type: string, resolution: string, callback: (results: SearchResult[]) => void): void {
     const results: SearchResult[] = this.availableSymbols
-      .filter((symbolItem) => symbolItem.toLowerCase().includes(symbol.toLowerCase()))
-      .map((symbolItem) => ({
-        symbol: symbolItem,
-        full_name: symbolItem,
-        description: `${symbolItem} Price`,
-        exchange: 'Crypto',
-        type: 'crypto',
-      }))
+      .filter((item) => item.toLowerCase().includes(symbol.toLowerCase()))
+      .flatMap((item) => [
+        {
+          symbol: item,
+          full_name: item,
+          description: `${item} Price`,
+          exchange: 'Crypto',
+          type: 'crypto',
+        },
+        {
+          symbol: `${this.customPrefix}${item}`,
+          full_name: `${this.customPrefix}${item}`,
+          description: `mo${item} Price`,
+          exchange: 'Crypto',
+          type: 'crypto',
+        },
+      ])
 
     callback(results)
   }
@@ -63,46 +79,69 @@ export class CustomUDFDatafeed {
     onResolve: (symbolInfo: LibrarySymbolInfo) => void,
     onError: (error: string) => void,
   ): Promise<void> {
-    setTimeout(() => {
-      if (!this.availableSymbols.includes(symbolName)) {
-        onError(`Symbol not found: ${symbolName}`)
-        return
-      }
+    const baseSymbol = symbolName.startsWith(this.customPrefix)
+      ? symbolName.slice(this.customPrefix.length)
+      : symbolName
 
-      const symbolInfo: LibrarySymbolInfo = {
-        name: symbolName,
-        ticker: symbolName,
-        description: `${symbolName} Price`,
-        type: 'crypto',
-        exchange: 'Crypto',
-        listed_exchange: 'Crypto',
-        session: '24x7',
-        timezone: 'Etc/UTC',
-        minmov: 1,
-        pricescale: 100000000,
-        has_intraday: true,
-        has_weekly_and_monthly: false,
-        volume_precision: 8,
-        data_status: 'streaming',
-        currency_code: 'USD',
-        format: 'price', // Include required format property
-      }
+    if (!this.availableSymbols.includes(baseSymbol)) {
+      onError(`Symbol not found: ${symbolName}`)
+      return
+    }
 
-      onResolve(symbolInfo)
-    }, 0)
+    const symbolInfo: LibrarySymbolInfo = {
+      name: symbolName,
+      ticker: symbolName,
+      description: `${symbolName} Price`,
+      type: 'crypto',
+      exchange: 'Crypto',
+      listed_exchange: 'Crypto',
+      session: '24x7',
+      timezone: 'Etc/UTC',
+      minmov: 1,
+      pricescale: 10,
+      has_intraday: true,
+      has_weekly_and_monthly: false,
+      volume_precision: 8,
+      data_status: 'streaming',
+      currency_code: 'USD',
+      format: 'price',
+    }
+
+    onResolve(symbolInfo)
   }
 
-  private async fetchAllData(symbol: string): Promise<TokenData[]> {
+  private async fetchAllData(symbol: string): Promise<{ raw: TokenData[]; mo: TokenData[] }> {
     if (this.cachedData.has(symbol)) {
       return this.cachedData.get(symbol)!
     }
 
-    const response = await fetch(`${this.baseUrl}/fetch-token-data?token=${symbol}`)
+    const response = await fetch(`${this.baseUrl}/fetch-token-data?token=mo${symbol}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const data: TokenData[] = await response.json()
+    const rawData: TokenData[] = await response.json()
+
+    const moData: TokenData[] = rawData.map((item) => {
+      const assetPrice = Number(item.close_price) // Convert close_price to number
+      const assetReturn = Number(item.cum_return) || 0 // Handle null values
+      const signalReturn = Number(item.cum_signal_return) || 0
+
+      const moPrice = (assetPrice * (1 + signalReturn)) / (1 + assetReturn)
+
+      return {
+        date: item.date,
+        close_price: moPrice.toFixed(8), // Format to 8 decimal places
+        return: null,
+        signal: null,
+        position: null,
+        signal_return: null,
+        cum_return: null,
+        cum_signal_return: null,
+      }
+    })
+
+    const data = { raw: rawData, mo: moData }
     this.cachedData.set(symbol, data)
     return data
   }
@@ -115,11 +154,15 @@ export class CustomUDFDatafeed {
     onError: (error: string) => void,
   ): Promise<void> {
     try {
-      const data: TokenData[] = await this.fetchAllData(symbolInfo.name)
+      const baseSymbol = symbolInfo.name.startsWith(this.customPrefix)
+        ? symbolInfo.name.slice(this.customPrefix.length)
+        : symbolInfo.name
 
-      // Filter the data based on the requested time range
-      const filteredData = data.filter((item: TokenData) => {
-        const timestamp = new Date(item.date).getTime()
+      const data = await this.fetchAllData(baseSymbol)
+      const relevantData = symbolInfo.name.startsWith(this.customPrefix) ? data.mo : data.raw
+
+      const filteredData = relevantData.filter((item) => {
+        const timestamp = new Date(item.date).getTime() // Ensure date is parsed correctly
         return timestamp >= periodParams.from * 1000 && timestamp <= periodParams.to * 1000
       })
 
@@ -128,7 +171,6 @@ export class CustomUDFDatafeed {
         return
       }
 
-      // Sort and map the data to TradingView's Bar type
       const sortedData = filteredData.sort((a, b) => {
         const timeA = new Date(a.date).getTime()
         const timeB = new Date(b.date).getTime()
@@ -136,13 +178,11 @@ export class CustomUDFDatafeed {
       })
 
       const bars: Bar[] = sortedData.map((item) => ({
-        time: new Date(item.date).getTime(),
+        time: new Date(item.date).getTime(), // Ensure time is in milliseconds
         open: parseFloat(item.close_price),
         high: parseFloat(item.close_price),
         low: parseFloat(item.close_price),
         close: parseFloat(item.close_price),
-        // Uncomment and map volume if available
-        // volume: parseFloat(item.position || '0'),
       }))
 
       onResult(bars, { noData: false })
@@ -153,10 +193,10 @@ export class CustomUDFDatafeed {
   }
 
   subscribeBars(): void {
-    // Real-time updates implementation
+    // Implement real-time updates if required
   }
 
   unsubscribeBars(): void {
-    // Cleanup
+    // Cleanup subscriptions
   }
 }

@@ -4,10 +4,10 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import React, { useContext, useEffect } from 'react'
 
+import dynamic from 'next/dynamic'
+
 import { useAccount } from 'wagmi'
 
-import ChartOptions from '@/components/ChartOptions/Index'
-import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
 import ProductMetrics from '@/components/ProductMetrics'
 import MomentumMetrics from '@/components/ProductMetrics/MomentumMetrics'
@@ -48,6 +48,10 @@ const Dashboard = () => {
     localStorage.setItem('coin', JSON.stringify(coin))
   }, [coin, pro, strategy])
 
+  const TVChartContainer = dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
+    ssr: false,
+  })
+
   return (
     <>
       {/* DESKTOP */}
@@ -70,7 +74,7 @@ const Dashboard = () => {
         <div className={`col-span-8 flex flex-col`} ref={parent1}>
           {values && dates ? (
             <>
-              <ChartsContainer />
+              <TVChartContainer />
               <TVAttribution />
             </>
           ) : (
@@ -126,8 +130,7 @@ const Dashboard = () => {
         <StrategyInfoTitle />
         {values && dates ? (
           <>
-            <ChartsContainer />
-            {strategy !== 'Momentum' && <ChartOptions />}
+            <TVChartContainer />
           </>
         ) : (
           <Card className="flex h-full w-full justify-center" title="LOADING...">

@@ -6,17 +6,34 @@ import { widget } from '@/public/charting_library'
 import type { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString } from '@/public/charting_library'
 import { proTheme } from '@/styles/colors'
 
-export const TVChartContainer = (props: Partial<ChartingLibraryWidgetOptions>) => {
+import Card from '../common/Card'
+
+const defaultWidgetProps: Partial<ChartingLibraryWidgetOptions> = {
+  symbol: 'moBTC', // Default token
+  interval: 'D' as ResolutionString,
+  library_path: '/charting_library/',
+  locale: 'en',
+  charts_storage_url: 'https://saveload.tradingview.com',
+  charts_storage_api_version: '1.1',
+  client_id: 'tradingview.com',
+  user_id: 'public_user_id',
+  fullscreen: false,
+  autosize: true,
+}
+
+export const TVChartContainer = () => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tvWidgetRef = useRef<any>(null)
 
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: props.symbol || 'moBTC', // Default symbol if not passed
+      symbol: defaultWidgetProps.symbol,
       datafeed: new CustomUDFDatafeed(),
       interval: '1D' as ResolutionString,
       container: chartContainerRef.current,
-      library_path: props.library_path,
-      locale: props.locale as LanguageCode,
+      library_path: defaultWidgetProps.library_path,
+      locale: defaultWidgetProps.locale as LanguageCode,
       disabled_features: [
         'use_localstorage_for_settings',
         'header_resolutions', // Remove header resolution options
@@ -24,12 +41,12 @@ export const TVChartContainer = (props: Partial<ChartingLibraryWidgetOptions>) =
         'header_chart_type',
       ],
       enabled_features: [],
-      charts_storage_url: props.charts_storage_url,
-      charts_storage_api_version: props.charts_storage_api_version,
-      client_id: props.client_id,
-      user_id: props.user_id,
-      fullscreen: props.fullscreen,
-      autosize: props.autosize,
+      charts_storage_url: defaultWidgetProps.charts_storage_url,
+      charts_storage_api_version: defaultWidgetProps.charts_storage_api_version,
+      client_id: defaultWidgetProps.client_id,
+      user_id: defaultWidgetProps.user_id,
+      fullscreen: defaultWidgetProps.fullscreen,
+      autosize: defaultWidgetProps.autosize,
       toolbar_bg: '#ff0000',
       overrides: {
         'mainSeriesProperties.style': 2, // 2 represents the line chart style
@@ -361,14 +378,20 @@ export const TVChartContainer = (props: Partial<ChartingLibraryWidgetOptions>) =
       ...widgetOptions,
     })
 
+    tvWidgetRef.current = tvWidget
+
+    tvWidget.onChartReady(() => {
+      tvWidget.chart().createStudy('Overlay', true, false, { symbol: 'BTC' })
+    })
+
     return () => {
       tvWidget.remove()
     }
-  }, [props])
+  }, [])
 
   return (
-    <>
-      <div ref={chartContainerRef} className="h-[50vh] w-full p-5" />
-    </>
+    <Card className="h-full w-full !p-0">
+      <div ref={chartContainerRef} className="h-full w-full p-5" />
+    </Card>
   )
 }
