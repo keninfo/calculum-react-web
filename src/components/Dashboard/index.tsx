@@ -1,20 +1,16 @@
 'use client'
 
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useMeasure } from '@uidotdev/usehooks'
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 import dynamic from 'next/dynamic'
 
 import { useAccount } from 'wagmi'
 
 import Positions from '@/components/Positions'
-import ProductMetrics from '@/components/ProductMetrics'
-import MomentumMetrics from '@/components/ProductMetrics/MomentumMetrics'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
-import TVNews from '@/components/TVNews'
-import TVTicker from '@/components/TVTicker'
 import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
@@ -23,13 +19,15 @@ import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
+import MarketTransactions from '../MarketTransactions'
+
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
   const { dates, values } = useContext(CoinsContext)
-  const [parent1] = useAutoAnimate()
-  const [parent2] = useAutoAnimate()
+  const [selected, setSelected] = useState<number>(1)
   const { isConnected } = useAccount()
+  const [ref, { height }] = useMeasure()
 
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
@@ -48,9 +46,13 @@ const Dashboard = () => {
     localStorage.setItem('coin', JSON.stringify(coin))
   }, [coin, pro, strategy])
 
-  const TVChartContainer = dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
-    ssr: false,
-  })
+  const TVChartContainer = useMemo(
+    () =>
+      dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
+        ssr: false,
+      }),
+    [],
+  )
 
   return (
     <>
@@ -58,6 +60,7 @@ const Dashboard = () => {
       <div className={`hidden grid-cols-11 gap-4 md:grid`}>
         <div
           className={`z-40 col-span-11 -my-4 flex flex-col bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"} md:sticky md:top-0`}
+          ref={ref}
         >
           <div
             className={`h-[1rem] w-full bg-cover bg-fixed bg-center ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
@@ -70,58 +73,60 @@ const Dashboard = () => {
         <div className={`col-span-11 flex flex-col`}>
           <StrategyInfoTitle />
         </div>
-
-        <div className={`col-span-8 flex flex-col`} ref={parent1}>
-          {values && dates ? (
-            <>
-              <TVChartContainer />
-              <TVAttribution />
-            </>
-          ) : (
-            <Card className="flex w-full justify-center" title="LOADING...">
-              <></>
+        <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
+          <TVChartContainer />
+          <TVAttribution />
+          {isConnected && coin == 'BTC' && (
+            <Card className="mt-4 h-full min-h-fit w-full">
+              <ul className="grid grid-cols-3 border-b border-payne pt-2">
+                <li className="col-span-1 flex justify-start text-lg">
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Market Transactions
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    My Positions
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-end text-lg">
+                  <button
+                    onClick={() => setSelected(2)}
+                    className={`pb-6 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    My Transaction History
+                  </button>
+                </li>
+              </ul>
+              {selected == 0 && <MarketTransactions />}
+              {selected == 1 && <Positions />}
+              {selected == 2 && <Transactions />}
             </Card>
-          )}
-          {isConnected && (
-            <div className="mt-4 h-full">
-              <Transactions />
-            </div>
           )}
           {!isConnected && coin == 'BTC' && (
-            <Card className="mt-4 h-full w-full" title="OPEN POSITION & TRANSACTIONS">
-              <p className="text-burnt">Connect a wallet to view positions and transactions</p>
+            <Card className="mt-4 h-full min-h-fit w-full">
+              <ul className="grid grid-cols-3 border-b border-payne p-2 pb-6">
+                <li className="col-span-1 flex justify-start text-lg">
+                  <button onClick={() => setSelected(0)}>Market Transactions</button>
+                </li>
+              </ul>
+              <MarketTransactions />
             </Card>
           )}
         </div>
-        <div className="col-span-3 flex h-full flex-col gap-4" ref={parent2}>
-          {values ? (
-            <>
+        {coin == 'BTC' && (
+          <div className="relative col-span-3 flex h-full flex-col gap-4">
+            <div className="sticky top-0" style={{ top: height || 0 }}>
               <TradeBox />
-              <Positions />
-              {pro && coin == 'BTC' && (
-                <Card className="h-full w-full">
-                  {strategy == 'Smoothcoin' && <ProductMetrics small={true} />}
-                  {strategy == 'Momentum' && <MomentumMetrics small={true} />}
-                </Card>
-              )}
-            </>
-          ) : (
-            <Card className="flex h-full w-full justify-center pt-[15vh]" title="LOADING...">
-              <></>
-            </Card>
-          )}
-        </div>
-        <div className="col-span-11 my-4 border-t border-dashed border-grey"></div>
-        <div className="col-span-11 flex h-full flex-col">
-          <Card className="w-full">
-            <TVTicker />
-          </Card>
-        </div>
-        <div className="col-span-11 flex h-[50vh] flex-col">
-          <Card className="h-full w-full">
-            <TVNews />
-          </Card>
-        </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* MOBILE */}
@@ -141,7 +146,7 @@ const Dashboard = () => {
         <TradeBox />
         <Positions />
         <Transactions />
-        <div className="my-4 w-full border-t border-dashed border-grey"></div>
+        {/* <div className="my-4 w-full border-t border-dashed border-grey"></div>
         <div className="w-full">
           <Card className="w-full">
             <TVTicker />
@@ -151,7 +156,7 @@ const Dashboard = () => {
           <Card className="h-full w-full">
             <TVNews />
           </Card>
-        </div>
+        </div> */}
       </div>
     </>
   )

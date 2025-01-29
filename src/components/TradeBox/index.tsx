@@ -77,7 +77,7 @@ const TradeBox = () => {
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
   const [amount, setAmount] = useState<number>(0)
   const [wrongNetwork, setWrongNetwork] = useState<boolean>()
-  const { setNetwork, coin } = useStrategyStore()
+  const { setNetwork } = useStrategyStore()
 
   const switchNetwork = async () => {
     if (walletClient) {
@@ -122,14 +122,6 @@ const TradeBox = () => {
       setStep(0)
     }
   }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult])
-
-  if (coin != 'BTC') {
-    return (
-      <Card className="flex h-full max-h-full w-full items-center justify-center">
-        <p className="w-2/3 text-center text-2xl text-true">The contract for this token is coming soon!</p>
-      </Card>
-    )
-  }
 
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
