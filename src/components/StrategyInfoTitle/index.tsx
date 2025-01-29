@@ -71,6 +71,9 @@ const StrategyInfoTitle = () => {
           <p>TESTNET</p>
           <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
         </div>
+        {coin !== 'BTC' && (
+          <p className="w-full text-right text-xl text-true">The contract for this token is coming soon!</p>
+        )}
         {values && coin == 'BTC' && (
           <>
             <div className="text-md hidden w-fit items-center justify-start text-nowrap text-grey md:flex">
