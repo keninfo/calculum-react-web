@@ -1,3 +1,6 @@
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useEffect, useState } from 'react'
 
 import type { Hash } from 'viem'
@@ -6,10 +9,8 @@ import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount } from 'wagmi'
 
-import Card from '@/components/common/Card'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
 
 type pendingDeposit = {
@@ -25,7 +26,6 @@ type responseData = [number, bigint, bigint, bigint]
 
 const Positions = () => {
   const { contractAddress, contractAbi, symbol } = useContract()
-  const { coin } = useStrategyStore()
 
   const { isConnected, address } = useAccount()
   const { ConvertToAssets, CurrentEpoch, EpochSharePrice, ContractGenesisEpoch, Deposits, BalanceShares } =
@@ -118,41 +118,65 @@ const Positions = () => {
       ? (((Number(daySharePrice) - Number(entrySharePrice)) / Number(entrySharePrice)) * 100).toFixed(2)
       : '0.00'
 
-  if (coin == 'BTC') {
-    return (
-      <>
-        {openPositions ? (
-          <Card title="Open Position" className="h-full min-h-fit w-full">
-            <p className="flex justify-between">
-              <b className="font-normal text-grey">Size:</b> {openPositions.toLocaleString('US')} {symbol}
-            </p>
-            <p className="flex justify-between">
-              <b className="font-normal text-grey">Collateral:</b>{' '}
-              {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
-            </p>
-            <p className="flex justify-between">
-              <b className="font-normal text-grey">Entry:</b> {formatBalance(entrySharePrice)} USDc
-            </p>
-            <p className="flex justify-between">
-              <b className="font-normal text-grey">Current:</b> {formatBalance(daySharePrice)} USDc
-            </p>
-            <p className="mb-5 flex justify-between">
-              <b className="font-normal text-grey">PNL:</b>{' '}
-              <b
-                className={`${Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'} font-normal`}
-              >
-                {pnl}%
-              </b>
-            </p>
-          </Card>
-        ) : (
-          <Card title="Open Positions" className="h-full min-h-fit w-full">
-            <h2 className="mb-[2vh] text-center text-lg text-burnt md:text-left">You have no open positions</h2>
-          </Card>
-        )}
-      </>
-    )
-  }
+  return (
+    <>
+      {openPositions ? (
+        <div className="hidden h-full w-full md:block">
+          <div className="w-full">
+            <div className="block overflow-x-auto">
+              <table className="w-full min-w-[400px] border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Metric</th>
+                    <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border-b border-grey px-4 py-2">Size</td>
+                    <td className="border-b border-grey px-4 py-2 text-right">
+                      {openPositions.toLocaleString('US')} {symbol}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border-b border-grey px-4 py-2">Collateral</td>
+                    <td className="border-b border-grey px-4 py-2 text-right">
+                      {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border-b border-grey px-4 py-2">Entry</td>
+                    <td className="border-b border-grey px-4 py-2 text-right">{formatBalance(entrySharePrice)} USDc</td>
+                  </tr>
+                  <tr>
+                    <td className="border-b border-grey px-4 py-2">Current</td>
+                    <td className="border-b border-grey px-4 py-2 text-right">{formatBalance(daySharePrice)} USDc</td>
+                  </tr>
+                  <tr>
+                    <td className="border-b border-grey px-4 py-2">PNL</td>
+                    <td
+                      className={`border-b border-grey px-4 py-2 text-right font-normal ${
+                        Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'
+                      }`}
+                    >
+                      {pnl}%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="h-full min-h-fit w-full py-20">
+          <p className="text-center text-[5vh] text-payne">
+            <FontAwesomeIcon icon={['fas', 'ban' as IconName]} />
+          </p>
+          <h2 className="text-center text-lg text-payne">You have no open positions</h2>
+        </div>
+      )}
+    </>
+  )
 }
 
 export default Positions
