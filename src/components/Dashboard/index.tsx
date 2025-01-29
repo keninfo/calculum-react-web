@@ -20,6 +20,8 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import MarketTransactions from '../MarketTransactions'
+import ProductMetrics from '../ProductMetrics'
+import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -78,7 +80,7 @@ const Dashboard = () => {
           <TVAttribution />
           {isConnected && coin == 'BTC' && (
             <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-3 border-b border-payne pt-2">
+              <ul className="grid grid-cols-4 border-b border-payne pt-2">
                 <li className="col-span-1 flex justify-start text-lg">
                   <button
                     onClick={() => setSelected(0)}
@@ -92,21 +94,31 @@ const Dashboard = () => {
                     onClick={() => setSelected(1)}
                     className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
+                    Metrics
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg">
+                  <button
+                    onClick={() => setSelected(2)}
+                    className={`pb-6 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
                     My Positions
                   </button>
                 </li>
                 <li className="col-span-1 flex justify-end text-lg">
                   <button
-                    onClick={() => setSelected(2)}
-                    className={`pb-6 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
+                    onClick={() => setSelected(3)}
+                    className={`pb-6 ${selected === 3 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
                     My Transaction History
                   </button>
                 </li>
               </ul>
               {selected == 0 && <MarketTransactions />}
-              {selected == 1 && <Positions />}
-              {selected == 2 && <Transactions />}
+              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 2 && <Positions />}
+              {selected == 3 && <Transactions />}
             </Card>
           )}
           {!isConnected && coin == 'BTC' && (
