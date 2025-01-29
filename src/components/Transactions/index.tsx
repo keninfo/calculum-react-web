@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { arbitrumSepolia } from '@wagmi/core/chains'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import Link from 'next/link'
 
@@ -10,260 +10,203 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 
 import { useAccount } from 'wagmi'
 
-import Card from '@/components/common/Card'
 import useContract from '@/hooks/useContract'
-import { useProStore } from '@/store/useProStore'
-import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
 
-const Transactions = () => {
-  const { isConnected, address } = useAccount()
-  const [transactions, setTransactions] = useState<any[]>([])
-  const { contractAddress } = useContract()
-  const { coin } = useStrategyStore()
+const ITEMS_PER_PAGE = 10
 
-  const { pro } = useProStore()
+const Transactions = () => {
+  const [transactions, setTransactions] = useState<any[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const { contractAddress } = useContract()
+  const [loading, setLoading] = useState<boolean>(true)
+  const { address } = useAccount()
+
+  const fetchLogs = useCallback(async () => {
+    setCurrentPage(1)
+    try {
+      const client = createPublicClient({
+        chain: arbitrumSepolia,
+        transport: http(),
+      })
+
+      const eventAbiWithdraw = parseAbiItem(
+        `event Withdraw(address indexed caller,address indexed receiver,address indexed owner,uint256 assets,uint256 shares)`,
+      )
+      const eventAbiPendingWithdraw = parseAbiItem(
+        `event PendingWithdraw(address indexed receiver,address indexed owner,uint256 assets,uint256 estimationOfShares)`,
+      )
+      const eventAbiDeposit = parseAbiItem(
+        `event Deposit(address indexed caller,address indexed owner,uint256 totalAssets,uint256 shares)`,
+      )
+      const eventAbiPendingDeposit = parseAbiItem(
+        `event PendingDeposit(address indexed caller,address indexed receiver,uint256 assets,uint256 estimationOfShares)`,
+      )
+
+      const [getWithdraws, getPendingWithdraws, getDeposits, getPendingDeposits] = await Promise.all([
+        client.getLogs({
+          address: contractAddress as Hash,
+          fromBlock: 'earliest',
+          toBlock: 'latest',
+          event: eventAbiWithdraw,
+          args: { caller: address },
+        }),
+        client.getLogs({
+          address: contractAddress as Hash,
+          fromBlock: 'earliest',
+          toBlock: 'latest',
+          event: eventAbiPendingWithdraw,
+          args: { receiver: address },
+        }),
+        client.getLogs({
+          address: contractAddress as Hash,
+          fromBlock: 'earliest',
+          toBlock: 'latest',
+          event: eventAbiDeposit,
+          args: { caller: address },
+        }),
+        client.getLogs({
+          address: contractAddress as Hash,
+          fromBlock: 'earliest',
+          toBlock: 'latest',
+          event: eventAbiPendingDeposit,
+          args: { receiver: address },
+        }),
+      ])
+
+      const blockNumbers = [
+        ...getWithdraws.map((log) => log.blockNumber),
+        ...getPendingWithdraws.map((log) => log.blockNumber),
+        ...getDeposits.map((log) => log.blockNumber),
+        ...getPendingDeposits.map((log) => log.blockNumber),
+      ]
+      const uniqueBlockNumbers = [...new Set(blockNumbers)]
+      const blockData = await Promise.all(uniqueBlockNumbers.map((blockNumber) => client.getBlock({ blockNumber })))
+      const blockTimestamps = new Map(
+        blockData.map((block) => [block.number, timeToWordDate(block.timestamp.toString())]),
+      )
+
+      const formattedLogs = [
+        ...getPendingWithdraws.map((log) => ({
+          block: log.blockNumber,
+          date: blockTimestamps.get(log.blockNumber) || 'Unknown',
+          type: 'Withdraw',
+          wallet: log.args.receiver,
+          usdc: parseInt(formatBalance(log.args.assets as bigint)).toLocaleString(),
+          shares: parseInt(formatShares(log.args.estimationOfShares as bigint)).toLocaleString(),
+          transactionHash: log.transactionHash,
+        })),
+        ...getWithdraws.map((log) => ({
+          block: log.blockNumber.toString(),
+          date: blockTimestamps.get(log.blockNumber) || 'Unknown',
+          type: 'Claimed USDC',
+          usdc: parseInt(formatBalance(log.args.shares as bigint)).toLocaleString(),
+          smoothcoins: parseInt(formatShares(log.args.assets as bigint)).toLocaleString(),
+          transactionHash: log.transactionHash,
+          blockNumber: log.blockNumber,
+        })),
+        ...getPendingDeposits.map((log) => ({
+          block: log.blockNumber,
+          date: blockTimestamps.get(log.blockNumber) || 'Unknown',
+          type: 'Deposit',
+          wallet: log.args.caller,
+          usdc: parseInt(formatShares(log.args.estimationOfShares as bigint)).toLocaleString(),
+          shares: parseInt(formatBalance(log.args.assets as bigint)).toLocaleString(),
+          transactionHash: log.transactionHash,
+        })),
+        ...getDeposits.map((log) => ({
+          block: log.blockNumber.toString(),
+          date: blockTimestamps.get(log.blockNumber) || 'Unknown',
+          type: 'Claimed Shares',
+          usdc: parseInt(formatBalance(log.args.totalAssets as bigint)).toLocaleString(),
+          smoothcoins: parseInt(formatShares(log.args.shares as bigint)).toLocaleString(),
+          transactionHash: log.transactionHash,
+          blockNumber: log.blockNumber,
+        })),
+      ]
+
+      setTransactions(formattedLogs.sort((a, b) => Number(b.block) - Number(a.block)))
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching logs:', error)
+    }
+  }, [contractAddress, address])
 
   useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const client = createPublicClient({
-          chain: arbitrumSepolia,
-          transport: http(),
-        })
+    fetchLogs()
+  }, [fetchLogs])
 
-        const eventAbiWithdraw = parseAbiItem(
-          `event Withdraw(address indexed caller,address indexed receiver,address indexed owner,uint256 assets,uint256 shares)`,
-        )
-        const eventAbiPendingWithdraw = parseAbiItem(
-          `event PendingWithdraw(address indexed receiver,address indexed owner,uint256 assets,uint256 estimationOfShares)`,
-        )
-        const eventAbiDeposit = parseAbiItem(
-          `event Deposit(address indexed caller,address indexed owner,uint256 totalAssets,uint256 shares)`,
-        )
-        const eventAbiPendingDeposit = parseAbiItem(
-          `event PendingDeposit(address indexed caller,address indexed receiver,uint256 assets,uint256 estimationOfShares)`,
-        )
+  const totalPages = Math.ceil(transactions.length / ITEMS_PER_PAGE)
+  const currentTransactions = transactions.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
-        const [getWithdraws, getPendingWithdraws, getDeposits, getPendingDeposits] = await Promise.all([
-          client.getLogs({
-            address: contractAddress as Hash,
-            fromBlock: 'earliest',
-            toBlock: 'latest',
-            event: eventAbiWithdraw,
-            args: { caller: address },
-          }),
-          client.getLogs({
-            address: contractAddress as Hash,
-            fromBlock: 'earliest',
-            toBlock: 'latest',
-            event: eventAbiPendingWithdraw,
-            args: { receiver: address },
-          }),
-          client.getLogs({
-            address: contractAddress as Hash,
-            fromBlock: 'earliest',
-            toBlock: 'latest',
-            event: eventAbiDeposit,
-            args: { caller: address },
-          }),
-          client.getLogs({
-            address: contractAddress as Hash,
-            fromBlock: 'earliest',
-            toBlock: 'latest',
-            event: eventAbiPendingDeposit,
-            args: { receiver: address },
-          }),
-        ])
-
-        const blockNumbers = [
-          ...getWithdraws.map((log) => log.blockNumber),
-          ...getPendingWithdraws.map((log) => log.blockNumber),
-          ...getDeposits.map((log) => log.blockNumber),
-          ...getPendingDeposits.map((log) => log.blockNumber),
-        ]
-
-        // Fetch the block data to get the timestamp
-        const blocks = await Promise.all(blockNumbers.map((blockNumber) => client.getBlock({ blockNumber })))
-
-        let formattedLogs = []
-
-        if (pro) {
-          formattedLogs = [
-            ...getWithdraws.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Claimed USDC',
-              usdc: formatBalance(log.args.shares as bigint),
-              smoothcoins: formatShares(log.args.assets as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-            ...getPendingWithdraws.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Withdraw',
-              usdc: formatBalance(log.args.assets as bigint),
-              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-            ...getDeposits.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Claimed Shares',
-              usdc: formatBalance(log.args.totalAssets as bigint),
-              smoothcoins: formatShares(log.args.shares as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-            ...getPendingDeposits.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Deposit',
-              usdc: formatBalance(log.args.assets as bigint),
-              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-          ]
-        } else {
-          formattedLogs = [
-            ...getPendingWithdraws.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Withdraw',
-              usdc: formatBalance(log.args.assets as bigint),
-              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-            ...getPendingDeposits.map((log, index) => ({
-              block: log.blockNumber.toString(),
-              date: timeToWordDate(blocks[index].timestamp.toString()),
-              type: 'Deposit',
-              usdc: formatBalance(log.args.assets as bigint),
-              smoothcoins: formatShares(log.args.estimationOfShares as bigint),
-              transactionHash: log.transactionHash,
-              blockNumber: log.blockNumber,
-            })),
-          ]
-        }
-
-        const sortedLogs = formattedLogs.sort((a, b) => Number(b.block) - Number(a.block))
-
-        setTransactions(sortedLogs)
-      } catch (error) {
-        console.error('Error fetching logs:', error)
-      }
-    }
-
-    if (isConnected && address) {
-      fetchLogs()
-    }
-  }, [isConnected, address, pro, contractAddress])
-
-  if (coin == 'BTC' && isConnected) {
-    return (
-      <>
-        <Card className="hidden h-full min-h-fit w-full grow md:block" title="Transaction History">
-          <div className="w-full">
-            {transactions.length === 0 ? (
-              <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
-            ) : (
-              <div className="block overflow-x-auto">
-                <table className="w-full min-w-[600px] border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Shares</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDc</th>
-                      <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
-                        Transaction Details
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {transactions.map((log, index) => (
-                      <tr key={index}>
-                        <td className="border-b border-grey px-4 py-2">{log.date}</td>
-                        <td className="border-b border-grey px-4 py-2">{log.type}</td>
-                        <td
-                          className={`border-b border-grey px-4 py-2 text-right ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
-                        >
-                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
-                          {log.smoothcoins}
-                        </td>
-                        <td className="border-b border-grey px-4 py-2 text-right">
-                          {' '}
-                          {log.type == 'Withdraw' || log.type == 'Claimed USDC' ? '- ' : ''}
-                          {log.usdc}
-                        </td>
-                        <td className="cursor-pointer border-b border-grey px-4 py-2 text-right text-robin underline">
-                          <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
-                            {shortenAddress(log.transactionHash)}
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </Card>
-        {/* mobile */}
-        <Card
-          className={`w-full grow md:hidden ${transactions.length === 0 ? 'max-h-full' : 'max-h-full'}`}
-          title="Transaction History"
-        >
-          <div className="w-full">
-            {transactions.length === 0 ? (
-              <p className="mb-5 text-left text-lg text-burnt md:text-left">You currently have no transactions.</p>
-            ) : (
-              <div className="fade-mask-down">
-                <div className="block h-full max-h-[40vh] overflow-y-scroll pb-20">
-                  {transactions.map((log, index) => (
-                    <div key={index} className={`${index != 0 ? 'border-t-2 border-payne py-4' : 'pb-4'}`}>
-                      <p className="text-left text-sm">
-                        <span className="font-bold text-grey">Date:</span> {log.date}
-                      </p>
-                      <p className="text-left text-sm">
-                        <span className="font-bold text-grey">Type:</span> {log.type}
-                      </p>
-                      <p
-                        className={`text-left text-sm ${log.type == 'Deposit' || log.type == 'Claimed Shares' ? 'text-spring' : 'text-fire'}`}
-                      >
-                        <span className="font-bold text-grey">Shares:</span>{' '}
-                        {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
-                        {log.smoothcoins}
-                      </p>
-                      <p className={`text-left text-sm`}>
-                        <span className="font-bold text-grey">USDC:</span>{' '}
-                        {log.type == 'Deposit' || log.type == 'Claimed Shares' ? '' : '-'}
-                        {log.usdc}
-                      </p>
-                      <p className="text-left text-sm">
-                        <span className="font-bold text-grey">Transaction: </span>
-                        <Link
-                          href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`}
-                          target="_blank"
-                          className="text-robin underline"
-                        >
-                          {shortenAddress(log.transactionHash)}
-                        </Link>
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </Card>
-      </>
-    )
+  if (loading) {
+    return <p className="mt-4">Loading...</p>
   }
+
+  return (
+    <div className="hidden h-full w-full md:block">
+      <div className="w-full">
+        <div className="block overflow-x-auto">
+          <table className="w-full min-w-[600px] border-collapse">
+            <thead>
+              <tr>
+                <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Date</th>
+                <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Type</th>
+                <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Shares</th>
+                <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">USDC</th>
+                <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">
+                  Transaction Details
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentTransactions.map((log, index) => (
+                <tr key={index}>
+                  <td className="border-b border-grey px-4 py-2">{log.date}</td>
+                  <td className="border-b border-grey px-4 py-2">{log.type}</td>
+                  <td
+                    className={`border-b border-grey px-4 py-2 text-right ${log.type === 'Deposit' ? 'text-spring' : 'text-fire'}`}
+                  >
+                    {log.type === 'Withdraw' ? '- ' : ''}
+                    {log.shares}
+                  </td>
+                  <td className="border-b border-grey px-4 py-2 text-right">
+                    {log.type === 'Withdraw' ? '- ' : ''}
+                    {log.usdc}
+                  </td>
+                  <td className="cursor-pointer border-b border-grey px-4 py-2 text-right text-robin underline">
+                    <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                      {shortenAddress(log.transactionHash)}
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {transactions.length === 0 && <div className="py-4 text-center text-grey">No transactions found.</div>}
+          <div className="mt-4 flex justify-between">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+              className="px-4 py-2 hover:text-primary disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              className="px-4 py-2 hover:text-primary disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Transactions
