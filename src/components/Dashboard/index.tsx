@@ -48,6 +48,10 @@ const Dashboard = () => {
     localStorage.setItem('coin', JSON.stringify(coin))
   }, [coin, pro, strategy])
 
+  useEffect(() => {
+    setSelected(0)
+  }, [isConnected])
+
   const TVChartContainer = useMemo(
     () =>
       dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
@@ -123,12 +127,27 @@ const Dashboard = () => {
           )}
           {!isConnected && coin == 'BTC' && (
             <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-3 border-b border-payne p-2 pb-6">
+              <ul className="grid grid-cols-4 border-b border-payne pt-2">
                 <li className="col-span-1 flex justify-start text-lg">
-                  <button onClick={() => setSelected(0)}>Market Transactions</button>
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Market Transactions
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Metrics
+                  </button>
                 </li>
               </ul>
-              <MarketTransactions />
+              {selected == 0 && <MarketTransactions />}
+              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
             </Card>
           )}
         </div>
