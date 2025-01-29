@@ -3,28 +3,35 @@ import { useEffect, useRef } from 'react'
 
 import { CustomUDFDatafeed } from '@/lib/CustomDatafeed'
 import { widget } from '@/public/charting_library'
-import type { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString } from '@/public/charting_library'
+import type {
+  ChartingLibraryWidgetOptions,
+  LanguageCode,
+  ResolutionString,
+  TimeFrameValue,
+} from '@/public/charting_library'
+import { useStrategyStore } from '@/store/useStrategyStore'
 import { proTheme } from '@/styles/colors'
 
 import Card from '../common/Card'
-
-const defaultWidgetProps: Partial<ChartingLibraryWidgetOptions> = {
-  symbol: 'moBTC', // Default token
-  interval: 'D' as ResolutionString,
-  library_path: '/charting_library/',
-  locale: 'en',
-  charts_storage_url: 'https://saveload.tradingview.com',
-  charts_storage_api_version: '1.1',
-  client_id: 'tradingview.com',
-  user_id: 'public_user_id',
-  fullscreen: false,
-  autosize: true,
-}
 
 export const TVChartContainer = () => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const tvWidgetRef = useRef<any>(null)
+  const { coin } = useStrategyStore()
+
+  const defaultWidgetProps: Partial<ChartingLibraryWidgetOptions> = {
+    symbol: `mo${coin}`, // Default token
+    interval: 'D' as ResolutionString,
+    library_path: '/charting_library/',
+    locale: 'en',
+    charts_storage_url: 'https://saveload.tradingview.com',
+    charts_storage_api_version: '1.1',
+    client_id: 'tradingview.com',
+    user_id: 'public_user_id',
+    fullscreen: false,
+    autosize: true,
+  }
 
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
@@ -39,6 +46,7 @@ export const TVChartContainer = () => {
         'header_resolutions', // Remove header resolution options
         'left_toolbar', // Remove the left toolbar (draw tools)
         'header_chart_type',
+        'create_volume_indicator_by_default',
       ],
       enabled_features: [],
       charts_storage_url: defaultWidgetProps.charts_storage_url,
@@ -57,16 +65,13 @@ export const TVChartContainer = () => {
         'paneProperties.vertGridProperties.color': 'rgba(255,255,255, .1)',
         'paneProperties.horzGridProperties.color': 'rgba(255,255,255, .1)',
         'scalesProperties.textColor': proTheme.offWhite,
-        'tradingProperties.background': proTheme.payne,
         'paneProperties.legendProperties.showBackground': 'false',
       },
     }
 
     const tvWidget = new widget({
       custom_themes: {
-        // The new palette for the light theme
         light: {
-          // Color that overrides blue
           color1: [
             proTheme.primary,
             proTheme.primary,
@@ -381,13 +386,30 @@ export const TVChartContainer = () => {
     tvWidgetRef.current = tvWidget
 
     tvWidget.onChartReady(() => {
-      tvWidget.chart().createStudy('Overlay', true, false, { symbol: 'BTC' })
+      tvWidget.chart().createStudy(
+        'Overlay',
+        true,
+        true,
+        { symbol: coin },
+        {
+          style: 2,
+          'lineStyle.color': proTheme.offWhite,
+        },
+        { priceScale: 'as-series' },
+      )
+      tvWidget.chart().setTimeFrame({
+        val: { type: 'period-back', value: '56M' } as TimeFrameValue,
+        res: '1D' as ResolutionString,
+      })
+      tvWidget.setCSSCustomProperty('--tv-color-toolbar-button-background-hover', proTheme.payne)
+      tvWidget.setCSSCustomProperty('--tv-color-popup-element-background-hover', proTheme.payne)
+      tvWidget.setCSSCustomProperty('--tv-color-toolbar-button-text-active-hover', proTheme.primary)
     })
 
     return () => {
       tvWidget.remove()
     }
-  }, [])
+  }, [coin])
 
   return (
     <Card className="h-full min-h-[70vh] w-full !p-0">

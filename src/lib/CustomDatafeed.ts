@@ -28,7 +28,7 @@ interface TokenData {
 export class CustomUDFDatafeed {
   private baseUrl: string
   private cachedData: Map<string, { raw: TokenData[]; mo: TokenData[] }> = new Map()
-  private availableSymbols: string[] = ['BTC', 'ETH', '1000PEPE']
+  private availableSymbols: string[] = ['BTC', 'ETH', '1000PEPE', 'ARB', 'DOGE', 'SOL']
   private customPrefix = 'mo'
 
   constructor() {
@@ -98,7 +98,7 @@ export class CustomUDFDatafeed {
       session: '24x7',
       timezone: 'Etc/UTC',
       minmov: 1,
-      pricescale: 10,
+      pricescale: symbolName == '1000PEPE' ? 10 : 1000000,
       has_intraday: true,
       has_weekly_and_monthly: false,
       volume_precision: 8,

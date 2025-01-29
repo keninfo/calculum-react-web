@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 
 import { useAccount } from 'wagmi'
 
+import ChartsContainer from '@/components/ChartsContainer/Index'
 import Positions from '@/components/Positions'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
@@ -80,7 +81,8 @@ const Dashboard = () => {
           <StrategyInfoTitle />
         </div>
         <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
-          <TVChartContainer />
+          {strategy == 'Momentum' && <TVChartContainer />}
+          {strategy == 'Smoothcoin' && <ChartsContainer />}
           <TVAttribution />
           {isConnected && coin == 'BTC' && (
             <Card className="mt-4 h-full min-h-fit w-full">
