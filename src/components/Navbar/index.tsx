@@ -34,14 +34,21 @@ const Sidebar = () => {
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
         <div className="flex items-center justify-between pl-2">
-          <Image src="/hodllogo.svg" width={100} height={100} alt="image" className="flex h-6 w-fit justify-start" />
+          <Image src="/HODL.png" width={1000} height={1000} alt="image" className="flex h-8 w-fit justify-start" />
           <div className="flex w-3/5 items-center justify-center">{navigationItems.map(NavbarItem)}</div>
-          <div className="flex w-1/5 justify-end">{/* <ProToggle /> */}</div>
+          <div className="flex w-1/5 justify-end">
+            <a
+              className="cursor-pointer rounded-md border-2 border-primary px-4 py-1 hover:scale-105 hover:text-primary"
+              href="/leaderboard"
+            >
+              LEADERBOARD
+            </a>
+          </div>
         </div>
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around p-6 md:hidden">
-        <Image src="/hodllogo.svg" width={100} height={20} alt="image" className="h-5 w-auto" />
+        <Image src="/HODL.png" width={100} height={20} alt="image" className="h-5 w-auto" />
         <p className="flex w-full justify-end text-lg" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}
           {isNavbarOpen && <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />}
