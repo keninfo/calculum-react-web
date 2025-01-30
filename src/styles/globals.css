@@ -20,6 +20,20 @@ body {
   padding-right: calc(100vw - 100%) !important;
 }
 
+* {
+  font-family: var(--font-space-grotesk);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+  font-family: var(--font-oxanium);
+}
+
 main {
   width: 100%;
 }

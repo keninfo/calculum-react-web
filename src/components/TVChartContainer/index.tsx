@@ -409,6 +409,7 @@ export const TVChartContainer = () => {
     return () => {
       tvWidget.remove()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coin])
 
   return (

@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 import { useEffect, useState, type ReactNode } from 'react'
 
-import { Inter } from 'next/font/google'
+import { Space_Grotesk, Oxanium } from 'next/font/google'
 
 import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
@@ -18,7 +18,8 @@ import '@/styles/globals.css'
 
 import { hotjar } from 'react-hotjar'
 
-const inter = Inter({ subsets: ['latin'] })
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
+const oxanium = Oxanium({ subsets: ['latin'] })
 
 library.add(fas)
 
@@ -44,7 +45,7 @@ const RootLayout = ({
     return (
       <html lang="en">
         <body
-          className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} ${
+          className={`classic overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} ${
             pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"
           }`}
         >
@@ -62,7 +63,9 @@ const RootLayout = ({
   if (isBear) {
     return (
       <html lang="en">
-        <body className={`classic overscroll-none bg-cover bg-fixed bg-center ${inter.className} }`}>
+        <body
+          className={`classic overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} }`}
+        >
           <AppProviders>
             <Bearam />
           </AppProviders>
