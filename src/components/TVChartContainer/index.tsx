@@ -46,7 +46,7 @@ export const TVChartContainer = () => {
         'header_resolutions', // Remove header resolution options
         'left_toolbar', // Remove the left toolbar (draw tools)
         'header_chart_type',
-        'create_volume_indicator_by_default',
+        'create_volume_indicator_by_default', // Remove volume indicator
       ],
       enabled_features: [],
       charts_storage_url: defaultWidgetProps.charts_storage_url,
