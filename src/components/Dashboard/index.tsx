@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 import { useAccount } from 'wagmi'
 
 import ChartsContainer from '@/components/ChartsContainer/Index'
+import Help from '@/components/Help'
 import Positions from '@/components/Positions'
 import StrategyInfoTitle from '@/components/StrategyInfoTitle'
 import StrategyOptions from '@/components/StrategyOptions/Index'
@@ -155,8 +156,9 @@ const Dashboard = () => {
         </div>
         {coin == 'BTC' && (
           <div className="relative col-span-3 flex h-full flex-col gap-4">
-            <div className="sticky top-0" style={{ top: height || 0 }}>
+            <div className="sticky top-0 space-y-4" style={{ top: height || 0 }}>
               <TradeBox />
+              <Help />
             </div>
           </div>
         )}
