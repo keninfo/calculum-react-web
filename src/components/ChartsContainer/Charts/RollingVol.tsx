@@ -132,12 +132,12 @@ const RollingVol = ({ dates, seriesData }: ChartProps) => {
 
     lineSeries?.setData(chartDataPrice1)
 
-    const visibleRange = {
-      from: formatDate(datesFiltered[0]) as Time,
-      to: formatDate(datesFiltered[datesFiltered.length - 1]) as Time,
-    }
+    // const visibleRange = {
+    //   from: formatDate(datesFiltered[0]) as Time,
+    //   to: formatDate(datesFiltered[datesFiltered.length - 1]) as Time,
+    // }
 
-    chartInstance.current?.timeScale().setVisibleRange(visibleRange)
+    chartInstance.current?.timeScale()
 
     const toolTip = document.createElement('div')
     Object.assign(toolTip.style, { height: '200px', ...tooltipConfig })
