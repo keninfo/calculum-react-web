@@ -8,7 +8,16 @@ const MomentumMetrics = ({ small = false }: { small?: boolean }) => {
   const { coin } = useStrategyStore()
 
   if (coin == 'BTC') {
-    return <InfoMomentum small={small} />
+    return (
+      <>
+        <div className="hidden md:block">
+          <InfoMomentum small={small} />
+        </div>
+        <div className="md:hidden">
+          <InfoMomentum small={true} />
+        </div>
+      </>
+    )
   }
 }
 

@@ -121,7 +121,7 @@ const Positions = () => {
   return (
     <>
       {openPositions ? (
-        <div className="hidden h-full w-full md:block">
+        <div className="h-full w-full">
           <div className="w-full">
             <div className="block overflow-x-auto">
               <table className="w-full min-w-[400px] border-collapse">

@@ -90,7 +90,7 @@ const MarketTransactions = () => {
   const currentTransactions = transactions.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
   if (loading) {
-    return <p className="mt-4">Loading...</p>
+    return <p className="mt-4 text-center">Loading...</p>
   }
 
   return (

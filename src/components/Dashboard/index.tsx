@@ -2,7 +2,7 @@
 
 import { useMeasure } from '@uidotdev/usehooks'
 
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -17,7 +17,6 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import TVAttribution from '@/components/common/TVAttribution'
-import { CoinsContext } from '@/contexts/CoinsContext'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
@@ -28,7 +27,6 @@ import MomentumMetrics from '../ProductMetrics/MomentumMetrics'
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
-  const { dates, values } = useContext(CoinsContext)
   const [selected, setSelected] = useState<number>(1)
   const { isConnected } = useAccount()
   const [ref, { height }] = useMeasure()
@@ -168,30 +166,82 @@ const Dashboard = () => {
       <div className="-mt-5 block w-screen space-y-5 px-5 md:hidden">
         <StrategyOptions />
         <StrategyInfoTitle />
-        {values && dates ? (
-          <>
-            <TVChartContainer />
-          </>
-        ) : (
-          <Card className="flex h-full w-full justify-center" title="LOADING...">
-            <></>
-          </Card>
-        )}
 
+        {strategy == 'Momentum' && <TVChartContainer />}
+        {strategy == 'Smoothcoin' && <ChartsContainer />}
+        <TVAttribution />
+        <Help />
         <TradeBox />
-        <Positions />
-        <Transactions />
-        {/* <div className="my-4 w-full border-t border-dashed border-grey"></div>
-        <div className="w-full">
-          <Card className="w-full">
-            <TVTicker />
-          </Card>
+        <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
+          {isConnected && coin == 'BTC' && (
+            <Card className="mt-4 h-full min-h-fit w-full">
+              <ul className="grid grid-cols-1 border-b border-payne pt-2 md:grid-cols-4">
+                <li className="col-span-1 flex justify-center text-lg md:justify-start">
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-6 ${selected === 0 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                  >
+                    Market Transactions
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-6 ${selected === 1 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                  >
+                    Metrics
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg">
+                  <button
+                    onClick={() => setSelected(2)}
+                    className={`pb-6 ${selected === 2 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                  >
+                    My Positions
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-center text-lg md:justify-end">
+                  <button
+                    onClick={() => setSelected(3)}
+                    className={`pb-6 ${selected === 3 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                  >
+                    My Transaction History
+                  </button>
+                </li>
+              </ul>
+              {selected == 0 && <MarketTransactions />}
+              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 2 && <Positions />}
+              {selected == 3 && <Transactions />}
+            </Card>
+          )}
+          {!isConnected && coin == 'BTC' && (
+            <Card className="mt-4 h-full min-h-fit w-full">
+              <ul className="grid grid-cols-4 border-b border-payne pt-2">
+                <li className="col-span-2 flex justify-start text-lg">
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Market Transactions
+                  </button>
+                </li>
+                <li className="col-span-2 flex justify-end text-lg md:justify-center">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Metrics
+                  </button>
+                </li>
+              </ul>
+              {selected == 0 && <MarketTransactions />}
+              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+            </Card>
+          )}
         </div>
-        <div className="col-span-11 flex h-[50vh] flex-col">
-          <Card className="h-full w-full">
-            <TVNews />
-          </Card>
-        </div> */}
       </div>
     </>
   )

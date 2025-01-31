@@ -4,9 +4,9 @@ import Image from 'next/image'
 
 const TVAttribution = () => {
   return (
-    <div className="flex w-full justify-between px-2 pt-5">
+    <div className="w-full justify-between px-2 md:flex md:pt-5">
       <div>
-        <p className="text-left text-xs text-grey">Powered by</p>
+        <p className="text-center text-xs text-grey md:text-left">Powered by</p>
         <a href="https://www.tradingview.com/" target="_blank" className="h-fit w-fit">
           <Image
             src={'TV-1.svg'}
@@ -17,7 +17,7 @@ const TVAttribution = () => {
           />
         </a>
       </div>
-      <p className="w-1/2 text-right text-[10px] text-grey">
+      <p className="text-center text-[10px] text-grey md:w-1/2 md:text-right">
         {`Advanced Charting is displayed using TradingView's technology, a platform which offers tools and data for
         comprehensive market research: here,`}
         <a href="https://www.tradingview.com/economic-calendar/" target="_blank" className="text-robin">

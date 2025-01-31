@@ -100,7 +100,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
       <>
         {!loading && (
           <div
-            className={`${!small ? 'mt-6 grid grid-cols-3' : 'flex flex-col justify-between space-y-4'} h-fit w-full [&_p]:text-left`}
+            className={`${!small ? 'mt-6 grid grid-cols-3' : 'flex flex-col justify-between space-y-4 pt-6'} h-fit w-full [&_p]:text-left`}
           >
             <div className="col-span-1">
               <p className="text-offWhite">Sharpe Ratio</p>
