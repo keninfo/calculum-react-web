@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { PrimaryButton } from '../common/Buttons'
+import Input from '../common/Input'
 import Modal from '../common/Modal'
 
 import { v4 as uuidv4 } from 'uuid'
@@ -26,11 +28,15 @@ const getOrCreateUserId = (): string => {
 
 const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([])
+  const [other, setOther] = useState<string>('')
 
   useEffect(() => {
     setShuffledOptions([...options].sort(() => Math.random() - 0.5))
   }, [])
 
+  const hadleOptionOther = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOther(event.target.value)
+  }
   const handleOptionClick = async (option: string) => {
     const userId = getOrCreateUserId() // Get or create anonymous user ID
 
@@ -51,7 +57,7 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
   return (
     <Modal onClose={() => handleOptionClick('SKIPPED')} closeMessage="SKIP">
       <h3 className="mt-14 text-center text-2xl text-robin">{`What's the main reason for your visit, anon?`}</h3>
-      <ul className="grid w-full grid-cols-4 gap-10 px-20 pb-20 pt-10">
+      <ul className="grid w-full grid-cols-4 gap-10 px-20 pb-10 pt-10">
         {shuffledOptions.map((text, index) => (
           <div
             key={index}
@@ -67,6 +73,18 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
           </div>
         ))}
       </ul>
+      <div className="flex flex-col items-center justify-center">
+        <Input
+          placeholder="Another reason..."
+          type={'text'}
+          value={other}
+          handleChange={hadleOptionOther}
+          className="w-1/2 rounded-t-none border-primary text-center"
+        />
+        <PrimaryButton handleClick={() => handleOptionClick(other)} className="mb-10 mt-5 w-1/2">
+          SUBMIT
+        </PrimaryButton>
+      </div>
     </Modal>
   )
 }
