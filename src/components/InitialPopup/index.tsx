@@ -73,15 +73,15 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
           </div>
         ))}
       </ul>
-      <div className="flex flex-col items-center justify-center">
+      <div className="mx-auto flex w-1/2 flex-col items-center justify-center">
         <Input
           placeholder="Another reason..."
           type={'text'}
           value={other}
           handleChange={hadleOptionOther}
-          className="w-1/2 rounded-t-none border-primary text-center"
+          className="rounded-t-none border-primary text-center"
         />
-        <PrimaryButton handleClick={() => handleOptionClick(other)} className="mb-10 mt-5 w-1/2">
+        <PrimaryButton handleClick={() => handleOptionClick(other)} className="mb-10 mt-5">
           SUBMIT
         </PrimaryButton>
       </div>
