@@ -98,7 +98,7 @@ export class CustomUDFDatafeed {
       session: '24x7',
       timezone: 'Etc/UTC',
       minmov: 1,
-      pricescale: symbolName == '1000PEPE' ? 10 : 1000000,
+      pricescale: symbolName !== 'mo1000PEPE' ? 10 : 1000000,
       has_intraday: true,
       has_weekly_and_monthly: false,
       volume_precision: 8,
