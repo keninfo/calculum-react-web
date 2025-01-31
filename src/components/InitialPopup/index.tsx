@@ -32,30 +32,24 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
   }, [])
 
   const handleOptionClick = async (option: string) => {
-    const userId = getOrCreateUserId()
+    const userId = getOrCreateUserId() // Get or create anonymous user ID
 
     try {
-      const response = await fetch('/api/storeResponse', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId, response: option }),
-      })
+      const response = await fetch(`/api/store-response?userId=${userId}&response=${option}`)
 
       if (!response.ok) {
         throw new Error('Failed to save response')
       }
 
-      localStorage.setItem('userResponse', option)
-      setModal(false)
+      localStorage.setItem('userResponse', option) // Store response locally
+      setModal(false) // Close the modal
     } catch (error) {
       console.error('Error saving response:', error)
     }
   }
 
   return (
-    <Modal onClose={() => setModal(false)} closeMessage="SKIP">
+    <Modal onClose={() => handleOptionClick('SKIPPED')} closeMessage="SKIP">
       <h3 className="mt-14 text-center text-2xl text-robin">{`What's the main reason for your visit, anon?`}</h3>
       <ul className="grid w-full grid-cols-4 gap-10 px-20 pb-20 pt-10">
         {shuffledOptions.map((text, index) => (

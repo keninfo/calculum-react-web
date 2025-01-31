@@ -41,6 +41,6 @@ next-env.d.ts
 .vscode
 
 # Trading views Advance Charting Library
-src/charting_library
-public/charting_library
-public/datafeeds
+# src/charting_library
+# public/charting_library
+# public/datafeeds
