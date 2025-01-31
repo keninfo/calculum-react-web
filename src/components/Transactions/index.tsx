@@ -23,7 +23,6 @@ const Transactions = () => {
   const { address } = useAccount()
 
   const fetchLogs = useCallback(async () => {
-    setCurrentPage(1)
     try {
       const client = createPublicClient({
         chain: arbitrumSepolia,
@@ -134,7 +133,8 @@ const Transactions = () => {
 
   useEffect(() => {
     fetchLogs()
-  }, [fetchLogs])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const totalPages = Math.ceil(transactions.length / ITEMS_PER_PAGE)
   const currentTransactions = transactions.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
@@ -144,7 +144,7 @@ const Transactions = () => {
   }
 
   return (
-    <div className="hidden h-full w-full md:block">
+    <div className="h-full w-full">
       <div className="w-full">
         <div className="block overflow-x-auto">
           <table className="w-full min-w-[600px] border-collapse">
