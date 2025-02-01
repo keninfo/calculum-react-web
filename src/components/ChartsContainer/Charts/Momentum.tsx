@@ -163,13 +163,13 @@ const Momentum = () => {
       priceFormat: {
         type: 'custom',
         formatter: (price: number) => {
-          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(0)}k`
+          return coin == 'PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(0)}k`
         },
       },
     })
 
     const closePriceSliced = closePrice.map((value) =>
-      coin == '1000PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
+      coin == 'PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
     )
 
     const chartDataPrice1: PriceChartData[] = closePriceSliced.map((data, index) => ({
@@ -185,13 +185,13 @@ const Momentum = () => {
       priceFormat: {
         type: 'custom',
         formatter: (price: number) => {
-          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(0)}k`
+          return coin == 'PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(0)}k`
         },
       },
     })
 
     const signalCumReturnsSliced = signalPrice.map((value) =>
-      coin == '1000PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
+      coin == 'PEPE' || coin == 'DOGE' ? Number(value) : Number(value) / 100000,
     )
 
     const chartDataPrice2: PriceChartData[] = signalCumReturnsSliced.map((data, index) => ({
@@ -279,8 +279,8 @@ const Momentum = () => {
           if (assetCumReturns > signalCumReturns) {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == 'PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == 'PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}
@@ -289,8 +289,8 @@ const Momentum = () => {
           } else {
             toolTip.innerHTML = `
           <div>
-            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
-            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: ${themeColors?.primary}; font-weight: bold;">Mom. BTC: <br/>  ${coin == 'PEPE' || coin == 'DOGE' ? `$${signalCumReturns.toLocaleString('US')}` : `$${(signalCumReturns * 100).toFixed(0)}k`}</p>
+            <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/>  ${coin == 'PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
           </div>
           <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
             ${dateStr}

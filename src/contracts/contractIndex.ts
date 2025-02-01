@@ -53,7 +53,7 @@ export const contractIndex = [
   {
     isWorking: false,
     strategy: 'Smoothcoin',
-    coin: '1000PEPE',
+    coin: 'PEPE',
     abi: contractSmoothcoinBTC.abi,
     address: contractSmoothcoinBTC.address,
     chainId: contractSmoothcoinBTC.chainId,
@@ -86,7 +86,7 @@ export const contractIndex = [
   {
     isWorking: false,
     strategy: 'Momentum',
-    coin: '1000PEPE',
+    coin: 'PEPE',
     abi: contractMomentumBTC.abi,
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,

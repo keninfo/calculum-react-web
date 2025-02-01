@@ -101,13 +101,13 @@ const RoC = ({ dates, seriesData1, seriesData2, ohcl }: ChartProps) => {
     const periods = 365 // only for daily, have to change if hourly
     let selectedWindow = window
 
-    if (studyCase == 1 && coin != '1000PEPE') {
+    if (studyCase == 1 && coin != 'PEPE') {
       selectedWindow = seriesData1.length - 573
-    } else if (studyCase == 2 && coin != '1000PEPE') {
+    } else if (studyCase == 2 && coin != 'PEPE') {
       selectedWindow = seriesData1.length - 1486
     }
 
-    if (coin == '1000PEPE' && studyCase == 1) {
+    if (coin == 'PEPE' && studyCase == 1) {
       setStudyCase(0)
     }
 

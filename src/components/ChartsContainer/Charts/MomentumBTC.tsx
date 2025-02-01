@@ -146,7 +146,7 @@ const MomentumBTC = () => {
       priceFormat: {
         type: 'custom',
         formatter: (price: number) => {
-          return coin == '1000PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(2)}k`
+          return coin == 'PEPE' || coin == 'DOGE' ? `$${price.toFixed(3)}` : `$${(price * 100).toFixed(2)}k`
         },
       },
     })
@@ -156,7 +156,7 @@ const MomentumBTC = () => {
 
       acc.push({
         time: (dates[index].getTime() / 1000) as UTCTimestamp,
-        value: coin === '1000PEPE' || coin === 'DOGE' ? Number(data) : Number(data) / 100000,
+        value: coin === 'PEPE' || coin === 'DOGE' ? Number(data) : Number(data) / 100000,
       })
 
       return acc
@@ -169,7 +169,7 @@ const MomentumBTC = () => {
 
       acc.push({
         time: (dates[index].getTime() / 1000) as UTCTimestamp,
-        value: coin === '1000PEPE' || coin === 'DOGE' ? Number(data) : Number(data) / 100000,
+        value: coin === 'PEPE' || coin === 'DOGE' ? Number(data) : Number(data) / 100000,
       })
 
       return acc
@@ -240,8 +240,8 @@ const MomentumBTC = () => {
         if (assetCumReturns !== undefined && momActual !== undefined) {
           toolTip.innerHTML = `
             <div>
-              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Momentum: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${momActual.toLocaleString('US')}`}</p>
-              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == '1000PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.robin}; font-weight: bold;">Momentum: <br/> ${coin == 'PEPE' || coin == 'DOGE' ? `$${momActual.toLocaleString('US')}` : `$${momActual.toLocaleString('US')}`}</p>
+              <p style="font-size: 10px; color: ${themeColors?.offWhite}; font-weight: bold;">BTC: <br/> ${coin == 'PEPE' || coin == 'DOGE' ? `$${assetCumReturns.toLocaleString('US')}` : `$${(assetCumReturns * 100).toFixed(0)}k`}</p>
             </div>
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: var(--color-dark); color: var(--color-offWhite); text-align: center; padding-top: 4px; padding-bottom: 8px;">
               ${dateStr}

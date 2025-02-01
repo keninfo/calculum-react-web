@@ -28,7 +28,7 @@ interface TokenData {
 export class CustomUDFDatafeed {
   private baseUrl: string
   private cachedData: Map<string, { raw: TokenData[]; mo: TokenData[] }> = new Map()
-  private availableSymbols: string[] = ['BTC', 'ETH', '1000PEPE', 'ARB', 'DOGE', 'SOL']
+  private availableSymbols: string[] = ['BTC', 'ETH', 'PEPE', 'ARB', 'DOGE', 'SOL']
   private customPrefix = 'mo'
 
   constructor() {
@@ -98,7 +98,7 @@ export class CustomUDFDatafeed {
       session: '24x7',
       timezone: 'Etc/UTC',
       minmov: 1,
-      pricescale: symbolName !== 'mo1000PEPE' ? 10 : 1000000,
+      pricescale: symbolName !== 'moPEPE' ? 10 : 1000000,
       has_intraday: true,
       has_weekly_and_monthly: false,
       volume_precision: 8,
@@ -115,7 +115,7 @@ export class CustomUDFDatafeed {
       return this.cachedData.get(symbol)!
     }
 
-    const response = await fetch(`${this.baseUrl}/fetch-token-data?token=mo${symbol}`)
+    const response = await fetch(`${this.baseUrl}/fetch-token-data?token=mo${symbol == 'PEPE' ? '1000PEPE' : symbol}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }

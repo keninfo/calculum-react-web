@@ -31,7 +31,7 @@ const Chart = () => {
   useEffect(() => {
     let newVolatility = 0
 
-    if (coinStrategy === '1000PEPE Smoothcoin' || coinStrategy === 'DOGE Smoothcoin') {
+    if (coinStrategy === 'PEPE Smoothcoin' || coinStrategy === 'DOGE Smoothcoin') {
       newVolatility = 0.6
     } else if (coinStrategy === 'ETH Smoothcoin') {
       newVolatility = 0.3
@@ -46,7 +46,7 @@ const Chart = () => {
 
   const getCoinArray = () => {
     let cutCoinName = cutStringToFirstSpace(coin)
-    if (coin === '1000PEPE') cutCoinName = 'MPEPE'
+    if (coin === 'PEPE') cutCoinName = 'MPEPE'
     if (coins) {
       const index = coins.indexOf(cutCoinName)
       return values ? values[index] : []
