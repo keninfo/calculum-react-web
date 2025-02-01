@@ -59,7 +59,7 @@ const AddToken: React.FC<TokenInfo> = ({ classname }) => {
   return (
     <div>
       <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-xs text-primary ${classname}`}>
-        Add Token to Wallet
+        Add {symbol} to your wallet
       </button>
     </div>
   )
