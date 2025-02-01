@@ -13,7 +13,7 @@ const Help = () => {
   // }
 
   return (
-    <Card className="relative flex items-center justify-center gap-6 overflow-hidden !bg-offWhite text-dark">
+    <Card className="relative flex w-full items-center justify-center gap-6 overflow-hidden !bg-offWhite text-dark">
       {/* <div className="absolute right-0 top-0 flex h-full w-1/12 cursor-pointer items-center justify-center bg-primary text-dark">
         <p onClick={() => setClosed(true)}>
           <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />
@@ -25,7 +25,7 @@ const Help = () => {
       <div>
         <h3 className="text-md font-bold">Need help?</h3>
         <p className="text-xs">
-          Checkout out our step-by-step guides in{' '}
+          Check out our step-by-step guides in{' '}
           <a className="underline" href="https://docs.hodlprotocol.io/" target="_blank">
             RESOURCES
           </a>
