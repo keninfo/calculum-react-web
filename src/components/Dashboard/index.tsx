@@ -102,15 +102,15 @@ const Dashboard = () => {
                     onClick={() => setSelected(0)}
                     className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
-                    Market Transactions
+                    Metrics
                   </button>
                 </li>
-                <li className="col-span-1 flex justify-center text-lg">
+                <li className="col-span-1 flex justify-start text-lg">
                   <button
                     onClick={() => setSelected(1)}
                     className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
-                    Metrics
+                    Market Transactions
                   </button>
                 </li>
                 <li className="col-span-1 flex justify-center text-lg">
@@ -130,9 +130,9 @@ const Dashboard = () => {
                   </button>
                 </li>
               </ul>
-              {selected == 0 && <MarketTransactions />}
-              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 1 && <MarketTransactions />}
               {selected == 2 && <Positions />}
               {selected == 3 && <Transactions />}
             </Card>
@@ -145,21 +145,21 @@ const Dashboard = () => {
                     onClick={() => setSelected(0)}
                     className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
-                    Market Transactions
+                    Metrics
                   </button>
                 </li>
-                <li className="col-span-1 flex justify-center text-lg">
+                <li className="col-span-1 flex justify-end text-lg">
                   <button
                     onClick={() => setSelected(1)}
                     className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
-                    Metrics
+                    Market Transactions
                   </button>
                 </li>
               </ul>
-              {selected == 0 && <MarketTransactions />}
-              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 1 && <MarketTransactions />}
             </Card>
           )}
         </div>
