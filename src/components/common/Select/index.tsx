@@ -40,7 +40,7 @@ type SelectProps = {
  */
 const Select = ({ handleChange, value, options, className = '', disabled = false, light = false }: SelectProps) => {
   return (
-    <div className="relative w-full md:w-fit">
+    <div className="relative w-fit">
       <select
         className={`text-md h-fit w-full cursor-pointer bg-transparent py-1 text-left md:w-max ${disabled ? 'pr-0' : 'pr-8 text-citron'} ${className}`}
         id="cryptoCoin"
@@ -55,7 +55,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
         ))}
       </select>
       {!disabled && (
-        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
+        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 md:translate-x-1/2">
           {light ? <ChevronBlack /> : <Chevron />}
         </div>
       )}
