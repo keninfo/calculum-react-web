@@ -124,38 +124,32 @@ const Positions = () => {
         <div className="h-full w-full">
           <div className="w-full">
             <div className="block overflow-x-auto">
-              <table className="w-full min-w-[400px] border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border-b-2 border-grey px-4 py-2 text-left font-normal text-grey">Metric</th>
-                    <th className="border-b-2 border-grey px-4 py-2 text-right font-normal text-grey">Value</th>
-                  </tr>
-                </thead>
+              <table className="mt-4 w-fit border-collapse">
                 <tbody>
                   <tr>
-                    <td className="border-b border-grey px-4 py-2">Size</td>
-                    <td className="border-b border-grey px-4 py-2 text-right">
+                    <td className="pr-4">Size</td>
+                    <td className="pr-4 text-right">
                       {openPositions.toLocaleString('US')} {symbol}
                     </td>
                   </tr>
                   <tr>
-                    <td className="border-b border-grey px-4 py-2">Collateral</td>
-                    <td className="border-b border-grey px-4 py-2 text-right">
+                    <td className="pr-4">Collateral</td>
+                    <td className="pr-4 text-right">
                       {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
                     </td>
                   </tr>
                   <tr>
-                    <td className="border-b border-grey px-4 py-2">Entry</td>
-                    <td className="border-b border-grey px-4 py-2 text-right">{formatBalance(entrySharePrice)} USDc</td>
+                    <td className="pr-4">Entry</td>
+                    <td className="pr-4 text-right">{formatBalance(entrySharePrice)} USDc</td>
                   </tr>
                   <tr>
-                    <td className="border-b border-grey px-4 py-2">Current</td>
-                    <td className="border-b border-grey px-4 py-2 text-right">{formatBalance(daySharePrice)} USDc</td>
+                    <td className="pr-4">Current</td>
+                    <td className="pr-4 text-right">{formatBalance(daySharePrice)} USDc</td>
                   </tr>
                   <tr>
-                    <td className="border-b border-grey px-4 py-2">PNL</td>
+                    <td className="pr-4">PNL</td>
                     <td
-                      className={`border-b border-grey px-4 py-2 text-right font-normal ${
+                      className={`pr-4 text-right font-normal ${
                         Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'
                       }`}
                     >
@@ -168,7 +162,7 @@ const Positions = () => {
           </div>
         </div>
       ) : (
-        <div className="h-full min-h-fit w-full py-20">
+        <div className="0 h-full min-h-fit w-full">
           <p className="text-center text-[5vh] text-payne">
             <FontAwesomeIcon icon={['fas', 'ban' as IconName]} />
           </p>
