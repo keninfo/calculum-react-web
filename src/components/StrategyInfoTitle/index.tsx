@@ -7,6 +7,8 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance } from '@/utils/formatters'
 
+import StrategySelect from './StrategySelect'
+
 const placeholder = {
   label: 'BTC Smoothcoin',
   symbol: 'smBTC',
@@ -60,19 +62,18 @@ const StrategyInfoTitle = () => {
 
   return (
     <div
-      className={`sticky left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:px-2 ${pro ? "bg-[url('/bgPro.png')]" : "bg-[url('/bg.png')]"}`}
+      className={`left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:px-2 ${pro ? "bg-[url('/stars.jpeg')]" : "bg-[url('/bg.png')]"}`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
-      <div className="items-center justify-between md:flex md:w-full">
-        <h2 className="w-full text-nowrap text-center text-3xl font-[400] md:text-left md:text-4xl">
-          {strategyInfo.label}
-        </h2>
-        <div className="text-md flex w-full items-center justify-center space-x-2 text-offWhite md:hidden">
-          <p>TESTNET</p>
-          <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
+      <div className="items-center justify-between md:w-full">
+        <div className="mx-auto w-fit md:mx-0">
+          <StrategySelect />
         </div>
+
         {coin !== 'BTC' && (
-          <p className="w-full text-right text-xl text-true">The contract for this token is coming soon!</p>
+          <p className="w-full text-center text-true md:text-left md:text-xl">
+            The contract for this token is coming soon!
+          </p>
         )}
         {values && coin == 'BTC' && (
           <>
@@ -126,6 +127,10 @@ const StrategyInfoTitle = () => {
             </div>
           </>
         )}
+      </div>
+      <div className="text-md mt-4 flex w-full items-center justify-center space-x-2 pr-4 text-offWhite md:mt-0 md:justify-end">
+        <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
+        <p>TESTNET (Arbitrum Sepolia)</p>
       </div>
       {/* <News /> */}
     </div>
