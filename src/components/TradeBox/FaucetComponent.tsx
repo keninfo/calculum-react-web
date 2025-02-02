@@ -137,11 +137,11 @@ const FaucetComponent = () => {
       <div className="mt-5">
         <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
           <Input
-            placeholder="Amount..."
+            placeholder="Enter amount..."
             type="number"
             value={amount}
             handleChange={handleSearch}
-            className="border-none text-2xl"
+            className="border-none text-lg"
           />
           <MaxButton handleClick={setMax}>MAX</MaxButton>
         </div>

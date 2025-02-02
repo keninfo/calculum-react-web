@@ -53,18 +53,7 @@ const Approve = () => {
 
   return (
     <>
-      <p className="relative mt-[1vh] text-center text-sm">
-        <p className="cursor-default text-primary" ref={ref}>
-          Why do I have to approve? <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} />
-        </p>
-        {hovering && (
-          <p className="absolute left-1/2 top-6 w-[19.5vw] -translate-x-1/2 rounded-md bg-dark px-4 pb-6 pt-5">
-            Token approvals are used to give permission to a smart contract to spend your tokens on your behalf. This is
-            a common pattern used by decentralized exchanges, lending protocols, and other decentralized applications.
-          </p>
-        )}
-      </p>
-      <p className="my-5 text-center text-sm text-grey">
+      <p className="text-md my-5 text-center text-grey">
         YOU HAVE
         <b className="mx-2 text-offWhite">
           {(Number(balanceAssets) / 1000000).toLocaleString('US')} {SymbolAsset().data as string}
@@ -72,11 +61,11 @@ const Approve = () => {
       </p>
       <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
-          placeholder="Amount..."
+          placeholder="Enter amount..."
           type="number"
           value={amount}
           handleChange={handleAmountChange}
-          className="border-none text-2xl"
+          className="border-none text-lg"
         />
         <MaxButton handleClick={setMax}>MAX</MaxButton>
       </div>
@@ -84,6 +73,17 @@ const Approve = () => {
       <PrimaryButton handleClick={() => ApproveAssets(amount, contractAddress)} disabled={isPending} className="mt-5">
         {isPending ? 'Approving...' : 'Approve'}
       </PrimaryButton>
+      <p className="relative my-4 text-center text-sm">
+        <p className="cursor-default text-offWhite" ref={ref}>
+          {`Why do I have to "Approve"?`} <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} />
+        </p>
+        {hovering && (
+          <p className="absolute bottom-6 left-1/2 w-[19.5vw] -translate-x-1/2 rounded-md bg-dark px-4 pb-6 pt-5">
+            Token approvals are used to give permission to a smart contract to spend your tokens on your behalf. This is
+            a common pattern used by decentralized exchanges, lending protocols, and other decentralized applications.
+          </p>
+        )}
+      </p>
     </>
   )
 }
