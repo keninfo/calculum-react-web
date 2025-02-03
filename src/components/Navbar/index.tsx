@@ -10,10 +10,10 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import Card from '@/components/common/Card'
+import CustomConnectButton from '@/components/common/CustomConnectButton'
 import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 
-import CustomConnectButton from '../common/CustomConnectButton'
 import NavbarItem from './NavbarItem'
 import { navigationItems } from './config'
 
@@ -49,18 +49,18 @@ const Sidebar = () => {
             className="col-span-2 flex h-8 w-fit justify-start"
           />
           <div className="col-span-6 flex items-center justify-start">{navigationItems.map(NavbarItem)} </div>
-          <div className="col-span-3 ml-4 px-6">
+          <div className="col-span-3 ml-4 flex justify-end">
             <CustomConnectButton />
           </div>
         </div>
       </div>
       {/* MOBILE */}
-      <div className="flex h-fit items-center justify-around gap-10 p-6 md:hidden">
-        <Image src="/HODL.png" width={100} height={20} alt="image" className="h-5 w-auto" />
-        <div className="w-full">
+      <div className="flex h-fit items-center justify-around gap-4 p-6 md:hidden">
+        <Image src="/HODLSmall.png" width={100} height={20} alt="image" className="h-10 w-auto" />
+        <div className="flex w-full justify-center">
           <CustomConnectButton />
         </div>
-        <p className="flex w-fit justify-end text-lg" onClick={handleNavbarToggle}>
+        <p className="flex w-fit justify-end text-2xl" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}
           {isNavbarOpen && <FontAwesomeIcon icon={['fas', 'xmark' as IconName]} />}
         </p>

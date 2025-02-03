@@ -10,5 +10,5 @@ export const navigationItems: NavigationItem[] = [
   { name: 'DASHBOARD', link: '/', icon: 'globe', target: '' },
   // { name: 'PRODUCTS', link: 'https://hodlprotocol.io', icon: 'file-invoice', target: '' },
   { name: 'RESOURCES', link: 'https://docs.hodlprotocol.io/', icon: 'file-invoice', target: '_blank' },
-  { name: 'LEADERBOARD', link: '/quests', icon: 'globe', target: '' },
+  { name: 'LEADERBOARD', link: '/leaderboard', icon: 'globe', target: '' },
 ]
