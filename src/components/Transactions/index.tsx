@@ -11,7 +11,7 @@ import { createPublicClient, http, parseAbiItem } from 'viem'
 import { useAccount } from 'wagmi'
 
 import useContract from '@/hooks/useContract'
-import { formatBalance, formatShares, shortenAddress, timeToWordDate } from '@/utils/formatters'
+import { formatBalance, formatShares, shortenAddress } from '@/utils/formatters'
 
 const ITEMS_PER_PAGE = 10
 
@@ -82,7 +82,10 @@ const Transactions = () => {
       const uniqueBlockNumbers = [...new Set(blockNumbers)]
       const blockData = await Promise.all(uniqueBlockNumbers.map((blockNumber) => client.getBlock({ blockNumber })))
       const blockTimestamps = new Map(
-        blockData.map((block) => [block.number, timeToWordDate(block.timestamp.toString())]),
+        blockData.map((block) => [
+          block.number,
+          new Date(Number(block.timestamp.toString()) * 1000).toLocaleDateString('en-US'),
+        ]),
       )
 
       const formattedLogs = [
@@ -145,7 +148,7 @@ const Transactions = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="w-full">
+      <div className="hidden w-full md:block">
         <div className="block overflow-x-auto">
           <table className="w-full min-w-[600px] border-collapse">
             <thead>
@@ -203,6 +206,60 @@ const Transactions = () => {
               Next
             </button>
           </div>
+        </div>
+      </div>
+      <div className="h-full w-full md:hidden">
+        {currentTransactions.length === 0 ? (
+          <div className="py-4 text-center text-grey">No transactions found.</div>
+        ) : (
+          <div className="space-y-4">
+            {currentTransactions.map((log, index) => (
+              <div key={index} className="rounded-lg border border-grey p-4 shadow-md">
+                <div className="flex items-end justify-between">
+                  <span className="font-bold text-white">{log.type}</span>
+                  <span className="text-sm text-grey">{log.date}</span>
+                </div>
+                <div className="mt-2 flex justify-between">
+                  <span className="text-sm font-medium">Shares:</span>
+                  <span className={log.type === 'Withdraw' ? 'text-fire' : 'text-spring'}>
+                    {log.type === 'Withdraw' ? '- ' : ''}
+                    {log.shares}
+                  </span>
+                </div>
+                <div className="mt-1 flex justify-between">
+                  <span className="text-sm font-medium">USDC:</span>
+                  <span>
+                    {log.type === 'Withdraw' ? '- ' : ''}
+                    {log.usdc}
+                  </span>
+                </div>
+                <div className="mt-2 text-center text-sm text-robin underline">
+                  <Link href={`https://sepolia.arbiscan.io/tx/${log.transactionHash}`} target="_blank">
+                    View Transaction
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="mt-4 flex items-center justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="px-4 py-2 hover:text-primary disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="px-4 py-2 hover:text-primary disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
