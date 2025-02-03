@@ -12,9 +12,9 @@ import { formatShares } from '@/utils/formatters'
 
 type responseData = [number, bigint, bigint, bigint]
 
-const ClaimMint = () => {
+const ClaimMint = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const { address } = useAccount()
-  const { contractAddress, contractAbi, symbol, icon } = useContract()
+  const { contractAddress, contractAbi, symbol } = useContract()
   const { ClaimShares, hash, error } = useClaimShares()
   const { IsClaimerMint, Deposits } = ContractReads(contractAddress, contractAbi)
   const [, , userDepositsShares] = (Deposits(address).data || []) as responseData
@@ -33,22 +33,26 @@ const ClaimMint = () => {
     <>
       <AddToken />
       <div className="my-5 flex items-center justify-center space-x-5">
-        <img src={`${icon}`} width={50} height={50} alt="image" className="rounded-full" />
-        <div className="text-left">
-          <p>{Number(formatShares(userDepositsShares)).toLocaleString('US')}</p>
-          <h4 className="text-citron">{symbol}</h4>
+        {/* <img src={`${icon}`} width={50} height={50} alt="image" className="rounded-full" /> */}
+        <div className="text-left text-xl">
+          <p>
+            {Number(formatShares(userDepositsShares)).toLocaleString('US')}
+            <b> {symbol}</b>
+          </p>
         </div>
       </div>
 
-      <div className="">
-        {claimerMint ? (
-          <PrimaryButton handleClick={() => ClaimShares(address, contractAddress, contractAbi)}>
-            Claim All Shares
-          </PrimaryButton>
-        ) : (
-          <p className="w-full rounded-lg bg-payne px-4 py-2 text-center text-grey">{`Wait one epoch to be able to claim all shares`}</p>
-        )}
-      </div>
+      {!inMaintenance && (
+        <div className="">
+          {claimerMint ? (
+            <PrimaryButton handleClick={() => ClaimShares(address, contractAddress, contractAbi)}>
+              Claim All Shares
+            </PrimaryButton>
+          ) : (
+            <p className="w-full rounded-lg bg-payne px-4 py-2 text-center text-grey">{`Wait one epoch to be able to claim all shares`}</p>
+          )}
+        </div>
+      )}
     </>
   )
 }

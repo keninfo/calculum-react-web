@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHover } from '@uidotdev/usehooks'
 import { track } from '@vercel/analytics/react'
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { type BaseError, useAccount } from 'wagmi'
 
+import AddUSDC from '@/components/common/AddToken/AddUSDC'
 import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
 import Input from '@/components/common/Input'
 import useApprove from '@/hooks/useApprove'
@@ -17,8 +18,9 @@ import { formatBalance } from '@/utils/formatters'
 
 import { AmountContext } from '.'
 
-const Approve = () => {
+const Approve = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const { contractAddress, contractAbi } = useContract()
+  const [isConfirming, setIsConfirming] = useState<boolean>(false)
 
   const { SymbolAsset, BalanceAssets } = ContractReads(contractAddress, contractAbi)
   const { ApproveAssets, isPending, error, hash } = useApprove()
@@ -41,6 +43,11 @@ const Approve = () => {
     setAmount(parseFloat(formatBalance(balanceAssets)))
   }
 
+  const handleApprove = () => {
+    setIsConfirming(true)
+    ApproveAssets(amount, contractAddress)
+  }
+
   useEffect(() => {
     if (hash) {
       createTransactionAlert('Transaction Approved!', true)
@@ -53,15 +60,17 @@ const Approve = () => {
 
   return (
     <>
-      <p className="text-md my-5 text-center text-grey">
-        YOU HAVE
+      <p className="text-center text-offWhite">Great!</p>
+      <p className="text-md mb-2 text-center">
+        {`You've received`}
         <b className="mx-2 text-offWhite">
           {(Number(balanceAssets) / 1000000).toLocaleString('US')} {SymbolAsset().data as string}
         </b>
       </p>
-      <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
+      <AddUSDC />
+      <div className="mx-5 mt-10 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
-          placeholder="Enter amount..."
+          placeholder="USDC amount..."
           type="number"
           value={amount}
           handleChange={handleAmountChange}
@@ -70,10 +79,17 @@ const Approve = () => {
         <MaxButton handleClick={setMax}>MAX</MaxButton>
       </div>
 
-      <PrimaryButton handleClick={() => ApproveAssets(amount, contractAddress)} disabled={isPending} className="mt-5">
-        {isPending ? 'Approving...' : 'Approve'}
-      </PrimaryButton>
-      <p className="relative my-4 text-center text-sm">
+      {!inMaintenance && (
+        <PrimaryButton handleClick={() => handleApprove()} disabled={isPending || isConfirming} className="mt-8">
+          {isConfirming && !isPending && (
+            <p className="mr-2">
+              <FontAwesomeIcon icon={['fas', 'spinner' as IconName]} className="animate-spin" />
+            </p>
+          )}
+          {isPending ? 'Approving...' : isConfirming ? 'Confirming...' : 'Approve'}
+        </PrimaryButton>
+      )}
+      <p className="relative mt-4 text-center text-xs">
         <p className="cursor-default text-offWhite" ref={ref}>
           {`Why do I have to "Approve"?`} <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} />
         </p>

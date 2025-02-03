@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
 
@@ -8,22 +8,18 @@ import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import useWithdrawAssets from '@/hooks/useWithdrawAssets'
 import createTransactionAlert from '@/utils/createTransactionAlert'
-import { formatBalance, formatShares } from '@/utils/formatters'
+import { formatShares } from '@/utils/formatters'
 
-import { AmountContext } from '.'
-
-const WithdrawAsset = () => {
+const WithdrawAsset = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const { contractAddress, contractAbi, symbol } = useContract()
 
-  const { amount, setAmount } = useContext(AmountContext)
+  const [amount, setAmount] = useState<number>(0)
   const { address } = useAccount()
-  const { BalanceShares, ConvertToShares, ConvertToAssets } = ContractReads(contractAddress, contractAbi)
+  const { BalanceShares, ConvertToAssets } = ContractReads(contractAddress, contractAbi)
   const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
   const formattedShares = formatShares(BalanceSharesResult)
-  const convertedAssets = ConvertToAssets(parseFloat(formattedShares)).data as bigint
-  const maxAssets = parseFloat(formatBalance(convertedAssets))
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
@@ -31,7 +27,7 @@ const WithdrawAsset = () => {
   }
 
   const setMaxAssets = () => {
-    setAmount(maxAssets)
+    setAmount(Number(formattedShares))
   }
 
   useEffect(() => {
@@ -46,38 +42,38 @@ const WithdrawAsset = () => {
   return (
     <>
       <p className="my-5 text-center text-sm text-grey">
-        YOU HAVE
-        <b className="mx-2 text-offWhite">
+        You have
+        <b className="mx-1 text-offWhite">
           {(Number(BalanceSharesResult) / 1000000000000000000).toLocaleString('US')} {symbol}
         </b>
       </p>
       <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
         <Input
-          placeholder="Amount..."
+          placeholder={`${symbol} amount...`}
           type="number"
           value={amount}
           handleChange={handleAmountChange}
-          className="border-none text-2xl"
+          className="border-none text-lg"
         />
         <p></p>
         <MaxButton handleClick={setMaxAssets}>MAX</MaxButton>
       </div>
-      <div className="flex w-full items-center justify-center space-x-1 px-2 pt-4 text-center text-xs">
-        <b> {(Number(ConvertToShares(amount).data as bigint) / 1000000000000000000 || 0).toLocaleString('US')}</b>
-        <p className="text-citron">{symbol}</p>
+      <div className="text-md mt-5 flex-row text-center">
+        <p className="text-offWhite">You will receive</p>
+        <b className="text-xl text-primary">
+          {' '}
+          {(Number(ConvertToAssets(amount).data as bigint) / 1000000 || 0).toLocaleString('US')} USDC
+        </b>
       </div>
-      <div className="mt-5 flex-row text-center text-xs">
-        <p className="text-grey">YOU WILL RECEIVE</p>
-        <b className="text-grey"> {(Number(amount) || 0).toLocaleString('US')} USDC</b>
-      </div>
-
-      <PrimaryButton
-        handleClick={() => withdrawAssets({ amount, address }, contractAddress, contractAbi)}
-        className="mt-5"
-        disabled={isPending}
-      >
-        {isPending ? 'Withdrawing...' : 'Withdraw'}
-      </PrimaryButton>
+      {!inMaintenance && (
+        <PrimaryButton
+          handleClick={() => withdrawAssets({ amount, address }, contractAddress, contractAbi)}
+          className="mt-5"
+          disabled={isPending}
+        >
+          {isPending ? 'Withdrawing...' : 'Withdraw'}
+        </PrimaryButton>
+      )}
     </>
   )
 }

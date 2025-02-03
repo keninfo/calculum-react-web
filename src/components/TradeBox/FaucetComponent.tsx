@@ -1,5 +1,7 @@
 'use client'
 
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { track } from '@vercel/analytics/react'
 
 import React, { useContext, useEffect, useState } from 'react'
@@ -12,9 +14,7 @@ import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount, useBalance } from 'wagmi'
 
-import AddUSDC from '@/components/common/AddToken/AddUSDC'
-import { MaxButton, PrimaryButton } from '@/components/common/Buttons'
-import Input from '@/components/common/Input'
+import { PrimaryButton } from '@/components/common/Buttons'
 import useMint from '@/hooks/useMint'
 import { PRIVATE_KEY } from '@/utils/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
@@ -24,10 +24,11 @@ import { AmountContext } from './index'
 const coins = ['USDC']
 const contracts = ['0xD32ea1C76ef1c296F131DD4C5B2A0aac3b22485a']
 
-const FaucetComponent = () => {
+const FaucetComponent = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const router = useRouter()
   const { address } = useAccount()
-  const { MintTokens, isPending, error, hash } = useMint()
+  const { MintTokens, isPending, error, isConfirmed } = useMint()
+  const [isConfirming, setIsConfirming] = useState<boolean>(false)
   const { amount, setAmount } = useContext(AmountContext)
   const [selectedCoin] = useState<number>(0)
 
@@ -41,22 +42,18 @@ const FaucetComponent = () => {
   const ethBalance = parseFloat(ethBalanceData?.formatted || '0')
   const isEligibleForEth = ethBalance < 0.0005 && !hasRequestedETH
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(parseFloat(event.target.value))
-  }
+  useEffect(() => {
+    setAmount(10000)
+  })
 
   useEffect(() => {
-    if (hash) {
+    if (isConfirmed) {
       createTransactionAlert('Tokens Minted', true)
     }
     if (error) {
-      createTransactionAlert('Erro: Tokens Not Minted', false)
+      createTransactionAlert('Error: Tokens Not Minted', false)
     }
-  }, [hash, error, router])
-
-  const setMax = () => {
-    setAmount(selectedCoin <= 1 ? 10000 : 99)
-  }
+  }, [isConfirmed, error, router])
 
   const handleSendTokens = async () => {
     try {
@@ -116,43 +113,28 @@ const FaucetComponent = () => {
         return
       }
     }
+    setIsConfirming(true)
     await MintTokens(contracts[selectedCoin], address as Hash, amount, selectedCoin <= 1 ? 6 : 18)
   }
 
   return (
     <>
-      {!isSending ? (
-        <>
-          <div className="flex items-center justify-center">
-            <span className={`h-3 w-3 rounded-full ${isEligibleForEth ? 'bg-primary' : 'bg-fire'}`} />
-            <p className="ml-2 text-offWhite">
-              {isEligibleForEth ? 'Eligible to receive ETH' : 'Not eligible to receive ETH'}
+      <p className="text-center">To start, you will need ETH and USDC from the faucet. </p>
+
+      {!inMaintenance && (
+        <PrimaryButton handleClick={handleMint} className="my-5" disabled={isSending || isPending || isConfirming}>
+          {isConfirming && !isPending && (
+            <p className="mr-2">
+              <FontAwesomeIcon icon={['fas', 'spinner' as IconName]} className="animate-spin" />
             </p>
-          </div>{' '}
-          <p className="mx-auto text-center text-xs text-grey">Your ETH Balance: {ethBalance.toFixed(6)} ETH</p>
-        </>
-      ) : (
-        <p className="text-center text-primary">Sending Gas Eth...</p>
-      )}
-      <div className="mt-5">
-        <div className="mx-5 flex items-center justify-center border-b-2 border-payne px-2 pb-2">
-          <Input
-            placeholder="Enter amount..."
-            type="number"
-            value={amount}
-            handleChange={handleSearch}
-            className="border-none text-lg"
-          />
-          <MaxButton handleClick={setMax}>MAX</MaxButton>
-        </div>
-        <p className="mt-5 text-center text-xs text-grey">
-          You will receive {amount.toLocaleString('US')} {coins[selectedCoin]}
-        </p>
-        <AddUSDC />
-        <PrimaryButton handleClick={handleMint} className="mt-5">
-          {isPending ? 'Minting...' : 'Mint Token'}
+          )}
+          {isSending ? 'Sending ETH...' : isPending ? 'Minting...' : isConfirming ? 'Confirming...' : `Let's go!`}
         </PrimaryButton>
-      </div>
+      )}
+      <p className="mt-5 text-center text-xs text-grey">
+        You will receive {amount.toLocaleString('US')} {coins[selectedCoin]}
+        <br /> {`and some ETH ( If you don't have any )`}
+      </p>
     </>
   )
 }

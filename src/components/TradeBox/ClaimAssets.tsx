@@ -12,7 +12,7 @@ import createTransactionAlert from '@/utils/createTransactionAlert'
 
 type responseData = [number, bigint, bigint, bigint]
 
-const ClaimAssets = () => {
+const ClaimAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const { contractAddress, contractAbi } = useContract()
   const { address } = useAccount()
   const { ClaimAssets, hash, error } = useClaimAssets()
@@ -33,23 +33,26 @@ const ClaimAssets = () => {
   return (
     <>
       <AddUSDC />
-      <div className="my-5 flex items-center justify-center space-x-5">
-        <CryptoIcon coin="USDC" className="h-[50px]" />
-        <div className="text-left">
-          <p>{amountAssets ? (Number(amountAssets) / 1000000).toLocaleString('US') : 'Loading...'}</p>
-          <h4 className="text-citron">USDC</h4>
+      <div className="my-5 flex items-center justify-center space-x-2">
+        <CryptoIcon coin="USDC" className="h-[20px]" />
+        <div className="text-left text-xl">
+          <p>
+            {amountAssets ? (Number(amountAssets) / 1000000).toLocaleString('US') : 'Loading...'} <b>USDC</b>
+          </p>
         </div>
       </div>
 
-      <div className="">
-        {claimerWithdraw ? (
-          <PrimaryButton handleClick={() => ClaimAssets(address, contractAddress, contractAbi)}>
-            Claim All Assets
-          </PrimaryButton>
-        ) : (
-          <p className="w-full rounded-lg bg-payne px-4 py-2 text-center text-grey">{`Wait one epoch to be able to claim all assets`}</p>
-        )}
-      </div>
+      {!inMaintenance && (
+        <div className="">
+          {claimerWithdraw ? (
+            <PrimaryButton handleClick={() => ClaimAssets(address, contractAddress, contractAbi)}>
+              Claim All Assets
+            </PrimaryButton>
+          ) : (
+            <p className="w-full rounded-lg bg-payne px-4 py-2 text-center text-grey">{`Wait one epoch to be able to claim all assets`}</p>
+          )}
+        </div>
+      )}
     </>
   )
 }

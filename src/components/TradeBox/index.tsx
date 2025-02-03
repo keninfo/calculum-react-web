@@ -2,12 +2,11 @@ import type { IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import React, { createContext, useEffect, useState } from 'react'
-import type { ReactNode } from 'react'
 
 import { useAccount } from 'wagmi'
 import { arbitrumSepolia } from 'wagmi/chains'
 
-import { PrimaryButton } from '@/components/common/Buttons'
+import { PrimaryButton, SecondaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
@@ -31,44 +30,15 @@ export const AmountContext = createContext<AmountContextType>({
   setAmount: () => {},
 })
 
-const TradeBoxButton = ({ action, type }: { action: string; type: number }) => {
-  if (type == 0) {
-    return (
-      <button
-        className="my-2 flex w-full items-center justify-between rounded-md bg-payne px-4 py-2 text-center text-grey"
-        disabled
-      >
-        <div className="h-4 w-4 bg-transparent"></div>
-        {action}
-        <FontAwesomeIcon icon={['fas', 'check' as IconName]} className="h-4 text-primary" />
-      </button>
-    )
-  } else if (type == 1) {
-    return (
-      <button
-        className="my-2 flex w-full items-center justify-center rounded-md bg-payne px-4 py-2 text-center text-grey"
-        disabled
-      >
-        {action}
-      </button>
-    )
-  }
-}
-
-const TradeBoxActionContainer = ({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) => {
-  return <div className="my-2 h-fit w-full rounded-lg border-2 border-payne p-5">{children}</div>
-}
-
 const TradeBox = () => {
   const { contractAddress, contractAbi } = useContract()
 
   const [step, setStep] = useState<number>(0)
   const { address, isConnected, chainId } = useAccount()
-  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares } = ContractReads(contractAddress, contractAbi)
+  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares, InMaintenance } = ContractReads(
+    contractAddress,
+    contractAbi,
+  )
   const balanceAssets = BalanceAssets(address).data as bigint
   const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint
@@ -99,6 +69,35 @@ const TradeBox = () => {
     }
   }, [chainId, setNetwork])
 
+  const handleChange = ({ toDeposit }: { toDeposit: boolean }) => {
+    if (toDeposit == true) {
+      if (
+        (userWithdrawalsStatus == 0 && userDepositStatus != 0) ||
+        (userWithdrawalsStatus == 3 && userDepositStatus != 3)
+      ) {
+        setStep(4)
+      } else if (userDepositStatus == 1) {
+        setStep(4)
+      } else if ((userDepositStatus == 0 || userDepositStatus == 3) && balanceAssets > 0 && allowance > 0) {
+        setStep(3)
+      } else if (balanceAssets <= 0) {
+        setStep(1)
+      } else if (allowance <= 0) {
+        setStep(2)
+      } else {
+        setStep(0)
+      }
+    } else {
+      if ((userWithdrawalsStatus == 2 || userWithdrawalsStatus == 5) && userDepositStatus == 3) {
+        setStep(6)
+      } else if (userDepositStatus == 3 && Number(balanceSharesResult) / 1000000000000000000 > 1) {
+        setStep(5)
+      } else {
+        setStep(7)
+      }
+    }
+  }
+
   useEffect(() => {
     if ((userWithdrawalsStatus == 2 || userWithdrawalsStatus == 5) && userDepositStatus == 3) {
       setStep(6)
@@ -122,9 +121,29 @@ const TradeBox = () => {
     }
   }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult])
 
+  let isInMaintenance = false
+  const data = InMaintenance().data as [boolean, number]
+  if (data) {
+    isInMaintenance = data[0] as boolean
+  }
+
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
       <Card className="h-fit w-full">
+        <div className="mb-8 grid w-full grid-cols-2 items-center gap-5">
+          <SecondaryButton
+            className={`col-span-1 w-full pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} hover:scale-100`}
+            handleClick={() => handleChange({ toDeposit: true })}
+          >
+            DEPOSIT
+          </SecondaryButton>
+          <SecondaryButton
+            className={`col-span-1 w-full pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''} hover:scale-100`}
+            handleClick={() => handleChange({ toDeposit: false })}
+          >
+            WITHDRAW
+          </SecondaryButton>
+        </div>
         {wrongNetwork && isConnected && (
           <>
             {' '}
@@ -134,67 +153,26 @@ const TradeBox = () => {
             </PrimaryButton>
           </>
         )}
-        {!isConnected && (
-          <ul className="mt-2 space-y-2">
-            <TradeBoxButton action="Mint" type={1} />
-            <TradeBoxButton action="Approve" type={1} />
-            <TradeBoxButton action="Deposit" type={1} />
-            <TradeBoxButton action="Claim Shares" type={1} />
-            <TradeBoxButton action="Withdraw" type={1} />
-            <TradeBoxButton action="Claim Assets" type={1} />
-          </ul>
-        )}
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
-            {step == 1 ? (
-              <TradeBoxActionContainer>
-                <FaucetComponent />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Mint" type={step < 1 ? 1 : 0} />
-            )}
-            {step == 2 ? (
-              <TradeBoxActionContainer>
-                <Approve />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Approve" type={step < 2 ? 1 : 0} />
-            )}
-            {step == 3 ? (
-              <TradeBoxActionContainer>
-                <Deposit />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Deposit" type={step < 3 ? 1 : 0} />
-            )}
-            {step == 4 ? (
-              <TradeBoxActionContainer>
-                <ClaimShares />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Claim Shares" type={step < 4 ? 1 : 0} />
-            )}
-            {step == 5 ? (
-              <TradeBoxActionContainer>
-                <Withdraw />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Withdraw" type={step < 5 ? 1 : 0} />
-            )}
-            {step == 6 ? (
-              <TradeBoxActionContainer>
-                <ClaimAssets />
-              </TradeBoxActionContainer>
-            ) : (
-              <></>
-              // <TradeBoxButton action="Claim Assets" type={step < 6 ? 1 : 0} />
+            {step == 1 && <FaucetComponent inMaintenance={isInMaintenance} />}
+            {step == 2 && <Approve inMaintenance={isInMaintenance} />}
+            {step == 3 && <Deposit inMaintenance={isInMaintenance} />}
+            {step == 4 && <ClaimShares inMaintenance={isInMaintenance} />}
+            {step == 5 && <Withdraw inMaintenance={isInMaintenance} />}
+            {step == 6 && <ClaimAssets inMaintenance={isInMaintenance} />}
+            {step == 7 && (
+              <p className="text-center">
+                {`You don't have positions to withdraw, try depositing something first and claiming your shares !`}
+              </p>
             )}
           </ul>
+        )}
+        {isInMaintenance && (
+          <div className="mt-4 flex w-full items-center justify-center bg-atomic py-2 text-center font-light text-dark">
+            <FontAwesomeIcon icon={['fas', 'triangle-exclamation' as IconName]} className="mr-2 text-xl" />
+            <p className="w-2/3 text-xs">Contract under maintenance, please try again in 5 minutes</p>
+          </div>
         )}
       </Card>
     </AmountContext.Provider>
