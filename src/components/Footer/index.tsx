@@ -16,7 +16,7 @@ const index = () => {
         </a>
       </div>
       <div className="col-span-1 my-5 flex h-full w-auto items-center justify-center px-20 md:my-0">
-        <Image src="/HODL.png" width={500} height={1000} alt="image" className="h-10 w-auto" />
+        <Image src="/HODL.png" width={500} height={1000} alt="image" className="h-auto w-full md:h-10 md:w-auto" />
       </div>
 
       <p className="col-span-1 text-center text-grey md:text-right">HODL Protocol @ 2025. All Rights Reserved</p>
