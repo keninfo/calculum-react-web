@@ -8,7 +8,16 @@ const ProductMetrics = ({ small = false }: { small?: boolean }) => {
   const { coin } = useStrategyStore()
 
   if (coin == 'BTC') {
-    return <Info small={small} />
+    return (
+      <>
+        <div className="hidden md:block">
+          <Info small={small} />
+        </div>
+        <div className="md:hidden">
+          <Info small={true} />
+        </div>
+      </>
+    )
   }
 }
 

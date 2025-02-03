@@ -102,7 +102,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
           <div
             className={`${!small ? 'mt-6 grid grid-cols-3' : 'flex flex-col justify-between space-y-4 pt-6'} h-fit w-full [&_p]:text-left`}
           >
-            <div className="col-span-1">
+            <div className="col-span-1 border-b border-grey pb-4 md:border-b-0 [&_p]:text-center md:[&_p]:text-left">
               <p className="text-offWhite">Sharpe Ratio</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}
@@ -118,7 +118,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
                 </b>
               </p>
             </div>
-            <div className="col-span-1">
+            <div className="col-span-1 border-b border-grey pb-4 md:border-b-0 [&_p]:text-center md:[&_p]:text-left">
               <p className="text-offWhite">CAGR</p>
               <p className="text-md mt-2 text-grey">
                 moBTC: <b className={`text-md ${scaledCAGR < 0 ? 'text-offWhite' : 'text-offWhite'}`}>{scaledCAGR}%</b>
@@ -132,7 +132,7 @@ const InfoMomentum = ({ small = false }: { small?: boolean }) => {
                 <b className={`text-md ${differenceCAGR > 0 ? 'text-spring' : 'text-fire'}`}>{differenceCAGRString}</b>
               </p>
             </div>
-            <div className="col-span-1">
+            <div className="col-span-1 [&_p]:text-center md:[&_p]:text-left">
               <p className="text-offWhite">Largest Drawdown</p>
               <p className="text-md mt-2 text-grey">
                 moBTC:{' '}
