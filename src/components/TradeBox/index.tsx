@@ -132,14 +132,16 @@ const TradeBox = () => {
       <Card className="h-fit w-full">
         <div className="mb-8 grid w-full grid-cols-2 items-center gap-5">
           <SecondaryButton
-            className={`col-span-1 w-full pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} hover:scale-100`}
+            className={`col-span-1 w-full pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} `}
             handleClick={() => handleChange({ toDeposit: true })}
+            disabled
           >
             DEPOSIT
           </SecondaryButton>
           <SecondaryButton
-            className={`col-span-1 w-full pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''} hover:scale-100`}
+            className={`col-span-1 w-full pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''}`}
             handleClick={() => handleChange({ toDeposit: false })}
+            disabled
           >
             WITHDRAW
           </SecondaryButton>

@@ -57,7 +57,7 @@ export const PrimaryButton = ({ handleClick, children, disabled, border, classNa
 export const SecondaryButton = ({ handleClick, children, disabled, border, className }: ButtonProps) => (
   <button
     onClick={handleClick}
-    className={`flex w-[100%] justify-center bg-dark py-1 text-offWhite hover:scale-105 ${border ? 'border-2' : ''} ${className}`}
+    className={`flex w-[100%] justify-center bg-dark py-1 text-offWhite ${border ? 'border-2' : ''} ${className}`}
     disabled={disabled}
   >
     {children}
