@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
+import Calendar from '@/components/ProductMetrics/Calendar'
+import CalendarMomentum from '@/components/ProductMetrics/CalendarMomentum'
+import Card from '@/components/common/Card'
 import { useOptionsStore } from '@/store/useOptionsStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-import Calendar from '../ProductMetrics/Calendar'
-import CalendarMomentum from '../ProductMetrics/CalendarMomentum'
-import Card from '../common/Card'
 import ChartOptions from './ChartOptions/Index'
 import ChartsContainer from './ChartsContainer/Index'
 import CoinSelect from './CoinSelect'

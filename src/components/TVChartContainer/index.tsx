@@ -1,6 +1,7 @@
 // TVChartContainer.tsx
 import { useEffect, useRef } from 'react'
 
+import Card from '@/components/common/Card'
 import { CustomUDFDatafeed } from '@/lib/CustomDatafeed'
 import { widget } from '@/public/charting_library'
 import type {
@@ -11,8 +12,6 @@ import type {
 } from '@/public/charting_library'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { proTheme } from '@/styles/colors'
-
-import Card from '../common/Card'
 
 export const TVChartContainer = () => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
