@@ -8,6 +8,7 @@ import { useAccount } from 'wagmi'
 
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Help from '@/components/Help'
+import InitialPopup from '@/components/InitialPopup'
 import MarketTransactions from '@/components/MarketTransactions'
 import Positions from '@/components/Positions'
 import ProductMetrics from '@/components/ProductMetrics'
@@ -20,8 +21,6 @@ import TVAttribution from '@/components/common/TVAttribution'
 import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
-
-import InitialPopup from '../InitialPopup'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -85,22 +84,6 @@ const Dashboard = () => {
               <ul className="flex items-center justify-start gap-10 border-b border-payne pt-2">
                 <li className="text-lg">
                   <button
-                    onClick={() => setSelected(0)}
-                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Metrics
-                  </button>
-                </li>
-                <li className="text-lg">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Transactions
-                  </button>
-                </li>
-                <li className="text-lg">
-                  <button
                     onClick={() => setSelected(2)}
                     className={`pb-6 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
@@ -113,6 +96,22 @@ const Dashboard = () => {
                     className={`pb-6 ${selected === 3 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
                     Transaction History
+                  </button>
+                </li>
+                <li className="text-lg">
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Metrics
+                  </button>
+                </li>
+                <li className="text-lg">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Transactions
                   </button>
                 </li>
               </ul>
@@ -167,45 +166,44 @@ const Dashboard = () => {
         <TVAttribution />
         {isConnected && (
           <>
-            <Help />
             <TradeBox />
+            <Help />
           </>
         )}
         <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
           {isConnected && coin == 'BTC' && (
-            <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-1 border-b border-payne pt-2 md:grid-cols-4">
-                <li className="col-span-1 flex justify-start text-lg">
-                  <button
-                    onClick={() => setSelected(0)}
-                    className={`pb-6 ${selected === 0 ? 'border-primary text-primary md:border-b-2' : ''}`}
-                  >
-                    Metrics
-                  </button>
-                </li>
-                <li className="col-span-1 flex justify-start text-lg md:justify-start">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-6 ${selected === 1 ? 'border-primary text-primary md:border-b-2' : ''}`}
-                  >
-                    Transactions
-                  </button>
-                </li>
-
-                <li className="col-span-1 flex justify-start text-lg">
+            <Card className="h-full min-h-fit w-full">
+              <ul className="flex items-center justify-around pt-2">
+                <li className="col-span-1 flex justify-start text-xs">
                   <button
                     onClick={() => setSelected(2)}
-                    className={`pb-6 ${selected === 2 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                    className={`pb-2 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
                     Positions
                   </button>
                 </li>
-                <li className="col-span-1 flex justify-start text-lg md:justify-end">
+                <li className="col-span-1 flex justify-start text-xs">
                   <button
                     onClick={() => setSelected(3)}
-                    className={`pb-6 ${selected === 3 ? 'border-primary text-primary md:border-b-2' : ''}`}
+                    className={`pb-2 ${selected === 3 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
-                    Transaction History
+                    Trade History
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-start text-xs">
+                  <button
+                    onClick={() => setSelected(0)}
+                    className={`pb-2 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Metrics
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-start text-xs">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-2 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Transactions
                   </button>
                 </li>
               </ul>
@@ -218,21 +216,21 @@ const Dashboard = () => {
           )}
           {!isConnected && coin == 'BTC' && (
             <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-4 border-b border-payne pt-2">
-                <li className="col-span-2 flex justify-start text-lg">
+              <ul className="grid grid-cols-4 pt-2">
+                <li className="col-span-1 flex justify-start text-xs">
                   <button
                     onClick={() => setSelected(0)}
-                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Market Transactions
-                  </button>
-                </li>
-                <li className="col-span-2 flex justify-end text-lg md:justify-center">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                    className={`pb-2 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
                   >
                     Metrics
+                  </button>
+                </li>
+                <li className="col-span-1 flex justify-start text-xs">
+                  <button
+                    onClick={() => setSelected(1)}
+                    className={`pb-2 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                  >
+                    Transactions
                   </button>
                 </li>
               </ul>
