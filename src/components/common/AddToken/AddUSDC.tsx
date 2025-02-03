@@ -56,9 +56,10 @@ const AddUSDC: React.FC<TokenInfo> = ({ classname }) => {
   }
 
   return (
-    <div>
-      <button onClick={watchAsset} className={`w-full cursor-pointer text-center text-sm text-primary ${classname}`}>
-        Add USDC to Wallet
+    <div className="flex flex-col justify-center px-5 text-center text-xs text-grey">
+      <p>{`Don't forget to`} </p>
+      <button onClick={watchAsset} className={`w-full cursor-pointer text-xs text-primary ${classname} underline`}>
+        add the USDC Symbol to your wallet
       </button>
     </div>
   )
