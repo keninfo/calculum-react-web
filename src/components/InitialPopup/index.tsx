@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import { PrimaryButton } from '../common/Buttons'
-import Input from '../common/Input'
-import Modal from '../common/Modal'
+import { PrimaryButton } from '@/components/common/Buttons'
+import Input from '@/components/common/Input'
+import Modal from '@/components/common/Modal'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -55,9 +55,9 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
   }
 
   return (
-    <Modal onClose={() => handleOptionClick('SKIPPED')} closeMessage="SKIP">
-      <h3 className="mt-14 text-center text-2xl text-robin">{`What's the main reason for your visit, anon?`}</h3>
-      <ul className="grid w-full grid-cols-4 gap-10 px-20 pb-10 pt-10">
+    <Modal onClose={() => handleOptionClick('SKIPPED')} closeMessage=" ">
+      <h3 className="mt-14 hidden px-5 text-center text-2xl text-robin md:block md:px-0">{`What's the main reason for your visit, anon?`}</h3>
+      <ul className="hidden w-full grid-cols-4 gap-10 px-20 pb-10 pt-10 md:grid">
         {shuffledOptions.map((text, index) => (
           <div
             key={index}
@@ -73,6 +73,21 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
           </div>
         ))}
       </ul>
+      <h3 className="mt-14 px-5 text-center text-2xl text-robin md:hidden md:px-0">
+        {`What's the main reason`} <br />
+        {`for your visit, anon?`}
+      </h3>
+      <ul className="py-6 md:hidden">
+        {shuffledOptions.map((text, index) => (
+          <div
+            key={index}
+            className="relative mx-10 flex cursor-pointer items-center justify-center border-b hover:bg-payne"
+            onClick={() => handleOptionClick(text)}
+          >
+            <h3 className="py-2 text-center text-[3.5vw] text-white">{text}</h3>
+          </div>
+        ))}
+      </ul>
       <div className="mx-auto flex w-1/2 flex-col items-center justify-center">
         <Input
           placeholder="Another reason..."
@@ -81,9 +96,12 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
           handleChange={hadleOptionOther}
           className="rounded-t-none border-primary text-center"
         />
-        <PrimaryButton handleClick={() => handleOptionClick(other)} className="mb-10 mt-5">
+        <PrimaryButton handleClick={() => handleOptionClick(other)} className="my-5">
           SUBMIT
         </PrimaryButton>
+        <p className="mb-10" onClick={() => handleOptionClick('SKIPPED')}>
+          SKIP
+        </p>
       </div>
     </Modal>
   )
