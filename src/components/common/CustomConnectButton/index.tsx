@@ -43,7 +43,7 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
                 return (
                   <button
                     onClick={openConnectModal}
-                    className={`flex w-full justify-center rounded-md bg-primary py-2 text-eerie hover:scale-105 hover:text-eerie`}
+                    className={`flex w-fit justify-center rounded-md bg-primary px-4 py-1 text-eerie hover:scale-105 hover:text-eerie md:py-2`}
                   >
                     <p>Connect Wallet</p>
                   </button>
@@ -52,11 +52,11 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`flex w-full items-center justify-between rounded-lg border-2 border-robin bg-transparent px-4 py-2 text-robin hover:text-offWhite ${className}`}
+                  className={`flex w-fit items-center justify-between rounded-lg border-2 border-robin bg-transparent px-4 py-1 text-robin hover:text-offWhite md:py-2 ${className}`}
                 >
                   <div className="h-4 w-4 bg-transparent"></div>
                   {account.displayName}
-                  <FontAwesomeIcon icon={['fas', 'arrow-right-from-bracket' as IconName]} className="h-4" />
+                  <FontAwesomeIcon icon={['fas', 'arrow-right-from-bracket' as IconName]} className="ml-4 h-4" />
                 </button>
               )
             })()}
