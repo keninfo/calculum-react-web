@@ -69,6 +69,11 @@ const StrategyInfoTitle = () => {
         <div className="mx-auto w-fit md:mx-0">
           <StrategySelect />
         </div>
+        <p className="text-center md:text-left">
+          {strategy == 'Momentum'
+            ? 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy.'
+            : 'Reduce volatility, while maintaining exposure to market upside.'}
+        </p>
 
         {coin !== 'BTC' && (
           <p className="w-full text-center text-true md:text-left md:text-xl">
