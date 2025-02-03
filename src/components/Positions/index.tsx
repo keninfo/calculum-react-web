@@ -124,32 +124,32 @@ const Positions = () => {
         <div className="h-full w-full">
           <div className="w-full">
             <div className="block overflow-x-auto">
-              <table className="mt-4 w-fit border-collapse">
+              <table className="mt-4 w-full border-collapse md:w-fit">
                 <tbody>
                   <tr>
                     <td className="pr-4">Size</td>
-                    <td className="pr-4 text-right">
+                    <td className="text-right">
                       {openPositions.toLocaleString('US')} {symbol}
                     </td>
                   </tr>
                   <tr>
                     <td className="pr-4">Collateral</td>
-                    <td className="pr-4 text-right">
+                    <td className="text-right">
                       {parseFloat(formatBalance(convertOpenPositions)).toLocaleString('US')} USDc
                     </td>
                   </tr>
                   <tr>
                     <td className="pr-4">Entry</td>
-                    <td className="pr-4 text-right">{formatBalance(entrySharePrice)} USDc</td>
+                    <td className="text-right">{formatBalance(entrySharePrice)} USDc</td>
                   </tr>
                   <tr>
                     <td className="pr-4">Current</td>
-                    <td className="pr-4 text-right">{formatBalance(daySharePrice)} USDc</td>
+                    <td className="text-right">{formatBalance(daySharePrice)} USDc</td>
                   </tr>
                   <tr>
                     <td className="pr-4">PNL</td>
                     <td
-                      className={`pr-4 text-right font-normal ${
+                      className={`text-right font-normal ${
                         Number(pnl) < 0 ? 'text-fire' : Number(pnl) > 0 ? 'text-spring' : 'text-grey'
                       }`}
                     >
