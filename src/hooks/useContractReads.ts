@@ -68,6 +68,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'isDepositWallet',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -79,7 +82,7 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       functionName: 'allowance',
       args: [address, contractAddress],
       query: {
-        refetchInterval: 100,
+        refetchInterval: 5000,
       },
     })
     return { data, isLoading, error }
@@ -109,6 +112,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'balanceOf',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -119,6 +125,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: usdcContract.address as Hash,
       functionName: 'balanceOf',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -129,6 +138,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'WITHDRAWALS',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -139,6 +151,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'DEPOSITS',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -149,6 +164,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'isClaimerMint',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
@@ -159,6 +177,9 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       address: contractAddress as Hash,
       functionName: 'isClaimerWithdraw',
       args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
     })
     return { data, isLoading, error }
   }
