@@ -9,7 +9,7 @@ const Quests = () => {
   return (
     <>
       <Head>
-        <title>HODL Protocol - Quests</title>
+        <title>HODL Protocol - Leaderboard</title>
         <MetaTags />
       </Head>
 
