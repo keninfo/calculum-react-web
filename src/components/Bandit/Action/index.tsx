@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useEffect } from 'react'
 
+import Image from 'next/image'
+
 import { useAccount } from 'wagmi'
 
 export const Action = ({
@@ -29,10 +31,13 @@ export const Action = ({
   if (!isConnected) {
     return (
       <div className={`${!status?.isCompleted ? 'border-offWhite' : 'border-grey'} rounded-xl border px-5 py-2`}>
+        {name?.includes('X') && (
+          <Image src="/x.png" width={50} height={100} alt="image" className="mx-auto mb-2 mt-1 h-5 w-5" />
+        )}
         <h1
           className={`${!status?.isCompleted ? 'text-primary' : 'text-grey'} flex justify-center space-x-4 text-center`}
         >
-          {name}
+          {name?.includes('X') ? name?.split(' ')[1] : name}
         </h1>
       </div>
     )
@@ -40,15 +45,18 @@ export const Action = ({
 
   return (
     <div
-      className={`${!status?.isCompleted ? 'cursor-pointer border-offWhite hover:scale-105' : 'border-grey'} rounded-xl border px-5 py-2`}
+      className={`${!status?.isCompleted ? 'cursor-pointer border-offWhite hover:scale-105' : 'border-grey'} w-full rounded-xl border px-5 py-2`}
       onClick={() => {
         !status?.isCompleted && openApp(id, app)
       }}
     >
+      {name?.includes('X') && (
+        <Image src="/x.png" width={50} height={100} alt="image" className="mx-auto mb-2 mt-1 h-5 w-5" />
+      )}
       <h1
         className={`${!status?.isCompleted ? 'text-primary' : 'text-grey'} flex justify-center space-x-4 text-center`}
       >
-        {name}
+        {name?.includes('X') ? name?.split(' ')[1] : name}
       </h1>
       {claimablePoints && (
         <div

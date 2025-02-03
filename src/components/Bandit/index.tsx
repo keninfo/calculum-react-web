@@ -7,6 +7,7 @@ import { Space_Grotesk, Oxanium } from 'next/font/google'
 import { useAccount } from 'wagmi'
 
 import { BanditProvider } from '@/services/BanditProvider'
+import { useNavbarStore } from '@/store/useNavbarStore'
 
 import CustomCampaign from './CustomCampaign'
 import CustomLeaderboard from './CustomLeaderboard'
@@ -17,6 +18,7 @@ const oxanium = Oxanium({ subsets: ['latin'] })
 
 const Bandit = () => {
   const { isConnected } = useAccount()
+  const { navbarHeight } = useNavbarStore()
 
   // State to trigger reload
   const [reloadKey, setReloadKey] = useState(0)
@@ -28,14 +30,10 @@ const Bandit = () => {
 
   return (
     <BanditProvider>
-      <div className={`${spaceGrotesk.className} ${oxanium.className}`}>
-        <div className={`${isConnected ? 'h-[50vh]' : 'h-fit'} md:hidden`}>
-          <UserCard campaignId={3857} key={reloadKey} />
-        </div>
-        <p className="mt-4 w-full text-center text-xs text-citron md:hidden">
-          Earned Moontonium may take a few minutes to be reflected
-        </p>
-        <h1 className="my-10 text-3xl text-offWhite">QUESTS</h1>
+      <div className={`${spaceGrotesk.className} ${oxanium.className}`} style={{ marginTop: navbarHeight }}>
+        <h1 className="py-10 pl-2 text-3xl text-offWhite">LEADERBOARD</h1>
+        <CustomLeaderboard campaignId={3857} key={reloadKey} />
+        <h1 className="py-10 pl-2 text-3xl text-offWhite">QUESTS</h1>
         <div className="w-full grid-cols-12 gap-4 md:grid">
           <div className="col-span-9 h-full space-y-4">
             <CustomCampaign campaignId={3856} onAction={triggerReload} />
@@ -45,13 +43,12 @@ const Bandit = () => {
             <UserCard campaignId={3857} key={reloadKey} />
           </div>
         </div>
-        <div className="flex w-full items-center justify-between">
-          <h2 className="my-10 text-3xl text-offWhite">LEADERBOARD</h2>{' '}
-          <p className="hidden w-fit text-right text-xs text-citron md:block">
-            Earned Moontonium may take a few minutes to be reflected
-          </p>
+        <div className={`${isConnected ? 'h-[50vh]' : 'h-fit'} mt-4 md:hidden`}>
+          <UserCard campaignId={3857} key={reloadKey} />
         </div>
-        <CustomLeaderboard campaignId={3857} key={reloadKey} />
+        <p className="mt-4 w-full text-center text-xs text-citron md:hidden">
+          Earned Moontonium may take a few minutes to be reflected
+        </p>
       </div>
     </BanditProvider>
   )

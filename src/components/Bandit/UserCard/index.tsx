@@ -6,7 +6,6 @@ import React from 'react'
 import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
-import CustomConnectButton from '@/components/common/CustomConnectButton'
 
 const MAX_XP = 210 // Define the maximum XP corresponding to 100%
 
@@ -14,7 +13,6 @@ const UserCard = ({ campaignId }: { campaignId: number }) => {
   const { isConnected } = useAccount()
   return (
     <Card className={`h-full w-full overflow-y-hidden text-offWhite`}>
-      <CustomConnectButton />
       <Leaderboard
         campaignId={campaignId}
         render={(args: LeaderboardRenderArgsType) => {
