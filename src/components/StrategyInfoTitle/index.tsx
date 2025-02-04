@@ -1,13 +1,16 @@
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useContext, useMemo } from 'react'
 
+import { useRouter } from 'next/navigation'
+
+import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatBalance } from '@/utils/formatters'
-
-import StrategySelect from './StrategySelect'
 
 const placeholder = {
   label: 'BTC Smoothcoin',
@@ -25,7 +28,7 @@ const StrategyInfoTitle = () => {
   const { coin, strategy } = useStrategyStore()
   const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
   const { values } = useContext(CoinsContext)
-  const { pro } = useProStore()
+  const router = useRouter()
 
   const currentEpochData = ContractReads(contractAddress, contractAbi).CurrentEpoch().data as bigint
   const daySharePriceData = ContractReads(contractAddress, contractAbi).EpochSharePrice(Number(currentEpochData) - 1)
@@ -38,6 +41,10 @@ const StrategyInfoTitle = () => {
     if (!daySharePriceData || !previousDaySharePriceData) return 0
     return (Number(daySharePriceData) / Number(previousDaySharePriceData) - 1) * 100
   }, [daySharePriceData, previousDaySharePriceData])
+
+  const returnHome = () => {
+    router.push('/')
+  }
 
   const strategyInfo = useMemo(() => {
     if (!values) return placeholder
@@ -61,13 +68,23 @@ const StrategyInfoTitle = () => {
   }, [values, strategy, coin, symbol, daySharePriceData, pricePercentageChange, isWorking, icon])
 
   return (
-    <div
-      className={`left-0 top-0 z-50 items-center justify-between bg-cover bg-fixed bg-center py-5 md:relative md:z-10 md:flex md:space-x-5 md:px-2 ${pro ? "bg-[url('/stars.jpeg')]" : "bg-[url('/bg.png')]"}`}
+    <Card
+      className={`left-0 top-0 z-50 w-full items-center justify-between bg-black bg-cover bg-fixed bg-center !px-0 py-2 md:relative md:z-10 md:flex md:space-x-5`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
+
       <div className="items-center justify-between md:w-full">
-        <div className="mx-auto w-fit md:mx-0">
-          <StrategySelect />
+        <div className="mx-auto flex w-fit flex-col-reverse items-start justify-center md:mx-0 md:flex-row md:space-x-6">
+          <h1 className="text-3xl text-primary">
+            {strategy} {coin}
+          </h1>
+          <button
+            className="mb-5 w-full text-nowrap rounded-md border border-primary px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
+            onClick={() => returnHome()}
+          >
+            <FontAwesomeIcon icon={['fas', 'left-long' as IconName]} className="mr-2" />
+            {`Go Back`}
+          </button>
         </div>
         <p className="text-center md:text-left">
           {strategy == 'Momentum'
@@ -138,7 +155,7 @@ const StrategyInfoTitle = () => {
         <p>TESTNET (Arbitrum Sepolia)</p>
       </div>
       {/* <News /> */}
-    </div>
+    </Card>
   )
 }
 
