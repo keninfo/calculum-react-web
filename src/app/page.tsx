@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Head from 'next/head'
 
-import Dashboard from '@/components/Dashboard'
 import Footer from '@/components/Footer'
+import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
@@ -16,8 +16,8 @@ const HODLProtocolApp = () => {
         <MetaTags />
       </Head>
 
-      <main className="pb-5">
-        <Dashboard />
+      <main className="md:pb-5">
+        <Home />
       </main>
       <Footer />
     </>

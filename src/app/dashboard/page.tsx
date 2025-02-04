@@ -1,19 +1,19 @@
 import Head from 'next/head'
 
+import Dashboard from '@/components/Dashboard'
 import Footer from '@/components/Footer'
-import Home from '@/components/Home'
 import MetaTags from '@/components/common/MetaTags'
 
 const Quests = () => {
   return (
     <>
       <Head>
-        <title>HODL Protocol - Products</title>
+        <title>HODL Protocol</title>
         <MetaTags />
       </Head>
 
-      <main className="px-5 md:px-0">
-        <Home />
+      <main className="pt-0 md:p-5 md:px-0">
+        <Dashboard />
       </main>
       <Footer />
     </>
