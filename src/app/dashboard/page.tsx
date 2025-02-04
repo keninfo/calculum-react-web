@@ -1,10 +1,15 @@
+import type { Metadata } from 'next'
 import Head from 'next/head'
 
 import Dashboard from '@/components/Dashboard'
 import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
-const Quests = () => {
+export const metadata: Metadata = {
+  title: 'HODL Protocol - Systematic wealth-building for HODLers',
+}
+
+const DashboardPage = () => {
   return (
     <>
       <Head>
@@ -20,4 +25,4 @@ const Quests = () => {
   )
 }
 
-export default Quests
+export default DashboardPage
