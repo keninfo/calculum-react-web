@@ -10,6 +10,7 @@ export interface contractType {
   abi: Abi
   address: Hash
   chainId: string
+  chain: string
   symbol: string
   icon: string
   info: string
@@ -23,9 +24,10 @@ export const contractIndex = [
     abi: contractMomentumBTC.abi,
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
+    chain: 'Arbitrum Sepolia',
     symbol: 'moBTC',
-    icon: 'https://placehold.co/600x600/white/black?text=M',
-    info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy',
+    icon: '/tokens/moBTC.png',
+    info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
   {
     isWorking: true,
@@ -34,8 +36,9 @@ export const contractIndex = [
     abi: contractSmoothcoinBTC.abi,
     address: contractSmoothcoinBTC.address,
     chainId: contractSmoothcoinBTC.chainId,
-    symbol: 'smBTC',
-    icon: '/bearLogo.png',
+    chain: 'Arbitrum Sepolia',
+    symbol: 'scBTC',
+    icon: '/tokens/scBTC.png',
     info: 'Live your life without having to constantly check on the market.',
   },
 
@@ -46,8 +49,9 @@ export const contractIndex = [
     abi: contractSmoothcoinBTC.abi,
     address: contractSmoothcoinBTC.address,
     chainId: contractSmoothcoinBTC.chainId,
-    symbol: 'smETH',
-    icon: '/bearLogo.png',
+    chain: 'Coming Soon',
+    symbol: 'scETH',
+    icon: '/tokens/scETH.png',
     info: 'Live your life without having to constantly check on the market.',
   },
   {
@@ -57,8 +61,9 @@ export const contractIndex = [
     abi: contractSmoothcoinBTC.abi,
     address: contractSmoothcoinBTC.address,
     chainId: contractSmoothcoinBTC.chainId,
-    symbol: 'smPEPE',
-    icon: '/bearLogo.png',
+    chain: 'Coming Soon',
+    symbol: 'scPEPE',
+    icon: '/tokens/scPEPE.png',
     info: 'Live your life without having to constantly check on the market.',
   },
   {
@@ -68,8 +73,9 @@ export const contractIndex = [
     abi: contractSmoothcoinBTC.abi,
     address: contractSmoothcoinBTC.address,
     chainId: contractSmoothcoinBTC.chainId,
-    symbol: 'smDOGE',
-    icon: '/bearLogo.png',
+    chain: 'Coming Soon',
+    symbol: 'scDOGE',
+    icon: '/tokens/scDOGE.png',
     info: 'Live your life without having to constantly check on the market.',
   },
   {
@@ -79,9 +85,10 @@ export const contractIndex = [
     abi: contractMomentumBTC.abi,
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
+    chain: 'Coming Soon',
     symbol: 'moETH',
-    icon: 'https://placehold.co/600x600/white/black?text=M',
-    info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy',
+    icon: '/tokens/moETH.png',
+    info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
   {
     isWorking: false,
@@ -90,9 +97,10 @@ export const contractIndex = [
     abi: contractMomentumBTC.abi,
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
+    chain: 'Coming Soon',
     symbol: 'moPEPE',
-    icon: 'https://placehold.co/600x600/white/black?text=M',
-    info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy',
+    icon: '/tokens/moPEPE.png',
+    info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
   {
     isWorking: false,
@@ -101,8 +109,9 @@ export const contractIndex = [
     abi: contractMomentumBTC.abi,
     address: contractMomentumBTC.address,
     chainId: contractMomentumBTC.chainId,
+    chain: 'Coming Soon',
     symbol: 'moDOGE',
-    icon: 'https://placehold.co/600x600/white/black?text=M',
-    info: 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy',
+    icon: '/tokens/moDOGE.png',
+    info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
 ]

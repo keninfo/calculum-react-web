@@ -17,6 +17,7 @@ const useContract = () => {
     abi: contractSmoothcoinBTC.abi as Abi,
     address: contractSmoothcoinBTC.address as Hash,
     chainId: contractSmoothcoinBTC.chainId,
+    chain: 'Arbitrum Sepolia',
     symbol: 'smBTC',
     icon: '/bearLogo.png',
     info: '',
