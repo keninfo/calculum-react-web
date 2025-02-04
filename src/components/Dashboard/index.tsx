@@ -164,7 +164,7 @@ const Dashboard = () => {
         {strategy == 'Momentum' && <TVChartContainer />}
         {strategy == 'Smoothcoin' && <ChartsContainer />}
         <TVAttribution />
-        {isConnected && (
+        {isConnected && coin == 'BTC' && (
           <>
             <TradeBox />
             <Help />
