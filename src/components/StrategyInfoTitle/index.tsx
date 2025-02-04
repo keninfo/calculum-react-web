@@ -69,7 +69,7 @@ const StrategyInfoTitle = () => {
 
   return (
     <Card
-      className={`left-0 top-0 z-50 w-full items-center justify-between bg-black bg-cover bg-fixed bg-center !px-0 py-2 md:relative md:z-10 md:flex md:space-x-5`}
+      className={`left-0 top-0 z-50 w-full items-center justify-between !bg-black bg-cover bg-fixed bg-center !px-0 !py-0 md:relative md:z-10 md:flex md:space-x-5`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
 
