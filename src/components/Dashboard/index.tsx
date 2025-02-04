@@ -216,8 +216,8 @@ const Dashboard = () => {
           )}
           {!isConnected && coin == 'BTC' && (
             <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-4 pt-2">
-                <li className="col-span-1 flex justify-start text-xs">
+              <ul className="flex items-center justify-around pt-2">
+                <li className="flex w-fit justify-start text-xs">
                   <button
                     onClick={() => setSelected(0)}
                     className={`pb-2 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
@@ -225,7 +225,7 @@ const Dashboard = () => {
                     Metrics
                   </button>
                 </li>
-                <li className="col-span-1 flex justify-start text-xs">
+                <li className="flex w-fit justify-start text-xs">
                   <button
                     onClick={() => setSelected(1)}
                     className={`pb-2 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
@@ -234,9 +234,9 @@ const Dashboard = () => {
                   </button>
                 </li>
               </ul>
-              {selected == 0 && <MarketTransactions />}
-              {selected == 1 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 1 && strategy == 'Smoothcoin' && <ProductMetrics />}
+              {selected == 1 && <MarketTransactions />}
+              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
             </Card>
           )}
         </div>
