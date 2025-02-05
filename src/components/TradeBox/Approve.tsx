@@ -54,6 +54,7 @@ const Approve = ({ inMaintenance }: { inMaintenance: boolean }) => {
       track('User Approved')
     }
     if (error) {
+      setIsConfirming(false)
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
   }, [hash, error])
@@ -94,7 +95,7 @@ const Approve = ({ inMaintenance }: { inMaintenance: boolean }) => {
           {`Why do I have to "Approve"?`} <FontAwesomeIcon icon={['fas', 'circle-info' as IconName]} />
         </p>
         {hovering && (
-          <p className="absolute bottom-6 left-1/2 w-[19.5vw] -translate-x-1/2 rounded-md bg-dark px-4 pb-6 pt-5">
+          <p className="absolute bottom-6 left-1/2 w-full -translate-x-1/2 rounded-md border bg-dark px-4 pb-6 pt-5">
             Token approvals are used to give permission to a smart contract to spend your tokens on your behalf. This is
             a common pattern used by decentralized exchanges, lending protocols, and other decentralized applications.
           </p>

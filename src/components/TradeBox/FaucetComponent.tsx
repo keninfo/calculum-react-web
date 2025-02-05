@@ -51,6 +51,7 @@ const FaucetComponent = ({ inMaintenance }: { inMaintenance: boolean }) => {
       createTransactionAlert('Tokens Minted', true)
     }
     if (error) {
+      setIsConfirming(false)
       createTransactionAlert('Error: Tokens Not Minted', false)
     }
   }, [isConfirmed, error, router])

@@ -1,3 +1,6 @@
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useEffect, useState } from 'react'
 
 import { useAccount, type BaseError } from 'wagmi'
@@ -17,6 +20,7 @@ const WithdrawAsset = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const { address } = useAccount()
   const { BalanceShares, ConvertToAssets } = ContractReads(contractAddress, contractAbi)
   const { withdrawAssets, isPending, hash, error } = useWithdrawAssets()
+  const [isConfirming, setIsConfirming] = useState<boolean>(false)
 
   const BalanceSharesResult = BalanceShares(address).data as bigint
   const formattedShares = formatShares(BalanceSharesResult)
@@ -24,6 +28,11 @@ const WithdrawAsset = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
     setAmount(value)
+  }
+
+  const handleWithdraw = () => {
+    setIsConfirming(true)
+    withdrawAssets({ amount, address }, contractAddress, contractAbi)
   }
 
   const setMaxAssets = () => {
@@ -35,6 +44,7 @@ const WithdrawAsset = ({ inMaintenance }: { inMaintenance: boolean }) => {
       createTransactionAlert('Transaction Confirmed', true)
     }
     if (error) {
+      setIsConfirming(false)
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
   }, [hash, error])
@@ -66,12 +76,13 @@ const WithdrawAsset = ({ inMaintenance }: { inMaintenance: boolean }) => {
         </b>
       </div>
       {!inMaintenance && (
-        <PrimaryButton
-          handleClick={() => withdrawAssets({ amount, address }, contractAddress, contractAbi)}
-          className="mt-5"
-          disabled={isPending}
-        >
-          {isPending ? 'Withdrawing...' : 'Withdraw'}
+        <PrimaryButton handleClick={() => handleWithdraw()} className="mt-5" disabled={isPending || isConfirming}>
+          {isConfirming && !isPending && (
+            <p className="mr-2">
+              <FontAwesomeIcon icon={['fas', 'spinner' as IconName]} className="animate-spin" />
+            </p>
+          )}
+          {isPending ? 'Withdrawing...' : isConfirming ? 'Confirming...' : 'Withdraw'}
         </PrimaryButton>
       )}
     </>

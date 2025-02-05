@@ -98,6 +98,7 @@ const DepositAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
       createTransactionAlert('Transaction Approved!', true)
     }
     if (error) {
+      setIsConfirming(false)
       createTransactionAlert((error as BaseError).shortMessage || error.message, false)
     }
   }, [hash, error])
