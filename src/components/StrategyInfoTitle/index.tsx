@@ -69,29 +69,27 @@ const StrategyInfoTitle = () => {
 
   return (
     <Card
-      className={`left-0 top-0 z-50 w-full items-center justify-between !bg-black bg-cover bg-fixed bg-center !px-0 !py-0 md:relative md:z-10 md:flex md:space-x-5`}
+      className={`left-0 top-0 z-50 w-full items-center justify-between !bg-transparent bg-cover bg-fixed bg-center !px-0 !py-0 md:relative md:z-10 md:flex md:space-x-5`}
     >
       {/* <img src={icon} width={50} height={50} alt="image" className="m-auto rounded-full" /> */}
 
       <div className="items-center justify-between md:w-full">
-        <div className="mx-auto flex w-fit flex-col-reverse items-start justify-center md:mx-0 md:flex-row md:space-x-6">
-          <h1 className="text-3xl text-primary">
+        <button
+          className="mb- w-full text-nowrap rounded-md border border-primary bg-black px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
+          onClick={() => returnHome()}
+        >
+          <FontAwesomeIcon icon={['fas', 'chevron-left' as IconName]} className="mr-2" />
+          {`Back`}
+        </button>
+        <div className="mx-auto mt-2 flex w-full flex-col-reverse items-end justify-start md:mx-0 md:flex-row md:space-x-6">
+          <h1 className="w-fit text-nowrap bg-black text-3xl text-primary">
             {strategy} {coin}
           </h1>
-          <button
-            className="mb-5 w-full text-nowrap rounded-md border border-primary px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
-            onClick={() => returnHome()}
-          >
-            <FontAwesomeIcon icon={['fas', 'left-long' as IconName]} className="mr-2" />
-            {`Go Back`}
-          </button>
+          <div className="text-md flex w-full items-center justify-start space-x-2 pr-4 text-offWhite">
+            <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
+            <p>TESTNET (Arbitrum Sepolia)</p>
+          </div>
         </div>
-        <p className="text-center md:text-left">
-          {strategy == 'Momentum'
-            ? 'Outperform passive HODLing with a 30-year tested, no leverage TradFi strategy.'
-            : 'Reduce volatility, while maintaining exposure to market upside.'}
-        </p>
-
         {coin !== 'BTC' && (
           <p className="w-full text-center text-true md:text-left md:text-xl">
             The contract for this token is coming soon!
@@ -99,7 +97,7 @@ const StrategyInfoTitle = () => {
         )}
         {values && coin == 'BTC' && (
           <>
-            <div className="text-md hidden w-fit items-center justify-start text-nowrap text-grey md:flex">
+            <div className="text-md hidden w-fit items-center justify-start text-nowrap bg-black text-grey md:flex">
               <p>{`Yesterday's closing price - `}</p>
 
               <p className="mx-1">{strategyInfo.token}:</p>
@@ -150,11 +148,6 @@ const StrategyInfoTitle = () => {
           </>
         )}
       </div>
-      <div className="text-md mt-4 flex w-full items-center justify-center space-x-2 pr-4 text-offWhite md:mt-0 md:justify-end">
-        <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
-        <p>TESTNET (Arbitrum Sepolia)</p>
-      </div>
-      {/* <News /> */}
     </Card>
   )
 }
