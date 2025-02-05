@@ -99,7 +99,7 @@ const InitialPopup: React.FC<InitialPopupProps> = ({ setModal }) => {
         <PrimaryButton handleClick={() => handleOptionClick(other)} className="my-5">
           SUBMIT
         </PrimaryButton>
-        <p className="mb-10" onClick={() => handleOptionClick('SKIPPED')}>
+        <p className="mb-10 cursor-pointer hover:text-grey" onClick={() => handleOptionClick('SKIPPED')}>
           SKIP
         </p>
       </div>
