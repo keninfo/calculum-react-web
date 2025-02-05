@@ -8,7 +8,6 @@ import { useAccount } from 'wagmi'
 
 import ChartsContainer from '@/components/ChartsContainer/Index'
 import Help from '@/components/Help'
-import InitialPopup from '@/components/InitialPopup'
 import MarketTransactions from '@/components/MarketTransactions'
 import Positions from '@/components/Positions'
 import ProductMetrics from '@/components/ProductMetrics'
@@ -28,7 +27,6 @@ const Dashboard = () => {
   const [selected, setSelected] = useState<number>(1)
   const { isConnected } = useAccount()
   const { navbarHeight } = useNavbarStore()
-  const [modal, setModal] = useState<boolean>(false)
 
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
@@ -51,14 +49,6 @@ const Dashboard = () => {
     setSelected(0)
   }, [isConnected])
 
-  useEffect(() => {
-    const hasAnswered = localStorage.getItem('userResponse')
-    if (!hasAnswered) {
-      setModal(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const TVChartContainer = useMemo(
     () =>
       dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
@@ -70,7 +60,7 @@ const Dashboard = () => {
   return (
     <>
       {/* DESKTOP */}
-      {modal && <InitialPopup setModal={setModal} />}
+
       <div className={`hidden grid-cols-11 gap-4 md:grid`} style={{ marginTop: navbarHeight }}>
         <div className={`col-span-11 flex w-full flex-col`}>
           <StrategyInfoTitle />
