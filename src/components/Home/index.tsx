@@ -79,7 +79,7 @@ const Index = () => {
         </Card>
         <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-4">
           <WorkingContracts />
-          <Card className="col-span-2 h-full w-full border border-dark !p-4">
+          <Card className="h-full w-full border border-dark !p-4 md:col-span-2">
             <h2 className="mb-2 text-xl text-primary">What Is Momentum?</h2>
             <p>
               Momentum is a crypto native adaptation of a 30+ year-old institutional investing approach used by hedge
@@ -87,7 +87,7 @@ const Index = () => {
               your exposure based on trend.
             </p>
           </Card>
-          <Card className="col-span-2 h-full w-full border border-dark !p-4">
+          <Card className="h-full w-full border border-dark !p-4 md:col-span-2">
             <h2 className="mb-2 text-xl text-primary">What Are Smoothcoins?</h2>
             <p>
               SmoothCoins are tokens designed to stabilize your portfolio by reducing the impact of market volatility.

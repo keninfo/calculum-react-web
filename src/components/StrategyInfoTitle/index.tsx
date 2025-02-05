@@ -75,17 +75,17 @@ const StrategyInfoTitle = () => {
 
       <div className="items-center justify-between md:w-full">
         <button
-          className="mb- w-full text-nowrap rounded-md border border-primary bg-black px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
+          className="w-full text-nowrap rounded-md border border-primary bg-black px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
           onClick={() => returnHome()}
         >
           <FontAwesomeIcon icon={['fas', 'chevron-left' as IconName]} className="mr-2" />
           {`Back`}
         </button>
-        <div className="mx-auto mt-2 flex w-full flex-col-reverse items-end justify-start md:mx-0 md:flex-row md:space-x-6">
+        <div className="mx-auto mt-6 flex w-full flex-col-reverse items-center justify-start md:mx-0 md:mt-2 md:flex-row md:items-end md:space-x-6">
           <h1 className="w-fit text-nowrap bg-black text-3xl text-primary">
             {strategy} {coin}
           </h1>
-          <div className="text-md flex w-full items-center justify-start space-x-2 pr-4 text-offWhite">
+          <div className="text-md flex w-full items-center justify-center space-x-2 pr-4 text-offWhite md:justify-start">
             <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
             <p>TESTNET (Arbitrum Sepolia)</p>
           </div>
