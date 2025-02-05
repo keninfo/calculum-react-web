@@ -7,7 +7,7 @@ import Modal from '@/components/common/Modal'
 import { v4 as uuidv4 } from 'uuid'
 
 const options = [
-  'To accumulate more of my token with no leverage',
+  'To accumulate more token, with no leverage',
   'For tax-efficient profit taking (automated)',
   'For a smoother crypto experience',
   'For responsible FOMO',
