@@ -55,7 +55,7 @@ const Index = ({
               id="agree"
               checked={isAgreeChecked}
               onChange={handleAgreeChange}
-              className={`mr-5 h-5 w-5 rounded-xl border ${isAgreeChecked ? 'bg-primary' : ''}`}
+              className={`mr-5 h-5 w-5 border ${isAgreeChecked ? 'bg-primary' : ''}`}
             />
             <label htmlFor="agree" className="text-lg font-bold text-offWhite">
               I have read and agree with the terms
