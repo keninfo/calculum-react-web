@@ -5,6 +5,8 @@ import React, { useContext, useMemo } from 'react'
 
 import { useRouter } from 'next/navigation'
 
+import { useAccount } from 'wagmi'
+
 import Card from '@/components/common/Card'
 import { CoinsContext } from '@/contexts/CoinsContext'
 import useContract from '@/hooks/useContract'
@@ -27,6 +29,7 @@ const placeholder = {
 const StrategyInfoTitle = () => {
   const { coin, strategy } = useStrategyStore()
   const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
+  const { isConnected } = useAccount()
   const { values } = useContext(CoinsContext)
   const router = useRouter()
 
@@ -75,26 +78,33 @@ const StrategyInfoTitle = () => {
 
       <div className="items-center justify-between md:w-full">
         <button
-          className="w-full text-nowrap rounded-md border border-primary bg-black px-4 py-1 text-sm hover:text-primary md:mb-0 md:w-fit"
+          className="fixed bottom-5 left-5 text-nowrap rounded-md border border-primary bg-black px-4 py-1 text-sm hover:text-primary md:relative md:bottom-0 md:left-0 md:mb-0 md:w-fit"
           onClick={() => returnHome()}
         >
           <FontAwesomeIcon icon={['fas', 'chevron-left' as IconName]} className="mr-2" />
           {`Back`}
         </button>
-        <div className="mx-auto mt-6 flex w-full flex-col-reverse items-center justify-start md:mx-0 md:mt-2 md:flex-row md:items-end md:space-x-6">
+        <div className="mx-auto mt-6 flex w-full flex-col-reverse items-center justify-start md:mx-0 md:mt-2 md:flex-row md:items-center md:space-x-6">
           <h1 className="w-fit text-nowrap bg-black text-3xl text-primary">
             {strategy} {coin}
           </h1>
           <div className="text-md flex w-full items-center justify-center space-x-2 pr-4 text-offWhite md:justify-start">
             <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
-            <p>TESTNET (Arbitrum Sepolia)</p>
+            <p className="bg-black">TESTNET (Arbitrum Sepolia)</p>
           </div>
+          {coin === 'BTC' && !isConnected && (
+            <p className="hidden w-full bg-black text-center text-true md:block md:text-right md:text-xl">
+              Connect your wallet to get started{' '}
+              <FontAwesomeIcon icon={['fas', 'arrow-up' as IconName]} className="ml-2" />
+            </p>
+          )}
+          {coin !== 'BTC' && (
+            <p className="w-full bg-black text-center text-true md:text-right md:text-xl">
+              The contract for this token is coming soon!
+            </p>
+          )}
         </div>
-        {coin !== 'BTC' && (
-          <p className="w-full text-center text-true md:text-left md:text-xl">
-            The contract for this token is coming soon!
-          </p>
-        )}
+
         {values && coin == 'BTC' && (
           <>
             <div className="text-md hidden w-fit items-center justify-start text-nowrap bg-black text-grey md:flex">
