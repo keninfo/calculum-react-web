@@ -12,6 +12,8 @@ import ContractReads from '@/hooks/useContractReads'
 import { useStrategyStore } from '@/store/useStrategyStore'
 import { formatShares } from '@/utils/formatters'
 
+import CryptoIcon from '../common/CryptoIcon'
+
 type responseData = [number, bigint, bigint, bigint]
 
 const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) => {
@@ -86,15 +88,18 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
           {contract.isWorking && (
             <Card
               key={index}
-              className={`h-full w-full !p-0 ${contract.isPlaceholder ? 'bg-transparent opacity-45' : 'opacity-90'}`}
+              className={`h-full w-full bg-eerie !p-0 ${contract.isPlaceholder ? 'bg-transparent opacity-45' : 'opacity-90 hover:opacity-100'}`}
             >
               {!contract.isPlaceholder ? (
                 <div
-                  className={`grid w-full cursor-pointer grid-cols-2 rounded-md border border-dark hover:border-offWhite`}
+                  className={`relative grid w-full cursor-pointer grid-cols-2 rounded-md border border-offWhite hover:border-primary`}
                   onClick={() => goTo(contract.strategy, contract.coin)}
                 >
                   <div className="col-span-1 p-4">
-                    <img src={contract.icon} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
+                    <div className="flex items-center justify-start space-x-2">
+                      <img src={contract.icon} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
+                      <CryptoIcon coin="USDC" className="h-[20px]" />
+                    </div>
                     <div className="space-y-2 pt-2">
                       <div>
                         <p className="text-xs text-grey">Token</p>
@@ -111,7 +116,9 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                     <div className="space-y-2 pt-2">
                       <div>
                         <p className="text-right text-xs text-grey">Network</p>
-                        <h2 className="w-full text-nowrap pt-1 text-right text-sm font-medium">{contract.chain}</h2>
+                        <h2 className="w-full text-nowrap py-1 text-right text-sm font-medium text-primary">
+                          {contract.chain}
+                        </h2>
                       </div>
                       <div>
                         <p className="text-right text-xs text-grey">Wallet Balance</p>
@@ -119,6 +126,7 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                       </div>
                     </div>
                   </div>
+                  <p className="absolute right-4 top-4 text-xs text-payne">Click to start trading</p>
                 </div>
               ) : (
                 <div className="h-full w-full border-spacing-5 rounded-md border border-dashed">
@@ -130,15 +138,18 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
           {!contract.isWorking && (
             <Card
               key={index}
-              className={`h-full w-full bg-eerie !p-0 ${contract.isPlaceholder ? 'bg-transparent opacity-45' : 'opacity-90'}`}
+              className={`h-full w-full bg-eerie !p-0 ${contract.isPlaceholder ? 'bg-transparent opacity-70' : 'opacity-70 hover:opacity-100'}`}
             >
               {!contract.isPlaceholder ? (
                 <div
-                  className={`grid h-full w-full cursor-pointer grid-cols-2 rounded-md border border-dark hover:border-primary`}
+                  className={`relative grid h-full w-full cursor-pointer grid-cols-2 rounded-md border border-offWhite hover:border-primary`}
                   onClick={() => goTo(contract.strategy, contract.coin)}
                 >
                   <div className="col-span-1 p-4">
-                    <img src={contract.icon} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
+                    <div className="flex items-center justify-start space-x-2">
+                      <img src={contract.icon} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
+                      <CryptoIcon coin="USDC" className="h-[20px]" />
+                    </div>
                     <div className="space-y-2 pt-2">
                       <div>
                         <p className="text-xs text-grey">Token</p>
@@ -155,7 +166,9 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                     <div className="space-y-2 pt-2">
                       <div>
                         <p className="text-right text-xs text-grey">Network</p>
-                        <h2 className="w-full text-nowrap text-right text-lg font-medium">{contract.chain}</h2>
+                        <h2 className="w-full text-nowrap pt-1 text-right text-sm font-medium text-robin">
+                          {contract.chain}
+                        </h2>
                       </div>
                       <div>
                         <p className="text-right text-xs text-grey">Opening</p>
@@ -163,6 +176,7 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                       </div>
                     </div>
                   </div>
+                  <p className="absolute right-4 top-4 text-xs text-payne">Click to learn more</p>
                 </div>
               ) : (
                 <div className="h-full w-full border-spacing-5 rounded-md border border-dashed">
