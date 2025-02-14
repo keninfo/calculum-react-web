@@ -84,7 +84,7 @@ const StrategyInfoTitle = () => {
           <FontAwesomeIcon icon={['fas', 'chevron-left' as IconName]} className="mr-2" />
           {`Back`}
         </button>
-        <div className="mx-auto mt-6 flex w-full flex-col-reverse items-center justify-start md:mx-0 md:mt-2 md:flex-row md:items-center md:space-x-6">
+        <div className="mx-auto mt-6 flex w-full flex-col items-center justify-start md:mx-0 md:mt-2 md:flex-row md:items-center md:space-x-6">
           <h1 className="w-fit text-nowrap bg-black text-3xl text-primary">
             {strategy} {coin}
           </h1>
