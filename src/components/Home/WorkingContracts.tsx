@@ -136,7 +136,7 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                         className="!rounded-md !py-1 text-sm"
                       >
                         <p className="flex w-full items-center justify-center space-x-6">
-                          {Number(contract.finalAmount) > 0 || contract.finalAmount == '-' ? 'View' : 'Deposit'}
+                          {Number(contract.finalAmount) > 0 || contract.finalAmount == '-' ? 'View' : 'View'}
                           {/* <FontAwesomeIcon icon={['fas', 'arrow-right' as IconName]} className='-rotate-45 ml-1' /> */}
                         </p>
                       </PrimaryButton>
