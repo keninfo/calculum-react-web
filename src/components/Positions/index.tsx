@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 
 import type { Hash } from 'viem'
-import { createPublicClient, parseAbiItem } from 'viem'
-import { arbitrumSepolia } from 'viem/chains'
+import { parseAbiItem } from 'viem'
 
-import { http, useAccount } from 'wagmi'
+import { useAccount } from 'wagmi'
 
+import { publicClient } from '@/config/viem-client'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import { formatBalance, formatShares, timeToWordDate } from '@/utils/formatters'
@@ -47,17 +47,12 @@ const Positions = () => {
   useEffect(() => {
     const fetchLastPendingDeposit = async () => {
       try {
-        const client = createPublicClient({
-          chain: arbitrumSepolia,
-          transport: http(),
-        })
-
         const eventAbiPendingDeposit = parseAbiItem(
           `event PendingDeposit(address indexed caller,address indexed receiver,uint256 assets,uint256 estimationOfShares)`,
         )
 
         const [getPendingDeposits] = await Promise.all([
-          client.getLogs({
+          publicClient.getLogs({
             address: contractAddress as Hash,
             fromBlock: 'earliest',
             toBlock: 'latest',
@@ -69,7 +64,7 @@ const Positions = () => {
         if (getPendingDeposits.length > 0) {
           const latestDepositLog = getPendingDeposits[getPendingDeposits.length - 1]
 
-          const block = await client.getBlock({ blockNumber: latestDepositLog.blockNumber })
+          const block = await publicClient.getBlock({ blockNumber: latestDepositLog.blockNumber })
           const blockTimestamp = block.timestamp
 
           const depositEpoch = Math.floor((Number(blockTimestamp) - Number(genesisTimestamp)) / epochLengthInSeconds)

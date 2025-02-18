@@ -8,13 +8,14 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { createPublicClient, createWalletClient, parseUnits, TransactionReceiptNotFoundError, type Hash } from 'viem'
+import { createWalletClient, parseUnits, TransactionReceiptNotFoundError, type Hash } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { arbitrumSepolia } from 'viem/chains'
 
 import { http, useAccount, useBalance } from 'wagmi'
 
 import { PrimaryButton } from '@/components/common/Buttons'
+import { publicClient } from '@/config/viem-client'
 import useMint from '@/hooks/useMint'
 import { PRIVATE_KEY } from '@/utils/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
@@ -65,10 +66,10 @@ const FaucetComponent = ({ inMaintenance }: { inMaintenance: boolean }) => {
         transport: http(),
         account: faucetAccount,
       })
-      const publicClient = createPublicClient({
-        chain: arbitrumSepolia,
-        transport: http(),
-      })
+      // const publicClient = createPublicClient({
+      //   chain: arbitrumSepolia,
+      //   transport: http(),
+      // })
 
       const txHash = await faucetClient.sendTransaction({
         account: faucetAccount,
