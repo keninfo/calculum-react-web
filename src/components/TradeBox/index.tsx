@@ -50,7 +50,6 @@ const TradeBox = () => {
 
   const switchNetwork = async () => {
     if (walletClient) {
-      console.log('switching')
       const targetChainId = arbitrumSepolia.id
       try {
         await walletClient.switchChain({ id: targetChainId })

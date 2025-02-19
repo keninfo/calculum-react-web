@@ -17,8 +17,6 @@ const MarketTransactions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.count('market transactions')
-
   const totalPages = Math.ceil(transactions.length / ITEMS_PER_PAGE)
   const currentTransactions = transactions.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
