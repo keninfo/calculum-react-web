@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createWalletClient, custom } from 'viem'
 
 import { type State, WagmiProvider } from 'wagmi'
-import { arbitrumSepolia } from 'wagmi/chains'
+import { arbitrumSepolia, base, mantleSepoliaTestnet } from 'wagmi/chains'
 
 import { useProStore } from '@/store/useProStore'
 import { classicTheme, proTheme } from '@/styles/colors'
@@ -31,7 +31,7 @@ if (!projectId) throw new Error('Project ID is not defined')
 export const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
-  chains: [arbitrumSepolia],
+  chains: [arbitrumSepolia, base, mantleSepoliaTestnet],
   ssr: true,
 })
 
