@@ -28,7 +28,7 @@ const NotFoundPage = () => {
       <h2 className="mt-2 text-2xl font-semibold">`{pathname.toUpperCase().slice(1)}` NOT FOUND</h2>
       <p className="mt-4 text-lg text-gray-400">The page you are looking for doesn’t exist or has been moved.</p>
       <PrimaryButton
-        className="mt-6 w-1/4 rounded-lg bg-primary px-6 py-2 text-dark hover:bg-robin"
+        className="mt-6 !w-1/4 rounded-lg bg-primary px-6 py-2 text-dark hover:bg-robin"
         handleClick={() => router.push('/')}
       >
         Go Home
