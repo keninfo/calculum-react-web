@@ -16,20 +16,26 @@ import { PrimaryButton } from '../common/Buttons'
 
 type responseData = [number, bigint, bigint, bigint]
 
-const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) => {
+const WorkingContracts = ({
+  myPositions = false,
+}: {
+  myPositions?: boolean
+  selectedToken: string
+  selectedChain: string
+}) => {
   const { setStrategy, setCoin } = useStrategyStore()
   const router = useRouter()
-  const { isConnected, address } = useAccount()
+  const { isConnected, address, chainId } = useAccount()
 
   const goTo = (strategy: string, coin: string) => {
     setStrategy(strategy)
     setCoin(coin)
     localStorage.setItem('strategy', JSON.stringify(strategy))
     localStorage.setItem('coin', JSON.stringify(coin))
+
     router.push('/dashboard')
   }
 
-  // Prepare all contract reads upfront
   const contractReadResults = contractIndex.map((contract) => {
     if (!contract.isWorking) {
       return { ...contract, finalAmount: '-', isPlaceholder: false }
@@ -72,6 +78,8 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
       symbol: '',
       icon: '',
       info: '',
+      decimals: 0,
+      chainIcon: '',
     })
   }
 
@@ -103,13 +111,19 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                       </div>
                       <div>
                         <p className="text-left text-xs text-grey">Token Balance</p>
-                        <h2 className="w-full text-nowrap text-left text-lg font-medium">{contract.finalAmount}</h2>
+                        {contract.chainId == chainId?.toString() ? (
+                          <h2 className="w-full text-nowrap text-left text-lg font-medium">{contract.finalAmount}</h2>
+                        ) : (
+                          <h2 className="w-full text-nowrap text-left text-xs text-payne">
+                            {isConnected ? 'Switch Network' : 'Connect Wallet'}
+                          </h2>
+                        )}
                       </div>
                     </div>
                   </div>
                   <div className="col-span-1 p-4">
                     <div className="flex items-center justify-end space-x-2">
-                      <img src={'/arb-logo.png'} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
+                      <img src={contract.chainIcon} width={50} height={50} alt={contract.symbol} className="h-6 w-6" />
                     </div>
                     <div className="space-y-2 pt-2">
                       <div>
@@ -137,7 +151,6 @@ const WorkingContracts = ({ myPositions = false }: { myPositions?: boolean }) =>
                       >
                         <p className="flex w-full items-center justify-center space-x-6">
                           {Number(contract.finalAmount) > 0 || contract.finalAmount == '-' ? 'View' : 'View'}
-                          {/* <FontAwesomeIcon icon={['fas', 'arrow-right' as IconName]} className='-rotate-45 ml-1' /> */}
                         </p>
                       </PrimaryButton>
                     </div>

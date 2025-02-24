@@ -20,6 +20,7 @@ const useContract = () => {
     chain: 'Arbitrum Sepolia',
     symbol: 'smBTC',
     icon: '/bearLogo.png',
+    chainIcon: '',
     info: '',
   })
 
@@ -37,6 +38,10 @@ const useContract = () => {
     symbol: contractData.symbol,
     icon: contractData.icon,
     info: contractData.info,
+    chain: contractData.chain,
+    strategy: contractData.strategy,
+    coin: contractData.coin,
+    chainIcon: contractData.chainIcon,
   }
 }
 
