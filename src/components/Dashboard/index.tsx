@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [selected, setSelected] = useState<number>(1)
   const { isConnected } = useAccount()
   const { navbarHeight } = useNavbarStore()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
@@ -39,6 +40,10 @@ const Dashboard = () => {
       setCoin(JSON.parse(storedCoin))
     }
   }, [setCoin, setPro, setStrategy])
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000) // Simulating loading delay
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('strategy', JSON.stringify(strategy))
@@ -57,10 +62,13 @@ const Dashboard = () => {
     [],
   )
 
+  if (loading) {
+    return <div className="flex h-screen w-full items-center justify-center">Loading...</div>
+  }
+
   return (
     <>
       {/* DESKTOP */}
-
       <div className={`hidden grid-cols-11 gap-4 md:grid`} style={{ marginTop: navbarHeight }}>
         <div className={`col-span-11 flex w-full flex-col`}>
           <StrategyInfoTitle />
