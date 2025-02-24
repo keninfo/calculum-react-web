@@ -55,7 +55,7 @@ const Select = ({ handleChange, value, options, className = '', disabled = false
         ))}
       </select>
       {!disabled && (
-        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 md:translate-x-1/2">
+        <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 md:-translate-x-full">
           {light ? <ChevronBlack /> : <Chevron />}
         </div>
       )}
