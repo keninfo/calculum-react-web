@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { Space_Grotesk, Oxanium } from 'next/font/google'
+import Image from 'next/image'
 
 import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
@@ -45,7 +46,7 @@ const RootLayout = ({
     return (
       <html lang="en">
         <body
-          className={`classic overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} ${
+          className={`classic relative overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} ${
             pro ? "bg-[url('/stars.jpeg')]" : "bg-[url('/bg.png')]"
           }`}
         >
@@ -53,6 +54,9 @@ const RootLayout = ({
           <AppProviders>
             <Navbar />
             <div className="md:px-20">{children}</div>
+            <div className="fixed bottom-14 right-14 z-50 h-24 w-24">
+              <Image src="/beta_sticker.svg" alt="background" layout="fill" objectFit="cover" objectPosition="center" />
+            </div>
           </AppProviders>
         </body>
         <Analytics />
