@@ -28,7 +28,7 @@ const placeholder = {
 
 const StrategyInfoTitle = () => {
   const { coin, strategy } = useStrategyStore()
-  const { contractAddress, contractAbi, symbol, icon, isWorking } = useContract()
+  const { contractAddress, contractAbi, symbol, icon, isWorking, chain } = useContract()
   const { isConnected } = useAccount()
   const { values } = useContext(CoinsContext)
   const router = useRouter()
@@ -67,8 +67,9 @@ const StrategyInfoTitle = () => {
       tokenChange: tokenChangePercentage,
       active: isWorking,
       icon,
+      chain,
     }
-  }, [values, strategy, coin, symbol, daySharePriceData, pricePercentageChange, isWorking, icon])
+  }, [values, strategy, coin, symbol, daySharePriceData, pricePercentageChange, isWorking, icon, chain])
 
   return (
     <Card
@@ -89,16 +90,18 @@ const StrategyInfoTitle = () => {
             {strategy} {coin}
           </h1>
           <div className="text-md flex w-full items-center justify-center space-x-2 pr-4 text-offWhite md:justify-start">
-            <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
-            <p className="bg-black">TESTNET (Arbitrum Sepolia)</p>
+            <div
+              className={`mb-0.5 h-3 w-3 animate-pulse rounded-full ${chain === 'Coming Soon' ? 'bg-fire' : 'bg-primary'}`}
+            ></div>
+            <p className="bg-black">{chain}</p>
           </div>
-          {coin === 'BTC' && !isConnected && (
+          {chain !== 'Coming Soon' && !isConnected && (
             <p className="hidden w-full bg-black text-center text-true md:block md:text-right md:text-xl">
               Connect your wallet to get started{' '}
               <FontAwesomeIcon icon={['fas', 'arrow-up' as IconName]} className="ml-2" />
             </p>
           )}
-          {coin !== 'BTC' && (
+          {chain === 'Coming Soon' && (
             <p className="w-full bg-black text-center text-true md:text-right md:text-xl">
               The contract for this token is coming soon!
             </p>
