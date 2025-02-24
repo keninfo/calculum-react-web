@@ -1,6 +1,7 @@
 import type { Abi, Hash } from 'viem'
 
 import { contractMomentumBTC } from './momentumBTC'
+import { contractMomentumUSDC } from './momentumUSDC'
 import { contractSmoothcoinBTC } from './smoothcoinBTC'
 
 export const baseAbi = [
@@ -644,6 +645,7 @@ export const contractIndex = [
     chainIcon: '/arb-logo.png',
     info: 'Live your life without having to constantly check on the market.',
   },
+
   {
     isWorking: false,
     strategy: 'Momentum',
@@ -749,5 +751,18 @@ export const contractIndex = [
     icon: '/tokens/scDOGE.png',
     chainIcon: '/arb-logo.png',
     info: 'Live your life without having to constantly check on the market.',
+  },
+  {
+    isWorking: false,
+    strategy: 'Momentum',
+    coin: 'USDC',
+    abi: contractMomentumUSDC.abi,
+    address: contractMomentumUSDC.address,
+    chainId: contractMomentumUSDC.chainId,
+    chain: 'Mantle',
+    symbol: 'moUSDC',
+    icon: '/tokens/moBTC.png',
+    chainIcon: '/mantle.png',
+    info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
 ]
