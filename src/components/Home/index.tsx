@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 
-import Image from 'next/image'
-
 import { useAccount } from 'wagmi'
 
 import Card from '@/components/common/Card'
@@ -31,8 +29,8 @@ const Index = () => {
   return (
     <>
       {modal && <InitialPopup setModal={setModal} />}
-      <div className="relative h-full min-h-screen overflow-hidden px-10 md:px-0" style={{ marginTop: navbarHeight }}>
-        <div className="fixed left-1/2 top-full -z-10 hidden h-screen w-full -translate-x-1/2 -translate-y-1/2 items-end justify-center md:flex">
+      <div className="relative h-full overflow-hidden px-10 md:px-0" style={{ marginTop: navbarHeight }}>
+        {/* <div className="fixed left-1/2 top-full -z-10 hidden h-screen w-full -translate-x-1/2 -translate-y-1/2 items-end justify-center md:flex">
           <Image
             src={'/moon.png'}
             width={1000}
@@ -43,14 +41,14 @@ const Index = () => {
               animation: 'rotate 1000s linear infinite',
             }}
           />
-        </div>
+        </div> */}
         {isConnected && (
           <>
             <Card className="mb-4 w-full items-center justify-between border border-dark !p-4 !py-1 md:flex">
               <h3 className="text-center text-2xl md:text-left md:text-xl">My Positions</h3>
             </Card>
             <div className="mb-4 grid w-full grid-cols-1 gap-3 md:grid-cols-4">
-              <WorkingContracts myPositions />
+              <WorkingContracts myPositions selectedToken={selectedToken} selectedChain={selectedChain} />
             </div>
           </>
         )}
@@ -63,7 +61,7 @@ const Index = () => {
             <Select
               handleChange={(e) => setSelectedChain(e.target.value)}
               value={selectedChain}
-              options={['All', 'Arbitrum', 'Base', 'Mantle']}
+              options={['All', 'Arbitrum Sepolia', 'Base', 'Mantle']}
             ></Select>
           </div>
           <div className="flex items-center justify-center space-x-2">
@@ -71,7 +69,7 @@ const Index = () => {
             <Select
               handleChange={(e) => setSelectedToken(e.target.value)}
               value={selectedToken}
-              options={['All', 'BTC', 'DOGE', 'ETH', 'PEPE']}
+              options={['All', 'BTC', 'DOGE', 'ETH', 'PEPE', 'WETH', 'CBBTC']}
             ></Select>
           </div>
         </div>
@@ -91,7 +89,7 @@ const Index = () => {
               They balance risk and reward, offering a middle ground between high volatility assets and stablecoins.
             </p>
           </Card> */}
-          <WorkingContracts />
+          <WorkingContracts selectedToken={selectedToken} selectedChain={selectedChain} />
         </div>
       </div>
     </>
