@@ -73,11 +73,13 @@ const Dashboard = () => {
         <div className={`col-span-11 flex w-full flex-col`}>
           <StrategyInfoTitle />
         </div>
-        <div className={`flex flex-col ${coin !== 'BTC' || !isConnected ? 'col-span-11' : 'col-span-8'}`}>
+        <div
+          className={`flex flex-col ${(coin !== 'BTC' && coin !== 'USDC') || !isConnected ? 'col-span-11' : 'col-span-8'}`}
+        >
           {strategy == 'Momentum' && <TVChartContainer />}
           {strategy == 'Smoothcoin' && <ChartsContainer />}
           <TVAttribution />
-          {isConnected && coin == 'BTC' && (
+          {isConnected && (coin == 'BTC' || coin == 'USDC') && (
             <Card className="mt-4 h-full min-h-fit w-full">
               <ul className="flex items-center justify-start gap-10 border-b border-payne pt-2">
                 <li className="text-lg">
@@ -120,7 +122,7 @@ const Dashboard = () => {
               {selected == 3 && <Transactions />}
             </Card>
           )}
-          {!isConnected && coin == 'BTC' && (
+          {!isConnected && (coin == 'BTC' || coin == 'USDC') && (
             <Card className="mt-4 h-full min-h-fit w-full">
               <ul className="grid grid-cols-4 border-b border-payne pt-2">
                 <li className="col-span-1 flex justify-start text-lg">
@@ -146,7 +148,7 @@ const Dashboard = () => {
             </Card>
           )}
         </div>
-        {coin == 'BTC' && isConnected && (
+        {(coin == 'BTC' || coin == 'USDC') && isConnected && (
           <div className="relative col-span-3 flex h-full flex-col gap-4">
             <div className="sticky top-0 space-y-4" style={{ top: navbarHeight || 0 }}>
               <TradeBox />
@@ -169,7 +171,7 @@ const Dashboard = () => {
           </>
         )}
         <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
-          {isConnected && coin == 'BTC' && (
+          {isConnected && (coin == 'BTC' || coin == 'USDC') && (
             <Card className="h-full min-h-fit w-full">
               <ul className="flex items-center justify-around pt-2">
                 <li className="col-span-1 flex justify-start text-xs">
@@ -212,7 +214,7 @@ const Dashboard = () => {
               {selected == 3 && <Transactions />}
             </Card>
           )}
-          {!isConnected && coin == 'BTC' && (
+          {!isConnected && (coin == 'BTC' || coin == 'USDC') && (
             <Card className="mt-4 h-full min-h-fit w-full">
               <ul className="flex items-center justify-around pt-2">
                 <li className="flex w-fit justify-start text-xs">

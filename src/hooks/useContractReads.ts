@@ -132,6 +132,19 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     return { data, isLoading, error }
   }
 
+  const BalanceAssetsMantle = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: usdcContract.abi,
+      address: '0xA7Fcb606611358afa388b6bd23b3B2F2c6abEd82' as Hash,
+      functionName: 'balanceOf',
+      args: [address],
+      query: {
+        refetchInterval: 5000,
+      },
+    })
+    return { data, isLoading, error }
+  }
+
   const Withdrawals = (address: string | undefined) => {
     const { data, isLoading, error } = useReadContract({
       abi: contractAbi,
@@ -252,6 +265,7 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     ConvertToAssets,
     TotalAssets,
     EpochSharePrice,
+    BalanceAssetsMantle,
   }
 }
 

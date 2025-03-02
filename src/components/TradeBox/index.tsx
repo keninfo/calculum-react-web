@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { createContext, useEffect, useState } from 'react'
 
 import { useAccount } from 'wagmi'
-import { arbitrumSepolia } from 'wagmi/chains'
 
 import { PrimaryButton, SecondaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
@@ -18,6 +17,7 @@ import ClaimAssets from './ClaimAssets'
 import ClaimShares from './ClaimShares'
 import Deposit from './Deposit'
 import FaucetComponent from './FaucetComponent'
+import FaucetComponentMantle from './FaucetComponentMantle'
 import Withdraw from './Withdraw'
 
 type responseData = [number, bigint, bigint, bigint]
@@ -31,15 +31,22 @@ export const AmountContext = createContext<AmountContextType>({
 })
 
 const TradeBox = () => {
-  const { contractAddress, contractAbi } = useContract()
+  const { contractAddress, contractAbi, chainId: currentChain, chain } = useContract()
 
   const [step, setStep] = useState<number>(0)
   const { address, isConnected, chainId } = useAccount()
-  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares, InMaintenance } = ContractReads(
-    contractAddress,
-    contractAbi,
-  )
-  const balanceAssets = BalanceAssets(address).data as bigint
+  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares, InMaintenance, BalanceAssetsMantle } =
+    ContractReads(contractAddress, contractAbi)
+
+  let balanceAssets = BigInt(0)
+
+  if (currentChain == '5003') {
+    balanceAssets = BalanceAssetsMantle(address).data as bigint
+  } else {
+    balanceAssets = BalanceAssets(address).data as bigint
+  }
+
+  console.log(balanceAssets)
   const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
@@ -50,9 +57,10 @@ const TradeBox = () => {
 
   const switchNetwork = async () => {
     if (walletClient) {
-      const targetChainId = arbitrumSepolia.id
+      const targetChain = parseInt(currentChain)
+      console.log(targetChain)
       try {
-        await walletClient.switchChain({ id: targetChainId })
+        await walletClient.switchChain({ id: targetChain })
       } catch (error) {
         console.error('Error switching chain:', error)
       }
@@ -60,13 +68,13 @@ const TradeBox = () => {
   }
 
   useEffect(() => {
-    if (chainId != arbitrumSepolia.id) {
+    if (chainId != parseInt(currentChain)) {
       setWrongNetwork(true)
     } else {
       setWrongNetwork(false)
-      setNetwork('Arbitrum Sepolia')
+      setNetwork(chain)
     }
-  }, [chainId, setNetwork])
+  }, [chain, chainId, currentChain, setNetwork])
 
   const handleChange = ({ toDeposit }: { toDeposit: boolean }) => {
     if (toDeposit == true) {
@@ -156,7 +164,8 @@ const TradeBox = () => {
         )}
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
-            {step == 1 && <FaucetComponent inMaintenance={isInMaintenance} />}
+            {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}
+            {step == 1 && currentChain === '5003' && <FaucetComponentMantle inMaintenance={isInMaintenance} />}
             {step == 2 && <Approve inMaintenance={isInMaintenance} />}
             {step == 3 && <Deposit inMaintenance={isInMaintenance} />}
             {step == 4 && <ClaimShares inMaintenance={isInMaintenance} />}
