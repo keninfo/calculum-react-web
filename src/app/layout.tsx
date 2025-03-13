@@ -8,7 +8,6 @@ import { Analytics } from '@vercel/analytics/react'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { Space_Grotesk, Oxanium } from 'next/font/google'
-import Image from 'next/image'
 
 import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
@@ -54,9 +53,6 @@ const RootLayout = ({
           <AppProviders>
             <Navbar />
             <div className="md:px-20">{children}</div>
-            <div className="fixed bottom-4 right-4 z-50 h-24 w-24 md:bottom-14 md:right-14">
-              <Image src="/beta_sticker.svg" alt="background" layout="fill" objectFit="cover" objectPosition="center" />
-            </div>
           </AppProviders>
         </body>
         <Analytics />
