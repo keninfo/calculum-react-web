@@ -17,7 +17,7 @@ const StrategyOptions = () => {
         </div>
         <div className="text-md flex w-full items-center justify-end space-x-2 text-offWhite">
           <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
-          <p>TESTNET (Arbitrum Sepolia)</p>
+          <p>Arbitrum (Testnet)</p>
         </div>
         {/* <div className="flex w-fit items-center justify-start space-x-5">
           <p className="text-xl text-grey">Network: </p>

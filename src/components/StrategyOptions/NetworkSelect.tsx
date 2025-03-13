@@ -7,7 +7,7 @@ import { useAccount } from 'wagmi'
 import Select from '@/components/common/Select'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-const networks = ['Arbitrum Sepolia']
+const networks = ['Arbitrum (Testnet)']
 
 const NetworkSelect = () => {
   const { network, setNetwork } = useStrategyStore()
