@@ -42,7 +42,7 @@ const Sidebar = () => {
       <div className="hidden px-20 md:block">
         <div className="grid grid-cols-11 items-center">
           <Image
-            src="/HODL.png"
+            src="/HODLBeta.png"
             width={1000}
             height={1000}
             alt="image"
