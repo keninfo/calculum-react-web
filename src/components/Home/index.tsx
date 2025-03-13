@@ -1,22 +1,37 @@
 'use client'
 
+import type { IconName } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useEffect, useState } from 'react'
 
-import { useAccount } from 'wagmi'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
-import Card from '@/components/common/Card'
-import Select from '@/components/common/Select'
+import { contractIndex } from '@/contracts/contractIndex'
 import { useNavbarStore } from '@/store/useNavbarStore'
+import { useStrategyStore } from '@/store/useStrategyStore'
 
 import InitialPopup from '../InitialPopup'
-import WorkingContracts from './WorkingContracts'
+import Card from '../common/Card'
+import CryptoIcon from '../common/CryptoIcon'
+import SelectionCard from './SelectionCard'
+import { WelcomeCard } from './WelcomeCard'
+import { useSelectionStore } from './useSelectionStore'
+
+const chains = [
+  ['Arbitrum (Testnet)', '/arb-logo.png'],
+  ['Base', '/base.svg'],
+  ['Mantle (Testnet)', '/mantle.png'],
+]
 
 const Index = () => {
   const { navbarHeight } = useNavbarStore()
-  const { isConnected } = useAccount()
   const [modal, setModal] = useState<boolean>(false)
-  const [selectedToken, setSelectedToken] = useState<string>('ALL')
-  const [selectedChain, setSelectedChain] = useState<string>('ALL')
+  const router = useRouter()
+  const { setStrategy, setCoin } = useStrategyStore()
+
+  const { selectedStrategy, selectedToken } = useSelectionStore()
 
   useEffect(() => {
     const hasAnswered = localStorage.getItem('userResponse')
@@ -26,70 +41,135 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const goTo = (strategy: string, coin: string) => {
+    setStrategy(strategy)
+    setCoin(coin)
+    localStorage.setItem('strategy', JSON.stringify(strategy))
+    localStorage.setItem('coin', JSON.stringify(coin))
+
+    router.push('/dashboard')
+  }
+
   return (
     <>
       {modal && <InitialPopup setModal={setModal} />}
-      <div className="relative h-full overflow-hidden px-10 md:px-0" style={{ marginTop: navbarHeight }}>
-        {/* <div className="fixed left-1/2 top-full -z-10 hidden h-screen w-full -translate-x-1/2 -translate-y-1/2 items-end justify-center md:flex">
-          <Image
-            src={'/moon.png'}
-            width={1000}
-            height={1000}
-            alt="photo of the earth viewed from space / black and white"
-            className="h-auto w-full md:h-[100vh] md:w-auto"
-            style={{
-              animation: 'rotate 1000s linear infinite',
-            }}
-          />
-        </div> */}
-        {isConnected && (
-          <>
-            <Card className="mb-4 w-full items-center justify-between border border-dark !p-4 !py-1 md:flex">
-              <h3 className="text-center text-2xl md:text-left md:text-xl">My Positions</h3>
+      <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
+        <div className="relative flex items-start justify-between space-x-4">
+          <div className="w-2/3">
+            <WelcomeCard />
+            <SelectionCard />
+            <Card className="mt-4 w-full">
+              <p>PRODUCTS</p>
+              <table className="min-w-full">
+                <thead>
+                  <tr>
+                    <th className="py-2 text-left text-sm font-medium text-grey">Token</th>
+                    <th className="py-2 text-left text-sm font-medium text-grey">Strategy</th>
+                    {/* <th className="py-2 text-left text-sm font-medium text-grey">Symbol</th> */}
+                    <th className="py-2 text-left text-sm font-medium text-grey">Chain</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {contractIndex.map((contract, index) => {
+                    const chainLogo = chains.find(([name]) => name === contract.chain)?.[1]
+                    if (selectedToken !== 'All Tokens') {
+                      if (!contract.coin.includes(selectedToken)) {
+                        return
+                      }
+                    }
+                    return (
+                      <tr
+                        key={index}
+                        onClick={() => goTo(contract.strategy, contract.coin)}
+                        className="cursor-pointer !rounded-full font-thin transition duration-200 ease-in-out hover:bg-eerie"
+                      >
+                        <td className="w-fit text-sm">
+                          <div className="flex w-fit items-center justify-start">
+                            <CryptoIcon coin={contract.coin} className="mr-2 h-5" />
+                            <p>{contract.coin}</p>
+                          </div>
+                        </td>
+                        <td className="w-fit py-2 text-sm">{contract.strategy}</td>
+                        {/* <td className="py-2 text-sm ">{contract.symbol}</td> */}
+                        <td className="w-fit text-sm">
+                          <div className="flex w-fit items-center justify-start">
+                            {chainLogo && <img src={chainLogo} alt="chain logo" className="mr-2 h-5 w-5" />}
+                            <p className={`${contract.chain == 'Coming Soon' ? 'text-payne' : ''}`}>{contract.chain}</p>
+                          </div>
+                        </td>
+                        <td className="w-18 pr-2 text-right">
+                          {contract.chain !== 'Coming Soon' && (
+                            <FontAwesomeIcon
+                              icon={['fas', 'angle-right' as IconName]}
+                              className="ml-1 text-xs font-thin text-grey"
+                            />
+                          )}
+                          {contract.chain == 'Coming Soon' && (
+                            <p className="text-xs text-payne">
+                              {' '}
+                              Preview <FontAwesomeIcon icon={['fas', 'angle-right' as IconName]} className="ml-1" />
+                            </p>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </Card>
-            <div className="mb-4 grid w-full grid-cols-1 gap-3 md:grid-cols-4">
-              <WorkingContracts myPositions selectedToken={selectedToken} selectedChain={selectedChain} />
-            </div>
-          </>
-        )}
-        <Card className="mb-4 w-full items-center justify-between border border-dark !p-4 !py-1 md:flex">
-          <h3 className="text-center text-2xl md:text-left md:text-xl">Our Products</h3>
-        </Card>
-        <div className="mb-5 flex items-center justify-center space-x-6 md:justify-end">
-          <div className="flex items-center justify-center space-x-2">
-            <label className="text-grey">Chain:</label>
-            <Select
-              handleChange={(e) => setSelectedChain(e.target.value)}
-              value={selectedChain}
-              options={['All', 'Arbitrum Sepolia', 'Base', 'Mantle']}
-            ></Select>
           </div>
-          <div className="flex items-center justify-center space-x-2">
-            <label className="text-grey">Token:</label>
-            <Select
-              handleChange={(e) => setSelectedToken(e.target.value)}
-              value={selectedToken}
-              options={['All', 'BTC', 'DOGE', 'ETH', 'PEPE', 'WETH', 'CBBTC']}
-            ></Select>
+          <div className="sticky w-1/3 space-y-4" style={{ top: navbarHeight }}>
+            {/* <div className='h-full col-span-1' onClick={() => setSelectedStrategy('All Strategies')}>
+              <Card className={`h-full cursor-pointer  hover:bg-eerie w-full flex justify-start items-start border ${selectedStrategy == 'All Strategies' ? 'border-primary' : 'border-dark'}`}>
+                <h2 className='text-xl'>ALL STRATEGIES</h2>
+              </Card>
+            </div> */}
+            <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
+              <Card
+                className={`h-full w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+              >
+                <h2 className="mb-2 text-xl">MOMENTUM</h2>
+                <p className="text-xs font-thin">
+                  Instead of passively `hodling` through market cycles, this 30-year-old strategy automatically adjusts
+                  your exposure based on trend.
+                </p>
+                <Image
+                  src={'charts/momentum_chart.svg'}
+                  alt={''}
+                  height={1000}
+                  width={1000}
+                  priority
+                  className="relative mt-4 h-[90%] w-full"
+                />
+              </Card>
+            </a>
+
+            <a
+              className="h-full w-full"
+              href="https://docs.hodlprotocol.io/hodl-101/what-are-smoothcoins"
+              target="_blank"
+            >
+              <Card
+                className={`mt-4 h-full w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Smoothcoins' ? 'border-primary' : 'border-dark'}`}
+              >
+                <h2 className="mb-2 text-xl">SMOOTHCOINS</h2>
+                <p className="text-xs font-thin">
+                  SmoothCoins are tokens designed to stabilize your portfolio by reducing the impact of market
+                  volatility. They balance risk and reward, offering a middle ground between high volatility assets and
+                  stablecoins.
+                </p>
+                <Image
+                  src={'charts/smoothcoin_chart.svg'}
+                  alt={''}
+                  height={1000}
+                  width={1000}
+                  priority
+                  className="relative mt-4 h-[90%] w-full"
+                />
+              </Card>
+            </a>
           </div>
-        </div>
-        <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-4">
-          {/* <Card className="h-full w-full border border-dark !p-4 md:col-span-2">
-            <h2 className="mb-2 text-xl text-robin">What Is Momentum?</h2>
-            <p className='font-thin'>
-              Momentum is a crypto native adaptation of a 30+ year-old institutional investing approach used by hedge
-              funds and asset managers. Instead of blindly holding through market cycles, Momentum automatically adjusts
-              your exposure based on trend.
-            </p>
-          </Card>
-          <Card className="h-full w-full border border-dark !p-4 md:col-span-2">
-            <h2 className="mb-2 text-xl text-robin">What Are Smoothcoins?</h2>
-            <p className='font-thin'>
-              SmoothCoins are tokens designed to stabilize your portfolio by reducing the impact of market volatility.
-              They balance risk and reward, offering a middle ground between high volatility assets and stablecoins.
-            </p>
-          </Card> */}
-          <WorkingContracts selectedToken={selectedToken} selectedChain={selectedChain} />
         </div>
       </div>
     </>
