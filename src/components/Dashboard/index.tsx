@@ -21,6 +21,8 @@ import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
+import LongShortChart from '../ChartsContainer/Charts/LongShort'
+
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
@@ -78,6 +80,7 @@ const Dashboard = () => {
         >
           {strategy == 'Momentum' && <TVChartContainer />}
           {strategy == 'Smoothcoin' && <ChartsContainer />}
+          <LongShortChart />
           <TVAttribution />
           {isConnected && (coin == 'BTC' || coin == 'USDC') && (
             <Card className="mt-4 h-full min-h-fit w-full">
