@@ -12,14 +12,14 @@ const SelectionCard = () => {
 
   return (
     <Card className="w-full !py-4 !pl-2">
-      <div className="flex items-center justify-start space-x-2">
+      <div className="fade-mask-right flex items-center justify-start space-x-2 overflow-scroll text-xs md:text-lg">
         <button
-          className={`flex items-center justify-center rounded-full px-4 py-1 transition duration-200 ease-in-out hover:bg-eerie ${selectedToken == 'All Tokens' ? 'text-primary' : ''}`}
+          className={`flex items-center justify-center rounded-full px-4 py-1 transition duration-200 ease-in-out hover:bg-eerie ${selectedToken == 'All Tokens' ? 'text-primary' : ''} text-nowrap`}
           onClick={() => setSelectedToken('All Tokens')}
         >
           ALL TOKENS
         </button>
-        <p>|</p>
+        <p className="hidden md:block">|</p>
         {tokens.map((item) => {
           return (
             <button

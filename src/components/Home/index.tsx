@@ -19,6 +19,8 @@ import SelectionCard from './SelectionCard'
 import { WelcomeCard } from './WelcomeCard'
 import { useSelectionStore } from './useSelectionStore'
 
+const ITEMS_PER_PAGE = 5
+
 const chains = [
   ['Arbitrum (Testnet)', '/arb-logo.png'],
   ['Base', '/base.svg'],
@@ -32,6 +34,9 @@ const Index = () => {
   const { setStrategy, setCoin } = useStrategyStore()
 
   const { selectedStrategy, selectedToken } = useSelectionStore()
+
+  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     const hasAnswered = localStorage.getItem('userResponse')
@@ -50,22 +55,35 @@ const Index = () => {
     router.push('/dashboard')
   }
 
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000) // Simulating loading delay
+  }, [])
+
+  const filteredContracts = contractIndex.filter(
+    (contract) => selectedToken === 'All Tokens' || contract.coin.includes(selectedToken),
+  )
+
+  const totalPages = Math.ceil(filteredContracts.length / ITEMS_PER_PAGE)
+  const displayedContracts = filteredContracts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+
+  if (loading) {
+    return <div className="flex h-screen w-full items-center justify-center">Loading...</div>
+  }
+
   return (
     <>
       {modal && <InitialPopup setModal={setModal} />}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
-        <div className="relative flex items-start justify-between space-x-4">
-          <div className="w-2/3">
+        <div className="relative grid-cols-12 md:grid md:space-x-4">
+          <div className="flex h-full flex-col md:col-span-8">
             <WelcomeCard />
             <SelectionCard />
-            <Card className="mt-4 w-full">
-              <p>PRODUCTS</p>
-              <table className="min-w-full">
+            <Card className="mt-4 hidden h-full w-full md:block">
+              <table className="h-fit min-w-full table-auto">
                 <thead>
                   <tr>
                     <th className="py-2 text-left text-sm font-medium text-grey">Token</th>
                     <th className="py-2 text-left text-sm font-medium text-grey">Strategy</th>
-                    {/* <th className="py-2 text-left text-sm font-medium text-grey">Symbol</th> */}
                     <th className="py-2 text-left text-sm font-medium text-grey">Chain</th>
                     <th></th>
                   </tr>
@@ -118,16 +136,77 @@ const Index = () => {
                 </tbody>
               </table>
             </Card>
+            <div className="mb-8 mt-4 w-full space-y-4 md:hidden">
+              <p className="p-4 text-center text-lg font-semibold">PRODUCTS</p>
+              {displayedContracts
+                .filter((contract) => selectedToken === 'All Tokens' || contract.coin.includes(selectedToken))
+                .map((contract, index) => {
+                  const chainLogo = chains.find(([name]) => name === contract.chain)?.[1]
+                  return (
+                    <a key={index} onClick={() => goTo(contract.strategy, contract.coin)}>
+                      <Card className="mt-2 w-full cursor-pointer transition duration-200 ease-in-out hover:bg-eerie">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <CryptoIcon coin={contract.coin} className="mr-2 h-6" />
+                            <p className="font-medium">
+                              {contract.coin} - {contract.strategy}
+                            </p>
+                          </div>
+                          {contract.chain !== 'Coming Soon' ? (
+                            <FontAwesomeIcon
+                              icon={['fas', 'angle-right' as IconName]}
+                              className="text-xs font-thin text-grey"
+                            />
+                          ) : (
+                            <p className="text-xs text-payne">
+                              Preview
+                              <FontAwesomeIcon icon={['fas', 'angle-right' as IconName]} className="ml-1" />
+                            </p>
+                          )}
+                        </div>
+                        <div className="ml-1 mt-4 flex items-center">
+                          {chainLogo && <img src={chainLogo} alt="chain logo" className="mr-2 h-5 w-5" />}
+                          <p className={`text-xs ${contract.chain === 'Coming Soon' ? 'text-grey' : 'text-offWhite'}`}>
+                            {contract.chain}
+                          </p>
+                        </div>
+                      </Card>
+                    </a>
+                  )
+                })}
+              {totalPages > 1 && (
+                <div className="mt-4 flex justify-center space-x-4">
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="rounded bg-dark px-3 py-1 disabled:opacity-50"
+                  >
+                    Prev
+                  </button>
+                  <span>
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="rounded bg-dark px-3 py-1 disabled:opacity-50"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="sticky w-1/3 space-y-4" style={{ top: navbarHeight }}>
+          <div className="sticky space-y-4 md:col-span-4" style={{ top: navbarHeight }}>
             {/* <div className='h-full col-span-1' onClick={() => setSelectedStrategy('All Strategies')}>
               <Card className={`h-full cursor-pointer  hover:bg-eerie w-full flex justify-start items-start border ${selectedStrategy == 'All Strategies' ? 'border-primary' : 'border-dark'}`}>
                 <h2 className='text-xl'>ALL STRATEGIES</h2>
               </Card>
             </div> */}
+            <p className="p-4 text-center text-lg font-semibold md:hidden">STRATEGIES</p>
             <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
               <Card
-                className={`h-full w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+                className={`h-fit w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
               >
                 <h2 className="mb-2 text-xl">MOMENTUM</h2>
                 <p className="text-xs font-thin">
@@ -151,7 +230,7 @@ const Index = () => {
               target="_blank"
             >
               <Card
-                className={`mt-4 h-full w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Smoothcoins' ? 'border-primary' : 'border-dark'}`}
+                className={`mt-4 h-fit w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Smoothcoins' ? 'border-primary' : 'border-dark'}`}
               >
                 <h2 className="mb-2 text-xl">SMOOTHCOINS</h2>
                 <p className="text-xs font-thin">
