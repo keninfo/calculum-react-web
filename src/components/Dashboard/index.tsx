@@ -166,6 +166,7 @@ const Dashboard = () => {
         <StrategyInfoTitle />
         {strategy == 'Momentum' && <TVChartContainer />}
         {strategy == 'Smoothcoin' && <ChartsContainer />}
+        <LongShortChart />
         <TVAttribution />
         {isConnected && coin == 'BTC' && (
           <>
