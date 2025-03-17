@@ -13,7 +13,7 @@ import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
 import Navbar from '@/components/Navbar'
 import Watermark from '@/components/common/Watermark'
-import { useProStore } from '@/store/useProStore'
+// import { useProStore } from '@/store/useProStore'
 import '@/styles/globals.css'
 
 import { hotjar } from 'react-hotjar'
@@ -28,7 +28,7 @@ const RootLayout = ({
 }: Readonly<{
   children: ReactNode
 }>) => {
-  const { pro } = useProStore()
+  // const { pro } = useProStore()
   const [isBear, setIsBear] = useState(false)
 
   useEffect(() => {
@@ -45,9 +45,7 @@ const RootLayout = ({
     return (
       <html lang="en">
         <body
-          className={`classic relative overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} ${
-            pro ? "bg-[url('/stars.jpeg')]" : "bg-[url('/bg.png')]"
-          }`}
+          className={`classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${oxanium.className}`}
         >
           <Watermark />
           <AppProviders>

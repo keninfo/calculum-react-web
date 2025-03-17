@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const TVAttribution = () => {
   return (
-    <div className="w-full justify-between px-2 md:flex md:pt-5">
+    <div className="w-full justify-between p-2 md:flex md:pt-5">
       <div>
         <p className="text-center text-xs text-grey md:text-left">Powered by</p>
         <a href="https://www.tradingview.com/" target="_blank" className="h-fit w-fit">
@@ -13,7 +13,7 @@ const TVAttribution = () => {
             alt="logo for trading view"
             width={500}
             height={500}
-            className="h-6 w-full fill-white"
+            className="my-2 h-8 w-full fill-white md:h-6"
           />
         </a>
       </div>
