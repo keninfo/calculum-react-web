@@ -70,6 +70,7 @@ const LongShortChart: React.FC = () => {
     if (!chart || !coin) return
 
     const fetchData = async () => {
+      console.log('Fetching data for:', coin)
       try {
         const response = await fetch(API_URL + `mo${coin}`)
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`)

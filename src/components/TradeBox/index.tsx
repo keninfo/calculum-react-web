@@ -46,7 +46,8 @@ const TradeBox = () => {
     balanceAssets = BalanceAssets(address).data as bigint
   }
 
-  console.log(balanceAssets)
+  console.log('balanceAssets =>> ', balanceAssets)
+
   const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
