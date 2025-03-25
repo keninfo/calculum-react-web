@@ -15,11 +15,12 @@ const HODLProtocolApp = () => {
       <Head>
         <MetaTags />
       </Head>
-
-      <main className="md:pb-5">
-        <Home />
-      </main>
-      <Footer />
+      <div className="flex min-h-screen flex-col justify-between">
+        <main className="mx-auto max-w-[1366px] md:pb-5">
+          <Home />
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }
