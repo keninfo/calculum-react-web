@@ -171,7 +171,7 @@ const Index = () => {
             </div>
             <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
               <Card
-                className={`h-fit w-full cursor-pointer border bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+                className={`h-fit w-full cursor-pointer border !bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
               >
                 <h2 className="mb-2 text-xl">MOMENTUM</h2>
                 <p className="text-xs font-thin">
