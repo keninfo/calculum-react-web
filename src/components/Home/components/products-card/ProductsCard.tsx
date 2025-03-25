@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 
 import { useStrategyStore } from '@/store/useStrategyStore'
 
+import { twMerge } from 'tailwind-merge'
+
 interface ProductsCardProps {
   isWorking: boolean
   strategy: string
@@ -35,37 +37,38 @@ const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain,
 
   return (
     <div
-      className="grid-col-1 grid cursor-pointer items-center justify-between gap-7 rounded-lg border border-gray-200 p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2"
+      className={twMerge(
+        'grid-col-1 box-border grid cursor-pointer items-center justify-between gap-7 rounded-lg border border-[transparent] p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2',
+        isWorking ? 'bg-[#013537]' : 'bg-[#0F0F0F]',
+      )}
       onClick={() => goTo(strategy, coin)}
     >
       <div>
-        <p className="text-sm text-[#7F7F7F]">Token</p>
+        <p className="text-sm text-[#878787]">Token</p>
         <div className="flex items-center space-x-2">
           <Image src={icon ?? ''} width={20} height={20} alt={chain} />
           <p className="text-xl">{symbol}</p>
         </div>
       </div>
       <div>
-        <p className="text-sm text-[#7F7F7F]">Chain</p>
+        <p className="text-sm text-[#878787]">Chain</p>
         <div className="flex items-center space-x-2">
           <Image src={chainIcon ?? ''} width={20} height={20} alt={chain} />
           <p className="text-xl">{chain}</p>
         </div>
       </div>
       <div>
-        <p className="text-sm text-[#7F7F7F]">Strategy</p>
+        <p className="text-sm text-[#878787]">Strategy</p>
         <p>{strategy}</p>
       </div>
       <div>
-        {!isWorking && <p className="text-sm text-[#7F7F7F]">Coming Soon</p>}
+        {!isWorking ? (
+          <p className="text-sm text-[#878787]">Coming Soon</p>
+        ) : (
+          <p className="text-sm text-[#878787]">Annual Target</p>
+        )}
         <div className="flex items-center space-x-2">
-          {!isWorking && <p className="text-xl">Preview</p>}
-          <Image
-            src={isWorking ? '/icons/external_arrow_green.svg' : '/icons/external_arrow_gray.svg'}
-            width={20}
-            height={20}
-            alt="Preview"
-          />
+          {!isWorking ? <p className="text-xl text-[#878787]">Preview</p> : <p className="text-xl">{'>10%'}</p>}
         </div>
       </div>
     </div>

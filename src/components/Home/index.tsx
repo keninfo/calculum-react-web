@@ -16,7 +16,6 @@ import InitialPopup from '../InitialPopup'
 import Card from '../common/Card'
 import CryptoIcon from '../common/CryptoIcon'
 import SelectionCard from './SelectionCard'
-import { InfoCarousel } from './components/info-carousel'
 import { ProductsCard } from './components/products-card'
 import { useSelectionStore } from './useSelectionStore'
 
@@ -75,14 +74,12 @@ const Index = () => {
     <>
       {modal && <InitialPopup setModal={setModal} />}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
-        <InfoCarousel />
+        {/* <InfoCarousel /> */}
         <div className="relative grid-cols-12 md:grid md:space-x-4">
           <div className="flex h-full flex-col md:col-span-8">
             <SelectionCard />
-            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
               {contractIndex.map((contract, index) => {
-                const chainLogo = chains.find(([name]) => name === contract.chain)?.[1]
-                console.log('chainLogo =>> ', chainLogo)
                 if (selectedToken !== 'All Tokens') {
                   if (!contract.coin.includes(selectedToken)) {
                     return
@@ -162,9 +159,19 @@ const Index = () => {
               </Card>
             </div> */}
             <h2 className="mb-8 text-lg md:text-xl">Our Strategies</h2>
+            <div className="flex flex-col gap-4 pb-9 text-[#a5a5a5]">
+              <p>
+                Our strategies comprise “Open Source” and “Funds” which lorem ipsum dolor sit amet, consectetur
+                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+              <a href="/#" className="flex items-center gap-2">
+                Learn more about our strategies{' '}
+                <Image src="/icons/external_arrow_green.svg" alt={''} width={20} height={20} />
+              </a>
+            </div>
             <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
               <Card
-                className={`h-fit w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+                className={`h-fit w-full cursor-pointer border bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
               >
                 <h2 className="mb-2 text-xl">MOMENTUM</h2>
                 <p className="text-xs font-thin">
@@ -182,7 +189,7 @@ const Index = () => {
               </Card>
             </a>
 
-            <a
+            {/* <a
               className="h-full w-full"
               href="https://docs.hodlprotocol.io/hodl-101/what-are-smoothcoins"
               target="_blank"
@@ -205,7 +212,7 @@ const Index = () => {
                   className="relative mt-4 h-[90%] w-full"
                 />
               </Card>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

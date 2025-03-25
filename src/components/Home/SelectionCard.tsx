@@ -4,7 +4,7 @@ import { useSelectionStore } from './useSelectionStore'
 
 import { twMerge } from 'tailwind-merge'
 
-const tokens = ['All Tokens', 'BTC', 'ETH', 'DOGE', 'PEPE']
+const tokens = ['All Tokens', 'BTC', 'ETH', 'DOGE', 'PEPE', 'PAXG']
 // const chains = [['Arbitrum (Testnet)', 'arb-logo.png'], ['Base', 'base.svg'], ['Mantle (Testnet)', 'mantle.png']]
 
 const SelectionCard = () => {

@@ -19,7 +19,7 @@ const InfoCarousel: FC = () => {
         {carouselData.map((slide) => (
           <div
             key={slide.title}
-            className="embla__slide bg-carousel-background grid min-h-72 w-full place-content-center place-items-center space-y-6 rounded-2xl bg-cover bg-center bg-no-repeat p-4"
+            className="embla__slide grid min-h-72 w-full place-content-center place-items-center space-y-6 rounded-2xl bg-carousel-background bg-cover bg-center bg-no-repeat p-4"
           >
             <h3 className="text-center text-3xl">{slide.title}</h3>
             {slide.description && <p className="max-w-[800px] text-center">{slide.description}</p>}
