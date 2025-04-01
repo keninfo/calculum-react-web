@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import Card from '@/components/common/Card'
-import CustomConnectButton from '@/components/common/CustomConnectButton'
 import { useNavbarStore } from '@/store/useNavbarStore'
 
 // import { useProStore } from '@/store/useProStore'
@@ -44,17 +43,23 @@ const Sidebar = () => {
             alt="image"
             className="col-span-2 flex w-32 justify-start"
           />
-          <div className="col-span-8 flex items-center justify-center">{navigationItems.map(NavbarItem)} </div>
+          <div className="col-span-8 flex items-center justify-center py-4">{navigationItems.map(NavbarItem)} </div>
           <div className="col-span-2 ml-4 flex justify-end">
-            <CustomConnectButton />
+            {/* <CustomConnectButton /> */}
+            <button className="flex h-12 w-52 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+              LAUNCHING SOON
+            </button>
           </div>
         </div>
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around gap-4 p-6 md:hidden">
-        <Image src="/HODLSmall.png" width={100} height={20} alt="image" className="h-10 w-auto" />
+        <Image src="/logo/main_logo_small.svg" width={100} height={20} alt="image" className="h-10 w-auto" />
         <div className="flex w-full justify-center">
-          <CustomConnectButton />
+          {/* <CustomConnectButton /> */}
+          <button className="flex h-12 w-52 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+            LAUNCHING SOON
+          </button>
         </div>
         <p className="flex w-fit justify-end text-2xl" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}

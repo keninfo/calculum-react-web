@@ -161,8 +161,14 @@ const Index = () => {
             <h2 className="mb-8 text-lg md:text-xl">Our Strategies</h2>
             <div className="flex flex-col gap-4 pb-9 text-[#a5a5a5]">
               <p>
-                Our strategies comprise “Open Source” and “Funds” which lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                HODL brings two categories of time-tested strategies onchain: Open-Source and Hedge Fund Manager Series.
+                Each strategy is designed for specific market conditions—whether it’s trending markets or
+                high-volatility phases—targeting sustainable, token-denominated growth above 10%.
+              </p>
+              <p>
+                Our first live strategy, Momentum, leads the Open-Source Series, helping users navigate market cycles
+                with a systematic approach. More strategies are launching soon, expanding your options for smarter, more
+                resilient crypto holdings.
               </p>
               <a href="/#" className="flex items-center gap-2">
                 Learn more about our strategies{' '}

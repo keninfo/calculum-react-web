@@ -1,28 +1,30 @@
+import type { ReactNode } from 'react'
+
 import type { Metadata } from 'next'
 import Head from 'next/head'
 
-import Dashboard from '@/components/Dashboard'
-import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
 export const metadata: Metadata = {
   title: 'HODL Protocol - Systematic wealth-building for HODLers',
 }
 
-const DashboardPage = () => {
+const layout = ({
+  children,
+}: Readonly<{
+  children: ReactNode
+}>) => {
   return (
     <>
       <Head>
         <title>HODL Protocol</title>
         <MetaTags />
       </Head>
-
-      <main className="mx-auto max-w-[1366px] pt-0 md:p-5 md:px-0">
-        <Dashboard />
-      </main>
-      <Footer />
+      <section className="mx-auto min-h-dvh max-w-[1336px] bg-cover bg-no-repeat px-2 pt-24 md:px-5">
+        {children}
+      </section>
     </>
   )
 }
 
-export default DashboardPage
+export default layout

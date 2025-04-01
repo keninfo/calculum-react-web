@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'carousel-background': "url('/backgrounds/carousel-bg.svg')",
+        'carousel-background': "url('/backgrounds/carousel_bg.svg')",
+        'home-section': "url('/backgrounds/home_bg.svg')",
       },
       colors: {
         primary: 'var(--color-primary)',

@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { useEffect, useState, type ReactNode } from 'react'
 
 import { Space_Grotesk, Oxanium } from 'next/font/google'
+import { usePathname } from 'next/navigation'
 
 import AppProviders from '@/components/AppProviders'
 import Bearam from '@/components/Bearam'
@@ -17,17 +18,21 @@ import Watermark from '@/components/common/Watermark'
 import '@/styles/globals.css'
 
 import { hotjar } from 'react-hotjar'
+import { twMerge } from 'tailwind-merge'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 const oxanium = Oxanium({ subsets: ['latin'] })
 
 library.add(fas)
+const bgRoutes = ['/home']
 
 const RootLayout = ({
   children,
 }: Readonly<{
   children: ReactNode
 }>) => {
+  const actualPath = usePathname()
+
   // const { pro } = useProStore()
   const [isBear, setIsBear] = useState(false)
 
@@ -50,7 +55,9 @@ const RootLayout = ({
           <Watermark />
           <AppProviders>
             <Navbar />
-            <div className="md:px-20">{children}</div>
+            <main className={twMerge(bgRoutes.includes(actualPath) && 'bg-home-section bg-cover bg-no-repeat')}>
+              {children}
+            </main>
           </AppProviders>
         </body>
         <Analytics />
