@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 import { useEffect, useState, type ReactNode } from 'react'
 
-import { Space_Grotesk, Oxanium } from 'next/font/google'
+import { Space_Grotesk, Roboto } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
 import AppProviders from '@/components/AppProviders'
@@ -21,7 +21,7 @@ import { hotjar } from 'react-hotjar'
 import { twMerge } from 'tailwind-merge'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
-const oxanium = Oxanium({ subsets: ['latin'] })
+const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'] })
 
 library.add(fas)
 const bgRoutes = ['/home']
@@ -49,9 +49,7 @@ const RootLayout = ({
   if (!isBear) {
     return (
       <html lang="en">
-        <body
-          className={`classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${oxanium.className}`}
-        >
+        <body className={`classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${roboto.className}`}>
           <Watermark />
           <AppProviders>
             <Navbar />
@@ -69,7 +67,7 @@ const RootLayout = ({
     return (
       <html lang="en">
         <body
-          className={`classic overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${oxanium.className} }`}
+          className={`classic overscroll-none bg-cover bg-fixed bg-center ${spaceGrotesk.className} ${roboto.className} }`}
         >
           <AppProviders>
             <Bearam />

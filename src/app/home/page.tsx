@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { EmailNotification } from './components/email-notification'
 import { HeroMainText } from './components/hero-main-text'
 import { HomeInfoCard } from './components/home-info-card'
@@ -7,22 +5,11 @@ import { whyHodlData } from './data'
 
 const HomePage = () => {
   return (
-    <>
-      <div className="flex flex-wrap justify-center md:justify-between">
+    <div className="calc-container grid place-content-center justify-center gap-20">
+      <div className="flex justify-center md:justify-between">
         <aside className="flex flex-col justify-center gap-12">
           <HeroMainText />
           <EmailNotification />
-        </aside>
-        <aside>
-          <div className="h-full max-h-[578px] w-full max-w-[578px]">
-            <Image
-              src="/deco/hero_section_deco.svg"
-              alt="HODL Protocol Sphere decorative"
-              width={587}
-              height={587}
-              className="h-full w-full object-contain"
-            />
-          </div>
         </aside>
       </div>
       <article className="w-full">
@@ -33,7 +20,7 @@ const HomePage = () => {
           ))}
         </div>
       </article>
-    </>
+    </div>
   )
 }
 export default HomePage

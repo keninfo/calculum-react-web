@@ -79,6 +79,10 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.calc-container {
+  min-height: calc(100dvh - 100px);
+}
+
 .scroll-offset {
   scroll-margin-top: 20vh; /* Adjust this value as needed */
 }

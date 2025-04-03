@@ -46,7 +46,7 @@ const Sidebar = () => {
           <div className="col-span-8 flex items-center justify-center py-4">{navigationItems.map(NavbarItem)} </div>
           <div className="col-span-2 ml-4 flex justify-end">
             {/* <CustomConnectButton /> */}
-            <button className="flex h-12 w-52 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+            <button className="w-50 flex h-10 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
               LAUNCHING SOON
             </button>
           </div>
@@ -54,10 +54,10 @@ const Sidebar = () => {
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around gap-4 p-6 md:hidden">
-        <Image src="/logo/main_logo_small.svg" width={100} height={20} alt="image" className="h-10 w-auto" />
+        <Image src="/logo/main_logo.svg" width={100} height={20} alt="image" className="h-10 w-auto" />
         <div className="flex w-full justify-center">
           {/* <CustomConnectButton /> */}
-          <button className="flex h-12 w-52 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+          <button className="w-50 flex h-10 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
             LAUNCHING SOON
           </button>
         </div>

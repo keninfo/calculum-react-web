@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { Space_Grotesk, Oxanium } from 'next/font/google'
+import { Space_Grotesk, Roboto } from 'next/font/google'
 
 import { useAccount } from 'wagmi'
 
@@ -14,7 +14,7 @@ import CustomLeaderboard from './CustomLeaderboard'
 import UserCard from './UserCard'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
-const oxanium = Oxanium({ subsets: ['latin'] })
+const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'] })
 
 const Bandit = () => {
   const { isConnected } = useAccount()
@@ -30,7 +30,7 @@ const Bandit = () => {
 
   return (
     <BanditProvider>
-      <div className={`${spaceGrotesk.className} ${oxanium.className}`} style={{ marginTop: navbarHeight }}>
+      <div className={`${spaceGrotesk.className} ${roboto.className}`} style={{ marginTop: navbarHeight }}>
         <h1 className="py-10 pl-2 text-3xl text-offWhite">LEADERBOARD</h1>
         <CustomLeaderboard campaignId={3857} key={reloadKey} />
         <h1 className="py-10 pl-2 text-3xl text-offWhite">QUESTS</h1>
