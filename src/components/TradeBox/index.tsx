@@ -46,7 +46,8 @@ const TradeBox = () => {
     balanceAssets = BalanceAssets(address).data as bigint
   }
 
-  console.log(balanceAssets)
+  console.log('balanceAssets =>> ', balanceAssets)
+
   const balanceSharesResult = BalanceShares(address).data as bigint
   const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
@@ -136,23 +137,31 @@ const TradeBox = () => {
 
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
-      <Card className="h-fit w-full">
+      <Card className="h-fit w-full bg-[#3B3B3B] md:min-h-[231px]">
         <div className="mb-8 grid w-full grid-cols-2 items-center gap-5">
           <SecondaryButton
-            className={`col-span-1 w-full pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} `}
+            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} `}
             handleClick={() => handleChange({ toDeposit: true })}
             disabled
           >
             DEPOSIT
           </SecondaryButton>
           <SecondaryButton
-            className={`col-span-1 w-full pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''}`}
+            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''}`}
             handleClick={() => handleChange({ toDeposit: false })}
             disabled
           >
             WITHDRAW
           </SecondaryButton>
         </div>
+
+        {chain !== 'Coming Soon' && !isConnected && (
+          <div className="grid h-28 place-content-center">
+            <p className="hidden w-full text-center text-sm text-[#C1EA60] md:block">
+              Connect your wallet to get started{' '}
+            </p>
+          </div>
+        )}
         {wrongNetwork && isConnected && (
           <>
             {' '}

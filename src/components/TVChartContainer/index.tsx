@@ -412,7 +412,7 @@ export const TVChartContainer = () => {
   }, [coin])
 
   return (
-    <Card className="h-full w-full !p-0 md:min-h-[70vh]">
+    <Card className="h-full w-full bg-[#3B3B3B] !p-0 md:min-h-[70vh]">
       <div ref={chartContainerRef} className="h-[50vh] w-full p-5 md:h-full" />
     </Card>
   )

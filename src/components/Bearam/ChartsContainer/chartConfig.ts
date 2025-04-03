@@ -84,7 +84,7 @@ export const tooltipConfig = {
   top: '12px',
   left: '12px',
   pointerEvents: 'none',
-  fontFamily: 'Inter, Roboto, Ubuntu, sans-serif',
+  fontFamily: 'Roboto, Ubuntu, sans-serif',
   color: 'offWhite',
 }
 

@@ -70,6 +70,7 @@ const LongShortChart: React.FC = () => {
     if (!chart || !coin) return
 
     const fetchData = async () => {
+      console.log('Fetching data for:', coin)
       try {
         const response = await fetch(API_URL + `mo${coin}`)
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`)
@@ -115,7 +116,7 @@ const LongShortChart: React.FC = () => {
   }, [chart, coin]) // Re-fetch when the chart or coin changes
 
   return (
-    <Card className="mt-4 h-fit w-full">
+    <Card className="mt-4 h-fit w-full bg-[#3B3B3B]">
       <div ref={chartContainerRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
     </Card>
   )

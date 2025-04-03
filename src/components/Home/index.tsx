@@ -16,7 +16,7 @@ import InitialPopup from '../InitialPopup'
 import Card from '../common/Card'
 import CryptoIcon from '../common/CryptoIcon'
 import SelectionCard from './SelectionCard'
-import { WelcomeCard } from './WelcomeCard'
+import { ProductsCard } from './components/products-card'
 import { useSelectionStore } from './useSelectionStore'
 
 const ITEMS_PER_PAGE = 5
@@ -74,68 +74,22 @@ const Index = () => {
     <>
       {modal && <InitialPopup setModal={setModal} />}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
+        {/* <InfoCarousel /> */}
         <div className="relative grid-cols-12 md:grid md:space-x-4">
           <div className="flex h-full flex-col md:col-span-8">
-            <WelcomeCard />
             <SelectionCard />
-            <Card className="mt-4 hidden h-full w-full md:block">
-              <table className="h-fit min-w-full table-auto">
-                <thead>
-                  <tr>
-                    <th className="py-2 text-left text-sm font-medium text-grey">Token</th>
-                    <th className="py-2 text-left text-sm font-medium text-grey">Strategy</th>
-                    <th className="py-2 text-left text-sm font-medium text-grey">Chain</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contractIndex.map((contract, index) => {
-                    const chainLogo = chains.find(([name]) => name === contract.chain)?.[1]
-                    if (selectedToken !== 'All Tokens') {
-                      if (!contract.coin.includes(selectedToken)) {
-                        return
-                      }
-                    }
-                    return (
-                      <tr
-                        key={index}
-                        onClick={() => goTo(contract.strategy, contract.coin)}
-                        className="cursor-pointer !rounded-full font-thin transition duration-200 ease-in-out hover:bg-eerie"
-                      >
-                        <td className="w-fit text-sm">
-                          <div className="flex w-fit items-center justify-start">
-                            <CryptoIcon coin={contract.coin} className="mr-2 h-5" />
-                            <p>{contract.coin}</p>
-                          </div>
-                        </td>
-                        <td className="w-fit py-2 text-sm">{contract.strategy}</td>
-                        {/* <td className="py-2 text-sm ">{contract.symbol}</td> */}
-                        <td className="w-fit text-sm">
-                          <div className="flex w-fit items-center justify-start">
-                            {chainLogo && <img src={chainLogo} alt="chain logo" className="mr-2 h-5 w-5" />}
-                            <p className={`${contract.chain == 'Coming Soon' ? 'text-payne' : ''}`}>{contract.chain}</p>
-                          </div>
-                        </td>
-                        <td className="w-18 pr-2 text-right">
-                          {contract.chain !== 'Coming Soon' && (
-                            <FontAwesomeIcon
-                              icon={['fas', 'angle-right' as IconName]}
-                              className="ml-1 text-xs font-thin text-grey"
-                            />
-                          )}
-                          {contract.chain == 'Coming Soon' && (
-                            <p className="text-xs text-payne">
-                              {' '}
-                              Preview <FontAwesomeIcon icon={['fas', 'angle-right' as IconName]} className="ml-1" />
-                            </p>
-                          )}
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </Card>
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {contractIndex.map((contract, index) => {
+                if (selectedToken !== 'All Tokens') {
+                  if (!contract.coin.includes(selectedToken)) {
+                    return
+                  }
+                }
+                return <ProductsCard key={index} {...contract} />
+              })}
+            </div>
+
+            {/* TODO: Check this component */}
             <div className="mb-8 mt-4 w-full space-y-4 md:hidden">
               <p className="p-4 text-center text-lg font-semibold">PRODUCTS</p>
               {displayedContracts
@@ -196,17 +150,34 @@ const Index = () => {
                 </div>
               )}
             </div>
+            {/* TODO: Check this component */}
           </div>
+
           <div className="sticky space-y-4 md:col-span-4" style={{ top: navbarHeight }}>
             {/* <div className='h-full col-span-1' onClick={() => setSelectedStrategy('All Strategies')}>
               <Card className={`h-full cursor-pointer  hover:bg-eerie w-full flex justify-start items-start border ${selectedStrategy == 'All Strategies' ? 'border-primary' : 'border-dark'}`}>
-                <h2 className='text-xl'>ALL STRATEGIES</h2>
               </Card>
             </div> */}
-            <p className="p-4 text-center text-lg font-semibold md:hidden">STRATEGIES</p>
+            <h2 className="mb-8 text-lg md:text-xl">Our Strategies</h2>
+            <div className="flex flex-col gap-4 pb-9 text-[#a5a5a5]">
+              <p>
+                HODL brings two categories of time-tested strategies onchain: Open-Source and Hedge Fund Manager Series.
+                Each strategy is designed for specific market conditions—whether it’s trending markets or
+                high-volatility phases—targeting sustainable, token-denominated growth above 10%.
+              </p>
+              <p>
+                Our first live strategy, Momentum, leads the Open-Source Series, helping users navigate market cycles
+                with a systematic approach. More strategies are launching soon, expanding your options for smarter, more
+                resilient crypto holdings.
+              </p>
+              <a href="/#" className="flex items-center gap-2">
+                Learn more about our strategies{' '}
+                <Image src="/icons/external_arrow_green.svg" alt={''} width={20} height={20} />
+              </a>
+            </div>
             <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
               <Card
-                className={`h-fit w-full cursor-pointer border transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+                className={`h-fit w-full cursor-pointer border !bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
               >
                 <h2 className="mb-2 text-xl">MOMENTUM</h2>
                 <p className="text-xs font-thin">
@@ -224,7 +195,7 @@ const Index = () => {
               </Card>
             </a>
 
-            <a
+            {/* <a
               className="h-full w-full"
               href="https://docs.hodlprotocol.io/hodl-101/what-are-smoothcoins"
               target="_blank"
@@ -247,7 +218,7 @@ const Index = () => {
                   className="relative mt-4 h-[90%] w-full"
                 />
               </Card>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

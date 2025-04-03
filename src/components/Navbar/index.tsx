@@ -10,10 +10,9 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import Card from '@/components/common/Card'
-import CustomConnectButton from '@/components/common/CustomConnectButton'
 import { useNavbarStore } from '@/store/useNavbarStore'
-import { useProStore } from '@/store/useProStore'
 
+// import { useProStore } from '@/store/useProStore'
 import NavbarItem from './NavbarItem'
 import { navigationItems } from './config'
 
@@ -22,7 +21,7 @@ const Sidebar = () => {
   const [navbar, { height }] = useMeasure()
   const { setNavbarHeight } = useNavbarStore()
   const [parent] = useAutoAnimate()
-  const { pro } = useProStore()
+  // const { pro } = useProStore()
 
   const handleNavbarToggle = () => {
     setIsNavbarOpen((prev) => !prev)
@@ -33,32 +32,34 @@ const Sidebar = () => {
   }, [height, setNavbarHeight])
 
   return (
-    <div
-      className={`fixed top-0 z-50 w-screen overflow-hidden bg-cover bg-fixed bg-center ${pro ? "bg-[url('/stars.jpeg')]" : "bg-[url('/bg.png')]"}`}
-      id="Navbar"
-      ref={navbar}
-    >
+    <div className={`fixed top-0 z-50 w-screen overflow-hidden`} id="Navbar" ref={navbar}>
       {/* DESKTOP*/}
       <div className="hidden px-20 md:block">
-        <div className="grid grid-cols-11 items-center">
+        <div className="grid grid-cols-12 items-center">
           <Image
-            src="/HODLBeta.png"
+            src="/logo/main_logo.svg"
             width={1000}
             height={1000}
             alt="image"
-            className="col-span-2 flex h-8 w-fit justify-start"
+            className="col-span-2 flex w-32 justify-start"
           />
-          <div className="col-span-6 flex items-center justify-start">{navigationItems.map(NavbarItem)} </div>
-          <div className="col-span-3 ml-4 flex justify-end">
-            <CustomConnectButton />
+          <div className="col-span-8 flex items-center justify-center py-4">{navigationItems.map(NavbarItem)} </div>
+          <div className="col-span-2 ml-4 flex justify-end">
+            {/* <CustomConnectButton /> */}
+            <button className="w-50 flex h-10 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+              LAUNCHING SOON
+            </button>
           </div>
         </div>
       </div>
       {/* MOBILE */}
       <div className="flex h-fit items-center justify-around gap-4 p-6 md:hidden">
-        <Image src="/HODLSmall.png" width={100} height={20} alt="image" className="h-10 w-auto" />
+        <Image src="/logo/main_logo.svg" width={100} height={20} alt="image" className="h-10 w-auto" />
         <div className="flex w-full justify-center">
-          <CustomConnectButton />
+          {/* <CustomConnectButton /> */}
+          <button className="w-50 flex h-10 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer">
+            LAUNCHING SOON
+          </button>
         </div>
         <p className="flex w-fit justify-end text-2xl" onClick={handleNavbarToggle}>
           {!isNavbarOpen && <FontAwesomeIcon icon={['fas', 'bars' as IconName]} />}

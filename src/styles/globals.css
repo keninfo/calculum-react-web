@@ -79,6 +79,10 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.calc-container {
+  min-height: calc(100dvh - 100px);
+}
+
 .scroll-offset {
   scroll-margin-top: 20vh; /* Adjust this value as needed */
 }
@@ -120,4 +124,16 @@ input[type='number'] {
   -webkit-mask-repeat: no-repeat;
   mask-size: 100% 100%;
   -webkit-mask-size: 100% 100%;
+}
+
+/* embla Styles */
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
 }

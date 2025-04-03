@@ -3,6 +3,10 @@ module.exports = {
   content: ['./src/app/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        'carousel-background': "url('/backgrounds/carousel_bg.svg')",
+        'home-section': "url('/backgrounds/home_bg.svg')",
+      },
       colors: {
         primary: 'var(--color-primary)',
         dark: 'var(--color-dark)',

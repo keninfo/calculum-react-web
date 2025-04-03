@@ -13,6 +13,7 @@ export const classicTheme = {
   true: '#229b95', //blue
   burnt: '#DF7153', //orange
   citron: '#DCCD5B', //yellow
+  darkBlue: '#013537', //dark blue
 }
 
 export const proTheme = {

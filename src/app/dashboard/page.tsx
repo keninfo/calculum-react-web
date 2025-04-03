@@ -17,7 +17,7 @@ const DashboardPage = () => {
         <MetaTags />
       </Head>
 
-      <main className="pt-0 md:p-5 md:px-0">
+      <main className="mx-auto max-w-[1366px] pt-0 md:p-5 md:px-0">
         <Dashboard />
       </main>
       <Footer />

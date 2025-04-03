@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic'
 import { useAccount } from 'wagmi'
 
 import ChartsContainer from '@/components/ChartsContainer/Index'
-import Help from '@/components/Help'
 import MarketTransactions from '@/components/MarketTransactions'
 import Positions from '@/components/Positions'
 import ProductMetrics from '@/components/ProductMetrics'
@@ -22,6 +21,9 @@ import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import LongShortChart from '../ChartsContainer/Charts/LongShort'
+import { LearnMore } from './components/learn-more'
+
+import { twMerge } from 'tailwind-merge'
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -68,43 +70,49 @@ const Dashboard = () => {
     return <div className="flex h-screen w-full items-center justify-center">Loading...</div>
   }
 
+  console.log('strategy =>> ', strategy)
+
   return (
     <>
       {/* DESKTOP */}
-      <div className={`hidden grid-cols-11 gap-4 md:grid`} style={{ marginTop: navbarHeight }}>
-        <div className={`col-span-11 flex w-full flex-col`}>
+      <div className={`grid-cols-12 gap-4 px-5 md:grid`} style={{ marginTop: navbarHeight }}>
+        <div className={`col-span-12 flex w-full flex-col md:col-span-9`}>
           <StrategyInfoTitle />
         </div>
-        <div
-          className={`flex flex-col ${(coin !== 'BTC' && coin !== 'USDC') || !isConnected ? 'col-span-11' : 'col-span-8'}`}
-        >
+        <div className={`flex flex-col ${coin !== 'BTC' && coin !== 'USDC' ? 'col-span-12' : 'col-span-9'}`}>
           {strategy == 'Momentum' && <TVChartContainer />}
           {strategy == 'Smoothcoin' && <ChartsContainer />}
+
           <LongShortChart />
           <TVAttribution />
-          {isConnected && (coin == 'BTC' || coin == 'USDC') && (
-            <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="flex items-center justify-start gap-10 border-b border-payne pt-2">
-                <li className="text-lg">
-                  <button
-                    onClick={() => setSelected(2)}
-                    className={`pb-6 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Positions
-                  </button>
-                </li>
-                <li className="text-lg">
-                  <button
-                    onClick={() => setSelected(3)}
-                    className={`pb-6 ${selected === 3 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Transaction History
-                  </button>
-                </li>
+
+          {(coin == 'BTC' || coin == 'USDC') && (
+            <Card className="my-2 mt-4 h-full min-h-fit w-full bg-[#3B3B3B]">
+              <ul className="flex items-center justify-start gap-10 border-b border-payne">
+                {isConnected && (
+                  <>
+                    <li className="text-lg">
+                      <button
+                        onClick={() => setSelected(2)}
+                        className={twMerge('pb-2', selected === 2 && 'border-b-2 border-primary text-primary')}
+                      >
+                        Positions
+                      </button>
+                    </li>
+                    <li className="text-lg">
+                      <button
+                        onClick={() => setSelected(3)}
+                        className={twMerge('pb-2', selected === 3 && 'border-b-2 border-primary text-primary')}
+                      >
+                        Transaction History
+                      </button>
+                    </li>
+                  </>
+                )}
                 <li className="text-lg">
                   <button
                     onClick={() => setSelected(0)}
-                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
+                    className={twMerge('pb-2', selected === 0 && 'border-b-2 border-primary text-primary')}
                   >
                     Metrics
                   </button>
@@ -112,7 +120,7 @@ const Dashboard = () => {
                 <li className="text-lg">
                   <button
                     onClick={() => setSelected(1)}
-                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
+                    className={twMerge('pb-2', selected === 1 && 'border-b-2 border-primary text-primary')}
                   >
                     Transactions
                   </button>
@@ -125,125 +133,15 @@ const Dashboard = () => {
               {selected == 3 && <Transactions />}
             </Card>
           )}
-          {!isConnected && (coin == 'BTC' || coin == 'USDC') && (
-            <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="grid grid-cols-4 border-b border-payne pt-2">
-                <li className="col-span-1 flex justify-start text-lg">
-                  <button
-                    onClick={() => setSelected(0)}
-                    className={`pb-6 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Metrics
-                  </button>
-                </li>
-                <li className="col-span-1 flex justify-start text-lg">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-6 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Transactions
-                  </button>
-                </li>
-              </ul>
-              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
-              {selected == 1 && <MarketTransactions />}
-            </Card>
-          )}
         </div>
-        {(coin == 'BTC' || coin == 'USDC') && isConnected && (
+        {(coin == 'BTC' || coin == 'USDC') && (
           <div className="relative col-span-3 flex h-full flex-col gap-4">
             <div className="sticky top-0 space-y-4" style={{ top: navbarHeight || 0 }}>
               <TradeBox />
-              <Help />
+              <LearnMore />
             </div>
           </div>
         )}
-      </div>
-
-      {/* MOBILE */}
-      <div className="-mt-5 block w-screen space-y-5 px-5 md:hidden" style={{ marginTop: navbarHeight }}>
-        <StrategyInfoTitle />
-        {strategy == 'Momentum' && <TVChartContainer />}
-        {strategy == 'Smoothcoin' && <ChartsContainer />}
-        <LongShortChart />
-        <TVAttribution />
-        {isConnected && coin == 'BTC' && (
-          <>
-            <TradeBox />
-            <Help />
-          </>
-        )}
-        <div className={`flex flex-col ${coin !== 'BTC' ? 'col-span-11' : 'col-span-8'}`}>
-          {isConnected && (coin == 'BTC' || coin == 'USDC') && (
-            <Card className="h-full min-h-fit w-full">
-              <ul className="flex items-center justify-around pt-2">
-                <li className="col-span-1 flex justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(2)}
-                    className={`pb-2 ${selected === 2 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Positions
-                  </button>
-                </li>
-                <li className="col-span-1 flex justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(3)}
-                    className={`pb-2 ${selected === 3 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Trade History
-                  </button>
-                </li>
-                <li className="col-span-1 flex justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(0)}
-                    className={`pb-2 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Metrics
-                  </button>
-                </li>
-                <li className="col-span-1 flex justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-2 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Transactions
-                  </button>
-                </li>
-              </ul>
-              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
-              {selected == 1 && <MarketTransactions />}
-              {selected == 2 && <Positions />}
-              {selected == 3 && <Transactions />}
-            </Card>
-          )}
-          {!isConnected && (coin == 'BTC' || coin == 'USDC') && (
-            <Card className="mt-4 h-full min-h-fit w-full">
-              <ul className="flex items-center justify-around pt-2">
-                <li className="flex w-fit justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(0)}
-                    className={`pb-2 ${selected === 0 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Metrics
-                  </button>
-                </li>
-                <li className="flex w-fit justify-start text-xs">
-                  <button
-                    onClick={() => setSelected(1)}
-                    className={`pb-2 ${selected === 1 ? 'border-b-2 border-primary text-primary' : ''}`}
-                  >
-                    Transactions
-                  </button>
-                </li>
-              </ul>
-              {selected == 1 && <MarketTransactions />}
-              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
-              {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
-            </Card>
-          )}
-        </div>
       </div>
     </>
   )

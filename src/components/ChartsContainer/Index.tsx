@@ -66,7 +66,7 @@ const Chart = () => {
     <>
       {strategy == `Smoothcoin` && (
         <div ref={parent}>
-          <Card className={`relative w-full !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw]`}>
+          <Card className={`relative w-full bg-[#3B3B3B] !p-0 !py-[2vh] !pr-[3vw] md:!px-[3vw]`}>
             <div className="absolute right-5 top-5 z-10 hidden md:block">
               <ChartOptions />
             </div>

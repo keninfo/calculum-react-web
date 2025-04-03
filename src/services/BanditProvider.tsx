@@ -17,7 +17,7 @@ export const BanditProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <BanditContextProvider
-      apiKey="1228fb10ed7e478ca4c89dd51d8f5772"
+      apiKey="1228fb10ed7e478ca4c89dd51d8f5772" // TODO: Transfer this apikey to a secure location
       cluster={'mainnet' as ClusterBanditType}
       connectedAddress={address}
       walletSettings={{

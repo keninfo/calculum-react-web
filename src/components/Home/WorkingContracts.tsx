@@ -84,9 +84,7 @@ const WorkingContracts = ({
   }
 
   if (filtered.length == 0) {
-    return (
-      <p className="bg-black py-5 text-center text-primary md:ml-6 md:text-left">{`You don't have any open positions`}</p>
-    )
+    return <p className="py-5 text-center text-primary md:ml-6 md:text-left">{`You don't have any open positions`}</p>
   }
 
   return (
