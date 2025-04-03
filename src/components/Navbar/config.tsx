@@ -6,8 +6,8 @@ export type NavigationItem = {
 }
 
 export const navigationItems: NavigationItem[] = [
-  { name: 'HOME', link: '/home', icon: 'file-invoice', target: '' },
-  { name: 'PRODUCTS', link: '/', icon: 'globe', target: '' },
+  { name: 'HOME', link: '/', icon: 'file-invoice', target: '' },
+  { name: 'PRODUCTS', link: '/products', icon: 'globe', target: '' },
   { name: 'RESOURCES', link: 'https://docs.hodlprotocol.io/', icon: 'file-invoice', target: '_blank' },
   { name: 'LEADERBOARD', link: '/leaderboard', icon: 'globe', target: '' },
 ]

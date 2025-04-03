@@ -24,7 +24,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'] })
 
 library.add(fas)
-const bgRoutes = ['/home']
+const bgRoutes = ['/']
 
 const RootLayout = ({
   children,
