@@ -163,7 +163,7 @@ const Index = () => {
               <p>
                 HODL brings two categories of time-tested strategies onchain: Open-Source and Hedge Fund Manager Series.
                 Each strategy is designed for specific market conditions—whether it’s trending markets or
-                high-volatility phases—targeting sustainable, token-denominated growth above 10%.
+                high-volatility phases—targeting token-denominated growth above of 10% p.a. over time.
               </p>
               <p>
                 Our first live strategy, Momentum, leads the Open-Source Series, helping users navigate market cycles
