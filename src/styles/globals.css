@@ -81,6 +81,8 @@ input[type='number'] {
 
 .calc-container {
   min-height: calc(100dvh - 100px);
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .scroll-offset {

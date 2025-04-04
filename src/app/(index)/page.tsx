@@ -13,7 +13,7 @@ const HomePage = () => {
         </aside>
       </div>
       <article className="w-full">
-        <h3 className="mb-10 text-3xl font-light text-primary">Why HODL with us?</h3>
+        <h3 className="mb-10 text-center text-3xl font-light text-primary md:text-left">Why HODL with us?</h3>
         <div className="flex flex-wrap items-center justify-center gap-4 md:justify-start md:gap-11">
           {whyHodlData.map((item) => (
             <HomeInfoCard {...item} key={item.title} />

@@ -45,7 +45,7 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
                     onClick={openConnectModal}
                     className={`flex w-fit justify-center rounded-md bg-primary px-4 py-1 text-eerie hover:scale-105 hover:text-eerie md:py-2`}
                   >
-                    <p>Connect Wallet</p>
+                    Launch App
                   </button>
                 )
               }
