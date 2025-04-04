@@ -11,6 +11,10 @@ const EmailNotification = () => {
           <span>Send</span>
         </button>
       </div>
+      <button className="mt-4 flex items-center justify-center gap-2 rounded-lg border-2 border-primary px-7 py-2 text-sm text-primary">
+        <Image src={'/icons/arrow_polygon.svg'} alt={''} width={14} height={9} />
+        <span>Send</span>
+      </button>
     </div>
   )
 }

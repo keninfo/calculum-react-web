@@ -20,9 +20,7 @@ const layout = ({
         <title>HODL Protocol</title>
         <MetaTags />
       </Head>
-      <section className="mx-auto min-h-dvh max-w-[1336px] bg-cover bg-no-repeat px-2 pt-24 md:px-5">
-        {children}
-      </section>
+      <section className="mx-auto min-h-dvh max-w-[1336px] px-2 md:px-5">{children}</section>
     </>
   )
 }

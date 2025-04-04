@@ -1,8 +1,8 @@
 const HeroMainText = () => {
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="text-[13vw] font-bold text-primary md:text-6xl">
+      <div className="mb-10">
+        <h1 className="mb-4 text-[13vw] font-bold leading-none text-primary md:text-7xl">
           OUTPERFORM <br /> THE MARKET
         </h1>
         <h2 className="text-3xl text-primary">Using no leverage</h2>
