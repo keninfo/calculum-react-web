@@ -8,7 +8,7 @@ const HeroMainText = () => {
         <h2 className="text-3xl text-primary">Using no leverage</h2>
       </div>
       <p className="max-w-[568px]">
-        HODL Protocol is tokenizing $1Trillion Asset Management strategies not yet in DeFi.
+        HODL Protocol is tokenizing $1trillion asset management strategies not yet in DeFi.
       </p>
     </div>
   )

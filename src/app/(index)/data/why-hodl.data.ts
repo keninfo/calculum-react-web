@@ -1,7 +1,7 @@
 export const whyHodlData = [
   {
     title: 'Accumulate More Token',
-    description: 'Watch your underlying asset token balance increase over time.',
+    description: 'Watch your underlying token balance increase over time.',
   },
   {
     title: 'Automated Strategies',
