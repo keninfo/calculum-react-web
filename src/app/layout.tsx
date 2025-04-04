@@ -49,11 +49,20 @@ const RootLayout = ({
   if (!isBear) {
     return (
       <html lang="en">
-        <body className={`classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${roboto.className}`}>
+        <body
+          className={twMerge(
+            `classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${roboto.className}`,
+            bgRoutes.includes(actualPath) && 'bg-home-section bg-auto bg-top bg-no-repeat md:bg-cover',
+          )}
+        >
           <Watermark />
           <AppProviders>
             <Navbar />
-            <main className={twMerge(bgRoutes.includes(actualPath) && 'bg-home-section bg-cover bg-no-repeat')}>
+            <main
+            // className={twMerge(
+            //   bgRoutes.includes(actualPath) && 'bg-home-section bg-auto bg-top bg-no-repeat md:bg-cover',
+            // )}
+            >
               {children}
             </main>
           </AppProviders>
