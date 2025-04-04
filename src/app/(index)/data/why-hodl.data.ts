@@ -1,6 +1,6 @@
 export const whyHodlData = [
   {
-    title: 'Accumulate Token',
+    title: 'Accumulate More Token',
     description: 'Watch your underlying asset token balance increase over time.',
   },
   {
@@ -8,7 +8,7 @@ export const whyHodlData = [
     description: 'Your holdings will be automatically rebalanced based on market trends to optimize returns.',
   },
   {
-    title: 'TradFi Battle-Tested',
+    title: 'TradFi Battle-tested',
     description: '30-year-old proven strategies previously reserved for the Wall Street elite.',
   },
   {
