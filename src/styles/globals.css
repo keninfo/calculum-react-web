@@ -89,6 +89,10 @@ input[type='number'] {
   scroll-margin-top: 20vh; /* Adjust this value as needed */
 }
 
+.home-bg {
+  background-position: 60% -10%;
+}
+
 @keyframes scroll {
   0% {
     transform: translateX(0);

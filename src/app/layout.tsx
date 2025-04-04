@@ -52,19 +52,13 @@ const RootLayout = ({
         <body
           className={twMerge(
             `classic relative overscroll-none bg-[#1e1e1e] ${spaceGrotesk.className} ${roboto.className}`,
-            bgRoutes.includes(actualPath) && 'bg-home-section bg-auto bg-top bg-no-repeat md:bg-cover',
+            bgRoutes.includes(actualPath) && 'home-bg bg-home-section bg-auto bg-no-repeat md:bg-cover',
           )}
         >
           <Watermark />
           <AppProviders>
             <Navbar />
-            <main
-            // className={twMerge(
-            //   bgRoutes.includes(actualPath) && 'bg-home-section bg-auto bg-top bg-no-repeat md:bg-cover',
-            // )}
-            >
-              {children}
-            </main>
+            <main>{children}</main>
           </AppProviders>
         </body>
         <Analytics />
