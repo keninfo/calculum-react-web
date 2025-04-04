@@ -43,7 +43,7 @@ const StrategyInfoTitle = () => {
   }, [daySharePriceData, previousDaySharePriceData])
 
   const returnHome = () => {
-    router.push('/')
+    router.push('/products')
   }
 
   const strategyInfo = useMemo(() => {
