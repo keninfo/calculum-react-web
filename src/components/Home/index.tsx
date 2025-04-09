@@ -12,7 +12,7 @@ import { contractIndex } from '@/contracts/contractIndex'
 import { useNavbarStore } from '@/store/useNavbarStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-import InitialPopup from '../InitialPopup'
+// import InitialPopup from '../InitialPopup'
 import Card from '../common/Card'
 import CryptoIcon from '../common/CryptoIcon'
 import SelectionCard from './SelectionCard'
@@ -29,7 +29,7 @@ const chains = [
 
 const Index = () => {
   const { navbarHeight } = useNavbarStore()
-  const [modal, setModal] = useState<boolean>(false)
+  // const [modal, setModal] = useState<boolean>(false)
   const router = useRouter()
   const { setStrategy, setCoin } = useStrategyStore()
 
@@ -38,13 +38,13 @@ const Index = () => {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    const hasAnswered = localStorage.getItem('userResponse')
-    if (!hasAnswered) {
-      setModal(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   const hasAnswered = localStorage.getItem('userResponse')
+  //   if (!hasAnswered) {
+  //     setModal(true)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   const goTo = (strategy: string, coin: string) => {
     setStrategy(strategy)
@@ -72,7 +72,7 @@ const Index = () => {
 
   return (
     <>
-      {modal && <InitialPopup setModal={setModal} />}
+      {/* {modal && <InitialPopup setModal={setModal} />} */}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
         {/* <InfoCarousel /> */}
         <div className="relative grid-cols-12 md:grid md:space-x-4">
