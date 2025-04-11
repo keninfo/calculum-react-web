@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Head from 'next/head'
 
-import Dashboard from '@/components/Dashboard'
+import DashboardView from '@/app/dashboard/view/DashboardView'
 import Footer from '@/components/Footer'
 import MetaTags from '@/components/common/MetaTags'
 
@@ -18,7 +18,7 @@ const DashboardPage = () => {
       </Head>
 
       <main className="mx-auto max-w-[1366px] pt-0 md:p-5 md:px-0">
-        <Dashboard />
+        <DashboardView />
       </main>
       <Footer />
     </>

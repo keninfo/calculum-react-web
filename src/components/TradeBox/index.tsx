@@ -7,9 +7,9 @@ import { useAccount } from 'wagmi'
 
 import { PrimaryButton, SecondaryButton } from '@/components/common/Buttons'
 import Card from '@/components/common/Card'
+import { walletClient } from '@/config/wallet-client'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
-import { walletClient } from '@/services/RainbowKitProvider'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
 import Approve from './Approve'

@@ -17,7 +17,7 @@ import { http, useAccount, useBalance } from 'wagmi'
 import { PrimaryButton } from '@/components/common/Buttons'
 import { publicClient } from '@/config/viem-client'
 import useMint from '@/hooks/useMint'
-import { PRIVATE_KEY } from '@/utils/constants'
+import { PRIVATE_KEY } from '@/shared/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { AmountContext } from './index'

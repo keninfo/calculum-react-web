@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-import { STAGING_PASSWORD } from '@/utils/constants'
+import { STAGING_PASSWORD } from '@/shared/constants'
 
 const PASSWORD = STAGING_PASSWORD
 
