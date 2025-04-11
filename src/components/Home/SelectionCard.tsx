@@ -11,22 +11,37 @@ const SelectionCard = () => {
   const { selectedToken, setSelectedToken } = useSelectionStore()
 
   return (
-    <div className="flex items-center justify-start space-x-2 text-xs md:text-lg">
-      {tokens.map((item) => {
-        return (
-          <button
-            key={item}
-            className={twMerge(
-              'rounded-full px-4 py-1 transition duration-200 ease-in-out hover:bg-eerie',
-              selectedToken === item && 'bg-black',
-            )}
-            onClick={() => setSelectedToken(item)}
-          >
-            {item}
-          </button>
-        )
-      })}
-    </div>
+    <>
+      <div className="mb-5 flex flex-wrap justify-center md:hidden">
+        <button
+          className={twMerge(
+            'rounded-full px-4 py-1 text-sm transition duration-200 ease-in-out md:text-base',
+            selectedToken === 'All Tokens' && 'bg-primary text-black',
+          )}
+          onClick={() => setSelectedToken('All Tokens')}
+        >
+          View All Tokens
+        </button>
+        <span className="text-sm">Or filter products by token below</span>
+      </div>
+      <div className="flex items-center justify-start overflow-x-auto text-xs md:space-x-2 md:text-lg">
+        {tokens.map((item) => {
+          return (
+            <button
+              key={item}
+              className={twMerge(
+                'rounded-full px-4 py-1 text-sm transition duration-200 ease-in-out md:text-base',
+                selectedToken === item && 'bg-primary text-black',
+                item === 'All Tokens' && 'hidden',
+              )}
+              onClick={() => setSelectedToken(item)}
+            >
+              {item}
+            </button>
+          )
+        })}
+      </div>
+    </>
   )
 }
 

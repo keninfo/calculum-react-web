@@ -38,7 +38,7 @@ const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain,
   return (
     <div
       className={twMerge(
-        'grid-col-1 box-border grid cursor-pointer items-center justify-between gap-7 rounded-lg border border-[transparent] p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2',
+        'box-border grid cursor-pointer grid-cols-2 items-center justify-between gap-3 rounded-lg border border-[transparent] p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2 md:gap-7',
         isWorking ? 'bg-[#013537]' : 'bg-[#0F0F0F]',
       )}
       onClick={() => goTo(strategy, coin)}
