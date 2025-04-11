@@ -2,8 +2,8 @@ import React from 'react'
 
 import { useAccount } from 'wagmi'
 
+import { walletClient } from '@/config/wallet-client'
 import { usdcContract } from '@/contracts/usdc'
-import { walletClient } from '@/services/RainbowKitProvider'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
 /** * Properties for the `AddUSDC` component. */
