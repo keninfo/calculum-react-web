@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 const HomeFooter = () => {
   return (
-    <footer className="flex flex-col items-center justify-center gap-5 py-4 md:flex-row md:justify-between md:py-0">
+    <footer className="flex flex-col items-center justify-center gap-5 bg-black py-4 md:mx-auto md:max-w-[1336px] md:flex-row md:justify-between md:bg-transparent md:px-10 md:pb-5">
       <p className="order-3 text-center md:order-1">
         <span className="">©</span> HODL Protocol. 2025. All rights reserved.
       </p>

@@ -1,42 +1,41 @@
 'use client'
 
-import type { IconName } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+// import type { IconName } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
+// import { useRouter } from 'next/navigation'
 import { contractIndex } from '@/contracts/contractIndex'
 import { useNavbarStore } from '@/store/useNavbarStore'
-import { useStrategyStore } from '@/store/useStrategyStore'
 
+// import { useStrategyStore } from '@/store/useStrategyStore'
 // import InitialPopup from '../InitialPopup'
 import Card from '../common/Card'
-import CryptoIcon from '../common/CryptoIcon'
+// import CryptoIcon from '../common/CryptoIcon'
 import SelectionCard from './SelectionCard'
-import { ProductsCard } from './components/products-card'
+import { ProductCardMock, ProductsCard } from './components/products-card'
 import { useSelectionStore } from './useSelectionStore'
 
-const ITEMS_PER_PAGE = 5
+// const ITEMS_PER_PAGE = 5
 
-const chains = [
-  ['Arbitrum (Testnet)', '/arb-logo.png'],
-  ['Base', '/base.svg'],
-  ['Mantle (Testnet)', '/mantle.png'],
-]
+// const chains = [
+//   ['Arbitrum (Testnet)', '/arb-logo.png'],
+//   ['Base', '/base.svg'],
+//   ['Mantle (Testnet)', '/mantle.png'],
+// ]
 
 const Index = () => {
   const { navbarHeight } = useNavbarStore()
   // const [modal, setModal] = useState<boolean>(false)
-  const router = useRouter()
-  const { setStrategy, setCoin } = useStrategyStore()
+  // const router = useRouter()
+  // const { setStrategy, setCoin } = useStrategyStore()
 
   const { selectedStrategy, selectedToken } = useSelectionStore()
 
   const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
 
   // useEffect(() => {
   //   const hasAnswered = localStorage.getItem('userResponse')
@@ -46,25 +45,25 @@ const Index = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const goTo = (strategy: string, coin: string) => {
-    setStrategy(strategy)
-    setCoin(coin)
-    localStorage.setItem('strategy', JSON.stringify(strategy))
-    localStorage.setItem('coin', JSON.stringify(coin))
+  // const goTo = (strategy: string, coin: string) => {
+  //   setStrategy(strategy)
+  //   setCoin(coin)
+  //   localStorage.setItem('strategy', JSON.stringify(strategy))
+  //   localStorage.setItem('coin', JSON.stringify(coin))
 
-    router.push('/dashboard')
-  }
+  //   router.push('/dashboard')
+  // }
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000) // Simulating loading delay
   }, [])
 
-  const filteredContracts = contractIndex.filter(
-    (contract) => selectedToken === 'All Tokens' || contract.coin.includes(selectedToken),
-  )
+  // const filteredContracts = contractIndex.filter(
+  //   (contract) => selectedToken === 'All Tokens' || contract.coin.includes(selectedToken),
+  // )
 
-  const totalPages = Math.ceil(filteredContracts.length / ITEMS_PER_PAGE)
-  const displayedContracts = filteredContracts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+  // const totalPages = Math.ceil(filteredContracts.length / ITEMS_PER_PAGE)
+  // const displayedContracts = filteredContracts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
   if (loading) {
     return <div className="flex h-screen w-full items-center justify-center">Loading...</div>
@@ -75,8 +74,8 @@ const Index = () => {
       {/* {modal && <InitialPopup setModal={setModal} />} */}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
         {/* <InfoCarousel /> */}
-        <div className="relative grid-cols-12 md:grid md:space-x-4">
-          <div className="flex h-full flex-col md:col-span-8">
+        <div className="relative flex flex-col gap-5 md:grid md:grid-cols-12 md:space-x-4">
+          <div className="order-2 flex h-full flex-col md:order-1 md:col-span-8">
             <SelectionCard />
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
               {contractIndex.map((contract, index) => {
@@ -87,10 +86,11 @@ const Index = () => {
                 }
                 return <ProductsCard key={index} {...contract} />
               })}
+              {selectedToken === 'All Tokens' && <ProductCardMock />}
             </div>
 
             {/* TODO: Check this component */}
-            <div className="mb-8 mt-4 w-full space-y-4 md:hidden">
+            {/* <div className="mb-8 mt-4 w-full space-y-4 md:hidden">
               <p className="p-4 text-center text-lg font-semibold">PRODUCTS</p>
               {displayedContracts
                 .filter((contract) => selectedToken === 'All Tokens' || contract.coin.includes(selectedToken))
@@ -149,11 +149,11 @@ const Index = () => {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
             {/* TODO: Check this component */}
           </div>
 
-          <div className="sticky space-y-4 md:col-span-4" style={{ top: navbarHeight }}>
+          <div className="order-1 space-y-4 md:sticky md:order-2 md:col-span-4" style={{ top: navbarHeight }}>
             {/* <div className='h-full col-span-1' onClick={() => setSelectedStrategy('All Strategies')}>
               <Card className={`h-full cursor-pointer  hover:bg-eerie w-full flex justify-start items-start border ${selectedStrategy == 'All Strategies' ? 'border-primary' : 'border-dark'}`}>
               </Card>

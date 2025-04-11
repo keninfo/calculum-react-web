@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 
 import { HeroMainText } from './components/hero-main-text'
-import { HomeFooter } from './components/home-footer'
 import { HomeInfoCard } from './components/home-info-card'
 import { whyHodlData } from './data'
 
@@ -16,7 +15,7 @@ const HomePage = () => {
 
   return (
     <div className="calc-container grid place-content-center justify-center gap-20">
-      <aside className="mb-[40dvh] flex flex-col justify-center gap-12 md:mb-1">
+      <aside className="mb-[36dvh] flex flex-col justify-center gap-12 md:mb-1">
         <HeroMainText />
       </aside>
       {/* <div className="w-full max-w-[568px]">
@@ -30,13 +29,12 @@ const HomePage = () => {
           ))}
           <button
             onClick={handleNav}
-            className="flex h-10 items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer md:hidden md:w-[300px]"
+            className="flex h-10 w-full items-center justify-center rounded-md bg-primary px-6 text-black transition-transform duration-200 ease-out hover:scale-105 hover:cursor-pointer md:hidden md:w-[300px]"
           >
             Launch App
           </button>
         </div>
       </article>
-      <HomeFooter />
     </div>
   )
 }

@@ -5,6 +5,8 @@ import Head from 'next/head'
 
 import MetaTags from '@/components/common/MetaTags'
 
+import { HomeFooter } from './components/home-footer'
+
 export const metadata: Metadata = {
   title: 'HODL Protocol - Systematic wealth-building for HODLers',
 }
@@ -20,7 +22,8 @@ const layout = ({
         <title>HODL Protocol</title>
         <MetaTags />
       </Head>
-      <section className="mx-auto max-w-[1336px] px-2 md:px-5">{children}</section>
+      <section className="mx-auto max-w-[1336px] px-11 pb-6 md:px-5">{children}</section>
+      <HomeFooter />
     </>
   )
 }

@@ -86,7 +86,7 @@ const StrategyInfoTitle = () => {
           <h2 className="inline-block w-full text-nowrap text-3xl text-primary">
             {strategy} {coin}
           </h2>
-          <div className="text-md flex w-full items-center justify-end space-x-2 pr-4 text-offWhite">
+          <div className="text-md flex w-full items-center justify-start space-x-2 pr-4 text-offWhite md:justify-end">
             <span
               className={`mb-0.5 inline-block h-3 w-3 animate-pulse rounded-full ${chain === 'Coming Soon' ? 'bg-fire' : 'bg-primary'}`}
             ></span>
