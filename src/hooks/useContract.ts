@@ -22,6 +22,7 @@ const useContract = () => {
     icon: '/bearLogo.png',
     chainIcon: '',
     info: '',
+    decimals: 0,
   })
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const useContract = () => {
     strategy: contractData.strategy,
     coin: contractData.coin,
     chainIcon: contractData.chainIcon,
+    decimals: contractData.decimals,
   }
 }
 

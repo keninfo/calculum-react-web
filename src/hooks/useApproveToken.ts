@@ -3,7 +3,7 @@ import { parseUnits } from 'viem'
 
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 
-import { baseAbi } from '@/contracts/contractIndex'
+import { baseAbi } from '@/contracts/abis'
 
 const useApproveToken = () => {
   const { data: hash, isPending, writeContract, error } = useWriteContract()

@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import React, { createContext, useEffect, useState } from 'react'
 
+import { base } from 'viem/chains'
+
 import { useAccount } from 'wagmi'
 
 import { PrimaryButton, SecondaryButton } from '@/components/common/Buttons'
@@ -19,6 +21,7 @@ import Deposit from './Deposit'
 import FaucetComponent from './FaucetComponent'
 import FaucetComponentMantle from './FaucetComponentMantle'
 import Withdraw from './Withdraw'
+import { VelvetInput } from './velvet-trade-box/components'
 
 type responseData = [number, bigint, bigint, bigint]
 interface AmountContextType {
@@ -35,21 +38,33 @@ const TradeBox = () => {
 
   const [step, setStep] = useState<number>(0)
   const { address, isConnected, chainId } = useAccount()
-  const { BalanceAssets, Allowance, Deposits, Withdrawals, BalanceShares, InMaintenance, BalanceAssetsMantle } =
-    ContractReads(contractAddress, contractAbi)
+  const {
+    BalanceAssets,
+    BalanceAssetsBase,
+    Allowance,
+    AllowanceBase,
+    Deposits,
+    Withdrawals,
+    BalanceShares,
+    InMaintenance,
+    BalanceAssetsMantle,
+  } = ContractReads(contractAddress, contractAbi)
 
   let balanceAssets = BigInt(0)
 
   if (currentChain == '5003') {
     balanceAssets = BalanceAssetsMantle(address).data as bigint
+  } else if (currentChain == '8453') {
+    balanceAssets = BalanceAssetsBase(address).data as bigint
   } else {
     balanceAssets = BalanceAssets(address).data as bigint
   }
 
   const balanceSharesResult = BalanceShares(address).data as bigint
-  const allowance = Allowance(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
+  const allowance =
+    Number(currentChain) !== base.id ? (Allowance(address).data as bigint) : (AllowanceBase(address).data as bigint)
   const [amount, setAmount] = useState<number>(0)
   const [wrongNetwork, setWrongNetwork] = useState<boolean>()
   const { setNetwork } = useStrategyStore()
@@ -171,6 +186,7 @@ const TradeBox = () => {
         )}
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
+            <VelvetInput />
             {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}
             {step == 1 && currentChain === '5003' && <FaucetComponentMantle inMaintenance={isInMaintenance} />}
             {step == 2 && <Approve inMaintenance={isInMaintenance} />}
