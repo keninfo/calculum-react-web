@@ -1,8 +1,11 @@
 import type { Abi, Hash } from 'viem'
 import { parseEther, parseUnits } from 'viem'
+import { base } from 'viem/chains'
 
-import { useReadContract } from 'wagmi'
+import { useReadContract, useReadContracts } from 'wagmi'
 
+import { baseAbi } from '@/contracts/abis'
+import { usdcBaseContract } from '@/contracts/base'
 import { usdcContract } from '@/contracts/usdc'
 
 const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
@@ -88,6 +91,19 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     return { data, isLoading, error }
   }
 
+  const AllowanceBase = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: contractAbi,
+      address: contractAddress as Hash,
+      functionName: 'allowance',
+      args: [address, contractAddress],
+      query: {
+        refetchInterval: 5000,
+      },
+    })
+    return { data, isLoading, error }
+  }
+
   const SymbolAsset = () => {
     const { data, isLoading, error } = useReadContract({
       abi: usdcContract.abi,
@@ -115,6 +131,16 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       query: {
         refetchInterval: 5000,
       },
+    })
+    return { data, isLoading, error }
+  }
+
+  const BalanceAssetsBase = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: contractAbi,
+      address: contractAddress as Hash,
+      functionName: 'balanceOf',
+      args: [address],
     })
     return { data, isLoading, error }
   }
@@ -253,9 +279,11 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     CheckWhitelist,
     HasDeposited,
     Allowance,
+    AllowanceBase,
     SymbolAsset,
     SymbolShares,
     BalanceAssets,
+    BalanceAssetsBase,
     BalanceShares,
     Withdrawals,
     Deposits,

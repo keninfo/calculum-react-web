@@ -25,6 +25,8 @@ import { LearnMore } from '../components/learn-more'
 
 import { twMerge } from 'tailwind-merge'
 
+const allowedCoins = ['BTC', 'USDC', 'cbBTC', 'wETH']
+
 const DashboardView = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
@@ -70,8 +72,6 @@ const DashboardView = () => {
     return <div className="flex h-screen w-full items-center justify-center">Loading...</div>
   }
 
-  console.log('strategy =>> ', strategy)
-
   return (
     <>
       {/* DESKTOP */}
@@ -79,14 +79,12 @@ const DashboardView = () => {
         <div className={`col-span-12 flex w-full flex-col md:col-span-9`}>
           <StrategyInfoTitle />
         </div>
-        <div className={`flex flex-col ${coin !== 'BTC' && coin !== 'USDC' ? 'col-span-12' : 'col-span-9'}`}>
+        <div className={`flex flex-col ${!allowedCoins.includes(coin) ? 'col-span-12' : 'col-span-9'}`}>
           {strategy == 'Momentum' && <TVChartContainer />}
           {strategy == 'Smoothcoin' && <ChartsContainer />}
-
           <LongShortChart />
           <TVAttribution />
-
-          {(coin == 'BTC' || coin == 'USDC') && (
+          {allowedCoins.includes(coin) && (
             <Card className="my-2 mt-4 h-full min-h-fit w-full bg-[#3B3B3B]">
               <ul className="flex items-center justify-start gap-10 border-b border-payne">
                 {isConnected && (
@@ -134,7 +132,7 @@ const DashboardView = () => {
             </Card>
           )}
         </div>
-        {(coin == 'BTC' || coin == 'USDC') && (
+        {allowedCoins.includes(coin) && (
           <div className="relative col-span-3 flex h-full flex-col gap-4">
             <div className="sticky top-0 space-y-4" style={{ top: navbarHeight || 0 }}>
               <TradeBox />
