@@ -1,6 +1,6 @@
 export const contractMomentumBTC = {
   chainId: '421614',
-  address: '0x355C52AD0EBe757272253AAf54E7920Ead630b9C',
+  address: '0x331332119a6c1593FC1471e484f975f7566460a8',
   abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     { inputs: [], name: 'AddressIsNotContract', type: 'error' },
