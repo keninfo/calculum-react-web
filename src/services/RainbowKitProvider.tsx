@@ -7,7 +7,7 @@ import React, { useEffect, useState, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { type State, WagmiProvider } from 'wagmi'
+import { http, type State, WagmiProvider } from 'wagmi'
 import { arbitrumSepolia, base, mantleSepoliaTestnet } from 'wagmi/chains'
 
 import { WALLET_CONNECT_PROJECT_ID } from '@/shared/constants'
@@ -30,9 +30,13 @@ export const config = getDefaultConfig({
   appName: 'Bear-Protocol',
   projectId: projectId,
   chains: [arbitrumSepolia, base, mantleSepoliaTestnet],
+  transports: {
+    [arbitrumSepolia.id]: http(),
+    [base.id]: http(),
+    [mantleSepoliaTestnet.id]: http(),
+  },
   ssr: true,
 })
-
 const queryClient = new QueryClient()
 
 export default function RainbowKit({ children, initialState }: { children: ReactNode; initialState?: State }) {

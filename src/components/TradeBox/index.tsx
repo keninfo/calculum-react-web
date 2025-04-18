@@ -21,7 +21,7 @@ import Deposit from './Deposit'
 import FaucetComponent from './FaucetComponent'
 import FaucetComponentMantle from './FaucetComponentMantle'
 import Withdraw from './Withdraw'
-import { VelvetInput } from './velvet-trade-box/components'
+import { VelvetDeposit } from './velvet-trade-box/components'
 
 type responseData = [number, bigint, bigint, bigint]
 interface AmountContextType {
@@ -186,7 +186,7 @@ const TradeBox = () => {
         )}
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
-            <VelvetInput />
+            <VelvetDeposit />
             {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}
             {step == 1 && currentChain === '5003' && <FaucetComponentMantle inMaintenance={isInMaintenance} />}
             {step == 2 && <Approve inMaintenance={isInMaintenance} />}
