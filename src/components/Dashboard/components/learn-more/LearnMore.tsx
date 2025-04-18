@@ -13,18 +13,18 @@ const links = [
     label: 'Momentum strategies',
     path: 'https://docs.hodlprotocol.io/hodl-101/what-is-momentum',
   },
-  {
-    label: 'Mantle Network',
-    path: 'https://docs.hodlprotocol.io/hodl-101/what-are-smoothcoins',
-  },
-  {
-    label: 'How to connect your wallet',
-    path: '/#',
-  },
-  {
-    label: 'How to switch networks',
-    path: '/#',
-  },
+  // {
+  //   label: 'Mantle Network',
+  //   path: 'https://docs.hodlprotocol.io/hodl-101/what-are-smoothcoins',
+  // },
+  // {
+  //   label: 'How to connect your wallet',
+  //   path: '/#',
+  // },
+  // {
+  //   label: 'How to switch networks',
+  //   path: '/#',
+  // },
 ]
 
 const LearnMore: FC = () => {
