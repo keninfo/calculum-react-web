@@ -1,1 +1,1 @@
-export { default as VelvetInput } from './VelvetInput'
+export { default as VelvetDeposit } from './VelvetDeposit'

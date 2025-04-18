@@ -13,7 +13,10 @@ import {
 
 import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 
-import { prepareDepositTx, prepareWithdrawTx } from '../services/velvet.service'
+import {
+  prepareDepositTxService,
+  prepareWithdrawTxService,
+} from '../../TradeBox/velvet-trade-box/services/velvet.service'
 import { VelvetTokenType, VelvetTransactionType } from '../types'
 
 export const useApproveToken = async (
@@ -66,7 +69,7 @@ export const useDepositVault = (
         args: [vault, parseUnits(depositAmount, decimals)],
       })
 
-      const txPayload = await prepareDepositTx({
+      const txPayload = await prepareDepositTxService({
         portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
         depositToken,
         depositAmount: parseUnits(depositAmount, decimals).toString(),
@@ -107,7 +110,7 @@ export const useWithdrawVault = () => {
     }): Promise<any> => {
       const { user, withdrawAmount, withdrawToken } = params
 
-      const txPayload = await prepareWithdrawTx({
+      const txPayload = await prepareWithdrawTxService({
         portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
         withdrawToken,
         withdrawAmount,
