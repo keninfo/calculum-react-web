@@ -15,11 +15,12 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     return { data, isLoading, error }
   }
 
-  const InMaintenance = () => {
+  const InMaintenance = (chainID?: number | undefined) => {
     const { data, isLoading, error } = useReadContract({
       abi: contractAbi,
       address: contractAddress as Hash,
       functionName: 'isMaintenance',
+      chainId: chainID,
     })
     return { data, isLoading, error }
   }

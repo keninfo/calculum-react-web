@@ -128,7 +128,7 @@ const TradeBox = () => {
   }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult])
 
   let isInMaintenance = false
-  const data = InMaintenance().data as [boolean, number]
+  const data = InMaintenance(chainId).data as [boolean, number]
   if (data) {
     isInMaintenance = data[0] as boolean
   }
