@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
+import type { AxiosResponse } from 'axios'
 
-import { VelvetDepositRequest, VelvetWithdrawRequest } from '../types/'
+import type { VelvetDepositRequest, VelvetWithdrawRequest } from '../types/'
 
 export const prepareDepositTxService = async (body: VelvetDepositRequest): Promise<AxiosResponse> => {
   return await axios.post('https://eventsapi.velvetdao.xyz/api/v3/portfolio/deposit', body)
