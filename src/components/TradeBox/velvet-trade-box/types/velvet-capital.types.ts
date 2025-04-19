@@ -1,4 +1,4 @@
-import { Hash } from 'viem'
+import type { Hash } from 'viem'
 
 export enum VelvetTransactionType {
   BATCH = 'batch',

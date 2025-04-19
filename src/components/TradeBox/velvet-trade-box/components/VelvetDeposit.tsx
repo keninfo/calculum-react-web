@@ -6,9 +6,10 @@ import { useEffect, useState, type FC } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
-import { Hash, parseUnits } from 'viem'
+import { parseUnits } from 'viem'
+import type { Hash } from 'viem'
 
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useSendTransaction } from 'wagmi'
 
@@ -57,7 +58,18 @@ const VelvetDeposit: FC = () => {
 
   const onSuccessPrepare = (response: AxiosResponse): void => {
     setStatus('Sending ...')
-    sendTransaction(response.data)
+    sendTransaction(response.data, {
+      onSuccess: (response) => {
+        console.log('Transaction sent successfully', response)
+        setTransactionHash(response)
+        setStatus('Processing ...')
+      },
+      onError: (error) => {
+        console.log('Error sending transaction', error)
+        setStatus('idle')
+        createTransactionAlert('Error sending deposit transaction', false)
+      },
+    })
   }
 
   const onErrorPrepare = (): void => {
@@ -161,7 +173,12 @@ const VelvetDeposit: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <input type="text" {...register('amount')} className="border-b border-primary bg-transparent" />
+      <input
+        type="text"
+        {...register('amount')}
+        className="border-b border-primary bg-transparent"
+        disabled={status !== 'idle'}
+      />
       {errors.amount && <p className="text-sm text-red-600">{errors.amount.message}</p>}
       <button
         className="bg-primary capitalize text-black"

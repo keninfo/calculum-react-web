@@ -1,23 +1,20 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 
-import { erc20Abi, Hash, parseUnits } from 'viem'
+import { erc20Abi, parseUnits } from 'viem'
+import type { Hash } from 'viem'
 
-import {
-  useWriteContract,
-  useSendTransaction,
-  useWaitForTransactionReceipt,
-  UseWaitForTransactionReceiptReturnType,
-} from 'wagmi'
+import { useWriteContract, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi'
+import type { UseWaitForTransactionReceiptReturnType } from 'wagmi'
 
+import { VelvetTokenType, VelvetTransactionType } from '@/components/TradeBox/velvet-trade-box/types'
 import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 
 import {
   prepareDepositTxService,
   prepareWithdrawTxService,
 } from '../../TradeBox/velvet-trade-box/services/velvet.service'
-import { VelvetTokenType, VelvetTransactionType } from '../types'
 
 export const useApproveToken = async (
   userAddress: Hash,
@@ -46,7 +43,7 @@ export const useApproveToken = async (
  * Deposita fondos (mint shares) y recibe tokens subyacentes
  * @param vault - Dirección del vault
  * @param depositToken - Dirección del token a depositar
- * @param depositAmount - Cantidad a depositar (en unidades mínimas, ej: "1000000" => 1 USDC)
+ * @param depositAmount - Cantidad a depositar (en unidades mínimas, ej: "1000000" =>\ 1 USDC)
  * @param user - Dirección del usuario que realiza el depósito
  * @param decimals - Decimales del token a depositar
  */
@@ -83,7 +80,7 @@ export const useDepositVault = (
       }
 
       const hash = (txPayload as unknown as { hash: Hash }).hash
-      const result = await useWaitForTransactionReceipt({ hash })
+      const result = useWaitForTransactionReceipt({ hash })
 
       return result as UseWaitForTransactionReceiptReturnType
     },

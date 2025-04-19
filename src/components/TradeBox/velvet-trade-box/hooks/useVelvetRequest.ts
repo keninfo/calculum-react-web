@@ -1,9 +1,10 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+import type { UseMutationResult } from '@tanstack/react-query'
 
-import { AxiosResponse, AxiosError } from 'axios'
+import type { AxiosResponse, AxiosError } from 'axios'
 
 import { prepareDepositTxService, prepareWithdrawTxService } from '../services'
-import { VelvetWithdrawRequest, VelvetDepositRequest } from '../types'
+import type { VelvetWithdrawRequest, VelvetDepositRequest } from '../types'
 
 interface VelvetRequest {
   PrepareDepositTx: (
