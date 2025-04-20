@@ -722,6 +722,7 @@ export const contractIndex = [
     chain: 'Coming Soon',
     symbol: 'moPEPE',
     icon: '/tokens/moPEPE.png',
+    chainIcon: '/arb-logo.png',
     info: 'Outperform passive HODLing with no leverage, using this 30-year battle-tested TradFi strategy.',
   },
 
