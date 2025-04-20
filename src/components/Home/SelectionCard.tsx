@@ -32,7 +32,7 @@ const SelectionCard = () => {
               className={twMerge(
                 'rounded-full px-4 py-1 text-sm transition duration-200 ease-in-out md:text-base',
                 selectedToken === item && 'bg-primary text-black',
-                item === 'All Tokens' && 'hidden',
+                item === 'All Tokens' && 'hidden md:block',
               )}
               onClick={() => setSelectedToken(item)}
             >
