@@ -25,7 +25,11 @@ const useVelvetRequest = (): VelvetRequest => {
     useMutation<AxiosResponse, AxiosError, VelvetDepositRequest>({
       mutationFn: prepareDepositTxService,
       onSuccess,
-      onError,
+      onError: (error: AxiosError) => {
+        // 新的 onError 回调函数
+        console.error('API failed:', error)
+        onError(error) // 调用传入的 onError 回调函数，并传递错误信息
+      },
     })
 
   const PrepareWithdrawTx = (

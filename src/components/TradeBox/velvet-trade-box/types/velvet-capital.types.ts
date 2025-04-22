@@ -8,6 +8,9 @@ export enum VelvetTokenType {
   ERC20 = 'erc20',
   NATIVE = 'native',
 }
+export enum ChainIDType {
+  chainID = 8453,
+}
 
 export interface VelvetDepositRequest {
   portfolio: Hash
@@ -16,6 +19,8 @@ export interface VelvetDepositRequest {
   user: Hash
   depositType: VelvetTransactionType
   tokenType: VelvetTokenType
+  skipApprovalCheck: boolean
+  chainID: ChainIDType
 }
 
 export interface VelvetWithdrawRequest {

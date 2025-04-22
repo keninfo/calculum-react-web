@@ -11,7 +11,7 @@ import type { AxiosResponse } from 'axios'
 import { parseUnits } from 'viem'
 import type { Hash } from 'viem'
 
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useSendTransaction } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useSendTransaction, useEstimateGas } from 'wagmi'
 
 import useContract from '@/hooks/useContract'
 import useContractReads from '@/hooks/useContractReads'
@@ -20,7 +20,7 @@ import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { useVelvetRequest } from '../hooks'
 import { VelvetTxType, velvetTxSchema } from '../schema/velvet.schema'
-import { VelvetStatus, VelvetTokenType, VelvetTransactionType } from '../types'
+import { VelvetStatus, VelvetTokenType, VelvetTransactionType, ChainIDType } from '../types'
 
 const VelvetDeposit: FC = () => {
   const {
@@ -58,7 +58,38 @@ const VelvetDeposit: FC = () => {
 
   const onSuccessPrepare = (response: AxiosResponse): void => {
     setStatus('Sending ...')
-    sendTransaction(response.data, {
+    const gasLimitNum = parseInt(response.data.gasLimit, 10)
+    const newGasLimitNum = gasLimitNum * 1.5
+
+    const transactionData = {
+      to: response.data.to,
+      data: response.data.data,
+      //from: address,
+    }
+
+    try {
+      console.log('Transaction to be sent:', transactionData)
+      console.log('Account:', address)
+      // 将异步请求包装在异步函数中执行
+      const sendEthereumRequest = async () => {
+        try {
+          const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [{ ...transactionData, from: address }],
+          })
+
+          console.log(`Transaction sent. Hash: ${txHash}\nWaiting for transaction to be mined...`)
+        } catch (error) {
+          console.error('Error sending transaction:', error)
+        }
+      }
+      // 调用异步函数
+      sendEthereumRequest()
+    } catch (error) {
+      console.error('Error sending transaction:', error)
+    }
+
+    sendTransaction(transactionData, {
       onSuccess: (response) => {
         console.log('Transaction sent successfully', response)
         setTransactionHash(response)
@@ -73,6 +104,7 @@ const VelvetDeposit: FC = () => {
   }
 
   const onErrorPrepare = (): void => {
+    console.log('Error preparing deposit transaction')
     createTransactionAlert('Error preparing deposit transaction', false)
     setStatus('idle')
   }
@@ -99,6 +131,7 @@ const VelvetDeposit: FC = () => {
     }
 
     const depositAmount = getValues('amount')
+    console.log('Deposit amount:', depositAmount)
 
     setStatus('Depositing ...')
 
@@ -109,6 +142,8 @@ const VelvetDeposit: FC = () => {
       user: address,
       depositType: VelvetTransactionType.BATCH,
       tokenType: VelvetTokenType.ERC20,
+      skipApprovalCheck: true,
+      chainID: ChainIDType.chainID,
     })
   }
 
@@ -137,6 +172,13 @@ const VelvetDeposit: FC = () => {
       console.log('error on contract decimals')
       return
     }
+    console.log('writeContract call params:', {
+      account: address,
+      address: contractAddress as Hash,
+      abi: contractAbi,
+      functionName: 'approve',
+      args: [VELVET_CAPITAL_BASE_DEPOSIT_MANAGER, parseUnits(data.amount, decimals)],
+    })
 
     writeContract(
       {

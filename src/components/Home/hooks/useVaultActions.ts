@@ -8,7 +8,7 @@ import type { Hash } from 'viem'
 import { useWriteContract, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi'
 import type { UseWaitForTransactionReceiptReturnType } from 'wagmi'
 
-import { VelvetTokenType, VelvetTransactionType } from '@/components/TradeBox/velvet-trade-box/types'
+import { VelvetTokenType, VelvetTransactionType, ChainIDType } from '@/components/TradeBox/velvet-trade-box/types'
 import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 
 import {
@@ -73,6 +73,8 @@ export const useDepositVault = (
         user,
         depositType: VelvetTransactionType.BATCH,
         tokenType: VelvetTokenType.ERC20,
+        skipApprovalCheck: true,
+        chainID: ChainIDType.chainID,
       })
 
       if (txPayload === undefined) {
