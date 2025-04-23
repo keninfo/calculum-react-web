@@ -89,17 +89,16 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     return { data, isLoading, error }
   }
 
-  const AllowanceBase = (address: string | undefined) => {
-    const { data, isLoading, error } = useReadContract({
+  const AllowanceBase = (ownerAddress: string | undefined, spenderAddress: string, enabled: boolean = true) => {
+    return useReadContract({
       abi: contractAbi,
       address: contractAddress as Hash,
       functionName: 'allowance',
-      args: [address, contractAddress],
+      args: [ownerAddress, spenderAddress],
       query: {
-        refetchInterval: 5000,
+        enabled,
       },
     })
-    return { data, isLoading, error }
   }
 
   const SymbolAsset = () => {

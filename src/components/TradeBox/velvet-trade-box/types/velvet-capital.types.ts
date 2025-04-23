@@ -18,6 +18,13 @@ export interface VelvetDepositRequest {
   tokenType: VelvetTokenType
 }
 
+export interface VelvetDepositResponse {
+  to: Hash
+  data: Hash
+  gasLimit: string
+  gasPrice: string
+}
+
 export interface VelvetWithdrawRequest {
   portfolio: Hash
   withdrawAmount: string
