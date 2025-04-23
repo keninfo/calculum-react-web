@@ -80,9 +80,9 @@ const DashboardView = () => {
           <StrategyInfoTitle />
         </div>
         <div className={`flex flex-col ${!allowedCoins.includes(coin) ? 'col-span-12' : 'col-span-9'}`}>
-          {strategy == 'Momentum' && <TVChartContainer />}
+          {strategy == 'Momentum' && <TVChartContainer /> }
           {strategy == 'Smoothcoin' && <ChartsContainer />}
-          <LongShortChart />
+          <LongShortChart /> 
           <TVAttribution />
           {allowedCoins.includes(coin) && (
             <Card className="my-2 mt-4 h-full min-h-fit w-full bg-[#3B3B3B]">
@@ -124,7 +124,7 @@ const DashboardView = () => {
                   </button>
                 </li>
               </ul>
-              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics />}
+              {selected == 0 && strategy == 'Momentum' && <MomentumMetrics /> }
               {selected == 0 && strategy == 'Smoothcoin' && <ProductMetrics />}
               {selected == 1 && <MarketTransactions />}
               {selected == 2 && <Positions />}

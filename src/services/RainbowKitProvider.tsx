@@ -7,7 +7,7 @@ import React, { useEffect, useState, type ReactNode } from 'react'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { http, type State, WagmiProvider } from 'wagmi'
+import { http, type State, WagmiProvider, fallback } from 'wagmi'
 import { arbitrumSepolia, base, mantleSepoliaTestnet } from 'wagmi/chains'
 
 import { WALLET_CONNECT_PROJECT_ID } from '@/shared/constants'

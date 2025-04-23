@@ -67,28 +67,6 @@ const VelvetDeposit: FC = () => {
       //from: address,
     }
 
-    try {
-      console.log('Transaction to be sent:', transactionData)
-      console.log('Account:', address)
-      // 将异步请求包装在异步函数中执行
-      const sendEthereumRequest = async () => {
-        try {
-          const txHash = await window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [{ ...transactionData, from: address }],
-          })
-
-          console.log(`Transaction sent. Hash: ${txHash}\nWaiting for transaction to be mined...`)
-        } catch (error) {
-          console.error('Error sending transaction:', error)
-        }
-      }
-      // 调用异步函数
-      sendEthereumRequest()
-    } catch (error) {
-      console.error('Error sending transaction:', error)
-    }
-
     sendTransaction(transactionData, {
       onSuccess: (response) => {
         console.log('Transaction sent successfully', response)
