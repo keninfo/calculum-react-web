@@ -16,14 +16,19 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import TVAttribution from '@/components/common/TVAttribution'
+import { MaintenanceDialog } from '@/components/maintenace-dialog'
+import useContract from '@/hooks/useContract'
+import ContractReads from '@/hooks/useContractReads'
 import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-import LongShortChart from '../ChartsContainer/Charts/LongShort'
+import LongShortChart from '../../components/ChartsContainer/Charts/LongShort'
 import { LearnMore } from './components/learn-more'
 
 import { twMerge } from 'tailwind-merge'
+
+const allowedCoins = ['BTC', 'USDC', 'cbBTC', 'wETH']
 
 const Dashboard = () => {
   const { pro, setPro } = useProStore()
@@ -32,6 +37,23 @@ const Dashboard = () => {
   const { isConnected } = useAccount()
   const { navbarHeight } = useNavbarStore()
   const [loading, setLoading] = useState(true)
+
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
+  const { contractAddress, contractAbi } = useContract()
+
+  const { chainId } = useAccount()
+  const { InMaintenance } = ContractReads(contractAddress, contractAbi)
+
+  let isInMaintenance = false
+  const data = InMaintenance(chainId).data as [boolean, number]
+  if (data) {
+    isInMaintenance = data[0] as boolean
+  }
+
+  const handleDialogClose = () => {
+    setShowDialog(false)
+  }
 
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
@@ -58,6 +80,13 @@ const Dashboard = () => {
     setSelected(0)
   }, [isConnected])
 
+  useEffect(() => {
+    if (isInMaintenance) {
+      console.log('In maintenance mode =>> ', isInMaintenance)
+      setShowDialog(true)
+    }
+  }, [isInMaintenance])
+
   const TVChartContainer = useMemo(
     () =>
       dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
@@ -72,19 +101,18 @@ const Dashboard = () => {
 
   return (
     <>
+      {showDialog && <MaintenanceDialog onClose={handleDialogClose} />}
       {/* DESKTOP */}
       <div className={`grid-cols-12 gap-4 px-5 md:grid`} style={{ marginTop: navbarHeight }}>
         <div className={`col-span-12 flex w-full flex-col md:col-span-9`}>
           <StrategyInfoTitle />
         </div>
-        <div className={`flex flex-col ${coin !== 'BTC' && coin !== 'USDC' ? 'col-span-12' : 'col-span-9'}`}>
+        <div className={`flex flex-col ${!allowedCoins.includes(coin) ? 'col-span-12' : 'col-span-9'}`}>
           {strategy == 'Momentum' && <TVChartContainer />}
           {strategy == 'Smoothcoin' && <ChartsContainer />}
-
           <LongShortChart />
           <TVAttribution />
-
-          {(coin == 'BTC' || coin == 'USDC') && (
+          {allowedCoins.includes(coin) && (
             <Card className="my-2 mt-4 h-full min-h-fit w-full bg-[#3B3B3B]">
               <ul className="flex items-center justify-start gap-10 border-b border-payne">
                 {isConnected && (
@@ -132,7 +160,7 @@ const Dashboard = () => {
             </Card>
           )}
         </div>
-        {(coin == 'BTC' || coin == 'USDC') && (
+        {allowedCoins.includes(coin) && (
           <div className="relative col-span-3 flex h-full flex-col gap-4">
             <div className="sticky top-0 space-y-4" style={{ top: navbarHeight || 0 }}>
               <TradeBox />
