@@ -1,6 +1,7 @@
 export const contractSmoothcoinBTC = {
   chainId: '421614',
-  address: '0x9E09d335CAEdB4D76708854bFaCd5228946543E5',
+  // address: '0x9E09d335CAEdB4D76708854bFaCd5228946543E5',
+  address: '0x5E68DABF3a9c402cA53642305394E02EA8E27FfF',
   abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     { inputs: [], name: 'AccessControlBadConfirmation', type: 'error' },
