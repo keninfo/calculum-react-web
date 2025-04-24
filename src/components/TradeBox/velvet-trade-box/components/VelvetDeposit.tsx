@@ -20,7 +20,7 @@ import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import { useVelvetRequest } from '../hooks'
 import { VelvetTxType, velvetTxSchema } from '../schema/velvet.schema'
-import { VelvetStatus, VelvetTokenType, VelvetTransactionType } from '../types'
+import { VelvetStatus, VelvetTokenType, VelvetTransactionType, ChainIDType } from '../types'
 
 const VelvetDeposit: FC = () => {
   const {
@@ -58,7 +58,12 @@ const VelvetDeposit: FC = () => {
 
   const onSuccessPrepare = (response: AxiosResponse): void => {
     setStatus('Sending ...')
-    sendTransaction(response.data, {
+    const transactionData = {
+      to: response.data.to,
+      data: response.data.data,
+      }
+    
+    sendTransaction(transactionData, {
       onSuccess: (response) => {
         console.log('Transaction sent successfully', response)
         setTransactionHash(response)
@@ -109,6 +114,8 @@ const VelvetDeposit: FC = () => {
       user: address,
       depositType: VelvetTransactionType.BATCH,
       tokenType: VelvetTokenType.ERC20,
+      skipApprovalCheck: true,
+      chainID: ChainIDType.chainID,
     })
   }
 

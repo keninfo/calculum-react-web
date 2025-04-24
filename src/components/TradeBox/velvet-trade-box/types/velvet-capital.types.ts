@@ -9,6 +9,10 @@ export enum VelvetTokenType {
   NATIVE = 'native',
 }
 
+export enum ChainIDType {
+  chainID = 8453,
+}
+
 export interface VelvetDepositRequest {
   portfolio: Hash
   depositAmount: string
@@ -16,6 +20,8 @@ export interface VelvetDepositRequest {
   user: Hash
   depositType: VelvetTransactionType
   tokenType: VelvetTokenType
+  skipApprovalCheck: boolean
+  chainID: ChainIDType
 }
 
 export interface VelvetWithdrawRequest {
