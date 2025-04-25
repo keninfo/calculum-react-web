@@ -27,16 +27,8 @@ const DepositAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
 
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
-  const {
-    Deposits,
-    Allowance,
-    AllowanceBase,
-    MaxDeposit,
-    SymbolAsset,
-    ConvertToShares,
-    BalanceAssets,
-    BalanceAssetsBase,
-  } = ContractReads(contractAddress, contractAbi)
+  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets, BalanceAssetsBase } =
+    ContractReads(contractAddress, contractAbi)
   const { Deposit, isPending, hash, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -46,8 +38,7 @@ const DepositAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const checkAmount = depositAssets + depositTotal
 
   const max = MaxDeposit().data as bigint
-  const allowance =
-    Number(chainId) === base.id ? (AllowanceBase(address).data as bigint) : (Allowance(address).data as bigint)
+  const allowance = Allowance(address).data as bigint
   const convertedShares = ConvertToShares(amount).data as bigint
   const balanceAssets =
     Number(chainId) === base.id ? (BalanceAssetsBase(address).data as bigint) : (BalanceAssets(address).data as bigint)

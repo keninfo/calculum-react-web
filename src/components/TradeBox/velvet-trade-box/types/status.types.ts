@@ -1,1 +1,7 @@
-export type VelvetStatus = 'idle' | 'Processing ...' | 'Approving... ' | 'Depositing ...' | 'Sending ...'
+export type VelvetStatus =
+  | 'idle'
+  | 'Processing ...'
+  | 'Approving... '
+  | 'Depositing ...'
+  | 'Sending ...'
+  | 'Withdrawing ...'

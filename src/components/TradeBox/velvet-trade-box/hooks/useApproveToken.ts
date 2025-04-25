@@ -28,8 +28,9 @@ export const useApproveToken = (): ApproveToken => {
   })
 
   /**
-   * Lanza la transacción de approve.
-   * @param amountString Cadena decimal (e.g. "1000.5")
+   * Approve the token for the Velvet Capital Base Deposit Manager
+   * @param amountString - Cadena decimal (e.g. "1000.5")
+   * @returns - void
    */
   const approve = (amountString: string): void => {
     if (!address) {
@@ -59,8 +60,6 @@ export const useApproveToken = (): ApproveToken => {
       },
       {
         onSuccess(response) {
-          console.log('✅ Approve tx sent', response)
-          // Guarda el hash para esperar la confirmación
           setTxHash(response)
         },
         onError(error) {

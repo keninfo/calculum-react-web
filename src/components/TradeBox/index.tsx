@@ -42,7 +42,6 @@ const TradeBox = () => {
     BalanceAssets,
     BalanceAssetsBase,
     Allowance,
-    AllowanceBase,
     Deposits,
     Withdrawals,
     BalanceShares,
@@ -63,8 +62,7 @@ const TradeBox = () => {
   const balanceSharesResult = BalanceShares(address).data as bigint
   const [userDepositStatus, , ,] = (Deposits(address).data || []) as responseData
   const [userWithdrawalsStatus, , ,] = (Withdrawals(address).data || []) as responseData
-  const allowance =
-    Number(currentChain) !== base.id ? (Allowance(address).data as bigint) : (AllowanceBase(address).data as bigint)
+  const allowance = Allowance(address).data as bigint
   const [amount, setAmount] = useState<number>(0)
   const [wrongNetwork, setWrongNetwork] = useState<boolean>()
   const { setNetwork } = useStrategyStore()
@@ -155,7 +153,7 @@ const TradeBox = () => {
           <SecondaryButton
             className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} `}
             handleClick={() => handleChange({ toDeposit: true })}
-            disabled
+            // disabled
           >
             DEPOSIT
           </SecondaryButton>
@@ -186,18 +184,23 @@ const TradeBox = () => {
         )}
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
-            <VelvetDeposit />
-            {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}
-            {step == 1 && currentChain === '5003' && <FaucetComponentMantle inMaintenance={isInMaintenance} />}
-            {step == 2 && <Approve inMaintenance={isInMaintenance} />}
-            {step == 3 && <Deposit inMaintenance={isInMaintenance} />}
-            {step == 4 && <ClaimShares inMaintenance={isInMaintenance} />}
-            {step == 5 && <Withdraw inMaintenance={isInMaintenance} />}
-            {step == 6 && <ClaimAssets inMaintenance={isInMaintenance} />}
-            {step == 7 && (
-              <p className="text-center">
-                {`You don't have positions to withdraw, try depositing something first and claiming your shares !`}
-              </p>
+            {Number(currentChain) === base.id ? (
+              <VelvetDeposit />
+            ) : (
+              <>
+                {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}
+                {step == 1 && currentChain === '5003' && <FaucetComponentMantle inMaintenance={isInMaintenance} />}
+                {step == 2 && <Approve inMaintenance={isInMaintenance} />}
+                {step == 3 && <Deposit inMaintenance={isInMaintenance} />}
+                {step == 4 && <ClaimShares inMaintenance={isInMaintenance} />}
+                {step == 5 && <Withdraw inMaintenance={isInMaintenance} />}
+                {step == 6 && <ClaimAssets inMaintenance={isInMaintenance} />}
+                {step == 7 && (
+                  <p className="text-center">
+                    {`You don't have positions to withdraw, try depositing something first and claiming your shares !`}
+                  </p>
+                )}
+              </>
             )}
           </ul>
         )}

@@ -6,40 +6,31 @@ import { useEffect, useState, type FC } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import type { AxiosError, AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
-import { Interface } from 'ethers'
-
-import { decodeErrorResult, parseEther, parseUnits } from 'viem'
+import { parseUnits } from 'viem'
 import type { Hash } from 'viem'
 import { base } from 'viem/chains'
 
-import {
-  useAccount,
-  useWriteContract,
-  useWaitForTransactionReceipt,
-  useSendTransaction,
-  useTransactionCount,
-  useEstimateGas,
-  useSimulateContract,
-  useReadContract,
-} from 'wagmi'
+import { useAccount, useSendTransaction } from 'wagmi'
 
 import useContract from '@/hooks/useContract'
 import useContractReads from '@/hooks/useContractReads'
 import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_BASE_DEPOSIT_MANAGER } from '@/shared/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
-import { depositBatchAbi, depositManagerAbi } from '../abi'
 import { useApproveToken, useVelvetRequest } from '../hooks'
-import { VelvetTxType, velvetTxSchema } from '../schema/velvet.schema'
-import { VelvetDepositResponse, VelvetStatus, VelvetTokenType, VelvetTransactionType } from '../types'
+import type { VelvetTxType } from '../schema/velvet.schema'
+import { velvetTxSchema } from '../schema/velvet.schema'
+import type { VelvetApiResponse, VelvetStatus } from '../types'
+import { VelvetTokenType, VelvetTransactionType } from '../types'
 
 const VelvetDeposit: FC = () => {
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -50,157 +41,52 @@ const VelvetDeposit: FC = () => {
   })
 
   const [status, setStatus] = useState<VelvetStatus>('idle')
-  const [batchData, setBatchData] = useState<any>()
-  // const [transactionHash, setTransactionHash] = useState<Hash | undefined>()
-  const [depositPayload, setDepositPayload] = useState<VelvetDepositResponse | null>(null)
+  const [depositPayload, setDepositPayload] = useState<VelvetApiResponse | null>(null)
 
   const { address: userAddress } = useAccount()
   const { contractAddress, decimals, contractAbi } = useContract()
-  // const { writeContract } = useWriteContract()
   const { sendTransaction } = useSendTransaction()
-  // const { data: transactionCount } = useTransactionCount({
-  //   address: userAddress as Hash,
-  //   blockTag: 'pending',
-  // })
 
-  // const { data: simResult, error: simError } = useSimulateContract({
-  //   // address: VELVET_CAPITAL_BASE_DEPOSIT_MANAGER as Hash,
-  //   address: '0x6E3e0fe13DAE2C42CCa7ae2E849b0976E2E63e05' as Hash,
-  //   abi: depositBatchAbi,
-  //   functionName: 'multiTokenSwapAndDeposit',
-  //   args: [batchData],
-  //   value: BigInt(0),
-  //   account: userAddress as Hash,
-  //   chainId: base.id,
-  //   query: { enabled: Boolean(batchData) },
-  // })
-
-  // console.log('simResult =>> ', simResult)
-  // console.log('simError =>> ', simError)
-
-  // const {
-  //   data: transactionReceipt,
-  //   isFetching: isTransactionReceiptFetching,
-  //   isError: isTransactionReceiptError,
-  //   isSuccess: isTransactionReceiptSuccess,
-  // } = useWaitForTransactionReceipt({
-  //   hash: transactionHash,
-  //   query: {
-  //     enabled: !!transactionHash,
-  //   },
-  // })
-
-  // const onSuccessPrepare = (response: AxiosResponse): void => {
-  //   setDepositPayload(response.data)
-  //   console.log('transactionCount =>> ', transactionCount)
-  //   console.log('estimateGasData =>> ', estimateGasData)
-
-  // const depositAmount = getValues('amount')
-  // setStatus('Sending ...')
-  // sendTransaction(
-  //   {
-  //     value: parseEther(depositAmount),
-  //     gas: BigInt(response.data.gasLimit),
-  //     gasPrice: BigInt(response.data.gasPrice),
-  //     to: response.data.to,
-  //     data: response.data.data,
-  //     chainId: base.id,
-  //   },
-  //   {
-  //     onSuccess: (response) => {
-  //       console.log('Transaction sent successfully', response)
-  //       setStatus('Processing ...')
-  //     },
-  //     onError: (error) => {
-  //       console.log('Error sending transaction', error)
-  //       setStatus('idle')
-  //       createTransactionAlert('Error sending deposit transaction', false)
-  //     },
-  //   },
-  // )
-  // }
-
-  // const onErrorPrepare = (): void => {
-  //   createTransactionAlert('Error preparing deposit transaction', false)
-  //   setStatus('idle')
-  // }
-
-  // const { mutate: prepareDepositTxMutate } = PrepareDepositTx(onSuccessPrepare, onErrorPrepare)
-
-  // const handlePrepareDepositTx = async () => {
-  //   if (!address || isDisconnected) {
-  //     createTransactionAlert('User address is not available', false)
-  //     return
-  //   }
-  //   if (!contractAddress) {
-  //     createTransactionAlert('Contract address is not available', false)
-  //     return
-  //   }
-  //   if (!decimals) {
-  //     createTransactionAlert('Error on contract decimals', false)
-  //     return
-  //   }
-
-  //   const depositAmount = getValues('amount')
-
-  //   setStatus('Depositing ...')
-
-  //   prepareDepositTxMutate({
-  //     portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
-  //     depositToken: contractAddress,
-  //     depositAmount: parseUnits(depositAmount, decimals).toString(),
-  //     user: address,
-  //     depositType: VelvetTransactionType.BATCH,
-  //     tokenType: VelvetTokenType.ERC20,
-  //   })
-  // }
-
-  // const { data: allowanceData, error: allowanceError } = AllowanceBase(VELVET_CAPITAL_BASE_DEPOSIT_MANAGER)
-
-  // const onWriteSuccess = async (response: any) => {
-  //   console.log('allowanceData =>> ', allowanceData)
-  //   console.log('allowanceError =>> ', allowanceError)
-
-  //   setStatus('Processing ...')
-  //   setTransactionHash(response)
-  // }
-
-  // const onWriteError = (error: any) => {
-  //   setStatus('idle')
-  //   createTransactionAlert('Error writing contract', false)
-  // }
-
-  const { AllowanceBase, BalanceAssetsBase } = useContractReads(contractAddress as Hash, contractAbi)
+  const { AllowanceBase } = useContractReads(contractAddress as Hash, contractAbi)
   const { PrepareDepositTx } = useVelvetRequest()
   const { approve, isApproving, isApproved } = useApproveToken()
 
-  if (!VELVET_CAPITAL_BASE_DEPOSIT_MANAGER) return // TODO: handle error
+  const { isSuccess: isAllowanceSuccess } = AllowanceBase(
+    userAddress,
+    VELVET_CAPITAL_BASE_DEPOSIT_MANAGER ?? '',
+    isApproved,
+  )
 
-  const { isSuccess: isAllowanceSuccess } = AllowanceBase(userAddress, VELVET_CAPITAL_BASE_DEPOSIT_MANAGER, isApproved)
-
-  const { data: balanceAssetsBaseData } = BalanceAssetsBase(userAddress as Hash)
+  // const { data: balanceAssetsBaseData } = BalanceAssetsBase(userAddress as Hash)
 
   const { mutate: prepareDepositMutation } = PrepareDepositTx(
     (response: AxiosResponse) => {
-      console.log('success response =>> ', response)
+      setStatus('Sending ...')
       setDepositPayload(response.data)
     },
-    (error: AxiosError) => {
-      console.log('error response =>> ', error)
+    () => {
+      setStatus('idle')
+      createTransactionAlert('Error preparing deposit transaction', false)
       setDepositPayload(null)
     },
   )
-
-  console.log('balanceAssetsBaseData =>> ', balanceAssetsBaseData)
 
   const onSubmit = async (data: VelvetTxType) => {
     approve(data.amount)
   }
 
   useEffect(() => {
+    if (isApproving) {
+      setStatus('Approving... ')
+    } else setStatus('idle')
+  }, [isApproving])
+
+  useEffect(() => {
     if (isApproved && isAllowanceSuccess && decimals) {
       const depositAmount = getValues('amount')
       const parsedDepositAmount = parseUnits(depositAmount, decimals).toString()
+
+      setStatus('Depositing ...')
 
       prepareDepositMutation({
         portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
@@ -209,60 +95,38 @@ const VelvetDeposit: FC = () => {
         user: userAddress as Hash,
         depositType: VelvetTransactionType.BATCH,
         tokenType: VelvetTokenType.ERC20,
+        skipApprovalCheck: true,
+        chainID: base.id,
       })
     }
-  }, [isApproved, isAllowanceSuccess, decimals])
-
-  const { data: simResult, error: simError } = useSimulateContract({
-    address: VELVET_CAPITAL_BASE_DEPOSIT_MANAGER as Hash,
-    abi: depositManagerAbi,
-    functionName: 'deposit',
-    args: batchData,
-    value: BigInt(0),
-    chainId: base.id,
-    query: { enabled: Boolean(batchData) },
-  })
-
-  console.log('simResult =>> ', simResult)
-  console.log('simError =>> ', simError)
-
-  useEffect(() => {
-    if (simError && depositPayload) {
-      const value = decodeErrorResult({
-        abi: depositManagerAbi,
-        data: (depositPayload?.data as Hash) ?? '',
-      })
-      console.log('decodedValue =>> ', value)
-    }
-  }, [simError, depositPayload])
+  }, [isApproved, isAllowanceSuccess, decimals, getValues, prepareDepositMutation, userAddress, contractAddress])
 
   useEffect(() => {
     if (depositPayload) {
-      const iface = new Interface(depositManagerAbi)
-      const parsed = iface.parseTransaction({ data: depositPayload?.data })
-
-      parsed !== null && setBatchData(parsed.args)
-
-      // sendTransaction(
-      //   {
-      //     gas: BigInt(depositPayload.gasLimit),
-      //     gasPrice: BigInt(depositPayload.gasPrice),
-      //     to: depositPayload.to,
-      //     data: depositPayload.data,
-      //     chainId: base.id,
-      //   },
-      //   {
-      //     onSuccess: (response) => {
-      //       console.log('Transaction sent successfully', response)
-      //     },
-      //     onError: (error) => {
-      //       console.log('Error sending transaction', error)
-      //       createTransactionAlert('Error sending deposit transaction', false)
-      //     },
-      //   },
-      // )
+      sendTransaction(
+        {
+          gas: BigInt(depositPayload.gasLimit),
+          gasPrice: BigInt(depositPayload.gasPrice),
+          to: depositPayload.to,
+          data: depositPayload.data,
+          chainId: base.id,
+        },
+        {
+          onSuccess: () => {
+            setStatus('idle')
+            reset()
+            setDepositPayload(null)
+            createTransactionAlert('Transaction sent successfully', false)
+          },
+          onError: () => {
+            setStatus('idle')
+            setDepositPayload(null)
+            createTransactionAlert('Error sending deposit transaction', false)
+          },
+        },
+      )
     }
-  }, [depositPayload])
+  }, [depositPayload, sendTransaction, reset])
 
   return (
     <div className="flex flex-col gap-4">
@@ -272,9 +136,9 @@ const VelvetDeposit: FC = () => {
         className="border-b border-primary bg-transparent"
         disabled={status !== 'idle'}
       />
-      {errors.amount && <p className="text-sm text-red-600">{errors.amount.message}</p>}
+      {errors.amount && <p className="text-sm text-red-400">{errors.amount.message}</p>}
       <button
-        className="bg-primary capitalize text-black"
+        className="rounded-md bg-primary px-4 py-2 capitalize text-black"
         onClick={handleSubmit(onSubmit)}
         disabled={status !== 'idle'}
       >

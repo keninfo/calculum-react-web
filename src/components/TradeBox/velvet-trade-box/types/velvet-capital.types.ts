@@ -16,9 +16,11 @@ export interface VelvetDepositRequest {
   user: Hash
   depositType: VelvetTransactionType
   tokenType: VelvetTokenType
+  skipApprovalCheck: boolean
+  chainID: number
 }
 
-export interface VelvetDepositResponse {
+export interface VelvetApiResponse {
   to: Hash
   data: Hash
   gasLimit: string
@@ -32,4 +34,6 @@ export interface VelvetWithdrawRequest {
   user: Hash
   withdrawType: VelvetTransactionType
   tokenType: VelvetTokenType
+  skipApprovalCheck: boolean
+  chainID: number
 }

@@ -4,7 +4,7 @@ import type { UseMutationResult } from '@tanstack/react-query'
 import type { AxiosResponse, AxiosError } from 'axios'
 
 import { prepareDepositTxService, prepareWithdrawTxService } from '../services'
-import type { VelvetWithdrawRequest, VelvetDepositRequest, VelvetDepositResponse } from '../types'
+import type { VelvetWithdrawRequest, VelvetDepositRequest, VelvetApiResponse } from '../types'
 
 interface VelvetRequest {
   PrepareDepositTx: (
@@ -14,7 +14,7 @@ interface VelvetRequest {
   PrepareWithdrawTx: (
     onSuccess: (response: AxiosResponse) => void,
     onError: (error: AxiosError) => void,
-  ) => UseMutationResult<AxiosResponse<VelvetDepositResponse>, AxiosError, VelvetWithdrawRequest>
+  ) => UseMutationResult<AxiosResponse<VelvetApiResponse>, AxiosError, VelvetWithdrawRequest>
 }
 
 const useVelvetRequest = (): VelvetRequest => {
@@ -22,7 +22,7 @@ const useVelvetRequest = (): VelvetRequest => {
     onSuccess: (response: AxiosResponse) => void,
     onError: (error: AxiosError) => void,
   ): UseMutationResult<AxiosResponse, AxiosError, VelvetDepositRequest> =>
-    useMutation<AxiosResponse<VelvetDepositResponse>, AxiosError, VelvetDepositRequest>({
+    useMutation<AxiosResponse<VelvetApiResponse>, AxiosError, VelvetDepositRequest>({
       mutationFn: prepareDepositTxService,
       onSuccess,
       onError,
