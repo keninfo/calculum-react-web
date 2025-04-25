@@ -80,6 +80,7 @@ const WorkingContracts = ({
       info: '',
       decimals: 0,
       chainIcon: '',
+      annualTarget: 0,
     })
   }
 

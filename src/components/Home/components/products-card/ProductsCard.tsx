@@ -22,7 +22,7 @@ interface ProductsCardProps {
   info: string
 }
 
-const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain, symbol, icon, chainIcon }) => {
+const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain, icon, chainIcon }) => {
   const router = useRouter()
   const { setStrategy, setCoin } = useStrategyStore()
 
@@ -38,7 +38,7 @@ const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain,
   return (
     <div
       className={twMerge(
-        'box-border grid cursor-pointer grid-cols-2 items-center justify-between gap-3 rounded-lg border border-[transparent] p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2 md:gap-7',
+        'box-border grid max-w-[336px] cursor-pointer grid-cols-2 items-center justify-between gap-3 rounded-lg border border-[transparent] p-4 transition duration-200 ease-in-out hover:border-[#C1EA60] md:grid-cols-2 md:gap-7',
         isWorking ? 'bg-[#013537]' : 'bg-[#0F0F0F]',
       )}
       onClick={() => goTo(strategy, coin)}
@@ -47,7 +47,7 @@ const ProductsCard: FC<ProductsCardProps> = ({ isWorking, strategy, coin, chain,
         <p className="text-sm text-[#878787]">Token</p>
         <div className="flex items-center space-x-2">
           <Image src={icon ?? ''} width={20} height={20} alt={chain} />
-          <p className="text-xl">{symbol}</p>
+          <p className="text-xl">{coin}</p>
         </div>
       </div>
       <div>
