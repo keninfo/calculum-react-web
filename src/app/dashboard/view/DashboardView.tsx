@@ -23,14 +23,14 @@ import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
 
-import LongShortChart from '../../components/ChartsContainer/Charts/LongShort'
-import { LearnMore } from './components/learn-more'
+import LongShortChart from '../../../components/ChartsContainer/Charts/LongShort'
+import { LearnMore } from '../components/learn-more'
 
 import { twMerge } from 'tailwind-merge'
 
 const allowedCoins = ['BTC', 'USDC', 'cbBTC', 'wETH']
 
-const Dashboard = () => {
+const DashboardView = () => {
   const { pro, setPro } = useProStore()
   const { coin, setCoin, strategy, setStrategy } = useStrategyStore()
   const [selected, setSelected] = useState<number>(1)
@@ -173,4 +173,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default DashboardView

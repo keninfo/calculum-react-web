@@ -4,6 +4,8 @@ import { track } from '@vercel/analytics/react'
 
 import React, { useContext, useEffect, useState } from 'react'
 
+import { base } from 'viem/chains'
+
 import { type BaseError, useAccount } from 'wagmi'
 
 import Disclaimer from '@/components/Disclaimer'
@@ -20,15 +22,13 @@ import { AmountContext } from '.'
 type DepositData = [number, bigint, bigint, bigint]
 
 const DepositAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
-  const { contractAddress, contractAbi, symbol } = useContract()
+  const { contractAddress, contractAbi, symbol, chainId } = useContract()
   const [isConfirming, setIsConfirming] = useState<boolean>(false)
 
   const { amount, setAmount } = useContext(AmountContext)
   const { address } = useAccount()
-  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets } = ContractReads(
-    contractAddress,
-    contractAbi,
-  )
+  const { Deposits, Allowance, MaxDeposit, SymbolAsset, ConvertToShares, BalanceAssets, BalanceAssetsBase } =
+    ContractReads(contractAddress, contractAbi)
   const { Deposit, isPending, hash, error } = useDeposit()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,7 +40,8 @@ const DepositAssets = ({ inMaintenance }: { inMaintenance: boolean }) => {
   const max = MaxDeposit().data as bigint
   const allowance = Allowance(address).data as bigint
   const convertedShares = ConvertToShares(amount).data as bigint
-  const balanceAssets = BalanceAssets(address).data as bigint
+  const balanceAssets =
+    Number(chainId) === base.id ? (BalanceAssetsBase(address).data as bigint) : (BalanceAssets(address).data as bigint)
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)

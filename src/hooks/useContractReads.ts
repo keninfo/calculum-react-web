@@ -89,6 +89,18 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     return { data, isLoading, error }
   }
 
+  const AllowanceBase = (ownerAddress: string | undefined, spenderAddress: string, enabled: boolean = true) => {
+    return useReadContract({
+      abi: contractAbi,
+      address: contractAddress as Hash,
+      functionName: 'allowance',
+      args: [ownerAddress, spenderAddress],
+      query: {
+        enabled,
+      },
+    })
+  }
+
   const SymbolAsset = () => {
     const { data, isLoading, error } = useReadContract({
       abi: usdcContract.abi,
@@ -116,6 +128,16 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
       query: {
         refetchInterval: 5000,
       },
+    })
+    return { data, isLoading, error }
+  }
+
+  const BalanceAssetsBase = (address: string | undefined) => {
+    const { data, isLoading, error } = useReadContract({
+      abi: contractAbi,
+      address: contractAddress as Hash,
+      functionName: 'balanceOf',
+      args: [address],
     })
     return { data, isLoading, error }
   }
@@ -254,9 +276,11 @@ const useContractReads = (contractAddress: Hash, contractAbi: Abi) => {
     CheckWhitelist,
     HasDeposited,
     Allowance,
+    AllowanceBase,
     SymbolAsset,
     SymbolShares,
     BalanceAssets,
+    BalanceAssetsBase,
     BalanceShares,
     Withdrawals,
     Deposits,
