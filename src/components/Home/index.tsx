@@ -74,8 +74,8 @@ const Index = () => {
       {/* {modal && <InitialPopup setModal={setModal} />} */}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
         {/* <InfoCarousel /> */}
-        <div className="relative flex flex-col gap-5 md:grid md:grid-cols-12 md:space-x-4">
-          <div className="order-2 flex h-full flex-col md:order-1 md:col-span-8">
+        <div className="relative flex flex-col gap-5 md:grid md:grid-cols-12 md:space-x-6">
+          <div className="order-2 flex h-full flex-col md:order-1 md:col-span-6 md:col-start-2">
             <SelectionCard />
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
               {contractIndex.map((contract, index) => {
@@ -175,25 +175,33 @@ const Index = () => {
                 <Image src="/icons/external_arrow_green.svg" alt={''} width={20} height={20} />
               </a>
             </div>
-            <a className="h-full w-full" href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum" target="_blank">
-              <Card
-                className={`h-fit w-full cursor-pointer border !bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+
+            <Card
+              className={`h-fit w-full cursor-pointer border !bg-[#013537] transition duration-200 ease-in-out hover:bg-eerie ${selectedStrategy == 'Momentum' ? 'border-primary' : 'border-dark'}`}
+            >
+              <h2 className="mb-2 text-xl">Momentum</h2>
+              <p className="mb-4 font-thin">
+                Open-source hedge-fund style algorithms that outperform passive HODLing, using no leverage.
+              </p>
+              <p className="mb-10 font-thin">Works best in trending markets.</p>
+              <Image
+                src={'charts/momentum_chart.svg'}
+                alt={''}
+                height={1000}
+                width={1000}
+                priority
+                className="relative mt-4 h-[90%] w-full"
+              />
+              <a
+                href="https://docs.hodlprotocol.io/hodl-101/what-is-momentum"
+                target="_blank"
+                rel="noopener"
+                className="mt-4 flex gap-1 font-thin"
               >
-                <h2 className="mb-2 text-xl">MOMENTUM</h2>
-                <p className="text-xs font-thin">
-                  Instead of passively `hodling` through market cycles, this 30-year-old strategy automatically adjusts
-                  your exposure based on trend.
-                </p>
-                <Image
-                  src={'charts/momentum_chart.svg'}
-                  alt={''}
-                  height={1000}
-                  width={1000}
-                  priority
-                  className="relative mt-4 h-[90%] w-full"
-                />
-              </Card>
-            </a>
+                Learn more about Momentum{' '}
+                <Image src="/icons/external_arrow_green.svg" alt={''} width={20} height={20} />
+              </a>
+            </Card>
 
             {/* <a
               className="h-full w-full"

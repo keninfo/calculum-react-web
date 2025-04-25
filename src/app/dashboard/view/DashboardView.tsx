@@ -16,6 +16,9 @@ import TradeBox from '@/components/TradeBox'
 import Transactions from '@/components/Transactions'
 import Card from '@/components/common/Card'
 import TVAttribution from '@/components/common/TVAttribution'
+import { MaintenanceDialog } from '@/components/maintenace-dialog'
+import useContract from '@/hooks/useContract'
+import ContractReads from '@/hooks/useContractReads'
 import { useNavbarStore } from '@/store/useNavbarStore'
 import { useProStore } from '@/store/useProStore'
 import { useStrategyStore } from '@/store/useStrategyStore'
@@ -34,6 +37,23 @@ const DashboardView = () => {
   const { isConnected } = useAccount()
   const { navbarHeight } = useNavbarStore()
   const [loading, setLoading] = useState(true)
+
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
+  const { contractAddress, contractAbi } = useContract()
+
+  const { chainId } = useAccount()
+  const { InMaintenance } = ContractReads(contractAddress, contractAbi)
+
+  let isInMaintenance = false
+  const data = InMaintenance(chainId).data as [boolean, number]
+  if (data) {
+    isInMaintenance = data[0] as boolean
+  }
+
+  const handleDialogClose = () => {
+    setShowDialog(false)
+  }
 
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
@@ -60,6 +80,13 @@ const DashboardView = () => {
     setSelected(0)
   }, [isConnected])
 
+  useEffect(() => {
+    if (isInMaintenance) {
+      console.log('In maintenance mode =>> ', isInMaintenance)
+      setShowDialog(true)
+    }
+  }, [isInMaintenance])
+
   const TVChartContainer = useMemo(
     () =>
       dynamic(() => import('@/components/TVChartContainer').then((mod) => mod.TVChartContainer), {
@@ -74,6 +101,7 @@ const DashboardView = () => {
 
   return (
     <>
+      {showDialog && <MaintenanceDialog onClose={handleDialogClose} />}
       {/* DESKTOP */}
       <div className={`grid-cols-12 gap-4 px-5 md:grid`} style={{ marginTop: navbarHeight }}>
         <div className={`col-span-12 flex w-full flex-col md:col-span-9`}>
