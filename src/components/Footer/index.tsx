@@ -11,7 +11,7 @@ const index = () => {
         </a>
 
         <p>|</p>
-        <a href="https://x.com/HODLlikeaPro" target="_blank">
+        <a href="https://x.com/HODL_Protocol " target="_blank">
           <Image src="/x.png" width={50} height={100} alt="image" className="h-5 w-5" />
         </a>
       </div>

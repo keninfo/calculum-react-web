@@ -9,7 +9,7 @@ const HomeFooter = () => {
       <Image src={'/logo/main_logo.svg'} alt={'hodl protocol'} width={160} height={48} className="order-1 md:hidden" />
       <div className="order-2 flex items-center justify-center gap-3 text-white md:order-3">
         <p className="hidden text-sm font-light md:block">Follow us on</p>
-        <a href="https://x.com/HODLlikeaPro" target="_blank">
+        <a href="https://x.com/HODL_Protocol" target="_blank">
           <Image src="/x.png" width={50} height={100} alt="image" className="h-5 w-5" />
         </a>
         <a href="https://t.me/+MOdhyvB63StmMmE0" target="_blank">
