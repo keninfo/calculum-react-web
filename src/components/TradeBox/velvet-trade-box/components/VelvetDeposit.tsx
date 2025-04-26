@@ -83,10 +83,10 @@ const VelvetDeposit: FC = () => {
 
   useEffect(() => {
     if (isApproved && isAllowanceSuccess && decimals) {
+      setStatus('Depositing ...')
+
       const depositAmount = getValues('amount')
       const parsedDepositAmount = parseUnits(depositAmount, decimals).toString()
-
-      setStatus('Depositing ...')
 
       prepareDepositMutation({
         portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
@@ -116,7 +116,7 @@ const VelvetDeposit: FC = () => {
             setStatus('idle')
             reset()
             setDepositPayload(null)
-            createTransactionAlert('Transaction sent successfully', false)
+            createTransactionAlert('Transaction sent successfully', true)
           },
           onError: () => {
             setStatus('idle')
