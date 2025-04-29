@@ -31,6 +31,7 @@ const VelvetDeposit: FC = () => {
     handleSubmit,
     getValues,
     reset,
+    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -47,7 +48,7 @@ const VelvetDeposit: FC = () => {
   const { contractAddress, decimals, contractAbi } = useContract()
   const { sendTransaction } = useSendTransaction()
 
-  const { AllowanceBase } = useContractReads(contractAddress as Hash, contractAbi)
+  const { AllowanceBase, BalanceAssetsBase } = useContractReads(contractAddress as Hash, contractAbi)
   const { PrepareDepositTx } = useVelvetRequest()
   const { approve, isApproving, isApproved } = useApproveToken()
 
@@ -57,7 +58,7 @@ const VelvetDeposit: FC = () => {
     isApproved,
   )
 
-  // const { data: balanceAssetsBaseData } = BalanceAssetsBase(userAddress as Hash)
+  const { data: balanceAssetsBaseData } = BalanceAssetsBase(userAddress as Hash)
 
   const { mutate: prepareDepositMutation } = PrepareDepositTx(
     (response: AxiosResponse) => {
@@ -72,6 +73,15 @@ const VelvetDeposit: FC = () => {
   )
 
   const onSubmit = async (data: VelvetTxType) => {
+    const required = parseUnits(data.amount, decimals!) // FIX: fix non nulling assertion
+
+    if (balanceAssetsBaseData && (balanceAssetsBaseData as bigint) < required) {
+      setError('amount', {
+        type: 'manual',
+        message: 'Insufficient balance',
+      })
+      return
+    }
     approve(data.amount)
   }
 

@@ -24,7 +24,11 @@ export const useApproveToken = (): ApproveToken => {
 
   const { isLoading: isApproving, isSuccess: isApproved } = useWaitForTransactionReceipt({
     hash: txHash,
-    query: { enabled: !!txHash },
+    query: {
+      enabled: !!txHash,
+      staleTime: 1000,
+      gcTime: 1000,
+    },
   })
 
   /**
