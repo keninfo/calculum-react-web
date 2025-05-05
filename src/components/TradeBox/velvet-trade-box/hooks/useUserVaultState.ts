@@ -8,8 +8,6 @@ import { velvetPortfolioAbi } from '../abi/velvetPortfolioAbi'
 export const useUserVaultState = (portfolioAddress: `0x${string}`) => {
   const { address } = useAccount()
 
-  console.log('account', address)
-
   const { data: tokenList } = useReadContract({
     address: portfolioAddress,
     abi: velvetPortfolioAbi,

@@ -7,9 +7,9 @@ import { UserPositionRow } from './components/user-position-row'
 
 const UserPositions = () => {
   const { tokenList, userShares, totalShares } = useUserVaultState(VELVET_CAPITAL_PORTFOLIO as Hash)
-  console.log('tokenList', tokenList)
-  console.log('userShares', userShares)
-  console.log('totalShares', totalShares)
+  console.log('tokenList =>>', tokenList)
+  console.log('userShares =>>', userShares)
+  console.log('totalShares =>>', totalShares)
 
   return (
     <div>
@@ -18,7 +18,7 @@ const UserPositions = () => {
       {tokenList?.map((token) => (
         <UserPositionRow
           key={token}
-          tokenAddress={token}
+          token={token}
           userShares={userShares ?? BigInt(0)}
           totalShares={totalShares ?? BigInt(1)}
           portfolioAddress={VELVET_CAPITAL_PORTFOLIO as Hash}
