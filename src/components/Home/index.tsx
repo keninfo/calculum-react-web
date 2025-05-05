@@ -13,6 +13,7 @@ import { useNavbarStore } from '@/store/useNavbarStore'
 // import { useStrategyStore } from '@/store/useStrategyStore'
 // import InitialPopup from '../InitialPopup'
 import Card from '../common/Card'
+// import { UserPositions } from '../user-positions'
 // import CryptoIcon from '../common/CryptoIcon'
 import SelectionCard from './SelectionCard'
 import { ProductCardMock, ProductsCard } from './components/products-card'
@@ -74,6 +75,7 @@ const Index = () => {
       {/* {modal && <InitialPopup setModal={setModal} />} */}
       <div className="h-full px-10 md:px-0" style={{ marginTop: navbarHeight }}>
         {/* <InfoCarousel /> */}
+        {/* <UserPositions /> */}
         <div className="relative flex flex-col gap-5 md:grid md:grid-cols-12 md:space-x-6">
           <div className="order-2 flex h-full flex-col md:order-1 md:col-span-6 md:col-start-2">
             <SelectionCard />
