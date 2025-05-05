@@ -6,31 +6,27 @@ import { useEffect, useState, type FC } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import type { AxiosError, AxiosResponse } from 'axios'
-
 import { parseUnits } from 'viem'
 import type { Hash } from 'viem'
 import { base } from 'viem/chains'
 
-import { useAccount, useSendTransaction } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 
-import useContract from '@/hooks/useContract'
-import useContractReads from '@/hooks/useContractReads'
-import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_BASE_DEPOSIT_MANAGER } from '@/shared/constants'
+import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
 
-import { useApproveToken, useVelvetRequest } from '../hooks'
+import { velvetPortfolioAbi } from '../abi/velvetPortfolioAbi'
 import type { VelvetTxType } from '../schema/velvet.schema'
 import { velvetTxSchema } from '../schema/velvet.schema'
-import type { VelvetApiResponse, VelvetStatus } from '../types'
-import { VelvetTokenType, VelvetTransactionType } from '../types'
+import type { VelvetStatus } from '../types'
 
 const VelvetWithdraw: FC = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
+    setError,
+    reset,
   } = useForm({
     defaultValues: {
       amount: '',
@@ -40,86 +36,64 @@ const VelvetWithdraw: FC = () => {
   })
 
   const [status, setStatus] = useState<VelvetStatus>('idle')
-  const [withdrawPayload, setWithdrawPayload] = useState<VelvetApiResponse | null>(null)
 
   const { address: userAddress } = useAccount()
-  const { contractAddress, decimals, contractAbi } = useContract()
-  const { sendTransaction } = useSendTransaction()
 
-  const { AllowanceBase } = useContractReads(contractAddress as Hash, contractAbi)
-  const { PrepareWithdrawTx } = useVelvetRequest()
-  const { approve, isApproved } = useApproveToken()
+  const { data: userShares } = useReadContract({
+    address: VELVET_CAPITAL_PORTFOLIO as Hash,
+    abi: velvetPortfolioAbi,
+    functionName: 'balanceOf',
+    args: [userAddress as Hash],
+    chainId: base.id,
+    query: { enabled: Boolean(userAddress) },
+  })
 
-  const { isSuccess: isAllowanceSuccess } = AllowanceBase(
-    userAddress,
-    VELVET_CAPITAL_BASE_DEPOSIT_MANAGER ?? '',
-    isApproved,
-  )
+  const { data: txHash, writeContract, isPending } = useWriteContract()
 
-  const { mutate: prepareWithdrawMutation } = PrepareWithdrawTx(
-    (response: AxiosResponse) => {
-      console.log('success response =>> ', response)
-      setWithdrawPayload(response.data)
-    },
-    (error: AxiosError) => {
-      console.log('error response =>> ', error)
-      setWithdrawPayload(null)
-    },
-  )
+  const { isSuccess, isLoading: isConfirming } = useWaitForTransactionReceipt({
+    hash: txHash,
+    chainId: base.id,
+  })
 
   const onSubmit = async (data: VelvetTxType) => {
-    approve(data.amount)
+    if (!userShares) return
+
+    try {
+      const parsedAmount = parseUnits(data.amount, 18)
+      if (parsedAmount > userShares) {
+        setError('amount', {
+          type: 'manual',
+          message: "You can't withdraw more than your available balance.",
+        })
+        return
+      }
+
+      setStatus('Withdrawing ...')
+
+      writeContract({
+        address: VELVET_CAPITAL_PORTFOLIO as Hash,
+        abi: velvetPortfolioAbi,
+        functionName: 'multiTokenWithdrawal',
+        args: [parsedAmount],
+        chainId: base.id,
+      })
+    } catch (err) {
+      console.error('❌ Error on withdraw:', err)
+      createTransactionAlert('Error preparing withdraw.', false)
+    }
   }
 
-  // useEffect(() => {
-  //   if (isApproving) {
-  //     setStatus('Approving... ')
-  //   } else setStatus('idle')
-  // }, [isApproving])
-
   useEffect(() => {
-    if (isApproved && isAllowanceSuccess && decimals) {
-      const depositAmount = getValues('amount')
-      const parsedDepositAmount = parseUnits(depositAmount, decimals).toString()
-
-      setStatus('Depositing ...')
-
-      prepareWithdrawMutation({
-        portfolio: VELVET_CAPITAL_PORTFOLIO as Hash,
-        withdrawToken: contractAddress as Hash,
-        withdrawAmount: parsedDepositAmount,
-        user: userAddress as Hash,
-        withdrawType: VelvetTransactionType.BATCH,
-        tokenType: VelvetTokenType.ERC20,
-        skipApprovalCheck: true,
-        chainID: base.id,
-      })
+    if (isSuccess) {
+      reset()
+      createTransactionAlert('Withdraw transaction sent', true)
+      setStatus('idle')
+    } else if (isPending || isConfirming) {
+      setStatus('Processing ...')
+    } else {
+      setStatus('idle')
     }
-  }, [isApproved, isAllowanceSuccess, decimals, getValues, prepareWithdrawMutation, userAddress, contractAddress])
-
-  useEffect(() => {
-    if (withdrawPayload) {
-      setStatus('Sending ...')
-      sendTransaction(
-        {
-          gas: BigInt(withdrawPayload.gasLimit),
-          gasPrice: BigInt(withdrawPayload.gasPrice),
-          to: withdrawPayload.to,
-          data: withdrawPayload.data,
-          chainId: base.id,
-        },
-        {
-          onSuccess: (response) => {
-            console.log('Transaction sent successfully', response)
-          },
-          onError: (error) => {
-            console.log('Error sending transaction', error)
-            createTransactionAlert('Error sending deposit transaction', false)
-          },
-        },
-      )
-    }
-  }, [withdrawPayload, sendTransaction])
+  }, [isSuccess, isPending, isConfirming, reset])
 
   return (
     <div className="flex flex-col gap-4">
@@ -131,11 +105,11 @@ const VelvetWithdraw: FC = () => {
       />
       {errors.amount && <p className="text-sm text-red-600">{errors.amount.message}</p>}
       <button
-        className="bg-primary capitalize text-black"
+        className="rounded-md bg-primary px-4 py-2 capitalize text-black transition-all duration-300 ease-in-out hover:scale-[1.01] hover:bg-[#a4c751] disabled:cursor-not-allowed disabled:opacity-50"
         onClick={handleSubmit(onSubmit)}
         disabled={status !== 'idle'}
       >
-        {status === 'idle' ? 'Deposit' : status}
+        {status === 'idle' ? 'Withdraw' : status}
       </button>
     </div>
   )

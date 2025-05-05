@@ -21,7 +21,7 @@ import Deposit from './Deposit'
 import FaucetComponent from './FaucetComponent'
 import FaucetComponentMantle from './FaucetComponentMantle'
 import Withdraw from './Withdraw'
-import { VelvetDeposit } from './velvet-trade-box/components'
+import { VelvetDeposit, VelvetWithdraw } from './velvet-trade-box/components'
 
 type responseData = [number, bigint, bigint, bigint]
 interface AmountContextType {
@@ -89,6 +89,16 @@ const TradeBox = () => {
   }, [chain, chainId, currentChain, setNetwork])
 
   const handleChange = ({ toDeposit }: { toDeposit: boolean }) => {
+    if (toDeposit && Number(currentChain) === base.id) {
+      setStep(8)
+      return
+    }
+
+    if (!toDeposit && Number(currentChain) === base.id) {
+      setStep(9)
+      return
+    }
+
     if (toDeposit == true) {
       if (
         (userWithdrawalsStatus == 0 && userDepositStatus != 0) ||
@@ -135,10 +145,12 @@ const TradeBox = () => {
       setStep(1)
     } else if (allowance <= 0) {
       setStep(2)
+    } else if (Number(currentChain) === base.id) {
+      setStep(8)
     } else {
       setStep(0)
     }
-  }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult])
+  }, [balanceAssets, allowance, userDepositStatus, userWithdrawalsStatus, balanceSharesResult, currentChain])
 
   let isInMaintenance = false
   const data = InMaintenance(chainId).data as [boolean, number]
@@ -146,21 +158,23 @@ const TradeBox = () => {
     isInMaintenance = data[0] as boolean
   }
 
+  console.log('step', step)
+
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
       <Card className="h-fit w-full bg-[#3B3B3B] md:min-h-[231px]">
         <div className="mb-8 grid w-full grid-cols-2 items-center gap-5">
           <SecondaryButton
-            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step < 5 ? 'border-b-2 border-robin text-robin' : ''} `}
+            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step < 5 || step == 8 ? 'border-b-2 border-robin text-robin' : ''} `}
             handleClick={() => handleChange({ toDeposit: true })}
             // disabled
           >
             DEPOSIT
           </SecondaryButton>
           <SecondaryButton
-            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${step >= 5 ? 'border-b-2 border-robin text-robin' : ''}`}
+            className={`col-span-1 w-full bg-[#3B3B3B] pb-4 ${(step >= 5 && step < 8) || step == 9 ? 'border-b-2 border-robin text-robin' : ''}`}
             handleClick={() => handleChange({ toDeposit: false })}
-            disabled
+            disabled={Number(currentChain) !== base.id}
           >
             WITHDRAW
           </SecondaryButton>
@@ -185,7 +199,10 @@ const TradeBox = () => {
         {isConnected && !wrongNetwork && (
           <ul className="mt-2">
             {Number(currentChain) === base.id ? (
-              <VelvetDeposit />
+              <>
+                {step == 8 && <VelvetDeposit />} {/** step 8 is for velvet deposit */}
+                {step == 9 && <VelvetWithdraw />} {/** step 9 is for velvet withdraw */}
+              </>
             ) : (
               <>
                 {step == 1 && currentChain !== '5003' && <FaucetComponent inMaintenance={isInMaintenance} />}

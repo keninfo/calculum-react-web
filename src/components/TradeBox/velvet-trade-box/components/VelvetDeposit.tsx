@@ -148,7 +148,7 @@ const VelvetDeposit: FC = () => {
       />
       {errors.amount && <p className="text-sm text-red-400">{errors.amount.message}</p>}
       <button
-        className="rounded-md bg-primary px-4 py-2 capitalize text-black"
+        className="rounded-md bg-primary px-4 py-2 capitalize text-black transition-all duration-300 ease-in-out hover:scale-[1.01] hover:bg-[#a4c751] disabled:cursor-not-allowed disabled:opacity-50"
         onClick={handleSubmit(onSubmit)}
         disabled={status !== 'idle'}
       >
