@@ -39,7 +39,7 @@ const VelvetWithdraw: FC = () => {
 
   const { address: userAddress } = useAccount()
 
-  const { data: userShares } = useReadContract({
+  const { data: userShares, refetch } = useReadContract({
     address: VELVET_CAPITAL_PORTFOLIO as Hash,
     abi: velvetPortfolioAbi,
     functionName: 'balanceOf',
@@ -86,6 +86,7 @@ const VelvetWithdraw: FC = () => {
   useEffect(() => {
     if (isSuccess) {
       reset()
+      refetch()
       createTransactionAlert('Withdraw transaction sent', true)
       setStatus('idle')
     } else if (isPending || isConfirming) {
@@ -93,10 +94,11 @@ const VelvetWithdraw: FC = () => {
     } else {
       setStatus('idle')
     }
-  }, [isSuccess, isPending, isConfirming, reset])
+  }, [isSuccess, isPending, isConfirming, reset, refetch])
 
   return (
     <div className="flex flex-col gap-4">
+      <p>{Number(userShares)}</p>
       <input
         type="text"
         {...register('amount')}

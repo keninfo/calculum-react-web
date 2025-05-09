@@ -19,11 +19,8 @@ export const useUserVaultState = (portfolioAddress: `0x${string}`) => {
     address: portfolioAddress,
     abi: velvetPortfolioAbi,
     functionName: 'balanceOf',
-    args: [address as Hash],
+    args: address ? [address as Hash] : undefined,
     chainId: base.id,
-    query: {
-      enabled: Boolean(address),
-    },
   })
 
   const { data: totalShares } = useReadContract({
@@ -33,9 +30,23 @@ export const useUserVaultState = (portfolioAddress: `0x${string}`) => {
     chainId: base.id,
   })
 
+  const { data: vaultBalances } = useReadContract({
+    address: portfolioAddress,
+    abi: velvetPortfolioAbi,
+    functionName: 'getTokenBalancesOf',
+    args: tokenList ? [tokenList, portfolioAddress] : undefined,
+    chainId: base.id,
+  })
+
+  const isReady = Boolean(
+    tokenList && userShares !== undefined && totalShares !== undefined && vaultBalances !== undefined,
+  )
+
   return {
     tokenList,
     userShares,
     totalShares,
+    vaultBalances,
+    isReady,
   }
 }

@@ -1,8 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
+
 import { erc20Abi } from 'viem'
 import type { Hash } from 'viem'
 import { formatUnits } from 'viem'
 
 import { useReadContract } from 'wagmi'
+
+import { getVelvetPortfolioTVLService } from '../services'
+import type { VelvetTVLResponse } from '../types'
 
 interface TokenBalanceProps {
   vaultTokenAddress: Hash
@@ -36,4 +42,12 @@ export const useVelvetTokenBalance = ({ vaultTokenAddress, userAddress }: TokenB
   // })
 
   return formatUnits(data ?? BigInt(0), decimals!)
+}
+
+export const GetVelvetPortfolioTVL = (): UseQueryResult<VelvetTVLResponse> => {
+  return useQuery({
+    queryKey: ['velvet-TVL'],
+    queryFn: getVelvetPortfolioTVLService,
+    refetchOnWindowFocus: false,
+  })
 }

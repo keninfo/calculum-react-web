@@ -35,17 +35,13 @@ const UserTokenRow: FC<Props> = ({ token, portfolioAddress, userShares, totalSha
     chainId: base.id,
   })
 
-  console.log('vaultBalance =>>', vaultBalance)
-  console.log('symbol =>>', symbol)
-  console.log('decimals =>>', decimals)
+  console.log('userShares', userShares)
+  console.log('totalShares', totalShares)
+  console.log('vaultBalance', vaultBalance)
 
   const rawAmount = vaultBalance && userShares && totalShares ? (userShares * vaultBalance) / totalShares : BigInt(0)
 
-  console.log('rawAmount =>>', rawAmount)
-
   const formatted = decimals !== undefined ? Number(rawAmount) / 10 ** decimals : 0
-
-  console.log('formatted =>>', formatted)
 
   return (
     <div className="text-white">
