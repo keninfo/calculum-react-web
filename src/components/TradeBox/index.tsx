@@ -68,10 +68,11 @@ const TradeBox = () => {
   const { setNetwork } = useStrategyStore()
 
   const switchNetwork = async () => {
+    console.log('Switching network')
+    console.log('walletClient', walletClient)
     if (walletClient) {
-      const targetChain = parseInt(currentChain)
-      console.log(targetChain)
       try {
+        const targetChain = parseInt(currentChain)
         await walletClient.switchChain({ id: targetChain })
       } catch (error) {
         console.error('Error switching chain:', error)
@@ -109,7 +110,7 @@ const TradeBox = () => {
         setStep(4)
       } else if ((userDepositStatus == 0 || userDepositStatus == 3) && balanceAssets > 0 && allowance > 0) {
         setStep(3)
-      } else if (balanceAssets <= 0) {
+      } else if (balanceAssets <= 0 && Number(currentChain) !== base.id) {
         setStep(1)
       } else if (allowance <= 0) {
         setStep(2)
@@ -141,7 +142,7 @@ const TradeBox = () => {
       setStep(4)
     } else if ((userDepositStatus == 0 || userDepositStatus == 3) && balanceAssets > 0 && allowance > 0) {
       setStep(3)
-    } else if (balanceAssets <= 0) {
+    } else if (balanceAssets <= 0 && Number(currentChain) !== base.id) {
       setStep(1)
     } else if (allowance <= 0) {
       setStep(2)
@@ -157,8 +158,6 @@ const TradeBox = () => {
   if (data) {
     isInMaintenance = data[0] as boolean
   }
-
-  console.log('step', step)
 
   return (
     <AmountContext.Provider value={{ amount, setAmount }}>
