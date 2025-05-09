@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import React, { createContext, useEffect, useState } from 'react'
 
+import { SwitchChainError } from 'viem'
 import { base } from 'viem/chains'
 
 import { useAccount } from 'wagmi'
@@ -13,6 +14,7 @@ import { walletClient } from '@/config/wallet-client'
 import useContract from '@/hooks/useContract'
 import ContractReads from '@/hooks/useContractReads'
 import { useStrategyStore } from '@/store/useStrategyStore'
+import createTransactionAlert from '@/utils/createTransactionAlert'
 
 import Approve from './Approve'
 import ClaimAssets from './ClaimAssets'
@@ -75,6 +77,9 @@ const TradeBox = () => {
         const targetChain = parseInt(currentChain)
         await walletClient.switchChain({ id: targetChain })
       } catch (error) {
+        if (error instanceof SwitchChainError) {
+          createTransactionAlert('Error switching chain. Verify your wallet', false)
+        }
         console.error('Error switching chain:', error)
       }
     }
