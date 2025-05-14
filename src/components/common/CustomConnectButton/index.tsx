@@ -51,7 +51,9 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
               }
               return (
                 <button
-                  onClick={openAccountModal}
+                  onClick={() => {
+                    openAccountModal()
+                  }}
                   className={`flex w-fit items-center justify-between rounded-lg border-2 border-robin bg-transparent px-4 py-1 text-robin hover:text-offWhite md:py-2 ${className}`}
                 >
                   <div className="h-4 w-4 bg-transparent"></div>

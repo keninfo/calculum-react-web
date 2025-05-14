@@ -39,7 +39,7 @@ const TradeBox = () => {
   const { contractAddress, contractAbi, chainId: currentChain, chain } = useContract()
 
   const [step, setStep] = useState<number>(0)
-  const { address, isConnected, chainId } = useAccount()
+  const { address, isConnected, chainId, status } = useAccount()
   const {
     BalanceAssets,
     BalanceAssetsBase,
@@ -50,6 +50,8 @@ const TradeBox = () => {
     InMaintenance,
     BalanceAssetsMantle,
   } = ContractReads(contractAddress, contractAbi)
+
+  console.log('status =>> ', status)
 
   let balanceAssets = BigInt(0)
 
@@ -70,8 +72,6 @@ const TradeBox = () => {
   const { setNetwork } = useStrategyStore()
 
   const switchNetwork = async () => {
-    console.log('Switching network')
-    console.log('walletClient', walletClient)
     if (walletClient) {
       try {
         const targetChain = parseInt(currentChain)

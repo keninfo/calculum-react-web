@@ -82,7 +82,6 @@ const DashboardView = () => {
 
   useEffect(() => {
     if (isInMaintenance) {
-      console.log('In maintenance mode =>> ', isInMaintenance)
       setShowDialog(true)
     }
   }, [isInMaintenance])
