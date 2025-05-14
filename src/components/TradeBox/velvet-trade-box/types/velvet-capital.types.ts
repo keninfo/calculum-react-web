@@ -9,7 +9,7 @@ export enum VelvetTokenType {
   NATIVE = 'native',
 }
 
-export interface VelvetDepositRequest {
+export interface VelvetDepositRequest_v1 {
   portfolio: Hash
   depositAmount: string
   depositToken: Hash
@@ -20,20 +20,47 @@ export interface VelvetDepositRequest {
   chainID: number
 }
 
-export interface VelvetApiResponse {
+export interface VelvetDepositRequest_v3 {
+  portfolio: Hash
+  depositAmount: string
+  depositToken: Hash
+  user: Hash
+  depositType: VelvetTransactionType
+  tokenType: VelvetTokenType
+}
+
+export interface VelvetApiResponse_v3 {
   to: Hash
   data: Hash
   gasLimit: string
   gasPrice: string
 }
 
-export interface VelvetWithdrawRequest {
+export interface VelvetApiResponse_v1 {
+  to: Hash
+  data: Hash
+  gasLimit: string
+  gasPrice: string
+  value: string
+}
+
+export interface VelvetWithdrawRequest_v1 {
+  portfolio: Hash
+  withdrawAmount: string
+  withdrawToken: Hash
+  user: Hash
+  slippage: string
+  withdrawType: VelvetTransactionType
+  tokenType: VelvetTokenType
+  skipApprovalCheck: boolean
+  chainID: number
+}
+
+export interface VelvetWithdrawRequest_v3 {
   portfolio: Hash
   withdrawAmount: string
   withdrawToken: Hash
   user: Hash
   withdrawType: VelvetTransactionType
   tokenType: VelvetTokenType
-  skipApprovalCheck: boolean
-  chainID: number
 }

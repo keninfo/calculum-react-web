@@ -22,7 +22,7 @@ import createTransactionAlert from '@/utils/createTransactionAlert'
 import { useApproveToken, useVelvetRequest } from '../hooks'
 import type { VelvetTxType } from '../schema/velvet.schema'
 import { velvetTxSchema } from '../schema/velvet.schema'
-import type { VelvetApiResponse, VelvetStatus } from '../types'
+import type { VelvetApiResponse_v1, VelvetStatus } from '../types'
 import { VelvetTokenType, VelvetTransactionType } from '../types'
 
 const VelvetDeposit: FC = () => {
@@ -42,14 +42,14 @@ const VelvetDeposit: FC = () => {
   })
 
   const [status, setStatus] = useState<VelvetStatus>('idle')
-  const [depositPayload, setDepositPayload] = useState<VelvetApiResponse | null>(null)
+  const [depositPayload, setDepositPayload] = useState<VelvetApiResponse_v1 | null>(null)
 
   const { address: userAddress } = useAccount()
   const { contractAddress, decimals, contractAbi } = useContract()
   const { sendTransaction } = useSendTransaction()
 
   const { AllowanceBase, BalanceAssetsBase } = useContractReads(contractAddress as Hash, contractAbi)
-  const { PrepareDepositTx } = useVelvetRequest()
+  const { PrepareDepositTx_v1 } = useVelvetRequest()
   const { approve, isApproving, isApproved } = useApproveToken()
 
   const { isSuccess: isAllowanceSuccess } = AllowanceBase(
@@ -60,7 +60,7 @@ const VelvetDeposit: FC = () => {
 
   const { data: balanceAssetsBaseData } = BalanceAssetsBase(userAddress as Hash)
 
-  const { mutate: prepareDepositMutation } = PrepareDepositTx(
+  const { mutate: prepareDepositMutation } = PrepareDepositTx_v1(
     (response: AxiosResponse) => {
       setStatus('Sending ...')
       setDepositPayload(response.data)
@@ -141,7 +141,7 @@ const VelvetDeposit: FC = () => {
   return (
     <div className="flex flex-col gap-4">
       <input
-        type="text"
+        type="number"
         {...register('amount')}
         className="border-b border-primary bg-transparent"
         disabled={status !== 'idle'}
