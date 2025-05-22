@@ -3,11 +3,9 @@ import type { AxiosResponse } from 'axios'
 
 import type { Hash } from 'viem'
 
-import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
+import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_INTENTS_BASE_API_URL } from '@/shared/constants'
 
 import type { VelvetPortfolioTransactionsResponse, VelvetTVLResponse } from '../types'
-import { VELVET_CAPITAL_INTENTS_BASE_API_URL } from '@/shared/constants'
-
 
 export const getVelvetPortfolioTVLService = async (): Promise<VelvetTVLResponse> => {
   const { data } = await axios.get(
