@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HODL Protocol React Web
 
-## Getting Started Smoothcoin React Web Page
+This project is a **Next.js** + **TypeScript** application that powers the front-end for the **HODL Protocol** ecosystem. It integrates blockchain contracts, wallet connections and a custom charting experience.
 
-First, run the development server:
+## Getting Started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Install dependencies and generate CSS variables (themes):
+   ```bash
+   npm install
+   npm run css-vars
+   ```
+2. Copy `.env.example` to `.env` and fill in all required keys.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+   Then open [http://localhost:3000](http://localhost:3000).
+
+## Environment Variables
+
+Configuration values are loaded from environment variables. See `.env.example` for all options, including database credentials, API tokens and Web3 keys.
+
+## Project Structure
+
+```
+src/
+├── app/               # Next.js routes and pages
+├── components/        # Reusable React components
+├── config/            # viem/wagmi clients
+├── contexts/          # React contexts (CoinsContext)
+├── contracts/         # Smart contract ABIs and addresses
+├── hooks/             # Custom hooks for contract interaction
+├── lib/               # Custom data feed for TradingView
+├── services/          # Providers such as RainbowKit & Bandit
+├── shared/            # Shared constants
+├── store/             # Zustand stores
+├── styles/            # Tailwind themes and globals
+└── utils/             # Utility helpers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Components Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Component | Description |
+|-----------|-------------|
+| **AppProviders** | Wraps the app with context providers (Redux, RainbowKit, etc.) |
+| **Bandit** | Displays quests and leaderboards powered by the Bandit SDK |
+| **Bearam** | Dashboard page for Momentum strategy charts |
+| **ChartOptions** | Small controls to switch chart ranges and windows |
+| **ChartsContainer** | Renders charts such as Return on Capital and Rolling Volatility |
+| **Disclaimer** | Banner with disclaimers about risks |
+| **Footer** | Global footer with links |
+| **Help** | Help dialog and documentation links |
+| **Home** | Landing page layout |
+| **InitialPopup** | Introductory modal shown on first visit |
+| **MarketTransactions** | Shows recent blockchain transactions |
+| **Navbar** | Main navigation bar and wallet connect button |
+| **Positions** | Displays open trading positions |
+| **ProductMetrics** | Presents metrics like performance and volatility |
+| **StrategyInfoTitle** | Header with summary information about current strategy |
+| **StrategyOptions** | Selector for strategies/coins |
+| **TVChartContainer** | Wrapper around the TradingView chart widget |
+| **TVNews** | News feed panel |
+| **TVTicker** | Animated ticker with market data |
+| **TradeBox** | Handles deposits and withdrawals into the strategies |
+| **Transactions** | History of user transactions |
+| **MaintenanceDialog** | Dialog shown when contracts are under maintenance |
+| **UserPositions** | Components and hooks for fetching user balances |
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Small reusable pieces live in `components/common` (buttons, modals, alerts, etc.).
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` – Start development server
+- `npm run build` – Build for production
+- `npm run start` – Start production server
+- `npm run lint` – Type check and lint the project
+- `npm run css-vars` – Generate color themes used by Tailwind
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentation Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Additional documentation lives in the [`docs/`](docs/PROJECT_OVERVIEW.md) folder. The following tasks describe how we plan to expand it:
 
-## Deploy on Vercel
+- Add more details for each component (props and examples).
+- Include diagrams of the data flow between hooks, stores and components.
+- Document the API routes in `src/app/api` and their expected parameters.
+- Create onboarding notes for setting up the database and environment.
+- Provide a contribution guide describing coding standards and how to run tests.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Improvement Plan
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The repository analysis identified several areas to address:
+
+1. Centralise API base URLs and remove hard-coded `/v1` paths.
+2. Add a gas buffer or `estimateGas` fallback for transactions.
+3. Move secrets out of the client bundle and into server-only environment variables.
+4. Refactor `TradeBox` into a reducer or state machine for maintainability.
+5. Remove unused code and enforce type safety across hooks and utilities.
+6. Introduce automated tests and a CI pipeline to run lint and tests.
+7. Optimise large ABIs and adopt a service layer for API/database access.
+
