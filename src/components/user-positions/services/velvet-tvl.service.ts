@@ -6,10 +6,12 @@ import type { Hash } from 'viem'
 import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 
 import type { VelvetPortfolioTransactionsResponse, VelvetTVLResponse } from '../types'
+import { VELVET_CAPITAL_INTENTS_BASE_API_URL } from '@/shared/constants'
+
 
 export const getVelvetPortfolioTVLService = async (): Promise<VelvetTVLResponse> => {
   const { data } = await axios.get(
-    `https://intents.velvet.capital/api/v1/portfolio/tvl?portfolios=${VELVET_CAPITAL_PORTFOLIO}&chainID=8453`,
+    `${VELVET_CAPITAL_INTENTS_BASE_API_URL}/v1/portfolio/tvl?portfolios=${VELVET_CAPITAL_PORTFOLIO}&chainID=8453`,
   )
   return data
 }
@@ -17,5 +19,5 @@ export const getVelvetPortfolioTVLService = async (): Promise<VelvetTVLResponse>
 export const getVelvetPortfolioTransactions = async (
   portfolioAddress: Hash,
 ): Promise<AxiosResponse<VelvetPortfolioTransactionsResponse>> => {
-  return await axios.get(`https://intents.velvet.capital/api/v1/portfolio/transactions/${portfolioAddress}`)
+  return await axios.get(`${VELVET_CAPITAL_INTENTS_BASE_API_URL}/v1/portfolio/transactions/${portfolioAddress}`)
 }
