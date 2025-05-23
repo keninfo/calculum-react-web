@@ -18,15 +18,13 @@ import useContract from '@/hooks/useContract'
 import useContractReads from '@/hooks/useContractReads'
 import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_BASE_DEPOSIT_MANAGER } from '@/shared/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
+import { getEip1559Fees } from '@/utils/getEip1559Fees'
 
 import { useApproveToken, useVelvetRequest } from '../hooks'
 import type { VelvetTxType } from '../schema/velvet.schema'
 import { velvetTxSchema } from '../schema/velvet.schema'
 import type { VelvetApiResponse_v1, VelvetStatus } from '../types'
 import { VelvetTokenType, VelvetTransactionType } from '../types'
-
-import { getEip1559Fees } from '@/utils/getEip1559Fees'
-
 
 const VelvetDeposit: FC = () => {
   const {
@@ -114,41 +112,40 @@ const VelvetDeposit: FC = () => {
     }
   }, [isApproved, isAllowanceSuccess, decimals, getValues, prepareDepositMutation, userAddress, contractAddress])
 
-useEffect(() => {
-  if (depositPayload) {
-    const sendTx = async () => {
-      const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees();
-      sendTransaction(
-        {
-          gas: BigInt(depositPayload.gasLimit),
-          to: depositPayload.to,
-          data: depositPayload.data,
-          chainId: base.id,
-          maxFeePerGas,
-          maxPriorityFeePerGas,
-        },
-        {
-          onSuccess: () => {
-            setStatus('idle');
-            reset();
-            setDepositPayload(null);
-            createTransactionAlert('Transaction sent successfully', true);
+  useEffect(() => {
+    if (depositPayload) {
+      const sendTx = async () => {
+        const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees()
+        sendTransaction(
+          {
+            gas: BigInt(depositPayload.gasLimit),
+            to: depositPayload.to,
+            data: depositPayload.data,
+            chainId: base.id,
+            maxFeePerGas,
+            maxPriorityFeePerGas,
           },
-          onError: () => {
-            setStatus('idle');
-            setDepositPayload(null);
-            createTransactionAlert('Error sending deposit transaction', false);
+          {
+            onSuccess: () => {
+              setStatus('idle')
+              reset()
+              setDepositPayload(null)
+              createTransactionAlert('Transaction sent successfully', true)
+            },
+            onError: () => {
+              setStatus('idle')
+              setDepositPayload(null)
+              createTransactionAlert('Error sending deposit transaction', false)
+            },
           },
-        },
-      );
-    };
+        )
+      }
 
-    sendTx().catch((error) => {
-      console.error("Transaction error:", error);
-    });
-  }
-}, [depositPayload, sendTransaction, reset]);
-
+      sendTx().catch((error) => {
+        console.error('Transaction error:', error)
+      })
+    }
+  }, [depositPayload, sendTransaction, reset])
 
   return (
     <div className="flex flex-col gap-4">

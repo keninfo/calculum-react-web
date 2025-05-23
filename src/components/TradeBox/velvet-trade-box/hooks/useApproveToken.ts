@@ -7,7 +7,6 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 
 import useContract from '@/hooks/useContract'
 import { VELVET_CAPITAL_BASE_DEPOSIT_MANAGER } from '@/shared/constants'
-
 import { getEip1559Fees } from '@/utils/getEip1559Fees'
 
 interface ApproveToken {
@@ -54,7 +53,7 @@ export const useApproveToken = (): ApproveToken => {
       return
     }
 
-    const parseAmount = parseUnits(amountString, decimals)  
+    const parseAmount = parseUnits(amountString, decimals)
 
     const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees()
 

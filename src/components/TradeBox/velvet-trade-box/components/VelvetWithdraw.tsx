@@ -14,13 +14,12 @@ import { useAccount, useReadContract, useWriteContract, useWaitForTransactionRec
 
 import { VELVET_CAPITAL_PORTFOLIO } from '@/shared/constants'
 import createTransactionAlert from '@/utils/createTransactionAlert'
+import { getEip1559Fees } from '@/utils/getEip1559Fees'
 
 import { velvetPortfolioAbi } from '../abi/velvetPortfolioAbi'
 import type { VelvetTxType } from '../schema/velvet.schema'
 import { velvetTxSchema } from '../schema/velvet.schema'
 import type { VelvetStatus } from '../types'
-
-import { getEip1559Fees } from '@/utils/getEip1559Fees'
 
 const VelvetWithdraw: FC = () => {
   const {
@@ -72,7 +71,7 @@ const VelvetWithdraw: FC = () => {
 
       setStatus('Withdrawing ...')
 
-      const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees();
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees()
 
       writeContract({
         address: VELVET_CAPITAL_PORTFOLIO as Hash,
