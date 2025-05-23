@@ -7,6 +7,7 @@ import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_INTENTS_BASE_API_URL } from '@
 
 import type { VelvetPortfolioTransactionsResponse, VelvetTVLResponse } from '../types'
 
+
 export const getVelvetPortfolioTVLService = async (): Promise<VelvetTVLResponse> => {
   const { data } = await axios.get(
     `${VELVET_CAPITAL_INTENTS_BASE_API_URL}/v1/portfolio/tvl?portfolios=${VELVET_CAPITAL_PORTFOLIO}&chainID=8453`,
