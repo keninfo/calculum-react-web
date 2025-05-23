@@ -20,6 +20,8 @@ import type { VelvetTxType } from '../schema/velvet.schema'
 import { velvetTxSchema } from '../schema/velvet.schema'
 import type { VelvetStatus } from '../types'
 
+import { getEip1559Fees } from '@/utils/getEip1559Fees'
+
 const VelvetWithdraw: FC = () => {
   const {
     register,
@@ -70,12 +72,16 @@ const VelvetWithdraw: FC = () => {
 
       setStatus('Withdrawing ...')
 
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees();
+
       writeContract({
         address: VELVET_CAPITAL_PORTFOLIO as Hash,
         abi: velvetPortfolioAbi,
         functionName: 'multiTokenWithdrawal',
         args: [parsedAmount],
         chainId: base.id,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
       })
     } catch (err) {
       console.error('❌ Error on withdraw:', err)

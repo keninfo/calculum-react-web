@@ -25,6 +25,9 @@ import { velvetTxSchema } from '../schema/velvet.schema'
 import type { VelvetApiResponse_v1, VelvetStatus } from '../types'
 import { VelvetTokenType, VelvetTransactionType } from '../types'
 
+import { getEip1559Fees } from '@/utils/getEip1559Fees'
+
+
 const VelvetDeposit: FC = () => {
   const {
     register,
@@ -111,32 +114,41 @@ const VelvetDeposit: FC = () => {
     }
   }, [isApproved, isAllowanceSuccess, decimals, getValues, prepareDepositMutation, userAddress, contractAddress])
 
-  useEffect(() => {
-    if (depositPayload) {
+useEffect(() => {
+  if (depositPayload) {
+    const sendTx = async () => {
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees();
       sendTransaction(
         {
           gas: BigInt(depositPayload.gasLimit),
-          gasPrice: BigInt(depositPayload.gasPrice),
           to: depositPayload.to,
           data: depositPayload.data,
           chainId: base.id,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
         },
         {
           onSuccess: () => {
-            setStatus('idle')
-            reset()
-            setDepositPayload(null)
-            createTransactionAlert('Transaction sent successfully', true)
+            setStatus('idle');
+            reset();
+            setDepositPayload(null);
+            createTransactionAlert('Transaction sent successfully', true);
           },
           onError: () => {
-            setStatus('idle')
-            setDepositPayload(null)
-            createTransactionAlert('Error sending deposit transaction', false)
+            setStatus('idle');
+            setDepositPayload(null);
+            createTransactionAlert('Error sending deposit transaction', false);
           },
         },
-      )
-    }
-  }, [depositPayload, sendTransaction, reset])
+      );
+    };
+
+    sendTx().catch((error) => {
+      console.error("Transaction error:", error);
+    });
+  }
+}, [depositPayload, sendTransaction, reset]);
+
 
   return (
     <div className="flex flex-col gap-4">
