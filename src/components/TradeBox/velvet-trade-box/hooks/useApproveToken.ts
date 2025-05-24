@@ -7,6 +7,7 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 
 import useContract from '@/hooks/useContract'
 import { VELVET_CAPITAL_BASE_DEPOSIT_MANAGER } from '@/shared/constants'
+import { getEip1559Fees } from '@/utils/getEip1559Fees'
 
 interface ApproveToken {
   approve: (amountString: string) => void
@@ -36,7 +37,7 @@ export const useApproveToken = (): ApproveToken => {
    * @param amountString - Cadena decimal (e.g. "1000.5")
    * @returns - void
    */
-  const approve = (amountString: string): void => {
+  const approve = async (amountString: string): Promise<void> => {
     if (!address) {
       console.error('No user address available')
       return
@@ -54,6 +55,8 @@ export const useApproveToken = (): ApproveToken => {
 
     const parseAmount = parseUnits(amountString, decimals)
 
+    const { maxFeePerGas, maxPriorityFeePerGas } = await getEip1559Fees()
+
     writeContract(
       {
         account: address,
@@ -61,6 +64,8 @@ export const useApproveToken = (): ApproveToken => {
         abi: contractAbi,
         functionName: 'approve',
         args: [VELVET_CAPITAL_BASE_DEPOSIT_MANAGER, parseAmount],
+        maxFeePerGas,
+        maxPriorityFeePerGas,
       },
       {
         onSuccess(response) {

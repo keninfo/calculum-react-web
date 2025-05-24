@@ -3,6 +3,7 @@ import type { AxiosResponse } from 'axios'
 
 import type { Hash } from 'viem'
 
+//use env variables
 import { VELVET_CAPITAL_PORTFOLIO, VELVET_CAPITAL_INTENTS_BASE_API_URL } from '@/shared/constants'
 
 import type { VelvetPortfolioTransactionsResponse, VelvetTVLResponse } from '../types'
