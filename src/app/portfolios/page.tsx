@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import Head from 'next/head'
 
-import Footer from '@/components/Footer'
-import Home from '@/components/Home'
-import MetaTags from '@/components/common/MetaTags'
-import {UserPositions} from '@/components/user-positions'
 import { AutoConnectWallet } from '@/components/AutoConnectWallet'
+import Footer from '@/components/Footer'
+import MetaTags from '@/components/common/MetaTags'
+import { UserPositions } from '@/components/user-positions'
 
 export const metadata: Metadata = {
   title: 'Portfolios',
@@ -20,7 +19,7 @@ const HODLPortfolios = () => {
       <div className="flex min-h-screen flex-col justify-between">
         <main className="mx-auto max-w-[1366px] md:pb-5">
           <AutoConnectWallet />
-          <UserPositions/>
+          <UserPositions />
         </main>
         <Footer />
       </div>
