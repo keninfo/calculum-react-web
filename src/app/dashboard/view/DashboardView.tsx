@@ -58,6 +58,8 @@ const DashboardView = () => {
   useEffect(() => {
     const storedStrategy = localStorage.getItem('strategy')
     const storedCoin = localStorage.getItem('coin')
+    console.log('storedCoin',storedCoin)
+    console.log('storedStrategy',storedStrategy)
     setPro(true)
     if (storedStrategy !== null) {
       setStrategy(JSON.parse(storedStrategy))
@@ -74,6 +76,9 @@ const DashboardView = () => {
   useEffect(() => {
     localStorage.setItem('strategy', JSON.stringify(strategy))
     localStorage.setItem('coin', JSON.stringify(coin))
+    console.log('coin',coin)
+    console.log('pro',pro)
+    console.log('strategy',strategy)
   }, [coin, pro, strategy])
 
   useEffect(() => {
